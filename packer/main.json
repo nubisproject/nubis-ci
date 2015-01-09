@@ -1,0 +1,55 @@
+{
+  "variables": {
+    "aws_access_key": "",
+    "aws_secret_key": "",
+    "jenkins_packer": "1.0",
+    "release": null
+  },
+  "builders": [
+  {
+    "type": "amazon-ebs",
+    "name": "amazon-us-west-2",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
+    "region": "us-west-2",
+    "source_ami": "ami-3d50120d",
+    "instance_type": "m3.medium",
+    "ssh_username": "ubuntu",
+    "ami_name": "gozer-jenkins-test {{timestamp}} v{{user `release`}}",
+    "ami_description": "Gozer testing this",
+    "tags" : {
+       "release": "{{user `release`}}",
+       "owner": "Gozer"
+    }
+  },
+  {
+    "type": "amazon-ebs",
+    "name": "amazon-us-east-1",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
+    "region": "us-east-1",
+    "source_ami": "ami-9eaa1cf6",
+    "instance_type": "m3.medium",
+    "ssh_username": "ubuntu",
+    "ami_name": "gozer-jenkins-test {{timestamp}} v{{user `release`}}",
+    "ami_description": "Gozer testing this",
+    "tags" : {
+       "release": "{{user `release`}}",
+       "owner": "Gozer"
+    }
+  }
+  ],
+  "provisioners": [{
+    "type": "shell",
+    "inline": [
+      "sleep 30",
+      "wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -",
+      "sudo sh -c 'echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list'",
+      "sudo apt-get update",
+      "sudo apt-get install -y jenkins unzip git",
+      "sudo mkdir -p /var/lib/jenkins/plugins",
+      "sudo wget -O /var/lib/jenkins/plugins/packer.hpi http://updates.jenkins-ci.org/download/plugins/packer/{{user `jenkins_packer`}}/packer.hpi",
+      "sudo chown -R jenkins:jenkins /var/lib/jenkins"
+    ]
+  }]
+}
