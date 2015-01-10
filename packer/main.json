@@ -3,6 +3,9 @@
     "aws_access_key": "",
     "aws_secret_key": "",
     "jenkins_packer": "1.0",
+    "jenkins_git": "2.3.4",
+    "jenkins_git_client": "1.15.0",
+    "jenkins_scm_api": "0.2",
     "release": null
   },
   "builders": [
@@ -39,17 +42,44 @@
     }
   }
   ],
-  "provisioners": [{
+  "provisioners": [
+  {
+  "type": "file",
+  "source": "jenkins.xml",
+  "destination": "/tmp/jenkins.xml"
+  },
+  {
+  "type": "file",
+  "source": "biz.neustar.jenkins.plugins.packer.PackerPublisher.xml",
+  "destination": "/tmp/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml"
+  },
+  {
     "type": "shell",
     "inline": [
       "sleep 30",
       "wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -",
       "sudo sh -c 'echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list'",
       "sudo apt-get update",
-      "sudo apt-get install -y jenkins unzip git",
-      "sudo mkdir -p /var/lib/jenkins/plugins",
+      "sudo apt-get -y install puppet=3.4.3-1"
+      
+  ]},
+  {
+      "type": "puppet-masterless",
+      "manifest_file": "packer/puppet.pp"
+  },
+  {
+    "type": "shell",
+    "inline": [
+      "sudo mkdir -p /var/lib/jenkins/plugins /var/lib/jenkins/jobs/test",
       "sudo wget -O /var/lib/jenkins/plugins/packer.hpi http://updates.jenkins-ci.org/download/plugins/packer/{{user `jenkins_packer`}}/packer.hpi",
+      "sudo wget -O /var/lib/jenkins/plugins/git.hpi http://updates.jenkins-ci.org/download/plugins/git/{{user `jenkins_git`}}/git.hpi",
+      "sudo wget -O /var/lib/jenkins/plugins/git-client.hpi http://updates.jenkins-ci.org/download/plugins/git-client/{{user `jenkins_git_client`}}/git-client.hpi",
+      "sudo wget -O /var/lib/jenkins/plugins/scm-api.hpi http://updates.jenkins-ci.org/download/plugins/scm-api/{{user `jenkins_scm_api`}}/scm-api.hpi",
+      "sudo mv /tmp/jenkins.xml /var/lib/jenkins/jobs/test/config.xml",
+      "echo $(( {{user `release`}} + 1 )) | sudo tee /var/lib/jenkins/jobs/test/nextBuildNumber",
+      "sudo mv /tmp/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml /var/lib/jenkins/",
       "sudo chown -R jenkins:jenkins /var/lib/jenkins"
     ]
-  }]
+  }
+  ]
 }
