@@ -78,6 +78,8 @@
       "sudo mv /tmp/jenkins.xml /var/lib/jenkins/jobs/test/config.xml",
       "echo $(( {{user `release`}} + 1 )) | sudo tee /var/lib/jenkins/jobs/test/nextBuildNumber",
       "sudo mv /tmp/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml /var/lib/jenkins/",
+      "sudo sed -i -e's/%%AWS_ACCESS_KEY%%/{{user `aws_access_key`}}/'  /var/lib/jenkins/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml",
+      "sudo sed -i -e's/%%AWS_SECRET_KEY%%/{{user `aws_secret_key`}}/'  /var/lib/jenkins/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml",
       "sudo chown -R jenkins:jenkins /var/lib/jenkins"
     ]
   }
