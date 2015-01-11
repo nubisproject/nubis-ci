@@ -41,6 +41,11 @@
       <useDebug>false</useDebug>
       <templateMode>global</templateMode>
     </biz.neustar.jenkins.plugins.packer.PackerPublisher>
+    <hudson.tasks.Mailer plugin="mailer@1.11">
+      <recipients>gozer@mozilla.com</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
   </publishers>
   <buildWrappers/>
 </project>
