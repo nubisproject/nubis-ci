@@ -54,12 +54,12 @@ provider "aws" {
 }
 
 resource "aws_route53_zone" "primary" {
-   name = "test.ectoplasm.org"
+   name = "tf.ectoplasm.org"
 }
 
 resource "aws_route53_record" "jenkins" {
    zone_id = "${aws_route53_zone.primary.zone_id}"
-   name = "jenkins.test.ectoplasm.org"
+   name = "jenkins.tf.ectoplasm.org"
    type = "CNAME"
    ttl = "300"
    records = ["${aws_elb.jenkins.dns_name}"]
@@ -116,9 +116,6 @@ resource "aws_security_group" "jenkins" {
       to_port = 8080
       protocol = "tcp"
       cidr_blocks = ["0.0.0.0/0"]
-      #security_groups = [
-      #    "amazon-elb/sg-843f59ed"
-      #]
   }
   
   ingress {
