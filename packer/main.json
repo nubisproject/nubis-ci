@@ -30,12 +30,12 @@
   "provisioners": [
   {
   "type": "file",
-  "source": "jenkins.xml",
+  "source": "jenkins/job.xml",
   "destination": "/tmp/jenkins.xml"
   },
   {
   "type": "file",
-  "source": "biz.neustar.jenkins.plugins.packer.PackerPublisher.xml",
+  "source": "jenkins/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml",
   "destination": "/tmp/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml"
   },
   {
