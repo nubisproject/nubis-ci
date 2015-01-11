@@ -6,8 +6,9 @@ variable "aws_region" {
 
 variable "amis" {
   default = {
-    us-east-1 = "ami-eafa8a82"
-    us-west-2 = "ami-ad603c9d"
+    eu-west-1 = "ami-7961e70e"
+    us-east-1 = "ami-060c7f6e"
+    us-west-2 = "ami-db84d8eb"
   }
 }
 
@@ -50,6 +51,18 @@ provider "aws" {
     access_key = "${var.aws_access_key}"
     secret_key = "${var.aws_secret_key}"
     region = "${var.aws_region}"
+}
+
+resource "aws_route53_zone" "primary" {
+   name = "test.ectoplasm.org"
+}
+
+resource "aws_route53_record" "jenkins" {
+   zone_id = "${aws_route53_zone.primary.zone_id}"
+   name = "jenkins.test.ectoplasm.org"
+   type = "CNAME"
+   ttl = "300"
+   records = ["${aws_elb.jenkins.dns_name}"]
 }
 
 # Create a new load balancer
