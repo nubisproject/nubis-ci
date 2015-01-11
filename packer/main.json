@@ -20,23 +20,7 @@
     "ssh_username": "ubuntu",
     "ami_name": "gozer-jenkins-test {{timestamp}} v{{user `release`}}",
     "ami_description": "Gozer testing this",
-    "ami_regions" : [ "eu-west-1" ],
-    "tags" : {
-       "release": "{{user `release`}}",
-       "owner": "Gozer"
-    }
-  },
-  {
-    "type": "amazon-ebs",
-    "name": "amazon-us-east-1",
-    "access_key": "{{user `aws_access_key`}}",
-    "secret_key": "{{user `aws_secret_key`}}",
-    "region": "us-east-1",
-    "source_ami": "ami-9eaa1cf6",
-    "instance_type": "m3.medium",
-    "ssh_username": "ubuntu",
-    "ami_name": "gozer-jenkins-test {{timestamp}} v{{user `release`}}",
-    "ami_description": "Gozer testing this",
+    "ami_regions" : [ "eu-west-1","us-east-1" ],
     "tags" : {
        "release": "{{user `release`}}",
        "owner": "Gozer"
