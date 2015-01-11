@@ -20,6 +20,7 @@
     "ssh_username": "ubuntu",
     "ami_name": "gozer-jenkins-test {{timestamp}} v{{user `release`}}",
     "ami_description": "Gozer testing this",
+    "ami_regions" : [ "eu-west-1" ],
     "tags" : {
        "release": "{{user `release`}}",
        "owner": "Gozer"
