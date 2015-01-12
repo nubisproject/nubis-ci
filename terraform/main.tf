@@ -7,9 +7,9 @@ variable "aws_region" {
 
 variable "amis" {
   default = {
-    eu-west-1 = "ami-273bbd50"
-    us-east-1 = "ami-70d2a118"
-    us-west-2 = "ami-e7d884d7"
+    eu-west-1 = "ami-0f38be78"
+    us-east-1 = "ami-7cd6a514"
+    us-west-2 = "ami-85da86b5"
   }
 }
 
@@ -86,7 +86,7 @@ resource "aws_elb" "jenkins" {
     healthy_threshold = 2
     unhealthy_threshold = 2
     timeout = 3
-    target = "HTTP:8080/"
+    target = "HTTP:8080/cc.xml"
     interval = 30
   }
 
