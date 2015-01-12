@@ -1,2 +1,2 @@
-download.mozilla.org
+Mozilla Nubis
 ====================
