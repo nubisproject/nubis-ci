@@ -7,9 +7,9 @@ variable "aws_region" {
 
 variable "amis" {
   default = {
-    eu-west-1 = "ami-173fb960"
-    us-east-1 = "ami-b0e497d8"
-    us-west-2 = "ami-d7dd81e7"
+    eu-west-1 = "ami-273bbd50"
+    us-east-1 = "ami-70d2a118"
+    us-west-2 = "ami-e7d884d7"
   }
 }
 
@@ -103,6 +103,7 @@ resource "aws_instance" "jenkins" {
     }
     
     key_name = "${consul_keys.ssh.var.key}"
+    
     instance_type = "m3.medium"
     
     security_groups = [
