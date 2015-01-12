@@ -6,6 +6,7 @@
     "jenkins_git": "2.3.4",
     "jenkins_git_client": "1.15.0",
     "jenkins_scm_api": "0.2",
+    "owner": "{{env `USER`}}",
     "release": null
   },
   "builders": [
@@ -45,7 +46,7 @@
       "wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -",
       "sudo sh -c 'echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list'",
       "sudo apt-get update",
-      "sudo apt-get -y install puppet=3.4.3-1 postfix=2.11.0-1"
+      "sudo apt-get -y install puppet=3.4.3-1 sendmail=8.14.4-4.1ubuntu1"
       
   ]},
   {
