@@ -1,15 +1,20 @@
 variable "aws_access_key" {}
 variable "aws_secret_key" {}
+
 variable "aws_region" {
     default = "us-east-1"
 }
 
 variable "amis" {
   default = {
-    eu-west-1 = "ami-7961e70e"
-    us-east-1 = "ami-060c7f6e"
-    us-west-2 = "ami-db84d8eb"
+    eu-west-1 = "ami-173fb960"
+    us-east-1 = "ami-b0e497d8"
+    us-west-2 = "ami-d7dd81e7"
   }
+}
+
+variable "zone" {
+  default = "tf.ectoplasm.org"
 }
 
 # Configure the Consul provider
@@ -54,12 +59,12 @@ provider "aws" {
 }
 
 resource "aws_route53_zone" "primary" {
-   name = "tf.ectoplasm.org"
+   name = "${var.zone}"
 }
 
 resource "aws_route53_record" "jenkins" {
    zone_id = "${aws_route53_zone.primary.zone_id}"
-   name = "jenkins.tf.ectoplasm.org"
+   name = "jenkins.${aws_route53_zone.primary.name}"
    type = "CNAME"
    ttl = "300"
    records = ["${aws_elb.jenkins.dns_name}"]
@@ -127,6 +132,9 @@ resource "aws_security_group" "jenkins" {
 }
 
 output "url" {
-    value = "http://${aws_elb.jenkins.dns_name}/"
+    value = "http://${aws_route53_record.jenkins.name}/"
 }
 
+output "elb" {
+    value = "http://${aws_elb.jenkins.dns_name}/"
+}
