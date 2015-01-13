@@ -1,5 +1,6 @@
 variable "aws_access_key" {}
 variable "aws_secret_key" {}
+variable "release" {}
 
 variable "aws_region" {
     default = "us-east-1"
@@ -65,6 +66,14 @@ resource "aws_route53_zone" "primary" {
 resource "aws_route53_record" "jenkins" {
    zone_id = "${aws_route53_zone.primary.zone_id}"
    name = "jenkins.${aws_route53_zone.primary.name}"
+   type = "CNAME"
+   ttl = "300"
+   records = ["${aws_route53_record.release.name}"]
+}
+
+resource "aws_route53_record" "release" {
+   zone_id = "${aws_route53_zone.primary.zone_id}"
+   name = "${var.release}.jenkins.${aws_route53_zone.primary.name}"
    type = "CNAME"
    ttl = "300"
    records = ["${aws_elb.jenkins.dns_name}"]
