@@ -2,6 +2,7 @@
   "variables": {
     "aws_access_key": "",
     "aws_secret_key": "",
+    "base_ami": "ami-b3e2be83",
     "jenkins_packer": "1.0",
     "jenkins_git": "2.3.4",
     "jenkins_git_client": "1.15.0",
@@ -16,7 +17,7 @@
     "access_key": "{{user `aws_access_key`}}",
     "secret_key": "{{user `aws_secret_key`}}",
     "region": "us-west-2",
-    "source_ami": "ami-3d50120d",
+    "source_ami": "{{user `base_ami`}}",
     "instance_type": "m3.medium",
     "ssh_username": "ubuntu",
     "ami_name": "mozilla nubis-ci v{{user `release`}}",
@@ -24,7 +25,7 @@
     "ami_regions" : [ "eu-west-1","us-east-1" ],
     "tags" : {
        "release": "{{user `release`}}",
-       "owner": "Gozer"
+       "owner": "{{user `owner`}}"
     }
   }
   ],
@@ -46,7 +47,7 @@
       "wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -",
       "sudo sh -c 'echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list'",
       "sudo apt-get update",
-      "sudo apt-get -y install puppet=3.4.3-1 sendmail=8.14.4-4.1ubuntu1"
+      "sudo apt-get -y install sendmail=8.14.4-4.1ubuntu1"
       
   ]},
   {
