@@ -18,7 +18,7 @@
     "ssh_username": "ubuntu",
     "ami_name": "mozilla nubis-ci v/{{user `release`}} t/{{timestamp}}",
     "ami_description": "Nubis - CI",
-    "ami_regions" : [ ],
+    "ami_regions" : [ "us-east-1" ],
     "tags" : {
        "release": "{{user `release`}}",
        "owner": "{{user `owner`}}"

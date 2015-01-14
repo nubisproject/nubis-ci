@@ -9,8 +9,8 @@ variable "aws_region" {
 variable "amis" {
   default = {
     eu-west-1 = "unknown"
-    us-east-1 = "unknown"
-    us-west-2 = "ami-632f7053"
+    us-east-1 = "ami-1a7e0372"
+    us-west-2 = "ami-f12f70c1"
   }
 }
 
