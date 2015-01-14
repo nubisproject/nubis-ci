@@ -34,7 +34,7 @@
   <builders>
     <hudson.tasks.Shell>
       <command>if [ -f nubis/jenkins/Makefile ]; then
-    cd nubis && make -f jenkins/Makefile
+    make -C nubis -f jenkins/Makefile
 fi</command>
     </hudson.tasks.Shell>
   </builders>
