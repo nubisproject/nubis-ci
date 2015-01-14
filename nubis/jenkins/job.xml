@@ -33,8 +33,8 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>if [ -f jenkins/Makefile ]; then
-    make -f jenkins/Makefile
+      <command>if [ -f nubis/jenkins/Makefile ]; then
+    cd nubis && make -f jenkins/Makefile
 fi</command>
     </hudson.tasks.Shell>
   </builders>

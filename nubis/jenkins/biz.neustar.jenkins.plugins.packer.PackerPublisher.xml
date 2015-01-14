@@ -15,7 +15,7 @@
       </properties>
       <packerHome></packerHome>
       <params>-var aws_access_key=%%AWS_ACCESS_KEY%% -var aws_secret_key=%%AWS_SECRET_KEY%%</params>
-      <jsonTemplate>packer/main.json</jsonTemplate>
+      <jsonTemplate>nubis/packer/main.json</jsonTemplate>
       <templateModeJsonObj>
         <nullObject>false</nullObject>
         <properties class="org.apache.commons.collections.map.ListOrderedMap" serialization="custom">
@@ -34,7 +34,7 @@
               </entry>
               <entry>
                 <string>jsonTemplate</string>
-                <string>packer/main.json</string>
+                <string>nubis/packer/main.json</string>
               </entry>
             </map>
           </org.apache.commons.collections.map.ListOrderedMap>
