@@ -1,0 +1,4 @@
+packer/variables.json
+terraform.*
+.tmp/
+puppet-modules/
