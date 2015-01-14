@@ -28,7 +28,7 @@
   "provisioners": [
   {
       "type": "puppet-masterless",
-      "manifest_file": "nubis/packer/puppet.pp",
+      "manifest_file": "packer/puppet.pp",
       "module_paths": [ 
       	"puppet-modules"
       ],
@@ -38,12 +38,12 @@
   },
   {
     "type": "file",
-    "source": "nubis/jenkins/job.xml",
+    "source": "jenkins/job.xml",
     "destination": "/tmp/nubis-ci.xml"
   },
   {
     "type": "file",
-    "source": "nubis/jenkins/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml",
+    "source": "jenkins/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml",
     "destination": "/tmp/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml"
   },  
   {
