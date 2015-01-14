@@ -3,10 +3,6 @@
     "aws_access_key": "",
     "aws_secret_key": "",
     "base_ami": "ami-b3e2be83",
-    "jenkins_packer": "1.0",
-    "jenkins_git": "2.3.4",
-    "jenkins_git_client": "1.15.0",
-    "jenkins_scm_api": "0.2",
     "owner": "{{env `USER`}}",
     "release": null
   },
@@ -20,9 +16,9 @@
     "source_ami": "{{user `base_ami`}}",
     "instance_type": "m3.medium",
     "ssh_username": "ubuntu",
-    "ami_name": "mozilla nubis-ci v{{user `release`}}",
+    "ami_name": "mozilla nubis-ci v/{{user `release`}} t/{{timestamp}}",
     "ami_description": "Nubis - CI",
-    "ami_regions" : [ "eu-west-1","us-east-1" ],
+    "ami_regions" : [ ],
     "tags" : {
        "release": "{{user `release`}}",
        "owner": "{{user `owner`}}"
@@ -31,47 +27,37 @@
   ],
   "provisioners": [
   {
-  "type": "file",
-  "source": "jenkins/job.xml",
-  "destination": "/tmp/jenkins.xml"
-  },
-  {
-  "type": "file",
-  "source": "jenkins/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml",
-  "destination": "/tmp/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml"
-  },
-  {
-    "type": "shell",
-    "inline": [
-      "sleep 30",
-      "wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -",
-      "sudo sh -c 'echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list'",
-      "sudo apt-get update",
-      "sudo apt-get -y install sendmail=8.14.4-4.1ubuntu1"
-      
-  ]},
-  {
       "type": "puppet-masterless",
       "manifest_file": "packer/puppet.pp",
+      "module_paths": [ 
+      	"puppet-modules"
+      ],
       "facter": {
           "ami_release": "{{user `release`}}"
       }
   },
   {
+    "type": "file",
+    "source": "jenkins/job.xml",
+    "destination": "/tmp/nubis-ci.xml"
+  },
+  {
+    "type": "file",
+    "source": "jenkins/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml",
+    "destination": "/tmp/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml"
+  },  
+  {
     "type": "shell",
-    "inline": [
-      "sudo mkdir -p /var/lib/jenkins/plugins /var/lib/jenkins/jobs/nubis-ci",
-      "sudo wget -O /var/lib/jenkins/plugins/packer.hpi http://updates.jenkins-ci.org/download/plugins/packer/{{user `jenkins_packer`}}/packer.hpi",
-      "sudo wget -O /var/lib/jenkins/plugins/git.hpi http://updates.jenkins-ci.org/download/plugins/git/{{user `jenkins_git`}}/git.hpi",
-      "sudo wget -O /var/lib/jenkins/plugins/git-client.hpi http://updates.jenkins-ci.org/download/plugins/git-client/{{user `jenkins_git_client`}}/git-client.hpi",
-      "sudo wget -O /var/lib/jenkins/plugins/scm-api.hpi http://updates.jenkins-ci.org/download/plugins/scm-api/{{user `jenkins_scm_api`}}/scm-api.hpi",
-      "sudo mv /tmp/jenkins.xml /var/lib/jenkins/jobs/nubis-ci/config.xml",
-      "echo $(( {{user `release`}} + 1 )) | sudo tee /var/lib/jenkins/jobs/nubis-ci/nextBuildNumber",
-      "sudo mv /tmp/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml /var/lib/jenkins/",
-      "sudo perl -pi -e's[%%AWS_ACCESS_KEY%%][{{user `aws_access_key`}}]'  /var/lib/jenkins/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml",
-      "sudo perl -pi -e's[%%AWS_SECRET_KEY%%][{{user `aws_secret_key`}}]'  /var/lib/jenkins/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml",
-      "sudo chown -R jenkins:jenkins /var/lib/jenkins"
-    ]
+      "inline": [
+        "sudo mkdir -p /var/lib/jenkins/jobs/nubis-ci",
+	"sudo mv /tmp/nubis-ci.xml /var/lib/jenkins/jobs/nubis-ci/config.xml",
+        "echo $(( {{user `release`}} + 1 )) | sudo tee /var/lib/jenkins/jobs/nubis-ci/nextBuildNumber",
+        "sudo mv /tmp/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml /var/lib/jenkins/",
+        "sudo perl -pi -e's[%%AWS_ACCESS_KEY%%][{{user `aws_access_key`}}]' /var/lib/jenkins/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml",
+        "sudo perl -pi -e's[%%AWS_SECRET_KEY%%][{{user `aws_secret_key`}}]' /var/lib/jenkins/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml",
+	"sudo chown -R jenkins:jenkins /var/lib/jenkins/jobs/nubis-ci /var/lib/jenkins/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml"
+	
+      ]
   }
   ]
 }

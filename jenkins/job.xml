@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Nubis CI</description>
+  <description>Nubis - CI</description>
   <keepDependencies>false</keepDependencies>
   <properties/>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@2.3.4">
@@ -31,7 +31,13 @@
     </hudson.triggers.SCMTrigger>
   </triggers>
   <concurrentBuild>false</concurrentBuild>
-  <builders/>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>if [ -f jenkins/Makefile ]; then
+    make -f jenkins/Makefile
+fi</command>
+    </hudson.tasks.Shell>
+  </builders>
   <publishers>
     <biz.neustar.jenkins.plugins.packer.PackerPublisher plugin="packer@1.0">
       <name>airmozilla</name>
