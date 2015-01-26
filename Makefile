@@ -8,9 +8,9 @@ RELEASE_FILE=nubis/packer/release.json
 # Top level build targets
 all: build
 
-build: build-increment nubis-puppet packer
+build: build-increment nubis-puppet
 
-release: release-increment nubis-puppet packer
+release: release-increment nubis-puppet
 
 # Internal build targets
 force: ;
