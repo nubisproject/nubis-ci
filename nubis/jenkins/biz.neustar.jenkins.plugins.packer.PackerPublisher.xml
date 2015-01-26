@@ -14,7 +14,7 @@
         </hudson.tools.InstallSourceProperty>
       </properties>
       <packerHome></packerHome>
-      <params>-var aws_access_key=%%AWS_ACCESS_KEY%% -var aws_secret_key=%%AWS_SECRET_KEY%%</params>
+      <params>-var iam_instance_profile=%%IAM_INSTANCE_PROFILE%%</params>
       <jsonTemplate>nubis/packer/main.json</jsonTemplate>
       <templateModeJsonObj>
         <nullObject>false</nullObject>

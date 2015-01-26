@@ -1,5 +1,5 @@
 class { 'jenkins':
-  version => "1.596"
+  version => "1.598"
 }
 
 # Will eventually need to pull this from the registry
@@ -7,6 +7,14 @@ class { 'jenkins':
 #  enabled => 0,
 #  config => template("/tmp/nubis-ci.xml.erb"),
 # }
+
+#XXX: Needs to be project-aware
+consul::service { 'jenkins':
+  tags           => ['nubis-ci'],
+  port           => 8080,
+  check_script   => '/usr/bin/wget -q -O- http://localhost:8080/cc.xml',
+  check_interval => '10s',
+}
 
 jenkins::plugin { "packer" :
     version => "1.0"
