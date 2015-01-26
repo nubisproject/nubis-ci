@@ -1,32 +1,20 @@
-variable "aws_access_key" {}
-variable "aws_secret_key" {}
-variable "release" {}
-
-variable "aws_region" {
-    default = "us-east-1"
-}
-
-variable "amis" {
-  default = {
-    eu-west-1 = "unknown"
-    us-east-1 = "ami-1a7e0372"
-    us-west-2 = "ami-f12f70c1"
-  }
-}
-
-variable "zone" {
-  default = "tf.ectoplasm.org"
-}
-
 # Configure the Consul provider
 provider "consul" {
-    address = "consul.service.consul:8500"
-    datacenter = "phx1"
+    address = "${var.consul}:8500"
+    datacenter = "${var.region}"
+}
+
+resource "consul_keys" "app" {
+    # Read the launch AMI from Consul
+    key {
+        name = "ami"
+        path = "nubis/${var.project}/releases/${var.release}.${var.build}/${var.region}"
+    }
 }
 
 # Consul outputs
 resource "consul_keys" "jenkins" {
-    datacenter = "phx1"
+    datacenter = "${var.region}"
    
     # Set the CNAME of our load balancer as a key
     key {
@@ -42,41 +30,11 @@ resource "consul_keys" "jenkins" {
     }
 }
 
-# Consul inputs (example)
-resource "consul_keys" "ssh" {
-    datacenter = "phx1"
-    
-    key {
-         name = "key"
-	 path = "aws/jenkins/key"
-    }
-}
-
 # Configure the AWS Provider
 provider "aws" {
     access_key = "${var.aws_access_key}"
     secret_key = "${var.aws_secret_key}"
-    region = "${var.aws_region}"
-}
-
-resource "aws_route53_zone" "primary" {
-   name = "${var.zone}"
-}
-
-resource "aws_route53_record" "jenkins" {
-   zone_id = "${aws_route53_zone.primary.zone_id}"
-   name = "jenkins.${aws_route53_zone.primary.name}"
-   type = "CNAME"
-   ttl = "300"
-   records = ["${aws_route53_record.release.name}"]
-}
-
-resource "aws_route53_record" "release" {
-   zone_id = "${aws_route53_zone.primary.zone_id}"
-   name = "${var.release}.jenkins.${aws_route53_zone.primary.name}"
-   type = "CNAME"
-   ttl = "300"
-   records = ["${aws_elb.jenkins.dns_name}"]
+    region = "${var.region}"
 }
 
 # Create a new load balancer
@@ -105,13 +63,13 @@ resource "aws_elb" "jenkins" {
 
 # Create a web server
 resource "aws_instance" "jenkins" {
-    ami = "${lookup(var.amis, var.aws_region)}"
+    ami = "${consul_keys.app.var.ami}"
     
     tags {
         Name = "Gozer Jenkins Test"
     }
     
-    key_name = "${consul_keys.ssh.var.key}"
+    key_name = "${var.key_name}"
     
     instance_type = "m3.medium"
     
@@ -119,7 +77,7 @@ resource "aws_instance" "jenkins" {
       "${aws_security_group.jenkins.name}"
     ]
     
-    user_data = "{ consul => 'consul://token@1.2.3.4:8500' }"
+    user_data = "CONSUL_PUBLIC=1\nCONSUL_DC=${var.region}\nCONSUL_SECRET=${var.secret}\nCONSUL_JOIN=${var.consul}"
 }
 
 resource "aws_security_group" "jenkins" {
@@ -139,12 +97,4 @@ resource "aws_security_group" "jenkins" {
       protocol = "tcp"
       cidr_blocks = ["0.0.0.0/0"]
   }
-}
-
-output "url" {
-    value = "http://${aws_route53_record.jenkins.name}/"
-}
-
-output "elb" {
-    value = "http://${aws_elb.jenkins.dns_name}/"
 }
