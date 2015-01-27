@@ -14,7 +14,7 @@
         </hudson.tools.InstallSourceProperty>
       </properties>
       <packerHome></packerHome>
-      <params>-var iam_instance_profile=%%IAM_INSTANCE_PROFILE%%</params>
+      <params>-var iam_instance_profile=%%IAM_INSTANCE_PROFILE%% -var-file=nubis/packer/release.json</params>
       <jsonTemplate>nubis/packer/main.json</jsonTemplate>
       <templateModeJsonObj>
         <nullObject>false</nullObject>

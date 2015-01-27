@@ -73,6 +73,8 @@ resource "aws_instance" "jenkins" {
     
     instance_type = "m3.medium"
     
+    iam_instance_profile = "${var.iam_instance_profile}"
+    
     security_groups = [
       "${aws_security_group.jenkins.name}"
     ]
