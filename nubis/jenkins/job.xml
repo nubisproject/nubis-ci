@@ -33,8 +33,8 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>if [ -f nubis/Makefile ]; then
-    make -C nubis build
+      <command>if [ -f Makefile ]; then
+    make
 fi</command>
     </hudson.tasks.Shell>
   </builders>
@@ -43,7 +43,7 @@ fi</command>
       <name>airmozilla</name>
       <jsonTemplate></jsonTemplate>
       <jsonTemplateText></jsonTemplateText>
-      <params>-var release=${BUILD_NUMBER}</params>
+      <params>-var build=${BUILD_NUMBER}</params>
       <useDebug>false</useDebug>
       <templateMode>global</templateMode>
     </biz.neustar.jenkins.plugins.packer.PackerPublisher>

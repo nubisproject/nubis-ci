@@ -9,12 +9,12 @@ class { 'jenkins':
 # }
 
 #XXX: Needs to be project-aware
-consul::service { 'jenkins':
-  tags           => ['nubis-ci'],
-  port           => 8080,
-  check_script   => '/usr/bin/wget -q -O- http://localhost:8080/cc.xml',
-  check_interval => '10s',
-}
+#consul::service { 'jenkins':
+#  tags           => ['nubis-ci'],
+#  port           => 8080,
+#  check_script   => '/usr/bin/wget -q -O- http://localhost:8080/cc.xml',
+#  check_interval => '10s',
+#}
 
 jenkins::plugin { "packer" :
     version => "1.0"
@@ -30,6 +30,19 @@ jenkins::plugin { "git-client" :
 
 jenkins::plugin { "scm-api" :
     version => "0.2"
+}
+
+# This is for librarian-puppet, below, and somewhat ugly
+package { "ruby-dev":
+  ensure => "1:1.9.3.4",
+}
+
+package { "librarian-puppet":
+  ensure => "2.0.1",
+  provider => "gem",
+  require => [
+    Package["ruby-dev"],
+  ],
 }
 
 # These are Ubuntu specific versions, needs fixing, but not with/without latest ?
