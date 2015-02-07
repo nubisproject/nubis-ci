@@ -22,7 +22,7 @@
       <hudson.plugins.git.extensions.impl.SubmoduleOption>
         <disableSubmodules>false</disableSubmodules>
         <recursiveSubmodules>true</recursiveSubmodules>
-        <trackingSubmodules>true</trackingSubmodules>
+        <trackingSubmodules>false</trackingSubmodules>
       </hudson.plugins.git.extensions.impl.SubmoduleOption>
     </extensions>
   </scm>
@@ -38,11 +38,6 @@
   </triggers>
   <concurrentBuild>false</concurrentBuild>
   <builders>
-    <hudson.tasks.Shell>
-      <command>if [ -f Makefile ]; then
-    make
-fi</command>
-    </hudson.tasks.Shell>
     <hudson.tasks.Shell>
       <command>if [ -f Makefile ]; then
     make deploy

@@ -22,7 +22,7 @@
       <hudson.plugins.git.extensions.impl.SubmoduleOption>
         <disableSubmodules>false</disableSubmodules>
         <recursiveSubmodules>true</recursiveSubmodules>
-        <trackingSubmodules>true</trackingSubmodules>
+        <trackingSubmodules>false</trackingSubmodules>
       </hudson.plugins.git.extensions.impl.SubmoduleOption>
     </extensions>
   </scm>
