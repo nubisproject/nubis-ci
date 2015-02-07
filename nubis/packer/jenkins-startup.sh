@@ -14,17 +14,23 @@ eval `ec2metadata --user-data`
 
 # Create the job directories
 mkdir -p /var/lib/jenkins/jobs/$NUBIS_CI_NAME-integration
+mkdir -p /var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment
 
 # Drop project configuration for jenkins
 cp /etc/nubis.d/jenkins-integration-config.xml /var/lib/jenkins/jobs/$NUBIS_CI_NAME-integration/config.xml
 perl -pi -e "s[%%NUBIS_GIT_REPO%%][$NUBIS_GIT_REPO]g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-integration/config.xml
 perl -pi -e "s[%%NUBIS_CI_NAME%%][$NUBIS_CI_NAME]g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-integration/config.xml
 
-# XXX: We still need to create the deployment job
-mkdir -p /var/lib/jenkins/jobs/$NUBIS_CI_NAME-deploy
+cp /etc/nubis.d/jenkins-deployment-config.xml /var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml
+perl -pi -e "s[%%NUBIS_GIT_REPO%%][$NUBIS_GIT_REPO]g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml
+perl -pi -e "s[%%NUBIS_CI_NAME%%][$NUBIS_CI_NAME]g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml
 
 # Make sure jenkins owns this stuff
 chown -R jenkins:jenkins /var/lib/jenkins/jobs
+
+#XXX: Hack, but grab terraform quickly
+wget -O /tmp/tf.zip https://dl.bintray.com/mitchellh/terraform/terraform_0.3.6_linux_amd64.zip
+cd /usr/local/bin && unzip /tmp/tf.zip
 
 # Finally, start jenkins for good
 service jenkins start
