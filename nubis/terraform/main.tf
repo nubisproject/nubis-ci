@@ -14,6 +14,8 @@ resource "consul_keys" "app" {
 
 # Consul outputs
 resource "consul_keys" "jenkins" {
+    datacenter = "${var.region}"
+
     # Set the CNAME of our load balancer as a key
     key {
         name = "elb_cname"
