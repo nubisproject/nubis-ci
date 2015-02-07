@@ -18,7 +18,13 @@
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
-    <extensions/>
+    <extensions>
+      <hudson.plugins.git.extensions.impl.SubmoduleOption>
+        <disableSubmodules>false</disableSubmodules>
+        <recursiveSubmodules>true</recursiveSubmodules>
+        <trackingSubmodules>true</trackingSubmodules>
+      </hudson.plugins.git.extensions.impl.SubmoduleOption>
+    </extensions>
   </scm>
   <canRoam>true</canRoam>
   <disabled>false</disabled>
