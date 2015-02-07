@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Nubis - CI</description>
+  <description>%%NUBIS_CI_NAME%%</description>
   <keepDependencies>false</keepDependencies>
   <properties/>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@2.3.4">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <url>https://github.com/mozilla/nubis-ci.git</url>
+        <url>%%NUBIS_GIT_REPO%%</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
@@ -35,6 +35,11 @@
     <hudson.tasks.Shell>
       <command>if [ -f Makefile ]; then
     make
+fi</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>if [ -f Makefile ]; then
+    make packer
 fi</command>
     </hudson.tasks.Shell>
   </builders>

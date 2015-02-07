@@ -14,23 +14,34 @@ variable "secret" {
 }
 
 variable "region" {
-  default = "us-east-1"
-  description = "The region of AWS, for AMI lookups."
+  default = "us-west-2"
+  description = "The region of AWS, for AMI lookups and where to launch"
 }
 
 variable "release" {
-  default = "0"
   description = "Release number of the architecture"
 }
 
 variable "build" {
-  default = "10"
   description = "Build number of the architecture"
 }
 
+variable "ci_release" {
+  description = "Release number of the CI"
+}
+
+variable "ci_build" {
+  description = "Build number of the CI"
+}
+
+variable "git_repo" {
+  description = "URL to git repo to build"
+  default = "https://github.com/mozilla/nubis-ci.git"
+}
+
 variable "project" {
-  default = "ci"
-  description = "Name of the project"
+  description = "Name of the Nubis project"
+  default = "CI"
 }
 
 variable "key_name" {

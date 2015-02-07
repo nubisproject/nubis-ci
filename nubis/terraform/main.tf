@@ -8,24 +8,22 @@ resource "consul_keys" "app" {
     # Read the launch AMI from Consul
     key {
         name = "ami"
-        path = "nubis/${var.project}/releases/${var.release}.${var.build}/${var.region}"
+        path = "nubis/ci/releases/${var.ci_release}.${var.ci_build}/${var.region}"
     }
 }
 
 # Consul outputs
 resource "consul_keys" "jenkins" {
-    datacenter = "${var.region}"
-   
     # Set the CNAME of our load balancer as a key
     key {
         name = "elb_cname"
-        path = "aws/jenkins/url"
+        path = "aws/jenkins/${var.project}/url"
         value = "http://${aws_elb.jenkins.dns_name}/"
     }
     
     key {
     	name = "instance-id"
-	path = "aws/jenkins/instance-id"
+	path = "aws/jenkins/${var.project}/instance-id"
 	value = "${aws_instance.jenkins.id}"
     }
 }
@@ -39,8 +37,8 @@ provider "aws" {
 
 # Create a new load balancer
 resource "aws_elb" "jenkins" {
-  name = "jenkins-elb"
-  availability_zones = ["us-east-1b", "us-east-1c", "us-east-1d", "us-east-1e" ]
+  name = "jenkins-elb-${var.project}-${var.ci_release}-${var.ci_build}"
+  availability_zones = ["us-west-2a", "us-west-2b", "us-west-2c" ]
 
   listener {
     instance_port = 8080
@@ -66,7 +64,7 @@ resource "aws_instance" "jenkins" {
     ami = "${consul_keys.app.var.ami}"
     
     tags {
-        Name = "Gozer Jenkins Test"
+        Name = "Nubis Jenkins ${var.project} (${var.ci_release}.${var.ci_build})"
     }
     
     key_name = "${var.key_name}"
@@ -79,11 +77,11 @@ resource "aws_instance" "jenkins" {
       "${aws_security_group.jenkins.name}"
     ]
     
-    user_data = "CONSUL_PUBLIC=1\nCONSUL_DC=${var.region}\nCONSUL_SECRET=${var.secret}\nCONSUL_JOIN=${var.consul}"
+    user_data = "CONSUL_PUBLIC=1\nCONSUL_DC=${var.region}\nCONSUL_SECRET=${var.secret}\nCONSUL_JOIN=${var.consul}\nNUBIS_CI_NAME=${var.project}\nNUBIS_GIT_REPO=${var.git_repo}"
 }
 
 resource "aws_security_group" "jenkins" {
-  name = "jenkins"
+  name = "jenkins-${var.project}.${var.ci_release}.${var.ci_build}"
   description = "Allow inbound traffic for Jenkins"
 
   ingress {
@@ -98,5 +96,21 @@ resource "aws_security_group" "jenkins" {
       to_port = 22
       protocol = "tcp"
       cidr_blocks = ["0.0.0.0/0"]
+  }
+  
+  // This is for the consul gossip traffic
+  ingress {
+    from_port = 8300
+    to_port = 8303
+    protocol = "udp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  // This is for the consul gossip traffic
+  ingress {
+    from_port = 8300
+    to_port = 8303
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }
