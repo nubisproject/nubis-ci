@@ -43,11 +43,6 @@
     make
 fi</command>
     </hudson.tasks.Shell>
-    <hudson.tasks.Shell>
-      <command>if [ -f Makefile ]; then
-    make packer
-fi</command>
-    </hudson.tasks.Shell>
   </builders>
   <publishers>
     <biz.neustar.jenkins.plugins.packer.PackerPublisher plugin="packer@1.0">
