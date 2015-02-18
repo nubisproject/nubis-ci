@@ -28,10 +28,12 @@ variable "build" {
 
 variable "ci_release" {
   description = "Release number of the CI"
+  default = "0"
 }
 
 variable "ci_build" {
   description = "Build number of the CI"
+  default = "14"
 }
 
 variable "git_repo" {
