@@ -3,7 +3,7 @@
     "iam_instance_profile": "",
     "aws_access_key": "",
     "aws_secret_key": "",
-    "base_ami": "ami-1f461c2f",
+    "base_ami": "ami-51290e61",
     "owner": "{{env `USER`}}",
     "release": null,
     "build": null
@@ -29,6 +29,12 @@
   }
   ],
   "provisioners": [
+  {
+    "type": "shell",
+      "inline" : [
+        "sudo apt-get update"
+       ]
+  },
   {
     "type": "puppet-masterless",
     "manifest_dir": "nubis/puppet",
