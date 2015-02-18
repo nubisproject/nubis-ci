@@ -8,7 +8,7 @@
         <hudson.tools.InstallSourceProperty>
           <installers>
             <biz.neustar.jenkins.plugins.packer.PackerInstaller>
-              <id>0.7.1-linux-amd64</id>
+              <id>0.7.5-linux-amd64</id>
             </biz.neustar.jenkins.plugins.packer.PackerInstaller>
           </installers>
         </hudson.tools.InstallSourceProperty>

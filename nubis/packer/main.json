@@ -29,7 +29,7 @@
   }
   ],
   "provisioners": [
-  {
+   {
     "type": "shell",
       "inline" : [
         "sudo apt-get update"
@@ -39,31 +39,41 @@
     "type": "puppet-masterless",
     "manifest_dir": "nubis/puppet",
     "manifest_file": "nubis/puppet/init.pp",
-    "module_paths": ["nubis/nubis-puppet"],
+    "execute_command": "{{.FacterVars}} {{if .Sudo}} sudo -E {{end}} puppet apply --verbose --modulepath='/etc/nubis-puppet/' {{if ne .HieraConfigPath \"\"}}--hiera_config='{{.HieraConfigPath}}' {{end}} {{if ne .ManifestDir \"\"}}--manifestdir='{{.ManifestDir}}' {{end}} --detailed-exitcodes {{.ManifestFile}}",
     "facter": {
-          "ami_release": "{{user `release`}}"
+        "ami_release": "{{user `release`}}",
+        "ami_build": "{{user `build`}}"
     }
   },
   {
     "type": "file",
-    "source": "nubis/jenkins/job.xml",
-    "destination": "/tmp/nubis-ci.xml"
+    "source": "nubis/jenkins/deployment.xml",
+    "destination": "/tmp/jenkins-deployment-config.xml"
+  },
+  {
+    "type": "file",
+    "source": "nubis/jenkins/integration.xml",
+    "destination": "/tmp/jenkins-integration-config.xml"
   },
   {
     "type": "file",
     "source": "nubis/jenkins/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml",
     "destination": "/tmp/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml"
-  },  
+  },
+  {
+    "type": "file",
+    "source": "nubis/packer/jenkins-startup.sh",
+    "destination": "/tmp/jenkins-startup.sh"
+  },   
   {
     "type": "shell",
       "inline": [
-        "sudo mkdir -p /var/lib/jenkins/jobs/nubis-ci",
-	"sudo mv /tmp/nubis-ci.xml /var/lib/jenkins/jobs/nubis-ci/config.xml",
-        "echo $(( {{user `release`}} + 1 )) | sudo tee /var/lib/jenkins/jobs/nubis-ci/nextBuildNumber",
+	"sudo mv /tmp/jenkins-startup.sh /etc/nubis.d/jenkins",
+	"sudo chmod 755 /etc/nubis.d/jenkins",
+	"sudo mv /tmp/jenkins-*.xml /etc/nubis.d/",
         "sudo mv /tmp/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml /var/lib/jenkins/",
 	"sudo perl -pi -e's[%%IAM_INSTANCE_PROFILE%%][{{user `iam_instance_profile`}}]' /var/lib/jenkins/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml",
-	"sudo chown -R jenkins:jenkins /var/lib/jenkins/jobs/nubis-ci /var/lib/jenkins/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml"
-	
+	"sudo chown -R jenkins:jenkins /var/lib/jenkins/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml"
       ]
   }
   ]
