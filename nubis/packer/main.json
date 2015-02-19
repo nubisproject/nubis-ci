@@ -3,7 +3,7 @@
     "iam_instance_profile": "",
     "aws_access_key": "",
     "aws_secret_key": "",
-    "base_ami": "ami-51290e61",
+    "base_ami": "ami-dd4660ed",
     "owner": "{{env `USER`}}",
     "release": null,
     "build": null
@@ -54,6 +54,11 @@
     "type": "file",
     "source": "nubis/jenkins/integration.xml",
     "destination": "/tmp/jenkins-integration-config.xml"
+  },
+  {
+    "type": "file",
+    "source": "nubis/jenkins/config.xml",
+    "destination": "/tmp/jenkins-config.xml"
   },
   {
     "type": "file",
