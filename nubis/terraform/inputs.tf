@@ -33,7 +33,11 @@ variable "ci_release" {
 
 variable "ci_build" {
   description = "Build number of the CI"
-  default = "14"
+  default = "16"
+}
+
+variable "ci_password" {
+  description = "Password to access CI"
 }
 
 variable "git_repo" {
@@ -43,7 +47,7 @@ variable "git_repo" {
 
 variable "project" {
   description = "Name of the Nubis project"
-  default = "CI"
+  default = "ci"
 }
 
 variable "key_name" {

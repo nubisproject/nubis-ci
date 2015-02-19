@@ -79,7 +79,7 @@ resource "aws_instance" "jenkins" {
       "${aws_security_group.jenkins.name}"
     ]
     
-    user_data = "CONSUL_PUBLIC=1\nCONSUL_DC=${var.region}\nCONSUL_SECRET=${var.secret}\nCONSUL_JOIN=${var.consul}\nNUBIS_CI_NAME=${var.project}\nNUBIS_GIT_REPO=${var.git_repo}"
+    user_data = "CONSUL_PUBLIC=1\nCONSUL_DC=${var.region}\nCONSUL_SECRET=${var.secret}\nCONSUL_JOIN=${var.consul}\nNUBIS_CI_NAME=${var.project}\nNUBIS_GIT_REPO=${var.git_repo}\nNUBIS_CI_PASSWORD=${var.ci_password}"
 }
 
 resource "aws_security_group" "jenkins" {
