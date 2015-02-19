@@ -45,14 +45,6 @@ fi</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <biz.neustar.jenkins.plugins.packer.PackerPublisher plugin="packer@1.0">
-      <name>airmozilla</name>
-      <jsonTemplate></jsonTemplate>
-      <jsonTemplateText></jsonTemplateText>
-      <params>-var build=${BUILD_NUMBER}</params>
-      <useDebug>false</useDebug>
-      <templateMode>global</templateMode>
-    </biz.neustar.jenkins.plugins.packer.PackerPublisher>
     <hudson.tasks.Mailer plugin="mailer@1.11">
       <recipients>gozer@mozilla.com</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
