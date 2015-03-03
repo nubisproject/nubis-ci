@@ -1,10 +1,23 @@
-Mozilla Nubis CI
-====================
+# nubis-ci
 
-To build the image, first, you need to run the pre-build steps:
+## Quick start
+0. `git clone git@github.com:nubisproject/nubis-base.git`
+0. `git clone git@github.com:nubisproject/nubis-builder.git`
+0. Refer to README.md in nubis-builder on how to build this project.
 
-$> make -C nubis build
+## File structure
 
-Then, you can just run packer
+##### `nubis`
+All files related to the nubis ci project
 
-$> packer build -var release=$USER-123 nubis/packer/main.json
+##### `nubis/bin`
+Scripts related to configuring nubis-ci AMIs creation
+
+##### `nubis/nubis-puppet`
+This is the puppet tree that's populated with librarian-puppet, it's in .gitignore and gets reset on every build.
+
+##### `nubis/builder`
+JSON files that describe the project, configure settings, configure provisioners, etc.
+
+##### `nubis/terraform`
+Terraform deployment templates.
