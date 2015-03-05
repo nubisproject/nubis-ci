@@ -1,0 +1,11 @@
+aws_access_key = ""
+aws_secret_key = ""
+iam_instance_profile = "packer"
+consul_secret = ""
+consul = ""
+key_name = "gozer"
+ci_password = "admin"
+build = 21
+release = 0
+ci_build = 21
+ci_release = 0

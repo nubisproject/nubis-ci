@@ -1,0 +1,51 @@
+{
+  "provisioners": [
+   {
+    "type": "shell",
+    "inline" : ["sudo apt-get update"],
+    "order": 20
+  },
+  {
+    "type": "file",
+    "source": "nubis/jenkins/deployment.xml",
+    "destination": "/tmp/jenkins-deployment-config.xml",
+    "order": 21
+  },
+  {
+    "type": "file",
+    "source": "nubis/jenkins/integration.xml",
+    "destination": "/tmp/jenkins-integration-config.xml",
+    "order": 22
+  },
+  {
+    "type": "file",
+    "source": "nubis/jenkins/config.xml",
+    "destination": "/tmp/jenkins-config.xml",
+    "order": 23
+  },
+  {
+    "type": "file",
+    "source": "nubis/jenkins/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml",
+    "destination": "/tmp/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml",
+    "order": 24
+  },
+  {
+    "type": "file",
+    "source": "nubis/bin/jenkins-startup.sh",
+    "destination": "/tmp/jenkins-startup.sh",
+    "order": 25
+  },   
+  {
+    "type": "shell",
+      "inline": [
+	"sudo mv /tmp/jenkins-startup.sh /etc/nubis.d/jenkins",
+	"sudo chmod 755 /etc/nubis.d/jenkins",
+	"sudo mv /tmp/jenkins-*.xml /etc/nubis.d/",
+        "sudo mv /tmp/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml /var/lib/jenkins/",
+	"sudo perl -pi -e's[%%IAM_INSTANCE_PROFILE%%][{{user `iam_instance_profile`}}]' /var/lib/jenkins/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml",
+	"sudo chown -R jenkins:jenkins /var/lib/jenkins/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml"
+      ],
+    "order": 26
+  }
+  ]
+}
