@@ -1,35 +1,3 @@
-# Configure the Consul provider
-provider "consul" {
-    address = "${var.consul}:8500"
-    datacenter = "${var.region}"
-}
-
-resource "consul_keys" "app" {
-    # Read the launch AMI from Consul
-    key {
-        name = "ami"
-        path = "nubis/ci/releases/${var.ci_release}.${var.ci_build}/${var.region}"
-    }
-}
-
-# Consul outputs
-resource "consul_keys" "jenkins" {
-    datacenter = "${var.region}"
-
-    # Set the CNAME of our load balancer as a key
-    key {
-        name = "elb_cname"
-        path = "aws/jenkins/${var.project}/url"
-        value = "http://${aws_elb.jenkins.dns_name}/"
-    }
-    
-    key {
-    	name = "instance-id"
-	path = "aws/jenkins/${var.project}/instance-id"
-	value = "${aws_instance.jenkins.id}"
-    }
-}
-
 # Configure the AWS Provider
 provider "aws" {
     access_key = "${var.aws_access_key}"
@@ -40,7 +8,7 @@ provider "aws" {
 # Create a new load balancer
 resource "aws_elb" "jenkins" {
   name = "jenkins-elb-${var.project}-${var.ci_release}-${var.ci_build}"
-  availability_zones = ["us-west-2a", "us-west-2b", "us-west-2c" ]
+  availability_zones = ["us-east-1b", "us-east-1c", "us-east-1d" ]
 
   listener {
     instance_port = 8080
@@ -63,7 +31,7 @@ resource "aws_elb" "jenkins" {
 
 # Create a web server
 resource "aws_instance" "jenkins" {
-    ami = "${consul_keys.app.var.ami}"
+    ami = "ami-50c09b38"
     
     tags {
         Name = "Nubis Jenkins ${var.project} (${var.ci_release}.${var.ci_build})"
@@ -79,7 +47,7 @@ resource "aws_instance" "jenkins" {
       "${aws_security_group.jenkins.name}"
     ]
     
-    user_data = "CONSUL_PUBLIC=1\nCONSUL_DC=${var.region}\nCONSUL_SECRET=${var.secret}\nCONSUL_JOIN=${var.consul}\nNUBIS_CI_NAME=${var.project}\nNUBIS_GIT_REPO=${var.git_repo}\nNUBIS_CI_PASSWORD=${var.ci_password}"
+    user_data = "CONSUL_PUBLIC=1\nCONSUL_DC=${var.region}\nCONSUL_SECRET=${var.consul_secret}\nCONSUL_JOIN=${var.consul}\nNUBIS_CI_NAME=${var.project}\nNUBIS_GIT_REPO=${var.git_repo}\nNUBIS_CI_PASSWORD=${var.ci_password}"
 }
 
 resource "aws_security_group" "jenkins" {

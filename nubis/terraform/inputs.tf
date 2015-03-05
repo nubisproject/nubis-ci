@@ -9,12 +9,12 @@ variable "consul" {
   default = "127.0.0.1"
 }
 
-variable "secret" {
+variable "consul_secret" {
   description = "Security shared secret for consul membership (consul keygen)"
 }
 
 variable "region" {
-  default = "us-west-2"
+  default = "us-east-1"
   description = "The region of AWS, for AMI lookups and where to launch"
 }
 
@@ -28,12 +28,10 @@ variable "build" {
 
 variable "ci_release" {
   description = "Release number of the CI"
-  default = "0"
 }
 
 variable "ci_build" {
   description = "Build number of the CI"
-  default = "16"
 }
 
 variable "ci_password" {
