@@ -1,3 +1,0 @@
-[submodule "nubis/builder"]
-	path = nubis/builder
-	url = https://github.com/Nubisproject/nubis-builder.git
