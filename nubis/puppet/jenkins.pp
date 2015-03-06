@@ -1,5 +1,5 @@
 class { 'jenkins':
-  version => "1.599"
+  version => "1.601"
 }
 
 # Will eventually need to pull this from the registry

@@ -31,11 +31,6 @@ perl -pi -e "s[%%NUBIS_CI_NAME%%][$NUBIS_CI_NAME]g" /var/lib/jenkins/jobs/$NUBIS
 # Make sure jenkins owns this stuff
 chown -R jenkins:jenkins /var/lib/jenkins
 
-#XXX: Hack, but grab terraform quickly
-wget -O /tmp/tf.zip https://dl.bintray.com/mitchellh/terraform/terraform_0.3.6_linux_amd64.zip
-cd /usr/local/bin && unzip /tmp/tf.zip
-
-
 if [ -f /etc/default/jenkins ]; then
   if [ "$NUBIS_CI_PASSWORD" ]; then
     JENKINS_ARGS="--argumentsRealm.passwd.admin=$NUBIS_CI_PASSWORD  --argumentsRealm.roles.admin=admin"
