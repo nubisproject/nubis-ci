@@ -16,8 +16,9 @@ eval `ec2metadata --user-data`
 mkdir -p /var/lib/jenkins/jobs/$NUBIS_CI_NAME-integration
 mkdir -p /var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment
 
-# Drop main configuration
+# Drop main configurations
 cp /etc/nubis.d/jenkins-config.xml /var/lib/jenkins/config.xml
+cp /etc/nubis.d/jenkins-location.xml /var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration.xml
 
 # Drop project configuration for jenkins
 cp /etc/nubis.d/jenkins-integration-config.xml /var/lib/jenkins/jobs/$NUBIS_CI_NAME-integration/config.xml

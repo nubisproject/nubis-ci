@@ -25,6 +25,12 @@
   },
   {
     "type": "file",
+    "source": "nubis/jenkins/jenkins.model.JenkinsLocationConfiguration.xml",
+    "destination": "/tmp/jenkins-location.xml",
+    "order": 24
+  },
+  {
+    "type": "file",
     "source": "nubis/bin/jenkins-startup.sh",
     "destination": "/tmp/jenkins-startup.sh",
     "order": 25
