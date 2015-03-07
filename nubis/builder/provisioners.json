@@ -25,12 +25,6 @@
   },
   {
     "type": "file",
-    "source": "nubis/jenkins/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml",
-    "destination": "/tmp/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml",
-    "order": 24
-  },
-  {
-    "type": "file",
     "source": "nubis/bin/jenkins-startup.sh",
     "destination": "/tmp/jenkins-startup.sh",
     "order": 25
@@ -41,9 +35,6 @@
 	"sudo mv /tmp/jenkins-startup.sh /etc/nubis.d/jenkins",
 	"sudo chmod 755 /etc/nubis.d/jenkins",
 	"sudo mv /tmp/jenkins-*.xml /etc/nubis.d/",
-        "sudo mv /tmp/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml /var/lib/jenkins/",
-	"sudo perl -pi -e's[%%IAM_INSTANCE_PROFILE%%][{{user `iam_instance_profile`}}]' /var/lib/jenkins/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml",
-	"sudo chown -R jenkins:jenkins /var/lib/jenkins/biz.neustar.jenkins.plugins.packer.PackerPublisher.xml"
       ],
     "order": 26
   }

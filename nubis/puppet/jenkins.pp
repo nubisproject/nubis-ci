@@ -16,10 +16,6 @@ class { 'jenkins':
 #  check_interval => '10s',
 #}
 
-jenkins::plugin { "packer" :
-    version => "1.0"
-}
-
 jenkins::plugin { "git" :
     version => "2.3.4"
 }
