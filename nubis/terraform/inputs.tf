@@ -4,6 +4,11 @@ variable "iam_instance_profile" {}
 
 variable "release" {}
 
+variable "environment" {
+  description = "Name of the environment this deployment is for"
+  default = "sandbox"
+}
+
 variable "consul" {
   description = "URL to Consul"
   default = "127.0.0.1"
@@ -11,6 +16,14 @@ variable "consul" {
 
 variable "consul_secret" {
   description = "Security shared secret for consul membership (consul keygen)"
+}
+
+variable "consul_ssl_cert" {
+  description = "SSL Certificate file"
+}
+
+variable "consul_ssl_key" {
+  description = "SSL Key file"
 }
 
 variable "region" {
@@ -26,15 +39,7 @@ variable "build" {
   description = "Build number of the architecture"
 }
 
-variable "ci_release" {
-  description = "Release number of the CI"
-}
-
-variable "ci_build" {
-  description = "Build number of the CI"
-}
-
-variable "ci_password" {
+variable "admin_password" {
   description = "Password to access CI"
 }
 
