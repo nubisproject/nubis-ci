@@ -1,3 +1,14 @@
+include nubis_discovery
+
+# XXX: This will need some post-bootup magic to include a project-specific tag, known only at bootup
+# XXX: Environment too ?
+nubis::discovery::service { 'jenkins':
+  tags => [ 'jenkins' ],
+  port => "8080",
+  check => "/usr/bin/curl -I http://localhost:8080/cc.xml",
+  interval => "30s",
+}
+
 class { 'jenkins':
   version => "1.601"
 }
