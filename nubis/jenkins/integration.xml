@@ -13,7 +13,7 @@
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>*/master</name>
+        <name>**</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -39,20 +39,21 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>if [ -f Makefile ]; then
-    make
-fi</command>
+      <command>nubis-builder build --packer-option &quot;-machine-readable&quot; 2&gt;&amp;1 | tee build.log</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>cat build.log | grep &apos;,artifact,&apos; | grep &apos;,id,&apos; | cut -d, -f6 | sed -e&apos;s/%!(PACKER_COMMA)/\n/&apos; &gt; amis.txt
+rm build.log</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <biz.neustar.jenkins.plugins.packer.PackerPublisher plugin="packer@1.0">
-      <name>airmozilla</name>
-      <jsonTemplate></jsonTemplate>
-      <jsonTemplateText></jsonTemplateText>
-      <params>-var build=${BUILD_NUMBER}</params>
-      <useDebug>false</useDebug>
-      <templateMode>global</templateMode>
-    </biz.neustar.jenkins.plugins.packer.PackerPublisher>
+    <hudson.tasks.ArtifactArchiver>
+      <artifacts>amis.txt</artifacts>
+      <allowEmptyArchive>false</allowEmptyArchive>
+      <onlyIfSuccessful>false</onlyIfSuccessful>
+      <fingerprint>false</fingerprint>
+      <defaultExcludes>true</defaultExcludes>
+    </hudson.tasks.ArtifactArchiver>
     <hudson.tasks.Mailer plugin="mailer@1.11">
       <recipients>gozer@mozilla.com</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>

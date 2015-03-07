@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jenkins.model.JenkinsLocationConfiguration>
+  <adminAddress>Mozilla AWS Infrastructure &lt;infra-aws@mozilla.com&gt;</adminAddress>
+</jenkins.model.JenkinsLocationConfiguration>

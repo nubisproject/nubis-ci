@@ -7,8 +7,8 @@ provider "aws" {
 
 # Create a new load balancer
 resource "aws_elb" "jenkins" {
-  name = "jenkins-elb-${var.project}-${var.ci_release}-${var.ci_build}"
-  availability_zones = ["us-east-1b", "us-east-1c", "us-east-1d" ]
+  name = "jenkins-elb-${var.project}-${var.release}-${var.build}"
+  availability_zones = ["us-east-1b", "us-east-1c", "us-east-1d","us-east-1e" ]
 
   listener {
     instance_port = 8080
@@ -31,10 +31,10 @@ resource "aws_elb" "jenkins" {
 
 # Create a web server
 resource "aws_instance" "jenkins" {
-    ami = "ami-50c09b38"
-    
+    ami = "ami-a68cd6ce"
+
     tags {
-        Name = "Nubis Jenkins ${var.project} (${var.ci_release}.${var.ci_build})"
+        Name = "Nubis Jenkins ${var.project} (${var.release}.${var.build})"
     }
     
     key_name = "${var.key_name}"
@@ -47,11 +47,11 @@ resource "aws_instance" "jenkins" {
       "${aws_security_group.jenkins.name}"
     ]
     
-    user_data = "CONSUL_PUBLIC=1\nCONSUL_DC=${var.region}\nCONSUL_SECRET=${var.consul_secret}\nCONSUL_JOIN=${var.consul}\nNUBIS_CI_NAME=${var.project}\nNUBIS_GIT_REPO=${var.git_repo}\nNUBIS_CI_PASSWORD=${var.ci_password}"
+    user_data = "NUBIS_PROJECT=${var.project}\nNUBIS_ENVIRONMENT=${var.environment}\nCONSUL_PUBLIC=1\nCONSUL_DC=${var.region}\nCONSUL_SECRET=${var.consul_secret}\nCONSUL_JOIN=${var.consul}\nCONSUL_KEY=\"${file("${var.consul_ssl_key}")}\"\nCONSUL_CERT=\"${file("${var.consul_ssl_cert}")}\"\nNUBIS_CI_NAME=${var.project}\nNUBIS_GIT_REPO=${var.git_repo}\nNUBIS_admin_password=${var.admin_password}"
 }
 
 resource "aws_security_group" "jenkins" {
-  name = "jenkins-${var.project}.${var.ci_release}.${var.ci_build}"
+  name = "jenkins-${var.project}.${var.release}.${var.build}"
   description = "Allow inbound traffic for Jenkins"
 
   ingress {

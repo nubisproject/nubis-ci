@@ -16,8 +16,9 @@ eval `ec2metadata --user-data`
 mkdir -p /var/lib/jenkins/jobs/$NUBIS_CI_NAME-integration
 mkdir -p /var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment
 
-# Drop main configuration
+# Drop main configurations
 cp /etc/nubis.d/jenkins-config.xml /var/lib/jenkins/config.xml
+cp /etc/nubis.d/jenkins-location.xml /var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration.xml
 
 # Drop project configuration for jenkins
 cp /etc/nubis.d/jenkins-integration-config.xml /var/lib/jenkins/jobs/$NUBIS_CI_NAME-integration/config.xml
@@ -30,11 +31,6 @@ perl -pi -e "s[%%NUBIS_CI_NAME%%][$NUBIS_CI_NAME]g" /var/lib/jenkins/jobs/$NUBIS
 
 # Make sure jenkins owns this stuff
 chown -R jenkins:jenkins /var/lib/jenkins
-
-#XXX: Hack, but grab terraform quickly
-wget -O /tmp/tf.zip https://dl.bintray.com/mitchellh/terraform/terraform_0.3.6_linux_amd64.zip
-cd /usr/local/bin && unzip /tmp/tf.zip
-
 
 if [ -f /etc/default/jenkins ]; then
   if [ "$NUBIS_CI_PASSWORD" ]; then
