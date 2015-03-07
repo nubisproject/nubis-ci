@@ -8,7 +8,7 @@ provider "aws" {
 # Create a new load balancer
 resource "aws_elb" "jenkins" {
   name = "jenkins-elb-${var.project}-${var.ci_release}-${var.ci_build}"
-  availability_zones = ["us-east-1b", "us-east-1c", "us-east-1d" ]
+  availability_zones = ["us-east-1b", "us-east-1c", "us-east-1d","us-east-1e" ]
 
   listener {
     instance_port = 8080
@@ -31,8 +31,8 @@ resource "aws_elb" "jenkins" {
 
 # Create a web server
 resource "aws_instance" "jenkins" {
-    ami = "ami-50c09b38"
-    
+    ami = "ami-a68cd6ce"
+
     tags {
         Name = "Nubis Jenkins ${var.project} (${var.ci_release}.${var.ci_build})"
     }
