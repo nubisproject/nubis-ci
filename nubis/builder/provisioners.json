@@ -34,7 +34,7 @@
       "inline": [
 	"sudo mv /tmp/jenkins-startup.sh /etc/nubis.d/jenkins",
 	"sudo chmod 755 /etc/nubis.d/jenkins",
-	"sudo mv /tmp/jenkins-*.xml /etc/nubis.d/",
+	"sudo mv /tmp/jenkins-*.xml /etc/nubis.d/"
       ],
     "order": 26
   }
