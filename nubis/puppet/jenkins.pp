@@ -31,6 +31,10 @@ jenkins::plugin { "git" :
     version => "2.3.4"
 }
 
+jenkins::plugin { "parameterized-trigger":
+    version => "2.26",
+}
+
 jenkins::plugin { "git-client" :
     version => "1.15.0"
 }
