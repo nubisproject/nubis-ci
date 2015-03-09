@@ -10,7 +10,7 @@ nubis::discovery::service { 'jenkins':
 }
 
 class { 'jenkins':
-  version => "1.601"
+  version => "latest"
 }
 
 # Will eventually need to pull this from the registry
@@ -32,7 +32,11 @@ jenkins::plugin { "git" :
 }
 
 jenkins::plugin { "parameterized-trigger":
-    version => "2.26",
+    version => "2.26"
+}
+
+jenkins::plugin { "s3"
+    version => "0.7"
 }
 
 jenkins::plugin { "git-client" :
