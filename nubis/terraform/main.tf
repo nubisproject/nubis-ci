@@ -31,7 +31,7 @@ resource "aws_elb" "jenkins" {
 
 # Create a web server
 resource "aws_instance" "jenkins" {
-    ami = "ami-2cc19b44"
+    ami = "${var.ami}"
 
     tags {
         Name = "Nubis Jenkins ${var.project} (${var.release}.${var.build})"

@@ -26,6 +26,11 @@ variable "consul_ssl_key" {
   description = "SSL Key file"
 }
 
+variable "ami" {
+  default = "ami-2cc19b44"
+  description = "Nubis CI AMI to launch"
+}
+
 variable "region" {
   default = "us-east-1"
   description = "The region of AWS, for AMI lookups and where to launch"
