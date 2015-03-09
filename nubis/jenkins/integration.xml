@@ -54,6 +54,23 @@
       <fingerprint>false</fingerprint>
       <defaultExcludes>true</defaultExcludes>
     </hudson.tasks.ArtifactArchiver>
+    <hudson.plugins.s3.S3BucketPublisher plugin="s3@0.7">
+      <profileName>%%NUBIS_CI_BUCKET_PROFILE%%</profileName>
+      <entries>
+        <hudson.plugins.s3.Entry>
+          <bucket>%%NUBIS_CI_BUCKET%%</bucket>
+          <sourceFile>amis.txt</sourceFile>
+          <storageClass>STANDARD</storageClass>
+          <selectedRegion>%%NUBIS_CI_BUCKET_REGION%%</selectedRegion>
+          <noUploadOnFailure>true</noUploadOnFailure>
+          <uploadFromSlave>false</uploadFromSlave>
+          <managedArtifacts>true</managedArtifacts>
+          <useServerSideEncryption>false</useServerSideEncryption>
+          <flatten>false</flatten>
+        </hudson.plugins.s3.Entry>
+      </entries>
+      <userMetadata/>
+    </hudson.plugins.s3.S3BucketPublisher>
     <hudson.tasks.Mailer plugin="mailer@1.11">
       <recipients>gozer@mozilla.com</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
