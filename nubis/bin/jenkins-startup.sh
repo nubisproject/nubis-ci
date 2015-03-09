@@ -20,6 +20,12 @@ mkdir -p /var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment
 cp /etc/nubis.d/jenkins-config.xml /var/lib/jenkins/config.xml
 cp /etc/nubis.d/jenkins-location.xml /var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration.xml
 
+# Configure S3 plugin
+cp /etc/nubis.d/jenkins-s3bucketpublisher.xml /var/lib/jenkins/hudson.plugins.s3.S3BucketPublisher.xml
+perl -pi -e "s[%%NUBIS_CI_BUCKET_PROFILE%%][$NUBIS_CI_BUCKET_PROFILE]g" /var/lib/jenkins/hudson.plugins.s3.S3BucketPublisher.xml
+perl -pi -e "s[%%NUBIS_CI_BUCKET%%][$NUBIS_CI_BUCKET]g" /var/lib/jenkins/hudson.plugins.s3.S3BucketPublisher.xml
+perl -pi -e "s[%%NUBIS_CI_BUCKET_REGION%%][$NUBIS_CI_BUCKET_REGION]g" /var/lib/jenkins/hudson.plugins.s3.S3BucketPublisher.xml
+
 # Drop project configuration for jenkins
 cp /etc/nubis.d/jenkins-integration-config.xml /var/lib/jenkins/jobs/$NUBIS_CI_NAME-integration/config.xml
 perl -pi -e "s[%%NUBIS_GIT_REPO%%][$NUBIS_GIT_REPO]g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-integration/config.xml

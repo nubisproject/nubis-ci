@@ -60,3 +60,8 @@ variable "key_name" {
 variable "zone_id" {
   description = "ID of the zone for the project"
 }
+
+variable "s3_bucket_name" {
+  description = "Name of the S3 bucket to store artifacts into"
+  default = "nubis-ci"
+}

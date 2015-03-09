@@ -24,6 +24,7 @@
         <recursiveSubmodules>true</recursiveSubmodules>
         <trackingSubmodules>false</trackingSubmodules>
       </hudson.plugins.git.extensions.impl.SubmoduleOption>
+      <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
     </extensions>
   </scm>
   <canRoam>true</canRoam>
@@ -39,11 +40,10 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>nubis-builder build --packer-option &quot;-machine-readable&quot; 2&gt;&amp;1 | tee build.log</command>
+      <command>nubis-builder build --packer-option &quot;-machine-readable&quot;</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>cat build.log | grep &apos;,artifact,&apos; | grep &apos;,id,&apos; | cut -d, -f6 | sed -e&apos;s/%!(PACKER_COMMA)/\n/&apos; &gt; amis.txt
-rm build.log</command>
+      <command>cat ../builds/$BUILD_NUMBER/log | grep &apos;,artifact,&apos; | grep &apos;,id,&apos; | cut -d, -f6 | sed -e&apos;s/%!(PACKER_COMMA)/\n/&apos; &gt; amis.txt</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
@@ -54,11 +54,48 @@ rm build.log</command>
       <fingerprint>false</fingerprint>
       <defaultExcludes>true</defaultExcludes>
     </hudson.tasks.ArtifactArchiver>
+    <hudson.plugins.s3.S3BucketPublisher plugin="s3@0.7">
+      <profileName>%%NUBIS_CI_BUCKET_PROFILE%%</profileName>
+      <entries>
+        <hudson.plugins.s3.Entry>
+          <bucket>%%NUBIS_CI_BUCKET%%</bucket>
+          <sourceFile>amis.txt</sourceFile>
+          <storageClass>STANDARD</storageClass>
+          <selectedRegion>%%NUBIS_CI_BUCKET_REGION%%</selectedRegion>
+          <noUploadOnFailure>true</noUploadOnFailure>
+          <uploadFromSlave>false</uploadFromSlave>
+          <managedArtifacts>true</managedArtifacts>
+          <useServerSideEncryption>false</useServerSideEncryption>
+          <flatten>false</flatten>
+        </hudson.plugins.s3.Entry>
+      </entries>
+      <userMetadata/>
+    </hudson.plugins.s3.S3BucketPublisher>
     <hudson.tasks.Mailer plugin="mailer@1.11">
       <recipients>gozer@mozilla.com</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
+    <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.26">
+      <configs>
+        <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+          <configs>
+            <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+              <properties>environment=sandbox</properties>
+            </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
+            <hudson.plugins.parameterizedtrigger.FileBuildParameters>
+              <propertiesFile>amis.txt</propertiesFile>
+              <failTriggerOnMissing>true</failTriggerOnMissing>
+              <useMatrixChild>false</useMatrixChild>
+              <onlyExactRuns>false</onlyExactRuns>
+            </hudson.plugins.parameterizedtrigger.FileBuildParameters>
+          </configs>
+          <projects>%%NUBIS_CI_NAME%%-deployment</projects>
+          <condition>SUCCESS</condition>
+          <triggerWithNoParameters>false</triggerWithNoParameters>
+        </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+      </configs>
+    </hudson.plugins.parameterizedtrigger.BuildTrigger>
   </publishers>
   <buildWrappers/>
 </project>

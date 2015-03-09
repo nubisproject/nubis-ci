@@ -31,9 +31,15 @@
   },
   {
     "type": "file",
+    "source": "nubis/jenkins/hudson.plugins.s3.S3BucketPublisher.xml",
+    "destination": "/tmp/jenkins-s3bucketpublisher.xml",
+    "order": 25
+  },  
+  {
+    "type": "file",
     "source": "nubis/bin/jenkins-startup.sh",
     "destination": "/tmp/jenkins-startup.sh",
-    "order": 25
+    "order": 26
   },   
   {
     "type": "shell",
@@ -42,7 +48,7 @@
 	"sudo chmod 755 /etc/nubis.d/jenkins",
 	"sudo mv /tmp/jenkins-*.xml /etc/nubis.d/"
       ],
-    "order": 26
+    "order": 27
   }
   ]
 }
