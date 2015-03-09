@@ -10,7 +10,7 @@ nubis::discovery::service { 'jenkins':
 }
 
 class { 'jenkins':
-  version => "1.601"
+  version => "latest"
 }
 
 # Will eventually need to pull this from the registry
