@@ -56,3 +56,7 @@ variable "project" {
 variable "key_name" {
   description = "SSH key name in your AWS account for AWS instances."
 }
+
+variable "zone_id" {
+  description = "ID of the zone for the project"
+}
