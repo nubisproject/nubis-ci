@@ -84,3 +84,11 @@ resource "aws_security_group" "jenkins" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+resource "aws_route53_record" "jenkins" {
+   zone_id = "${var.zone_id}"
+   name = "ci"
+   type = "CNAME"
+   ttl = "30"
+   records = ["dualstack.${aws_elb.jenkins.dns_name}"]
+}
