@@ -27,7 +27,7 @@ variable "consul_ssl_key" {
 }
 
 variable "ami" {
-  default = "ami-2cc19b44"
+  default = "ami-2cd1f544"
   description = "Nubis CI AMI to launch"
 }
 
