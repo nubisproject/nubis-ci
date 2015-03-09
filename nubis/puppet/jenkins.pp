@@ -31,12 +31,28 @@ jenkins::plugin { "git" :
     version => "2.3.4"
 }
 
+jenkins::plugin { "github":
+    version => "1.11"
+}
+
+jenkins::plugin { "github-api":
+    version => "1.59"
+}
+
+jenkins::plugin { "multiple-scms":
+    version => "0.2"
+}
+
 jenkins::plugin { "parameterized-trigger":
     version => "2.26"
 }
 
-jenkins::plugin { "s3"
+jenkins::plugin { "s3":
     version => "0.7"
+}
+
+jenkins::plugin { "copyartifact":
+    version => "1.35"
 }
 
 jenkins::plugin { "git-client" :
