@@ -3,5 +3,5 @@ output "elb" {
 }
 
 output "instance" {
-    value = "ubuntu@${aws_instance.jenkins.public_dns}"
+    value = "ubuntu@${aws_instance.jenkins.private_ip}"
 }

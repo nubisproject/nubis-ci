@@ -1,0 +1,5 @@
+#XXX: Can't have arrays as input variables until TF 0.4
+
+resource "aws_elb" "jenkins" {
+  subnets = [ "subnet-abc", "subnet-cde", "subnet-fgh" ]
+}

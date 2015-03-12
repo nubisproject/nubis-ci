@@ -2,7 +2,7 @@
 <hudson.plugins.s3.S3BucketPublisher_-DescriptorImpl plugin="s3@0.7">
   <profiles>
     <hudson.plugins.s3.S3Profile>
-      <name>packer</name>
+      <name>%%NUBIS_CI_BUCKET_PROFILE%%</name>
       <accessKey></accessKey>
       <proxyHost></proxyHost>
       <proxyPort></proxyPort>
