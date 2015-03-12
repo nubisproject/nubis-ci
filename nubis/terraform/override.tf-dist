@@ -3,3 +3,8 @@
 resource "aws_elb" "jenkins" {
   subnets = [ "subnet-abc", "subnet-cde", "subnet-fgh" ]
 }
+
+resource "aws_autoscaling_group" "jenkins" {
+  vpc_zone_identifier = [ "subnet-123","subnet-234","subnet-345" ]
+}
+

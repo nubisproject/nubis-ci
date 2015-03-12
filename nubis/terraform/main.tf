@@ -22,37 +22,14 @@ resource "aws_elb" "jenkins" {
     unhealthy_threshold = 2
     timeout = 3
     target = "HTTP:8080/cc.xml"
-    interval = 30
+    interval = 5
   }
 
-  instances = ["${aws_instance.jenkins.id}"]
   cross_zone_load_balancing = true
 
   security_groups = [
     "${aws_security_group.elb.id}"
   ]
-}
-
-# Create a web server
-resource "aws_instance" "jenkins" {
-    ami = "${var.ami}"
-    subnet_id = "${var.subnet_id}"
-
-    tags {
-        Name = "Nubis Jenkins ${var.project} (${var.release}.${var.build})"
-    }
-    
-    key_name = "${var.key_name}"
-    
-    instance_type = "m3.medium"
-    
-    iam_instance_profile = "${var.iam_instance_profile}"
-    
-    security_groups = [
-      "${aws_security_group.jenkins.id}"
-    ]
-    
-    user_data = "NUBIS_PROJECT=${var.project}\nNUBIS_ENVIRONMENT=${var.environment}\nCONSUL_PUBLIC=1\nCONSUL_DC=${var.region}\nCONSUL_SECRET=${var.consul_secret}\nCONSUL_JOIN=${var.consul}\nCONSUL_KEY=\"${file("${var.consul_ssl_key}")}\"\nCONSUL_CERT=\"${file("${var.consul_ssl_cert}")}\"\nNUBIS_CI_NAME=${var.project}\nNUBIS_GIT_REPO=${var.git_repo}\nNUBIS_CI_PASSWORD=${var.admin_password}\nNUBIS_CI_BUCKET=${var.s3_bucket_name}\nNUBIS_CI_BUCKET_REGION=${var.region}\nNUBIS_CI_BUCKET_PROFILE=${var.iam_instance_profile}"
 }
 
 resource "aws_security_group" "elb" {
@@ -108,9 +85,38 @@ resource "aws_security_group" "jenkins" {
   }
 }
 
+resource "aws_autoscaling_group" "jenkins" {
+  availability_zones = [ ]
+  vpc_zone_identifier = [ "subnet-a9139ccc", "subnet-cb3a97bc", "subnet-227fbc7b" ]
+
+  name = "${var.project}-${var.release}-${var.build}"
+  
+  load_balancers = [
+   "${aws_elb.jenkins.name}"
+  ]
+
+  max_size = "1"
+  min_size = "0"
+  health_check_grace_period = 300
+  health_check_type = "ELB"
+  desired_capacity = "1"
+  force_delete = true
+  launch_configuration = "${aws_launch_configuration.jenkins.name}"
+}
+
+resource "aws_launch_configuration" "jenkins" {
+    name = "${var.project}-${var.release}-${var.build}"
+    image_id = "${var.ami}"
+    instance_type = "m3.medium"
+    key_name = "${var.key_name}"
+    security_groups = ["${aws_security_group.jenkins.id}"]
+
+    user_data = "NUBIS_PROJECT=${var.project}\nNUBIS_ENVIRONMENT=${var.environment}\nNUBIS_PROJECT_URL=http://${aws_route53_record.jenkins.name}/\nCONSUL_PUBLIC=0\nCONSUL_DC=${var.region}\nCONSUL_SECRET=${var.consul_secret}\nCONSUL_JOIN=${var.consul}\nCONSUL_KEY=\"${file("${var.consul_ssl_key}")}\"\nCONSUL_CERT=\"${file("${var.consul_ssl_cert}")}\"\nNUBIS_CI_NAME=${var.project}\nNUBIS_GIT_REPO=${var.git_repo}\nNUBIS_CI_PASSWORD=${var.admin_password}\nNUBIS_CI_BUCKET=${var.s3_bucket_name}\nNUBIS_CI_BUCKET_REGION=${var.region}\nNUBIS_CI_BUCKET_PROFILE=${var.iam_instance_profile}"
+}
+
 resource "aws_route53_record" "jenkins" {
    zone_id = "${var.zone_id}"
-   name = "ci"
+   name = "${var.project}.${var.domain}"
    type = "CNAME"
    ttl = "30"
    records = ["dualstack.${aws_elb.jenkins.dns_name}"]
