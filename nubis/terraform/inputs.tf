@@ -27,7 +27,7 @@ variable "consul_ssl_key" {
 }
 
 variable "ami" {
-  default = "ami-08dcf860"
+  default = "ami-b00225d8"
   description = "Nubis CI AMI to launch"
 }
 
@@ -69,4 +69,20 @@ variable "zone_id" {
 variable "s3_bucket_name" {
   description = "Name of the S3 bucket to store artifacts into"
   default = "nubis-ci"
+}
+
+variable "subnet_id" {
+  default = ""
+}
+
+variable "elb_subnet_id" {
+  default = ""
+}
+
+variable "elb_subnet_ids" {
+  default = [ ]
+}
+
+variable "vpc_id" {
+  default = ""
 }
