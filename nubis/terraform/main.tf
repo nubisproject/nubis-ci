@@ -112,7 +112,7 @@ resource "aws_launch_configuration" "jenkins" {
     security_groups = ["${aws_security_group.jenkins.id}"]
     iam_instance_profile = "${var.iam_instance_profile}"
 
-    user_data = "NUBIS_PROJECT=${var.project}\nNUBIS_ENVIRONMENT=${var.environment}\nNUBIS_PROJECT_URL=http://${aws_route53_record.jenkins.name}/\nCONSUL_PUBLIC=0\nCONSUL_DC=${var.region}\nCONSUL_SECRET=${var.consul_secret}\nCONSUL_JOIN=${var.consul}\nCONSUL_KEY=\"${file("${var.consul_ssl_key}")}\"\nCONSUL_CERT=\"${file("${var.consul_ssl_cert}")}\"\nNUBIS_CI_NAME=${var.project}\nNUBIS_GIT_REPO=${var.git_repo}\nNUBIS_CI_PASSWORD=${var.admin_password}\nNUBIS_CI_BUCKET=${var.s3_bucket_name}\nNUBIS_CI_BUCKET_REGION=${var.region}\nNUBIS_CI_BUCKET_PROFILE=${var.iam_instance_profile}"
+    user_data = "NUBIS_PROJECT=${var.project}\nNUBIS_ENVIRONMENT=${var.environment}\nNUBIS_PROJECT_URL=http://${aws_route53_record.jenkins.name}/\nCONSUL_PUBLIC=0\nCONSUL_DC=${var.region}\nCONSUL_SECRET=${var.consul_secret}\nCONSUL_JOIN=${var.consul}\nCONSUL_KEY=\"${file("${var.consul_ssl_key}")}\"\nCONSUL_CERT=\"${file("${var.consul_ssl_cert}")}\"\nNUBIS_CI_NAME=${var.project}\nNUBIS_GIT_REPO=${var.git_repo}\nNUBIS_CI_PASSWORD=${var.admin_password}\nNUBIS_CI_BUCKET=${var.s3_bucket_name}\nNUBIS_CI_BUCKET_REGION=${var.region}\n"
 }
 
 resource "aws_route53_record" "jenkins" {
