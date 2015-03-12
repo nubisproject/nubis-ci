@@ -32,8 +32,6 @@ perl -pi -e "s[%%NUBIS_GIT_REPO%%][$NUBIS_GIT_REPO]g" /var/lib/jenkins/jobs/$NUB
 perl -pi -e "s[%%NUBIS_CI_NAME%%][$NUBIS_CI_NAME]g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-integration/config.xml
 
 ## Configure S3 plugin
-perl -pi -e "s[%%NUBIS_CI_BUCKET_PROFILE%%][$NUBIS_CI_BUCKET_PROFILE]g" /var/lib/jenkins/hudson.plugins.s3.S3BucketPublisher.xml
-perl -pi -e "s[%%NUBIS_CI_BUCKET_PROFILE%%][$NUBIS_CI_BUCKET_PROFILE]g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-integration/config.xml 
 perl -pi -e "s[%%NUBIS_CI_BUCKET%%][$NUBIS_CI_BUCKET]g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-integration/config.xml 
 perl -pi -e "s[%%NUBIS_CI_BUCKET_REGION%%][$NUBIS_CI_BUCKET_REGION]g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-integration/config.xml 
 

@@ -55,7 +55,7 @@
       <defaultExcludes>true</defaultExcludes>
     </hudson.tasks.ArtifactArchiver>
     <hudson.plugins.s3.S3BucketPublisher plugin="s3@0.7">
-      <profileName>%%NUBIS_CI_BUCKET_PROFILE%%</profileName>
+      <profileName>nubis-ci</profileName>
       <entries>
         <hudson.plugins.s3.Entry>
           <bucket>%%NUBIS_CI_BUCKET%%</bucket>
