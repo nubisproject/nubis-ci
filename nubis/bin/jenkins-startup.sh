@@ -24,6 +24,9 @@ cp /etc/nubis.d/jenkins-s3bucketpublisher.xml /var/lib/jenkins/hudson.plugins.s3
 # Drop project configuration for jenkins
 cp /etc/nubis.d/jenkins-integration-config.xml /var/lib/jenkins/jobs/$NUBIS_CI_NAME-integration/config.xml
 
+# Fix Location Config
+perl -pi -e "s[%%NUBIS_PROJECT_URL%%][$NUBIS_PROJECT_URL]g" /var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration.xml
+
 ## General Config
 perl -pi -e "s[%%NUBIS_GIT_REPO%%][$NUBIS_GIT_REPO]g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-integration/config.xml
 perl -pi -e "s[%%NUBIS_CI_NAME%%][$NUBIS_CI_NAME]g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-integration/config.xml
