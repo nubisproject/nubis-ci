@@ -5,7 +5,7 @@ include nubis_discovery
 nubis::discovery::service { 'jenkins':
   tags => [ 'jenkins' ],
   port => "8080",
-  check => "/usr/bin/curl -I http://localhost:8080/cc.xml",
+  check => "/usr/bin/curl -vs http://localhost:8080/cc.xml",
   interval => "30s",
 }
 
