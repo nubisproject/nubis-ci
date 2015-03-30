@@ -19,7 +19,7 @@ vcsrepo { "/opt/nubis-builder":
   ensure   => present,
   provider => git,
   source   => 'https://github.com/Nubisproject/nubis-builder.git',
-  revision => '1f002ce0a1fefe58f158d31dc6b0cc2c6bdc8ca1',
+  revision => '7cebe3ea03302e274a72f919ea36f219482e72d4',
 }
 
 # XXX: need to move to puppet-packer
