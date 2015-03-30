@@ -92,3 +92,7 @@ package { "make":
 pacakge { "ansible":
     ensure => "latest",
 }
+
+package { "python-boto":
+    ensure => "latest",
+}
