@@ -88,3 +88,7 @@ package { "git":
 package { "make":
     ensure => "3.81-8.2ubuntu3",
 }
+
+pacakge { "ansible":
+    ensure => "latest",
+}
