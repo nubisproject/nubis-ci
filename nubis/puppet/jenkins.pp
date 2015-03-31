@@ -10,7 +10,8 @@ nubis::discovery::service { 'jenkins':
 }
 
 class { 'jenkins':
-  version => "latest"
+  version => "latest",
+  configure_firewall => false,
 }
 
 # Will eventually need to pull this from the registry
@@ -87,4 +88,12 @@ package { "git":
 
 package { "make":
     ensure => "3.81-8.2ubuntu3",
+}
+
+package { "ansible":
+    ensure => "latest",
+}
+
+package { "python-boto":
+    ensure => "latest",
 }

@@ -6,8 +6,8 @@ provider "aws" {
 }
 
 # Create a new load balancer
-resource "aws_elb" "jenkins" {
-  name = "jenkins-elb-${var.project}-${var.release}-${var.build}"
+resource "aws_elb" "ci" {
+  name = "ci-elb-${var.project}-${var.release}-${var.build}"
   subnets = [ "${var.elb_subnet_id}" ]
 
   listener {
@@ -33,8 +33,8 @@ resource "aws_elb" "jenkins" {
 }
 
 resource "aws_security_group" "elb" {
-  name = "elb-${var.project}.${var.release}.${var.build}"
-  description = "Allow inbound traffic for Jenkins"
+  name = "ci-elb-${var.project}.${var.release}.${var.build}"
+  description = "Allow inbound traffic for CI"
 
   vpc_id = "${var.vpc_id}"
 
@@ -46,9 +46,9 @@ resource "aws_security_group" "elb" {
   }
 }
 
-resource "aws_security_group" "jenkins" {
-  name = "jenkins-${var.project}.${var.release}.${var.build}"
-  description = "Allow inbound traffic for Jenkins"
+resource "aws_security_group" "ci" {
+  name = "ci-${var.project}.${var.release}.${var.build}"
+  description = "Allow inbound traffic for CI"
 
   vpc_id = "${var.vpc_id}"
 
@@ -85,14 +85,14 @@ resource "aws_security_group" "jenkins" {
   }
 }
 
-resource "aws_autoscaling_group" "jenkins" {
+resource "aws_autoscaling_group" "ci" {
   availability_zones = [ ]
   vpc_zone_identifier = [ "subnet-a9139ccc", "subnet-cb3a97bc", "subnet-227fbc7b" ]
 
-  name = "${var.project}-${var.release}-${var.build}"
+  name = "ci-${var.project}-${var.release}-${var.build}"
   
   load_balancers = [
-   "${aws_elb.jenkins.name}"
+   "${aws_elb.ci.name}"
   ]
 
   max_size = "2"
@@ -101,24 +101,24 @@ resource "aws_autoscaling_group" "jenkins" {
   health_check_type = "ELB"
   desired_capacity = "1"
   force_delete = true
-  launch_configuration = "${aws_launch_configuration.jenkins.name}"
+  launch_configuration = "${aws_launch_configuration.ci.name}"
 }
 
-resource "aws_launch_configuration" "jenkins" {
-    name = "${var.project}-${var.release}-${var.build}"
+resource "aws_launch_configuration" "ci" {
+    name = "ci-${var.project}-${var.release}-${var.build}"
     image_id = "${var.ami}"
     instance_type = "m3.medium"
     key_name = "${var.key_name}"
-    security_groups = ["${aws_security_group.jenkins.id}"]
+    security_groups = ["${aws_security_group.ci.id}"]
     iam_instance_profile = "${var.iam_instance_profile}"
 
-    user_data = "NUBIS_PROJECT=${var.project}\nNUBIS_ENVIRONMENT=${var.environment}\nNUBIS_PROJECT_URL=http://${aws_route53_record.jenkins.name}/\nCONSUL_PUBLIC=0\nCONSUL_DC=${var.region}\nCONSUL_SECRET=${var.consul_secret}\nCONSUL_JOIN=${var.consul}\nCONSUL_KEY=\"${file("${var.consul_ssl_key}")}\"\nCONSUL_CERT=\"${file("${var.consul_ssl_cert}")}\"\nNUBIS_CI_NAME=${var.project}\nNUBIS_GIT_REPO=${var.git_repo}\nNUBIS_CI_PASSWORD=${var.admin_password}\nNUBIS_CI_BUCKET=${var.s3_bucket_name}\nNUBIS_CI_BUCKET_REGION=${var.region}\n"
+    user_data = "NUBIS_PROJECT=${var.project}\nNUBIS_ENVIRONMENT=${var.environment}\nNUBIS_PROJECT_URL=http://${aws_route53_record.ci.name}/\nCONSUL_PUBLIC=0\nCONSUL_DC=${var.region}\nCONSUL_SECRET=${var.consul_secret}\nCONSUL_JOIN=${var.consul}\nCONSUL_KEY=\"${file("${var.consul_ssl_key}")}\"\nCONSUL_CERT=\"${file("${var.consul_ssl_cert}")}\"\nNUBIS_CI_NAME=${var.project}\nNUBIS_GIT_REPO=${var.git_repo}\nNUBIS_CI_PASSWORD=${var.admin_password}\nNUBIS_CI_BUCKET=${var.s3_bucket_name}\nNUBIS_CI_BUCKET_REGION=${var.region}\n"
 }
 
-resource "aws_route53_record" "jenkins" {
+resource "aws_route53_record" "ci" {
    zone_id = "${var.zone_id}"
-   name = "${var.project}.${var.domain}"
+   name = "ci.${var.domain}"
    type = "CNAME"
    ttl = "30"
-   records = ["dualstack.${aws_elb.jenkins.dns_name}"]
+   records = ["dualstack.${aws_elb.ci.dns_name}"]
 }
