@@ -81,7 +81,7 @@
         <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
           <configs>
             <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
-              <properties>environment=sandbox</properties>
+              <properties>environment=dev</properties>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
             <hudson.plugins.parameterizedtrigger.FileBuildParameters>
               <propertiesFile>amis.txt</propertiesFile>
