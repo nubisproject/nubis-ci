@@ -6,6 +6,12 @@ wget -O /tmp/default.js http://updates.jenkins-ci.org/update-center.json
 sed '1d;$d' /tmp/default.js > /tmp/default.json
 curl -X POST -H "Accept: application/json" -d @/tmp/default.json http://localhost:8080/updateCenter/byId/default/postBack
 
+AWS_ACCOUNT_ID=`curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | jq -r '.accountId'`
+AWS_REGION=`curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | jq -r '.region'`
+
+#XXX: Needs to be configurable/discovered
+NUBIS_AMI_BUCKET="nubis-amis"
+
 # Stop jenkins for reconfiguration
 service jenkins stop
 
@@ -49,6 +55,20 @@ if [ -f /etc/default/jenkins ]; then
     perl -pi -e"s[^JENKINS_ARGS=\"(.*)\"][JENKINS_ARGS=\"\$1 $JENKINS_ARGS\"]g" /etc/default/jenkins
   fi
 fi
+
+cat <<EOF | tee /opt/nubis-builder/secrets/variables.json
+{
+  "variables": {
+    "aws_account_id": "$AWS_ACCOUNT_ID",
+    "aws_region": "$AWS_REGION",
+    "aws_instance_s3_bucket": "$NUBIS_AMI_BUCKET",
+    "aws_x509_cert_path": "/full/path/to/secrets/aws.crt.pem",
+    "aws_x509_key_path": "/full/path/to/secrets/aws.key.pem",
+    "iam_instance_profile": "",
+    "iam_instance_role": ""
+  }
+}
+EOF
 
 # Finally, start jenkins for good
 service jenkins start
