@@ -64,6 +64,10 @@ jenkins::plugin { "scm-api" :
     version => "0.2"
 }
 
+jenkins::plugin { "ansible" :
+    version => "0.2"
+}
+
 # This is for librarian-puppet, below, and somewhat ugly
 package { "ruby-dev":
   ensure => "1:1.9.3.4",
