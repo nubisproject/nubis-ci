@@ -68,6 +68,10 @@ jenkins::plugin { "ansible" :
     version => "0.2"
 }
 
+jenkins::plugin { "rebuild" :
+    version => "1.24"
+}
+
 # This is for librarian-puppet, below, and somewhat ugly
 package { "ruby-dev":
   ensure => "1:1.9.3.4",
