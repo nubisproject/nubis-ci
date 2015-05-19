@@ -112,13 +112,18 @@ class { 'python':
 
 python::pip { 'boto':
   ensure => 'latest',
+  require => Class['python'],
 }
 
 python::pip { 'ansible':
   ensure => 'latest',
+  require => Class['python'],
 }
 
 wget::fetch { "download Google's index":
-  source => 'https://github.com/ansible/ansible-modules-core/blob/devel/cloud/amazon/cloudformation.py',
+  source => 'https://raw.githubusercontent.com/ansible/ansible-modules-core/devel/cloud/amazon/cloudformation.py',
   destination => '/usr/local/lib/python2.7/dist-packages/ansible/modules/core/cloud/amazon/cloudformation.py',
+  require => [
+    Python::Pip['ansible'],
+  ]
 }
