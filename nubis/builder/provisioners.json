@@ -40,15 +40,22 @@
     "source": "nubis/bin/jenkins-startup.sh",
     "destination": "/tmp/jenkins-startup.sh",
     "order": 26
-  },   
+  },
+  {
+    "type": "file",
+    "source": "nubis/bin/sts",
+    "destination": "/tmp/sts",
+    "order": 27
+  },
   {
     "type": "shell",
       "inline": [
 	"sudo mv /tmp/jenkins-startup.sh /etc/nubis.d/jenkins",
-	"sudo chmod 755 /etc/nubis.d/jenkins",
+	"sudo mv /tmp/sts /usr/local/bin/sts",
+	"sudo chmod 755 /etc/nubis.d/jenkins /usr/local/bin/sts",
 	"sudo mv /tmp/jenkins-*.xml /etc/nubis.d/"
       ],
-    "order": 27
+    "order": 28
   }
   ]
 }
