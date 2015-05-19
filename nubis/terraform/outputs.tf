@@ -1,3 +1,3 @@
 output "elb" {
-    value = "http://${aws_route53_record.ci.name}/"
+    value = "http://ci.${var.domain}}/"
 }

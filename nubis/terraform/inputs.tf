@@ -9,21 +9,9 @@ variable "environment" {
   default = "sandbox"
 }
 
-variable "consul" {
-  description = "URL to Consul"
-  default = "127.0.0.1"
-}
-
-variable "consul_secret" {
-  description = "Security shared secret for consul membership (consul keygen)"
-}
-
-variable "consul_ssl_cert" {
-  description = "SSL Certificate file"
-}
-
-variable "consul_ssl_key" {
-  description = "SSL Key file"
+variable "nubis_domain" {
+  description = "Top-level Nubis domain for this environemnt"
+  default = "nubis.allizom.org"
 }
 
 variable "ami" {
@@ -90,3 +78,12 @@ variable "elb_subnet_ids" {
 variable "vpc_id" {
   default = ""
 }
+
+variable "internet_security_group_id" {
+  description = "ID of that SG"
+}
+
+variable "shared_services_security_group_id" {
+  description = "ID of that SG"
+}
+

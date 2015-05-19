@@ -30,6 +30,7 @@ resource "aws_elb" "ci" {
   security_groups = [
     "${aws_security_group.elb.id}"
   ]
+
 }
 
 resource "aws_security_group" "elb" {
@@ -102,6 +103,13 @@ resource "aws_autoscaling_group" "ci" {
   desired_capacity = "1"
   force_delete = true
   launch_configuration = "${aws_launch_configuration.ci.name}"
+
+  tag {
+    key = "Name"
+    value = "CI server for ${var.project} (v/${var.release}.${var.build})"
+    propagate_at_launch = true
+  }
+
 }
 
 resource "aws_launch_configuration" "ci" {
@@ -109,10 +117,19 @@ resource "aws_launch_configuration" "ci" {
     image_id = "${var.ami}"
     instance_type = "m3.medium"
     key_name = "${var.key_name}"
-    security_groups = ["${aws_security_group.ci.id}"]
+    security_groups = [
+      "${aws_security_group.ci.id}",
+      "${var.internet_security_group_id}",
+      "${var.shared_services_security_group_id}",
+    ]
+    
+    
+    
     iam_instance_profile = "${var.iam_instance_profile}"
 
-    user_data = "NUBIS_PROJECT=${var.project}\nNUBIS_ENVIRONMENT=${var.environment}\nNUBIS_PROJECT_URL=http://${aws_route53_record.ci.name}/\nCONSUL_PUBLIC=0\nCONSUL_DC=${var.region}\nCONSUL_SECRET=${var.consul_secret}\nCONSUL_JOIN=${var.consul}\nCONSUL_KEY=\"${file("${var.consul_ssl_key}")}\"\nCONSUL_CERT=\"${file("${var.consul_ssl_cert}")}\"\nNUBIS_CI_NAME=${var.project}\nNUBIS_GIT_REPO=${var.git_repo}\nNUBIS_CI_PASSWORD=${var.admin_password}\nNUBIS_CI_BUCKET=${var.s3_bucket_name}\nNUBIS_CI_BUCKET_REGION=${var.region}\n"
+    user_data = "NUBIS_PROJECT=${var.project}\nNUBIS_ENVIRONMENT=${var.environment}\nNUBIS_DOMAIN=${var.nubis_domain}\nNUBIS_PROJECT_URL=http://${aws_route53_record.ci.name}/\nNUBIS_CI_NAME=${var.project}\nNUBIS_GIT_REPO=${var.git_repo}\nNUBIS_CI_PASSWORD=${var.admin_password}\nNUBIS_CI_BUCKET=${var.s3_bucket_name}\nNUBIS_CI_BUCKET_REGION=${var.region}\n"
+
+    depends_on = ["aws_route53_record.ci"]
 }
 
 resource "aws_route53_record" "ci" {
