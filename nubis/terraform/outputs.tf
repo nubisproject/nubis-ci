@@ -1,3 +1,3 @@
 output "elb" {
-    value = "http://ci.${var.domain}}/"
+    value = "http://ci.${var.domain}/"
 }
