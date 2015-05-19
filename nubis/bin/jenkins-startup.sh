@@ -19,7 +19,7 @@ service jenkins stop
 eval `ec2metadata --user-data`
 
 # Create the job directories
-mkdir -p /var/lib/jenkins/jobs/$NUBIS_CI_NAME-integration
+mkdir -p /var/lib/jenkins/jobs/$NUBIS_CI_NAME-build
 mkdir -p /var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment
 
 # Drop main configurations
@@ -28,18 +28,18 @@ cp /etc/nubis.d/jenkins-location.xml /var/lib/jenkins/jenkins.model.JenkinsLocat
 cp /etc/nubis.d/jenkins-s3bucketpublisher.xml /var/lib/jenkins/hudson.plugins.s3.S3BucketPublisher.xml
 
 # Drop project configuration for jenkins
-cp /etc/nubis.d/jenkins-integration-config.xml /var/lib/jenkins/jobs/$NUBIS_CI_NAME-integration/config.xml
+cp /etc/nubis.d/jenkins-build-config.xml /var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml
 
 # Fix Location Config
 perl -pi -e "s[%%NUBIS_PROJECT_URL%%][$NUBIS_PROJECT_URL]g" /var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration.xml
 
 ## General Config
-perl -pi -e "s[%%NUBIS_GIT_REPO%%][$NUBIS_GIT_REPO]g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-integration/config.xml
-perl -pi -e "s[%%NUBIS_CI_NAME%%][$NUBIS_CI_NAME]g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-integration/config.xml
+perl -pi -e "s[%%NUBIS_GIT_REPO%%][$NUBIS_GIT_REPO]g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml
+perl -pi -e "s[%%NUBIS_CI_NAME%%][$NUBIS_CI_NAME]g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml
 
 ## Configure S3 plugin
-perl -pi -e "s[%%NUBIS_CI_BUCKET%%][$NUBIS_CI_BUCKET]g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-integration/config.xml 
-perl -pi -e "s[%%NUBIS_CI_BUCKET_REGION%%][$NUBIS_CI_BUCKET_REGION]g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-integration/config.xml 
+perl -pi -e "s[%%NUBIS_CI_BUCKET%%][$NUBIS_CI_BUCKET]g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml 
+perl -pi -e "s[%%NUBIS_CI_BUCKET_REGION%%][$NUBIS_CI_BUCKET_REGION]g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml 
 
 # Drop deployment configuration for jenkins
 cp /etc/nubis.d/jenkins-deployment-config.xml /var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml

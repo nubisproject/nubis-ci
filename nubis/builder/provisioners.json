@@ -13,8 +13,8 @@
   },
   {
     "type": "file",
-    "source": "nubis/jenkins/integration.xml",
-    "destination": "/tmp/jenkins-integration-config.xml",
+    "source": "nubis/jenkins/build.xml",
+    "destination": "/tmp/jenkins-build-config.xml",
     "order": 22
   },
   {
