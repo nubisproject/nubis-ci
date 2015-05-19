@@ -72,6 +72,10 @@ jenkins::plugin { "rebuild" :
     version => "1.24"
 }
 
+jenkins::plugin { "promoted-builds":
+    version => "2.21"
+}
+
 # This is for librarian-puppet, below, and somewhat ugly
 package { "ruby-dev":
   ensure => "1:1.9.3.4",
