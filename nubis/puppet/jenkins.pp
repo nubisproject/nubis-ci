@@ -102,10 +102,23 @@ package { "make":
     ensure => "3.81-8.2ubuntu3",
 }
 
-package { "ansible":
-    ensure => "latest",
+# Needed because current ansible/boto has bugs with STS tokens
+
+class { 'python':
+  version => 'system',
+  pip => true,
+  dev => true,
 }
 
-package { "python-boto":
-    ensure => "latest",
+python::pip { 'boto':
+  ensure => 'latest',
+}
+
+python::pip { 'ansible':
+  ensure => 'latest',
+}
+
+wget::fetch { "download Google's index":
+  source => 'https://github.com/ansible/ansible-modules-core/blob/devel/cloud/amazon/cloudformation.py',
+  destination => '/usr/local/lib/python2.7/dist-packages/ansible/modules/core/cloud/amazon/cloudformation.py',
 }
