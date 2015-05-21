@@ -29,19 +29,19 @@ class { 'jenkins':
 #}
 
 jenkins::plugin { "git" :
-    version => "2.3.4"
+    version => "2.3.5"
 }
 
 jenkins::plugin { "github":
-    version => "1.11"
+    version => "1.11.3"
 }
 
 jenkins::plugin { "github-api":
-    version => "1.59"
+    version => "1.67"
 }
 
 jenkins::plugin { "multiple-scms":
-    version => "0.2"
+    version => "0.4"
 }
 
 jenkins::plugin { "parameterized-trigger":
@@ -53,11 +53,11 @@ jenkins::plugin { "s3":
 }
 
 jenkins::plugin { "copyartifact":
-    version => "1.35"
+    version => "1.35.1"
 }
 
 jenkins::plugin { "git-client" :
-    version => "1.15.0"
+    version => "1.17.1"
 }
 
 jenkins::plugin { "scm-api" :
