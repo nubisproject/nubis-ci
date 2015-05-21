@@ -30,6 +30,11 @@ cp /etc/nubis.d/jenkins-s3bucketpublisher.xml /var/lib/jenkins/hudson.plugins.s3
 # Drop project configuration for jenkins
 cp /etc/nubis.d/jenkins-build-config.xml /var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml
 
+# Drop promotion configuration
+mkdir -p /var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/promotions/Deployed
+cp /etc/nubis.d/jenkins-build-promotion-deployed-config.xml /var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/promotions/Deployed/config.xml
+perl -pi -e "s[%%NUBIS_CI_NAME%%][$NUBIS_CI_NAME]g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/promotions/Deployed/config.xml
+
 # Fix Location Config
 perl -pi -e "s[%%NUBIS_PROJECT_URL%%][$NUBIS_PROJECT_URL]g" /var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration.xml
 
