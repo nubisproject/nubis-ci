@@ -1,0 +1,7 @@
+[template]
+src = "vars.tmpl"
+dest = "/var/lib/jenkins/jobs/wiki-deployment/vars.yaml"
+prefix = "/%%NUBIS_CI_NAME%%/%%ENVIRONMENT%%"
+keys = [
+    "/config"
+]

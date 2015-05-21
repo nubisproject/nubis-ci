@@ -1,0 +1,4 @@
+---
+{{range gets "/config/*"}}{{base .Key}} : "{{.Value}}"
+{{end}}
+

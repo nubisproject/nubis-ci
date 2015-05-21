@@ -1,0 +1,26 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  vars:
+    region: "us-west-2"
+    env: "sandbox"
+    domain: "nubis.allizom.org"
+  tasks:
+  - name: CloudFormation
+    register: stack
+    cloudformation:
+      stack_name: "{{"{{"}} stack_name }}"
+      region: "{{"{{"}} region }}"
+      state: "present"
+      disable_rollback: true
+      template: "{{"{{"}} template }}"
+      template_parameters:
+        Environment: "{{"{{"}} env }}"
+        BaseZone: "{{"{{"}} domain }}"
+        AmiId: "{{"{{"}} ami }}"
+        KeyName: "{{"{{"}} key_name }}"
+        TechnicalOwner: "{{"{{"}} owner }}"
+        ServiceName: "{{"{{"}} service_name }}"
+{{range gets "/config/*"}}        {{base .Key}} : "{{"{{"}} {{base .Key}} }}"
+{{end}}

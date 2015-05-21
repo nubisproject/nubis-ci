@@ -1,0 +1,7 @@
+[template]
+src = "ansible.tmpl"
+dest = "/var/lib/jenkins/jobs/wiki-deployment/ansible.yaml"
+prefix = "/%%NUBIS_CI_NAME%%/%%ENVIRONMENT%%"
+keys = [
+    "/config"
+]
