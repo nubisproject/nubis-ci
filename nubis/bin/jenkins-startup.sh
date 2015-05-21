@@ -70,5 +70,9 @@ cat <<EOF | tee /opt/nubis-builder/secrets/variables.json
 }
 EOF
 
+# Manually fix our confd stuff (missing confd puppet support)
+find /etc/confd/conf.d -type f -name '*.toml' | xargs --verbose sed -i -e "s/%%NUBIS_CI_NAME%%/$NUBIS_CI_NAME/g"
+service confd reload
+
 # Finally, start jenkins for good
 service jenkins start
