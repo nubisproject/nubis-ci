@@ -7,7 +7,7 @@
     ],
     "project_description": "Nubis - CI (jenkins)",
     "project_name": "nubis-ci",
-    "project_version": "0.5",
+    "project_version": "0.41",
     "source_ami_project_name": "nubis-base"
   }
 }
