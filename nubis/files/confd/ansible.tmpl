@@ -22,5 +22,7 @@
         KeyName: "{{"{{"}} key_name }}"
         TechnicalOwner: "{{"{{"}} owner }}"
         ServiceName: "{{"{{"}} service_name }}"
+{{if exists "/config"}}
 {{range gets "/config/*"}}        {{base .Key}} : "{{"{{"}} {{base .Key}} }}"
+{{end}}
 {{end}}
