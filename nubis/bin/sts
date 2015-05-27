@@ -7,7 +7,7 @@ if [ "$BUILD_TAG" = "" ]; then
   SESSION_NAME=cli
 else
   #XXX: role-session-name must be 32 characters or less ($BUILD_TAG would be nice)
-  SESSION_NAME="${BUILD_NUMBER}/${JOB_NAME}"
+  SESSION_NAME="${BUILD_NUMBER}+${JOB_NAME}"
   SESSION_NAME=${SESSION_NAME:0:32}
 fi
 
