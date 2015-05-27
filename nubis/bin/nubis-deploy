@@ -29,9 +29,5 @@ sts $iam_role ansible-playbook -i localhost, \
   -e @$VARIABLES
 fi
 
-NUBIS_CONSUL=$WORKSPACE/nubis/bin/consul_inputs.sh
-
-if [ -f $NUBIS_CONSUL ]; then
-  echo "Injecting into Consul"
-  PROJECT_NAME=$service_name NUBIS_ENVIRONMENT=$environment CONSUL_ENDPOINT="ui.$region.consul.$environment.nubis.allizom.org" AWS_DEFAULT_REGION=$region sts $iam_role ./nubis/bin/consul_inputs.sh --stack-name $stack_name get-and-update
-fi
+echo "Injecting into Consul"
+PROJECT_NAME=$service_name NUBIS_ENVIRONMENT=$environment CONSUL_ENDPOINT="ui.$region.consul.$environment.nubis.allizom.org" AWS_DEFAULT_REGION=$region sts $iam_role nubis-consul --stack-name $stack_name get-and-update
