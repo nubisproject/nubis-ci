@@ -33,7 +33,7 @@ staging::extract { 'packer.zip':
 
 # XXX: need to move to puppet-terraform	
 staging::file { 'terraform.zip':
-  source => "https://dl.bintray.com/mitchellh/terraform/terraform_0.3.7_linux_amd64.zip"
+  source => "https://dl.bintray.com/mitchellh/terraform/terraform_0.5.1_linux_amd64.zip"
 } ->
 staging::extract { 'terraform.zip':
   target  => "/usr/local/bin",

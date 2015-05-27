@@ -4,10 +4,14 @@ ROLE=$1
 shift
 
 if [ "$BUILD_TAG" = "" ]; then
-  BUILD_TAG=cli
+  SESSION_NAME=cli
+else
+  #XXX: role-session-name must be 32 characters or less ($BUILD_TAG would be nice)
+  SESSION_NAME="${BUILD_NUMBER}/${JOB_NAME}"
+  SESSION_NAME=${SESSION_NAME:0:32}
 fi
 
-OUTPUT=`aws sts assume-role --role-arn "$ROLE" --role-session-name "$BUILD_TAG"`
+OUTPUT=`aws sts assume-role --role-arn "$ROLE" --role-session-name "$SESSION_NAME"
 
 STATUS=$?
 

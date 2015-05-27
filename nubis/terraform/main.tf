@@ -20,9 +20,9 @@ resource "aws_elb" "ci" {
   health_check {
     healthy_threshold = 2
     unhealthy_threshold = 2
-    timeout = 3
+    timeout = 10
     target = "HTTP:8080/cc.xml"
-    interval = 5
+    interval = 30 
   }
 
   cross_zone_load_balancing = true
@@ -35,7 +35,7 @@ resource "aws_elb" "ci" {
 
 resource "aws_security_group" "elb" {
   name = "ci-elb-${var.project}.${var.release}.${var.build}"
-  description = "Allow inbound traffic for CI"
+  description = "Allow inbound traffic for CI ${var.project}"
 
   vpc_id = "${var.vpc_id}"
 
@@ -45,16 +45,24 @@ resource "aws_security_group" "elb" {
       protocol = "tcp"
       cidr_blocks = ["0.0.0.0/0"]
   }
+
+  egress {
+      from_port = 0
+      to_port = 0
+      protocol = "-1"
+      cidr_blocks = ["0.0.0.0/0"]
+  }
+
 }
 
 resource "aws_security_group" "ci" {
   name = "ci-${var.project}.${var.release}.${var.build}"
-  description = "Allow inbound traffic for CI"
+  description = "Allow inbound traffic for CI ${var.project}"
 
   vpc_id = "${var.vpc_id}"
 
   ingress {
-      from_port = 0
+      from_port = 8080
       to_port = 8080
       protocol = "tcp"
       security_groups = [
@@ -63,7 +71,7 @@ resource "aws_security_group" "ci" {
   }
   
   ingress {
-      from_port = 0
+      from_port = 22
       to_port = 22
       protocol = "tcp"
       cidr_blocks = ["0.0.0.0/0"]
@@ -84,6 +92,14 @@ resource "aws_security_group" "ci" {
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  egress {
+      from_port = 0
+      to_port = 0
+      protocol = "-1"
+      cidr_blocks = ["0.0.0.0/0"]
+  }
+
 }
 
 resource "aws_autoscaling_group" "ci" {
