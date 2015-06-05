@@ -21,7 +21,7 @@
           <description></description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
-              <string>dev</string>
+              <string>stage</string>
               <string>prod</string>
             </a>
           </choices>

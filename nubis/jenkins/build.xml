@@ -91,7 +91,7 @@
         <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
           <configs>
             <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
-              <properties>environment=dev</properties>
+              <properties>environment=stage</properties>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
             <hudson.plugins.parameterizedtrigger.FileBuildParameters>
               <propertiesFile>amis.txt</propertiesFile>

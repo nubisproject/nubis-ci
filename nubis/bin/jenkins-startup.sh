@@ -16,7 +16,7 @@ NUBIS_AMI_BUCKET="nubis-amis"
 service jenkins stop
 
 # shell parse our userdata
-eval `ec2metadata --user-data`
+eval `curl -fq http://169.254.169.254/latest/user-data`
 
 # Create the job directories
 mkdir -p /var/lib/jenkins/jobs/$NUBIS_CI_NAME-build
