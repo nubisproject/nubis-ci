@@ -15,7 +15,7 @@ variable "nubis_domain" {
 }
 
 variable "ami" {
-  default = "ami-c33a17f3"
+  default = "ami-f1dcd1c1"
   description = "Nubis CI AMI to launch"
 }
 
@@ -63,16 +63,8 @@ variable "s3_bucket_name" {
   default = "nubis-ci"
 }
 
-variable "subnet_id" {
-  default = ""
-}
-
 variable "elb_subnet_id" {
   default = ""
-}
-
-variable "elb_subnet_ids" {
-  default = [ ]
 }
 
 variable "vpc_id" {
