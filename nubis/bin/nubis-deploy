@@ -16,7 +16,7 @@ if [ -f $CF_TEMPLATE ]; then
 echo "Running CloudFormation"
 ansible-playbook -i localhost, \
   $PLAYBOOK \
-  -e stack_name=$FULL_STACK_NAME \$FULL_STACK_NAME \
+  -e stack_name=$FULL_STACK_NAME \
   -e owner=$owner \
   -e service_name=$service_name \
   -e key_name=$key_name \
