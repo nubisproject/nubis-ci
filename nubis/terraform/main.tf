@@ -7,7 +7,7 @@ provider "aws" {
 
 # Create a new load balancer
 resource "aws_elb" "ci" {
-  name = "ci-elb-${var.project}-${var.release}-${var.build}"
+  name = "ci-elb-${var.project}"
   subnets = ["${split(",", var.public_subnets)}"]
 
   listener {
@@ -34,7 +34,7 @@ resource "aws_elb" "ci" {
 }
 
 resource "aws_security_group" "elb" {
-  name = "ci-elb-${var.project}.${var.release}.${var.build}"
+  name = "ci-elb-${var.project}"
   description = "Allow inbound traffic for CI ${var.project}"
 
   vpc_id = "${var.vpc_id}"
@@ -56,7 +56,7 @@ resource "aws_security_group" "elb" {
 }
 
 resource "aws_security_group" "ci" {
-  name = "ci-${var.project}.${var.release}.${var.build}"
+  name = "ci-${var.project}"
   description = "Allow inbound traffic for CI ${var.project}"
 
   vpc_id = "${var.vpc_id}"
@@ -91,7 +91,7 @@ resource "aws_security_group" "ci" {
 resource "aws_autoscaling_group" "ci" {
   vpc_zone_identifier = ["${split(",", var.private_subnets)}"]
 
-  name = "ci-${var.project}-${var.release}-${var.build}"
+  name = "ci-${var.project}"
   
   load_balancers = [
    "${aws_elb.ci.name}"
