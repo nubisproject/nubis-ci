@@ -1,12 +1,12 @@
 #!/bin/bash
 
 if [ "$ami" = "" ]; then
-  ami=`cat amis.txt | grep $region | cut -d: -f2`
+  ami=`cat artifacts/amis.txt | grep $region | cut -d: -f2`
 fi
 
 echo "Deploying AMI $ami into $environment/$region"
 
-CF_TEMPLATE=$WORKSPACE/nubis/cloudformation/main.json
+CF_TEMPLATE=$WORKSPACE/artifacts/main.json
 PLAYBOOK=$WORKSPACE/../ansible.yaml
 VARIABLES=$WORKSPACE/../vars.yaml
 

@@ -53,12 +53,20 @@
       <command>nubis-builder build --packer-option &quot;-machine-readable&quot;</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>cat ../builds/$BUILD_NUMBER/log | grep &apos;,artifact,&apos; | grep &apos;,id,&apos; | cut -d, -f6 | sed -e&apos;s/%!(PACKER_COMMA)/\n/&apos; &gt; amis.txt</command>
+      <command>rm -rf artifacts
+mkdir artifacts
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>cat ../builds/$BUILD_NUMBER/log | grep &apos;,artifact,&apos; | grep &apos;,id,&apos; | cut -d, -f6 | sed -e&apos;s/%!(PACKER_COMMA)/\n/&apos; &gt; artifacts/amis.txt
+if [ -d nubis/cloudformation ]; then
+  rsync -av nubis/cloudformation/ artifacts/
+fi
+</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
     <hudson.tasks.ArtifactArchiver>
-      <artifacts>amis.txt</artifacts>
+      <artifacts>artifacts/*</artifacts>
       <allowEmptyArchive>false</allowEmptyArchive>
       <onlyIfSuccessful>false</onlyIfSuccessful>
       <fingerprint>true</fingerprint>
@@ -69,7 +77,7 @@
       <entries>
         <hudson.plugins.s3.Entry>
           <bucket>%%NUBIS_CI_BUCKET%%</bucket>
-          <sourceFile>amis.txt</sourceFile>
+          <sourceFile>artifacts/*</sourceFile>
           <storageClass>STANDARD</storageClass>
           <selectedRegion>%%NUBIS_CI_BUCKET_REGION%%</selectedRegion>
           <noUploadOnFailure>true</noUploadOnFailure>
@@ -94,7 +102,7 @@
               <properties>environment=stage</properties>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
             <hudson.plugins.parameterizedtrigger.FileBuildParameters>
-              <propertiesFile>amis.txt</propertiesFile>
+              <propertiesFile>artifacts/amis.txt</propertiesFile>
               <failTriggerOnMissing>true</failTriggerOnMissing>
               <useMatrixChild>false</useMatrixChild>
               <onlyExactRuns>false</onlyExactRuns>

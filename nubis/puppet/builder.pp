@@ -4,6 +4,10 @@ package { "awscli":
   ensure => present
 }
 
+package { "rsync":
+  ensure => present
+}
+
 # XXX: We require jq 1.4, not in repos yet
 exec { "wget-jq":
   creates => "/usr/local/bin/jq",
