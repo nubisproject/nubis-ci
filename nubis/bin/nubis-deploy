@@ -4,11 +4,7 @@ if [ "$ami" = "" ]; then
   ami=`cat amis.txt | grep $region | cut -d: -f2`
 fi
 
-if [ "$aim_role" = "" ]; then
-  iam_role=`curl -s http://localhost:8500/v1/kv/environments/$environment/global/meta/DeployRole?raw=1`
-fi
-
-echo "Deploying AMI $ami with role $iam_role into $environment/$region"
+echo "Deploying AMI $ami into $environment/$region"
 
 CF_TEMPLATE=$WORKSPACE/nubis/cloudformation/main.json
 PLAYBOOK=$WORKSPACE/../ansible.yaml
