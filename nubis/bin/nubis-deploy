@@ -16,7 +16,7 @@ VARIABLES=$WORKSPACE/../vars.yaml
 
 if [ -f $CF_TEMPLATE ]; then
 echo "Running CloudFormation"
-sts $iam_role ansible-playbook -i localhost, \
+ansible-playbook -i localhost, \
   $PLAYBOOK \
   -e stack_name=$stack_name \
   -e owner=$owner \
