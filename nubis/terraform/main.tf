@@ -305,13 +305,21 @@ resource "aws_iam_role_policy" "ci_deploy" {
                 "rds:DescribeDBSubnetGroups",
                 "rds:DeleteDBInstance",
                 "rds:DescribeDBInstances",
-                "route53:CreateHostedZone",
                 "route53:GetChange",
-                "route53:DeleteHostedZone",
                 "route53:ListHostedZones",
-                "s3:*"
+                "route53:GetHostedZone",
+                "s3:*",
+                "lambda:InvokeFunction"
               ],
               "Resource": "*"
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "route53:ChangeResourceRecordSets",
+                "route53:ListResourceRecordSets"
+              ],
+              "Resource": "arn:aws:route53:::hostedzone/${var.zone_id}"
             }
     ]
 }
