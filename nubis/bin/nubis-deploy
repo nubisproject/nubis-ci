@@ -1,24 +1,22 @@
 #!/bin/bash
 
 if [ "$ami" = "" ]; then
-  ami=`cat amis.txt | grep $region | cut -d: -f2`
+  ami=`cat artifacts/amis.txt | grep $region | cut -d: -f2`
 fi
 
-if [ "$aim_role" = "" ]; then
-  iam_role=`curl -s http://localhost:8500/v1/kv/environments/$environment/global/meta/DeployRole?raw=1`
-fi
+echo "Deploying AMI $ami into $environment/$region"
 
-echo "Deploying AMI $ami with role $iam_role into $environment/$region"
-
-CF_TEMPLATE=$WORKSPACE/nubis/cloudformation/main.json
+CF_TEMPLATE=$WORKSPACE/artifacts/main.json
 PLAYBOOK=$WORKSPACE/../ansible.yaml
 VARIABLES=$WORKSPACE/../vars.yaml
 
+FULL_STACK_NAME=$stack_name-$environment
+
 if [ -f $CF_TEMPLATE ]; then
 echo "Running CloudFormation"
-sts $iam_role ansible-playbook -i localhost, \
+ansible-playbook -i localhost, \
   $PLAYBOOK \
-  -e stack_name=$stack_name \
+  -e stack_name=$FULL_STACK_NAME \
   -e owner=$owner \
   -e service_name=$service_name \
   -e key_name=$key_name \
@@ -30,4 +28,4 @@ sts $iam_role ansible-playbook -i localhost, \
 fi
 
 echo "Injecting into Consul"
-PROJECT_NAME=$service_name NUBIS_ENVIRONMENT=$environment CONSUL_ENDPOINT="ui.$region.consul.$environment.nubis.allizom.org" AWS_DEFAULT_REGION=$region sts $iam_role nubis-consul --stack-name $stack_name get-and-update
+PROJECT_NAME=$service_name NUBIS_ENVIRONMENT=$environment CONSUL_ENDPOINT="ui.$region.consul.$environment.nubis.allizom.org" AWS_DEFAULT_REGION=$region nubis-consul --stack-name $FULL_STACK_NAME get-and-update

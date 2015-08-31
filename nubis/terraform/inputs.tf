@@ -1,6 +1,5 @@
 variable "aws_access_key" {}
 variable "aws_secret_key" {}
-variable "iam_instance_profile" {}
 
 variable "release" {}
 
@@ -58,11 +57,6 @@ variable "zone_id" {
   description = "ID of the zone for the project"
 }
 
-variable "s3_bucket_name" {
-  description = "Name of the S3 bucket to store artifacts into"
-  default = "nubis-ci"
-}
-
 variable "elb_subnet_id" {
   default = ""
 }
@@ -79,3 +73,14 @@ variable "shared_services_security_group_id" {
   description = "ID of that SG"
 }
 
+variable "public_subnets" {
+  description = "Public Subnets IDs, comma-separated"
+}
+
+variable "private_subnets" {
+  description = "Private Subnets IDs, comma-separated"
+}
+
+variable "account_name" {
+  description = "Name of the AWS account"
+}
