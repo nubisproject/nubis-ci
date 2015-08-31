@@ -308,7 +308,8 @@ resource "aws_iam_role_policy" "ci_deploy" {
                 "route53:CreateHostedZone",
                 "route53:GetChange",
                 "route53:DeleteHostedZone",
-                "route53:ListHostedZones"
+                "route53:ListHostedZones",
+                "s3:*"
               ],
               "Resource": "*"
             }
