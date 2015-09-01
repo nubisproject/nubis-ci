@@ -61,6 +61,7 @@ mkdir artifacts
       <command>cat ../builds/$BUILD_NUMBER/log | grep &apos;,artifact,&apos; | grep &apos;,id,&apos; | cut -d, -f6 | sed -e&apos;s/%!(PACKER_COMMA)/\n/&apos; &gt; artifacts/amis.txt
 if [ -d nubis/cloudformation ]; then
   rsync -av nubis/cloudformation/ artifacts/
+  rsync -av ../builds/$BUILD_NUMBER/log artifacts/log
 fi
 </command>
     </hudson.tasks.Shell>
