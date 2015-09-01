@@ -1,5 +1,25 @@
 # Change Log
 
+## [v1.0.0](https://github.com/nubisproject/nubis-ci/tree/v1.0.0) (2015-08-31)
+
+[Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v0.9.0...v1.0.0)
+
+**Implemented enhancements:**
+
+- CI needs to be able to deploy in the new multiple-VPCs in one account [\#84](https://github.com/Nubisproject/nubis-ci/issues/84)
+
+**Closed issues:**
+
+- Rename KeyName to SSHKeyName [\#63](https://github.com/Nubisproject/nubis-ci/issues/63)
+
+**Merged pull requests:**
+
+- Convert to the one-app-per-account layout [\#88](https://github.com/Nubisproject/nubis-ci/pull/88) ([gozer](https://github.com/gozer))
+
+- A big PR to allow CI to publish to the multiple-vpcs-per-account layout [\#86](https://github.com/Nubisproject/nubis-ci/pull/86) ([gozer](https://github.com/gozer))
+
+- pin at nubis-builder v0.9.0 [\#70](https://github.com/Nubisproject/nubis-ci/pull/70) ([gozer](https://github.com/gozer))
+
 ## [v0.9.0](https://github.com/nubisproject/nubis-ci/tree/v0.9.0) (2015-07-22)
 
 **Closed issues:**
@@ -15,6 +35,8 @@
 - move all jenkins setup into puppet [\#9](https://github.com/Nubisproject/nubis-ci/issues/9)
 
 **Merged pull requests:**
+
+- Updating changelog for v0.9.0 release [\#69](https://github.com/Nubisproject/nubis-ci/pull/69) ([gozer](https://github.com/gozer))
 
 - Upgrade terraform to 0.6.0, fixes \#66 [\#68](https://github.com/Nubisproject/nubis-ci/pull/68) ([gozer](https://github.com/gozer))
 
