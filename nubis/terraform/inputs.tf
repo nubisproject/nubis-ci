@@ -84,3 +84,7 @@ variable "private_subnets" {
 variable "account_name" {
   description = "Name of the AWS account"
 }
+
+variable "s3_bucket_name" {
+  description = "Name of the S3 Bucket to store artifacts in"
+}

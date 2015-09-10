@@ -89,6 +89,7 @@ resource "aws_security_group" "ci" {
 }
 
 resource "aws_autoscaling_group" "ci" {
+  lifecycle { create_before_destroy = true }
   vpc_zone_identifier = ["${split(",", var.private_subnets)}"]
 
   name = "ci-${var.project}"
@@ -150,7 +151,8 @@ resource "aws_route53_record" "ci" {
 }
 
 resource "aws_s3_bucket" "ci_artifacts" {
-    bucket = "ci-${var.project}-${var.region}"
+    lifecycle { create_before_destroy = true }
+    bucket = "${var.s3_bucket_name}"
     acl = "private"
 
     tags = {
@@ -278,6 +280,7 @@ resource "aws_iam_role_policy" "ci_deploy" {
                 "autoscaling:DescribeScheduledActions",
                 "autoscaling:TerminateInstanceInAutoScalingGroup",
                 "autoscaling:SetDesiredCapacity",
+                "autoscaling:PutScalingPolicy",
                 "cloudformation:*",
                 "ec2:createTags",
                 "ec2:CreateSecurityGroup",
@@ -287,6 +290,8 @@ resource "aws_iam_role_policy" "ci_deploy" {
                 "ec2:DescribeAccountAttributes",
                 "ec2:AuthorizeSecurityGroupIngress",
                 "ec2:DeleteSecurityGroup",
+                "ec2:allocateAddress",
+                "ec2:describeAddresses",
                 "elasticache:CreateCacheSubnetGroup",
                 "elasticache:DeleteCacheSubnetGroup",
                 "elasticache:DescribeCacheSubnetGroups",
@@ -305,9 +310,15 @@ resource "aws_iam_role_policy" "ci_deploy" {
                 "rds:DescribeDBSubnetGroups",
                 "rds:DeleteDBInstance",
                 "rds:DescribeDBInstances",
+                "rds:ModifyDBInstance",
                 "route53:GetChange",
                 "route53:ListHostedZones",
                 "route53:GetHostedZone",
+                "cloudwatch:PutMetricAlarm",
+                "iam:CreateRole",
+                "iam:CreateInstanceProfile",
+                "iam:AddRoleToInstanceProfile",
+                "iam:PutRolePolicy",
                 "s3:*",
                 "lambda:InvokeFunction"
               ],
