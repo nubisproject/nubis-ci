@@ -49,7 +49,7 @@
         <hudson.model.StringParameterDefinition>
           <name>owner</name>
           <description></description>
-          <defaultValue>gozer@mozilla.com</defaultValue>
+          <defaultValue>%%NUBIS_CI_EMAIL%%</defaultValue>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>service_name</name>
@@ -114,7 +114,7 @@
   </builders>
   <publishers>
     <hudson.tasks.Mailer plugin="mailer@1.11">
-      <recipients>gozer@mozilla.com</recipients>
+      <recipients>%%NUBIS_CI_EMAIL%%</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>

@@ -92,7 +92,7 @@ fi
       <userMetadata/>
     </hudson.plugins.s3.S3BucketPublisher>
     <hudson.tasks.Mailer plugin="mailer@1.11">
-      <recipients>gozer@mozilla.com</recipients>
+      <recipients>%%NUBIS_CI_EMAIL%%</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
