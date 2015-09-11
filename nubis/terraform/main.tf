@@ -137,6 +137,7 @@ NUBIS_GIT_REPO=${var.git_repo}
 NUBIS_CI_PASSWORD=${var.admin_password}
 NUBIS_CI_BUCKET=${aws_s3_bucket.ci_artifacts.id}
 NUBIS_CI_BUCKET_REGION=${var.region}
+NUBIS_CI_EMAIL=${var.email}
 EOF
 
     depends_on = ["aws_route53_record.ci"]

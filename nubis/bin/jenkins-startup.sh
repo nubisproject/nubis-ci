@@ -42,6 +42,9 @@ perl -pi -e "s[%%NUBIS_PROJECT_URL%%][$NUBIS_PROJECT_URL]g" /var/lib/jenkins/jen
 perl -pi -e "s[%%NUBIS_GIT_REPO%%][$NUBIS_GIT_REPO]g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml
 perl -pi -e "s[%%NUBIS_CI_NAME%%][$NUBIS_CI_NAME]g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml
 
+# Owner e-mail
+perl -pi -e "s[%%NUBIS_CI_EMAIL%%][$NUBIS_CI_EMAIL]g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml /var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml
+
 ## Configure S3 plugin
 perl -pi -e "s[%%NUBIS_CI_BUCKET%%][$NUBIS_CI_BUCKET]g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml 
 perl -pi -e "s[%%NUBIS_CI_BUCKET_REGION%%][$NUBIS_CI_BUCKET_REGION]g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml 

@@ -88,3 +88,8 @@ variable "account_name" {
 variable "s3_bucket_name" {
   description = "Name of the S3 Bucket to store artifacts in"
 }
+
+variable "email" {
+  description = "e-mail to send build notifications to"
+  default = "gozer@mozilla.com"
+}
