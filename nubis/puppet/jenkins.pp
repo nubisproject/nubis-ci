@@ -76,6 +76,10 @@ jenkins::plugin { "promoted-builds":
     version => "2.21"
 }
 
+jenkins::plugin { "pegdown-formatter":
+    version => "1.3"
+}
+
 # This is for librarian-puppet, below, and somewhat ugly
 package { "ruby-dev":
   ensure => "1:1.9.3.4",
