@@ -82,7 +82,7 @@ package { "ruby-dev":
 }
 
 package { "librarian-puppet":
-  ensure => "2.2.1"
+  ensure => "2.2.1",
   provider => "gem",
   require => [
     Package["ruby-dev"],
