@@ -1,7 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>%%NUBIS_CI_NAME%%</description>
+  <description>##%%NUBIS_CI_NAME%%
+#WARNING WARNING
+This is a deployment job that can impact production, **use with care**
+</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.model.ParametersDefinitionProperty>
