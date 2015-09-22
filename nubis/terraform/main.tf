@@ -282,6 +282,7 @@ resource "aws_iam_role_policy" "ci_deploy" {
                 "autoscaling:TerminateInstanceInAutoScalingGroup",
                 "autoscaling:SetDesiredCapacity",
                 "autoscaling:PutScalingPolicy",
+                "autoscaling:CreateOrUpdateTags",
                 "cloudformation:*",
                 "ec2:createTags",
                 "ec2:CreateSecurityGroup",
@@ -320,6 +321,9 @@ resource "aws_iam_role_policy" "ci_deploy" {
                 "iam:CreateInstanceProfile",
                 "iam:AddRoleToInstanceProfile",
                 "iam:PutRolePolicy",
+                "iam:RemoveRoleFromInstanceProfile",
+                "iam:DeleteRole",
+                "iam:DeleteRolePolicy",
                 "s3:*",
                 "lambda:InvokeFunction"
               ],
