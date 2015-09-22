@@ -28,7 +28,8 @@ ansible-playbook -i localhost, \
   -e ami=$ami \
   -e template=$CF_TEMPLATE \
   -e @$VARIABLES
-fi
 
 echo "Injecting into Consul"
 PROJECT_NAME=$service_name NUBIS_ENVIRONMENT=$environment CONSUL_ENDPOINT="public.consul.$environment.$region.$NUBIS_ACCOUNT.$NUBIS_DOMAIN" AWS_DEFAULT_REGION=$region nubis-consul --stack-name $FULL_STACK_NAME get-and-update
+
+fi
