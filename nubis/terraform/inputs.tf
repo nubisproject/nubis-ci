@@ -75,6 +75,10 @@ variable "shared_services_security_group_id" {
   description = "ID of that SG"
 }
 
+variable "ssh_security_group_id" {
+  description = "ID of that SG"
+}
+
 variable "public_subnets" {
   description = "Public Subnets IDs, comma-separated"
 }

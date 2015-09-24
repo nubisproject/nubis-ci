@@ -75,7 +75,7 @@ resource "aws_security_group" "ci" {
       to_port = 22
       protocol = "tcp"
       security_groups = [
-        "${var.shared_services_security_group_id}"
+        "${var.ssh_security_group_id}"
       ]
   }
 
