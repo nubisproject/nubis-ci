@@ -14,7 +14,7 @@ variable "nubis_domain" {
 }
 
 variable "ami" {
-  default = "ami-f1dcd1c1"
+  default = "ami-85e49be0"
   description = "Nubis CI AMI to launch"
 }
 
@@ -25,10 +25,12 @@ variable "region" {
 
 variable "release" {
   description = "Release number of the architecture"
+  default = 0
 }
 
 variable "build" {
   description = "Build number of the architecture"
+  default = 91
 }
 
 variable "admin_password" {
