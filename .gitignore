@@ -1,3 +1,8 @@
+nubis/librarian-puppet.tar.gz
+nubis/librarian-puppet
+nubis/Puppetfile.lock
+nubis/.tmp
+nubis/.librarian
 terraform.tfvars
 terraform.tfstate
 terraform.tfstate.backup
