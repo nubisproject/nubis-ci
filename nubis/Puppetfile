@@ -1,0 +1,9 @@
+forge "https://forgeapi.puppetlabs.com"
+
+# Jenkins Dependencies
+mod 'puppetlabs/apt', '1.8.0'
+mod 'puppetlabs/java','1.4.2'
+mod 'darin/zypprepo', '1.0.2'
+
+# Jenkins itself
+mod 'rtyler/jenkins', '1.5.0'
