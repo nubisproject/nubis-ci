@@ -1,11 +1,7 @@
 #XXX: Needs released version
 
-# Amazon Linux upgraded python3 and broke boto, so install awscli and dependencies the hard way
-package { "python3-pip":
-  ensure => present
-}->
-exec { "upgrade awscli":
-  command => "/usr/bin/pip3 install awscli",
+package { "awscli":
+  ensure => latest,
 }
 
 package { "rsync":
