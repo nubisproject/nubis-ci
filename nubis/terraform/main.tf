@@ -291,6 +291,7 @@ resource "aws_iam_role_policy" "ci_deploy" {
                 "ec2:DescribeSecurityGroups",
                 "ec2:DescribeAccountAttributes",
                 "ec2:AuthorizeSecurityGroupIngress",
+                "ec2:RevokeSecurityGroupIngress",
                 "ec2:DeleteSecurityGroup",
                 "ec2:allocateAddress",
                 "ec2:describeAddresses",
