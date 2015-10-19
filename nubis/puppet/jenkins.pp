@@ -125,7 +125,7 @@ python::pip { 'ansible':
 }
 
 wget::fetch { "download latest cloudformation ansible module (bugfix)":
-  source => 'https://raw.githubusercontent.com/ansible/ansible-modules-core/devel/cloud/amazon/cloudformation.py',
+  source => 'https://raw.githubusercontent.com/ansible/ansible-modules-core/e25605cd5bca003a5071aebbdaeb2887e8e5c659/cloud/amazon/cloudformation.py',
   destination => '/usr/local/lib/python2.7/dist-packages/ansible/modules/core/cloud/amazon/cloudformation.py',
   verbose => true,
   redownload => true, # The file already exists, we replace it
