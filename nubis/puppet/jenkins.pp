@@ -28,36 +28,46 @@ class { 'jenkins':
 #  check_interval => '10s',
 #}
 
-jenkins::plugin { "git" :
-    version => "2.3.5"
+## ADDITIONAL PLUGINS ##
+
+jenkins::plugin { "git":
+    version => "2.4.0"
 }
 
 jenkins::plugin { "github":
-    version => "1.11.3"
+    version => "1.14.0"
 }
 
 jenkins::plugin { "github-api":
-    version => "1.67"
+    version => "1.69"
 }
 
 jenkins::plugin { "multiple-scms":
-    version => "0.4"
+    version => "0.5"
 }
 
 jenkins::plugin { "parameterized-trigger":
-    version => "2.26"
+    version => "2.29"
 }
 
 jenkins::plugin { "s3":
-    version => "0.7"
+    version => "0.8"
+}
+
+jenkins::plugin { "plain-credentials":
+    version => "1.1"
+}
+
+jenkins::plugin { "aws-java-sdk":
+    version => "1.10.26"
 }
 
 jenkins::plugin { "copyartifact":
-    version => "1.35.1"
+    version => "1.36.1"
 }
 
 jenkins::plugin { "git-client" :
-    version => "1.17.1"
+    version => "1.19.0"
 }
 
 jenkins::plugin { "scm-api" :
@@ -65,15 +75,15 @@ jenkins::plugin { "scm-api" :
 }
 
 jenkins::plugin { "ansible" :
-    version => "0.2"
+    version => "0.3.1"
 }
 
 jenkins::plugin { "rebuild" :
-    version => "1.24"
+    version => "1.25"
 }
 
 jenkins::plugin { "promoted-builds":
-    version => "2.21"
+    version => "2.23"
 }
 
 jenkins::plugin { "pegdown-formatter":
