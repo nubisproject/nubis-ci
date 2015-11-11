@@ -10,7 +10,7 @@ nubis::discovery::service { 'jenkins':
 }
 
 class { 'jenkins':
-  version => "latest",
+  version => "1.638",
   configure_firewall => false,
 }
 
