@@ -1,0 +1,3 @@
+amazon-ebs-ubuntu:
+us-east-1: ami-0b763261
+us-west-2: ami-a72131c6
