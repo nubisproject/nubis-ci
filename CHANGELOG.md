@@ -36,6 +36,7 @@
 **Merged pull requests:**
 
 - Update AMI IDs file for v1.0.1 release [\#136](https://github.com/nubisproject/nubis-ci/pull/136) ([tinnightcap](https://github.com/tinnightcap))
+- switch to latest release of nubis-builder [\#138](https://github.com/nubisproject/nubis-ci/pull/138) ([gozer](https://github.com/gozer))
 - Fixes security issue by upgrading Jenkins [\#132](https://github.com/nubisproject/nubis-ci/pull/132) ([gozer](https://github.com/gozer))
 - Add more missing IAM privileges for CF deploys [\#129](https://github.com/nubisproject/nubis-ci/pull/129) ([gozer](https://github.com/gozer))
 - Update plugins [\#128](https://github.com/nubisproject/nubis-ci/pull/128) ([gozer](https://github.com/gozer))
