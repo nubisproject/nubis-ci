@@ -12,6 +12,11 @@ nubis::discovery::service { 'jenkins':
 class { 'jenkins':
   version => "1.639",
   configure_firewall => false,
+  config_hash => {
+    'JAVA_ARGS' => {
+      'value' => '-Djava.awt.headless=true -Dhudson.diyChunking=false'
+    },
+  },
 }
 
 # Will eventually need to pull this from the registry
