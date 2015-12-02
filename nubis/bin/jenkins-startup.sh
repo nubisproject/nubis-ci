@@ -54,15 +54,14 @@ perl -pi -e "s[%%NUBIS_CI_NAME%%][$NUBIS_CI_NAME]g" /var/lib/jenkins/jobs/$NUBIS
 # Owner e-mail
 sed -i -e"s/%%NUBIS_CI_EMAIL%%/$NUBIS_CI_EMAIL/g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml /var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml
 
+# GitHub Authentication
+perl -pi -e "s[%%NUBIS_CI_GITHUB_ADMINS%%][$NUBIS_CI_GITHUB_ADMINS]g" /var/lib/jenkins/config.xml
+perl -pi -e "s[%%NUBIS_CI_GITHUB_ORGANIZATIONS%%][$NUBIS_CI_GITHUB_ORGANIZATIONS]g" /var/lib/jenkins/config.xml
+perl -pi -e "s[%%NUBIS_CI_GITHUB_CLIENT_TOKEN%%][$NUBIS_CI_GITHUB_CLIENT_TOKEN]g" /var/lib/jenkins/config.xml
+perl -pi -e "s[%%NUBIS_CI_GITHUB_CLIENT_SECRET%%][$NUBIS_CI_GITHUB_CLIENT_SECRET]g" /var/lib/jenkins/config.xml
+
 # Make sure jenkins owns this stuff
 chown -R jenkins:jenkins /var/lib/jenkins
-
-if [ -f /etc/default/jenkins ]; then
-  if [ "$NUBIS_CI_PASSWORD" ]; then
-    JENKINS_ARGS="--argumentsRealm.passwd.admin=$NUBIS_CI_PASSWORD  --argumentsRealm.roles.admin=admin"
-    perl -pi -e"s[^JENKINS_ARGS=\"(.*)\"][JENKINS_ARGS=\"\$1 $JENKINS_ARGS\"]g" /etc/default/jenkins
-  fi
-fi
 
 cat <<EOF | tee /opt/nubis-builder/secrets/variables.json
 {

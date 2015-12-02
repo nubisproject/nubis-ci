@@ -7,8 +7,30 @@
   <numExecutors>2</numExecutors>
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
-  <authorizationStrategy class="hudson.security.FullControlOnceLoggedInAuthorizationStrategy"/>
-  <securityRealm class="hudson.security.LegacySecurityRealm"/>
+  <authorizationStrategy class="org.jenkinsci.plugins.GithubAuthorizationStrategy" plugin="github-oauth@0.22.2">
+    <rootACL>
+      <organizationNameList class="linked-list">
+        <string>%%NUBIS_CI_GITHUB_ORGANIZATIONS%%</string>
+      </organizationNameList>
+      <adminUserNameList class="linked-list">
+        <string>%%NUBIS_CI_GITHUB_ADMINS%%</string>
+      </adminUserNameList>
+      <authenticatedUserReadPermission>true</authenticatedUserReadPermission>
+      <useRepositoryPermissions>true</useRepositoryPermissions>
+      <authenticatedUserCreateJobPermission>false</authenticatedUserCreateJobPermission>
+      <allowGithubWebHookPermission>true</allowGithubWebHookPermission>
+      <allowCcTrayPermission>true</allowCcTrayPermission>
+      <allowAnonymousReadPermission>true</allowAnonymousReadPermission>
+      <allowAnonymousJobStatusPermission>true</allowAnonymousJobStatusPermission>
+    </rootACL>
+  </authorizationStrategy>
+  <securityRealm class="org.jenkinsci.plugins.GithubSecurityRealm">
+    <githubWebUri>https://github.com</githubWebUri>
+    <githubApiUri>https://api.github.com</githubApiUri>
+    <clientID>%%NUBIS_CI_GITHUB_CLIENT_TOKEN%%</clientID>
+    <clientSecret>%%NUBIS_CI_GITHUB_CLIENT_SECRET%%</clientSecret>
+    <oauthScopes>read:org,user:email</oauthScopes>
+  </securityRealm>
   <disableRememberMe>false</disableRememberMe>
   <projectNamingStrategy class="jenkins.model.ProjectNamingStrategy$DefaultProjectNamingStrategy"/>
   <workspaceDir>${ITEM_ROOTDIR}/workspace</workspaceDir>
