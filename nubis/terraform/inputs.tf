@@ -99,3 +99,7 @@ variable "email" {
   description = "e-mail to send build notifications to"
   default = "gozer@mozilla.com"
 }
+
+variable "https_cert_arn" {
+  description = "ARN of the SSL cert to use for https traffic"
+}

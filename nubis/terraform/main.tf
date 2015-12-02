@@ -13,8 +13,9 @@ resource "aws_elb" "ci" {
   listener {
     instance_port = 8080
     instance_protocol = "http"
-    lb_port = 80
-    lb_protocol = "http"
+    lb_port = 443
+    lb_protocol = "https"
+    ssl_certificate_id = "${var.https_cert_arn}"
   }
 
   health_check {
@@ -40,8 +41,8 @@ resource "aws_security_group" "elb" {
   vpc_id = "${var.vpc_id}"
 
   ingress {
-      from_port = 80
-      to_port = 80
+      from_port = 443
+      to_port = 443
       protocol = "tcp"
       cidr_blocks = ["0.0.0.0/0"]
   }
