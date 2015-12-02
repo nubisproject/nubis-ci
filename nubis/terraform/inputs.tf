@@ -14,7 +14,7 @@ variable "nubis_domain" {
 }
 
 variable "ami" {
-  default = "ami-85e49be0"
+  default = "ami-1f551875"
   description = "Nubis CI AMI to launch"
 }
 
@@ -30,11 +30,25 @@ variable "release" {
 
 variable "build" {
   description = "Build number of the architecture"
-  default = 91
+  default = 122
 }
 
-variable "admin_password" {
-  description = "Password to access CI"
+variable "admins" {
+  description = "GitHub userids that should be admins, comma separated"
+  default = "gozer"
+}
+
+variable "organizations" {
+  description = "GitHub organizations that should be build users, comma separated"
+  default = "nubisproject"
+}
+
+variable "github_oauth_client_id" {
+  description = "GitHub OAuth client id"
+}
+
+variable "github_oauth_client_secret" {
+  description = "GitHub OAuth client secret"
 }
 
 variable "git_repo" {

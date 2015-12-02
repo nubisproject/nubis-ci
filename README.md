@@ -5,6 +5,15 @@
 0. `git clone git@github.com:nubisproject/nubis-builder.git`
 0. Refer to README.md in nubis-builder on how to build this project.
 
+## Github Authentication
+
+You need to create a new OAuth application by going to : https://github.com/settings/applications/new
+
+Set the homepage to http://ci.<application>.admin.us-east-1.<account>.nubis.allizom.org/
+Set the callback URL to http://ci.<application>.admin.us-east-1.<account>.nubis.allizom.org/securityRealm/finishLogin
+
+And use the provided Client ID and Client Secret as inputs, respectively: github_oauth_client_id and github_oauth_client_secret
+
 ## File structure
 
 ##### `nubis`

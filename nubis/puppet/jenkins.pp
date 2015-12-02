@@ -47,6 +47,10 @@ jenkins::plugin { "github-api":
     version => "1.69"
 }
 
+jenkins::plugin { "github-oauth":
+    version => "0.22.2"
+}
+
 jenkins::plugin { "multiple-scms":
     version => "0.5"
 }

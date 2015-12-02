@@ -135,10 +135,13 @@ NUBIS_DOMAIN=${var.nubis_domain}
 NUBIS_PROJECT_URL=http://${aws_route53_record.ci.fqdn}/
 NUBIS_CI_NAME=${var.project}
 NUBIS_GIT_REPO=${var.git_repo}
-NUBIS_CI_PASSWORD=${var.admin_password}
 NUBIS_CI_BUCKET=${aws_s3_bucket.ci_artifacts.id}
 NUBIS_CI_BUCKET_REGION=${var.region}
 NUBIS_CI_EMAIL=${var.email}
+NUBIS_CI_GITHUB_ADMINS=${var.admins}
+NUBIS_CI_GITHUB_ORGANIZATIONS=${var.organizations}
+NUBIS_CI_GITHUB_CLIENT_TOKEN=${var.github_oauth_client_id}
+NUBIS_CI_GITHUB_CLIENT_SECRET=${var.github_oauth_client_secret}
 EOF
 
     depends_on = ["aws_route53_record.ci"]
