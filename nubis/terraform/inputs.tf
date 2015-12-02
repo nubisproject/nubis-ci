@@ -114,3 +114,6 @@ variable "email" {
   default = "gozer@mozilla.com"
 }
 
+variable "https_cert_arn" {
+  description = "ARN of the SSL cert to use for https traffic"
+}
