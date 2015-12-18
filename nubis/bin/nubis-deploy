@@ -29,7 +29,28 @@ ansible-playbook -i localhost, \
   -e template=$CF_TEMPLATE \
   -e @$VARIABLES
 
+export CONSUL_ENDPOINT
+CONSUL_ENDPOINT="public.consul.$environment.$region.$NUBIS_ACCOUNT.$NUBIS_DOMAIN"
+
 echo "Injecting into Consul"
-PROJECT_NAME=$service_name NUBIS_ENVIRONMENT=$environment CONSUL_ENDPOINT="public.consul.$environment.$region.$NUBIS_ACCOUNT.$NUBIS_DOMAIN" nubis-consul --quiet --region $region --stack-name $FULL_STACK_NAME get-and-update
+PROJECT_NAME=$service_name NUBIS_ENVIRONMENT=$environment nubis-consul --quiet --region $region --stack-name $FULL_STACK_NAME get-and-update
+
+## XXX: Needs to move to its own tool
+## XXX: limit to nubis/proxy for the time being
+if [ -d nubis/proxy ]; then
+  CONFIG_INJECT=proxy
+  INJECT_PREFIX="nubis-$CONFIG_INJECT-$environment/$environment/config"
+
+  echo "Injecting $CONFIG_INJECT rules into $INJECT_PREFIX"
+
+  # Make sure the container config/ key is present
+  curl --insecure -qfs -X PUT "https://$CONSUL_ENDPOINT/v1/kv/$INJECT_PREFIX/" >/dev/null
+
+  for r in $(find nubis/$CONFIG_INJECT/ -type f | grep -v \.md | cut -d/ -f3); do
+    echo -n "$r "
+    curl --insecure -qfs -X PUT -d "@nubis/$CONFIG_INJECT/$r" "https://$CONSUL_ENDPOINT/v1/kv/$INJECT_PREFIX/$r"
+    echo
+  done
+fi
 
 fi
