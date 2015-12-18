@@ -3,7 +3,7 @@
    {
     "type": "shell",
     "inline" : ["sudo apt-get update"],
-    "order": 20
+    "order": 5
   },
   {
     "type": "file",
