@@ -254,7 +254,8 @@ resource "aws_iam_role_policy" "ci_build" {
                 "ec2:DescribeImages",
                 "ec2:RegisterImage",
                 "ec2:CreateTags",
-                "ec2:ModifyImageAttribute"
+                "ec2:ModifyImageAttribute",
+                "ec2:DescribeRegions"
               ],
               "Resource": "*"
             }
