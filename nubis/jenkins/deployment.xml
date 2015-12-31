@@ -14,8 +14,7 @@ This is a deployment job that can impact production, **use with care**
           <description></description>
           <choices class="java.util.Arrays$ArrayList">
             <a class="string-array">
-              <string>us-east-1</string>
-              <string>us-west-2</string>
+              %%REGIONS%%
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
