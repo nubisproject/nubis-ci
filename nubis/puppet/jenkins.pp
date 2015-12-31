@@ -59,6 +59,9 @@ jenkins::plugin { "parameterized-trigger":
     version => "2.29"
 }
 
+jenkins::plugin { "jackson2-api":
+    version => "0.8"
+}
 jenkins::plugin { "s3":
     version => "0.8"
 }
