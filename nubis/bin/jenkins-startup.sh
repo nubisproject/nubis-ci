@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Bootstrap the update service, oterwise, it's on a schedule, so make sure we are
 # updated from boot time
@@ -56,6 +56,15 @@ perl -pi -e "s[%%NUBIS_CI_BUCKET_REGION%%][$NUBIS_CI_BUCKET_REGION]g" /var/lib/j
 cp /etc/nubis.d/jenkins-deployment-config.xml /var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml
 perl -pi -e "s[%%NUBIS_GIT_REPO%%][$NUBIS_GIT_REPO]g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml
 perl -pi -e "s[%%NUBIS_CI_NAME%%][$NUBIS_CI_NAME]g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml
+
+# Discover available regions
+  # All regions according to AWS (US only), with our own first
+  REGIONS=($AWS_REGION $(aws --region "$AWS_REGION" ec2 describe-regions | jq -r '.Regions[] | .RegionName' | grep -E "^us-" | grep -v "$AWS_REGION" | sort))
+  # build a XML chunk
+  for region in ${REGIONS[*]}; do
+    REGIONS_STRING="$REGIONS_STRING<string>$region</string>"
+  done
+perl -pi -e"s[%%REGIONS%%][$REGIONS_STRING]g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml
 
 # Owner e-mail
 sed -i -e"s/%%NUBIS_CI_EMAIL%%/$NUBIS_CI_EMAIL/g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml /var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml
