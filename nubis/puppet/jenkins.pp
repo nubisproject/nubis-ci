@@ -36,15 +36,15 @@ class { 'jenkins':
 ## ADDITIONAL PLUGINS ##
 
 jenkins::plugin { "git":
-    version => "2.4.0"
+    version => "2.4.1"
 }
 
 jenkins::plugin { "github":
-    version => "1.14.0"
+    version => "1.14.2"
 }
 
 jenkins::plugin { "github-api":
-    version => "1.69"
+    version => "1.71"
 }
 
 jenkins::plugin { "github-oauth":
@@ -68,23 +68,23 @@ jenkins::plugin { "plain-credentials":
 }
 
 jenkins::plugin { "aws-java-sdk":
-    version => "1.10.26"
+    version => "1.10.42"
 }
 
 jenkins::plugin { "copyartifact":
-    version => "1.36.1"
+    version => "1.37"
 }
 
 jenkins::plugin { "git-client" :
-    version => "1.19.0"
+    version => "1.19.1"
 }
 
 jenkins::plugin { "scm-api" :
-    version => "0.2"
+    version => "1.0"
 }
 
 jenkins::plugin { "ansible" :
-    version => "0.3.1"
+    version => "0.4"
 }
 
 jenkins::plugin { "rebuild" :
@@ -92,7 +92,7 @@ jenkins::plugin { "rebuild" :
 }
 
 jenkins::plugin { "promoted-builds":
-    version => "2.23"
+    version => "2.24.1"
 }
 
 jenkins::plugin { "pegdown-formatter":
