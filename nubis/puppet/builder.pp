@@ -28,7 +28,7 @@ vcsrepo { "/opt/nubis-builder":
 
 # XXX: need to move to puppet-packer
 staging::file { 'packer.zip':
-  source => "https://dl.bintray.com/mitchellh/packer/packer_0.8.2_linux_amd64.zip"
+  source => "https://dl.bintray.com/mitchellh/packer/packer_0.8.6_linux_amd64.zip"
 } ->
 staging::extract { 'packer.zip':
   target  => "/usr/local/bin",
