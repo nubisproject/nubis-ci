@@ -22,6 +22,12 @@ eval `curl -fq http://169.254.169.254/latest/user-data`
 mkdir -p /var/lib/jenkins/jobs/$NUBIS_CI_NAME-build
 mkdir -p /var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment
 
+# Security (http://jenkins-ci.org/security-144)
+mkdir -p /var/lib/jenkins/secrets
+echo false > /var/lib/jenkins/secrets/slave-to-master-security-kill-switch
+chown root:root /var/lib/jenkins/secrets/slave-to-master-security-kill-switch
+chmod 644 /var/lib/jenkins/secrets/slave-to-master-security-kill-switch
+
 # Drop main configurations
 cp /etc/nubis.d/jenkins-config.xml /var/lib/jenkins/config.xml
 cp /etc/nubis.d/jenkins-location.xml /var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration.xml
