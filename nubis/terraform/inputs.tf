@@ -73,10 +73,6 @@ variable "zone_id" {
   description = "ID of the zone for the project"
 }
 
-variable "elb_subnet_id" {
-  default = ""
-}
-
 variable "vpc_id" {
   default = ""
 }
