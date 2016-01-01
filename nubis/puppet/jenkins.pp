@@ -117,11 +117,11 @@ package { "librarian-puppet":
 
 # These are Ubuntu specific versions, needs fixing, but not with/without latest ?
 package { "unzip":
-    ensure => "6.0-9ubuntu1",
+    ensure => "6.0-9ubuntu1.5",
 }
 
 package { "git":
-    ensure => "1:1.9.1-1",
+    ensure => "1:1.9.1-1ubuntu0.2",
 }
 
 package { "make":
