@@ -60,8 +60,13 @@ jenkins::plugin { "parameterized-trigger":
 }
 
 jenkins::plugin { "jackson2-api":
-    version => "0.8"
+    version => "2.5.4"
 }
+
+jenkins::plugin { "token-macro":
+    version => "1.12.1"
+}
+
 jenkins::plugin { "s3":
     version => "0.8"
 }
