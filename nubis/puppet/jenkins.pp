@@ -102,6 +102,10 @@ jenkins::plugin { "pegdown-formatter":
     version => "1.3"
 }
 
+jenkins::plugin { "thinBackup":
+    version => "1.7.4"
+}
+
 # This is for librarian-puppet, below, and somewhat ugly
 package { "ruby-dev":
   ensure => "1:1.9.3.4",
