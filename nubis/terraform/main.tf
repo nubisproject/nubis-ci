@@ -90,10 +90,10 @@ resource "aws_security_group" "ci" {
 }
 
 resource "aws_autoscaling_group" "ci" {
-  lifecycle { create_before_destroy = true }
   vpc_zone_identifier = ["${split(",", var.private_subnets)}"]
 
-  name = "ci-${var.project}"
+  # This is on purpose, when the LC changes, will force creation of a new ASG
+  name = "ci-${var.project} - ${aws_launch_configuration.ci.name}"
   
   load_balancers = [
    "${aws_elb.ci.name}"
@@ -124,7 +124,6 @@ resource "aws_launch_configuration" "ci" {
       "${var.internet_security_group_id}",
       "${var.shared_services_security_group_id}",
     ]
-    lifecycle { create_before_destroy = true }
     iam_instance_profile = "${aws_iam_instance_profile.ci.name}"
 
     user_data = <<EOF
@@ -156,7 +155,6 @@ resource "aws_route53_record" "ci" {
 }
 
 resource "aws_s3_bucket" "ci_artifacts" {
-    lifecycle { create_before_destroy = true }
     bucket = "${var.s3_bucket_name}"
     acl = "private"
 
