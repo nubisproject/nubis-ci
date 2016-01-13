@@ -151,7 +151,7 @@ python::pip { 'boto':
 }
 
 python::pip { 'ansible':
-  ensure => 'latest',
+  ensure => '1.9.4',
   require => Class['python'],
 }
 
