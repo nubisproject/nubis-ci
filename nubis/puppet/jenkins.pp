@@ -146,7 +146,7 @@ class { 'python':
 }
 
 python::pip { 'boto':
-  ensure => 'latest',
+  ensure => '2.38.0',
   require => Class['python'],
 }
 
