@@ -9,8 +9,8 @@
 
 You need to create a new OAuth application by going to : https://github.com/settings/applications/new
 
-Set the homepage to http://ci.<application>.admin.us-east-1.<account>.nubis.allizom.org/
-Set the callback URL to http://ci.<application>.admin.us-east-1.<account>.nubis.allizom.org/securityRealm/finishLogin
+Set the homepage to https://ci.<application>.admin.us-east-1.<account>.nubis.allizom.org/
+Set the callback URL to https://ci.<application>.admin.us-east-1.<account>.nubis.allizom.org/securityRealm/finishLogin
 
 And use the provided Client ID and Client Secret as inputs, respectively: github_oauth_client_id and github_oauth_client_secret
 
@@ -30,4 +30,3 @@ JSON files that describe the project, configure settings, configure provisioners
 
 ##### `nubis/terraform`
 Terraform deployment templates.
-
