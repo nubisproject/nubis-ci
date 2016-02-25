@@ -1,3 +1,16 @@
+resource "atlas_artifact" "nubis-ci" {
+  name = "nubisproject/nubis-ci"
+  type = "amazon.image"
+
+  metadata {
+        project_version = "${var.version}"
+    }
+}
+
+atlas {
+    name = "gozer/bugzilla-ci"
+}
+
 # Configure the AWS Provider
 provider "aws" {
     access_key = "${var.aws_access_key}"
@@ -109,14 +122,16 @@ resource "aws_autoscaling_group" "ci" {
 
   tag {
     key = "Name"
-    value = "CI server for ${var.project} (v/${var.release}.${var.build})"
+    value = "CI server for ${var.project} (${atlas_artifact.nubis-ci.metadata_full.project_version})"
     propagate_at_launch = true
   }
 
 }
 
 resource "aws_launch_configuration" "ci" {
-    image_id = "${var.ami}"
+    # Fugly hack to work around limitations of TFs atlas provider, unfortunately, this is the only known
+    # way to extract an AMI id by region from AWS, yuck
+    image_id = "${element(split(":", element(split(",", atlas_artifact.nubis-ci.id), lookup(var.atlas_region_map, var.region))), 1)}"
     instance_type = "m3.medium"
     key_name = "${var.key_name}"
     security_groups = [

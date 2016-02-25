@@ -1,8 +1,6 @@
 variable "aws_access_key" {}
 variable "aws_secret_key" {}
 
-variable "release" {}
-
 variable "environment" {
   description = "Name of the environment this deployment is for"
   default = "sandbox"
@@ -13,24 +11,9 @@ variable "nubis_domain" {
   default = "nubis.allizom.org"
 }
 
-variable "ami" {
-  default = "ami-1f551875"
-  description = "Nubis CI AMI to launch"
-}
-
 variable "region" {
   default = "us-east-1"
   description = "The region of AWS, for AMI lookups and where to launch"
-}
-
-variable "release" {
-  description = "Release number of the architecture"
-  default = 0
-}
-
-variable "build" {
-  description = "Build number of the architecture"
-  default = 122
 }
 
 variable "admins" {
@@ -112,4 +95,18 @@ variable "email" {
 
 variable "https_cert_arn" {
   description = "ARN of the SSL cert to use for https traffic"
+}
+
+variable "version" {
+  description = "Version of nubis-ci to deploy"
+}
+
+# Work around a limitation in TF, keep it an ordered list of
+# regions indexed at 0, must match what is being built as an
+# Artifact. WARNING: brittleness!
+variable "atlas_region_map" {
+  default = {
+    "us-east-1" = 0
+    "us-west-2" = 1
+  }
 }
