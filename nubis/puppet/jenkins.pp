@@ -10,7 +10,7 @@ nubis::discovery::service { 'jenkins':
 }
 
 class { 'jenkins':
-  version => "1.647",
+  version => "1.650",
   configure_firewall => false,
   config_hash => {
     'JAVA_ARGS' => {
