@@ -1,13 +1,12 @@
 {
   "variables": {
-    "automatic_version_bump": "1",
-    "automatic_version_verify": "1",
     "builders": [
       "amazon-ebs-ubuntu"
     ],
     "project_description": "Nubis - CI (jenkins)",
     "project_name": "nubis-ci",
-    "project_version": "0.122",
-    "source_ami_project_name": "nubis-base"
+    "project_version": "v1.0.1-sec1",
+    "source_ami_project_name": "nubis-base",
+    "source_ami_project_version": "v1.0.1-sec1"
   }
 }
