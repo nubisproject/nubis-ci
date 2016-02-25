@@ -8,10 +8,10 @@ package { "rsync":
   ensure => present
 }
 
-# XXX: We require jq 1.4, not in repos yet
+# XXX: We require jq 1.5, not in repos yet
 exec { "wget-jq":
   creates => "/usr/local/bin/jq",
-  command => "/usr/bin/curl -s -o /usr/local/bin/jq http://stedolan.github.io/jq/download/linux64/jq",
+  command => "/usr/bin/curl -Lfqs -o /usr/local/bin/jq https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64"
 } ->
 file { "/usr/local/bin/jq":
   owner => 0,
