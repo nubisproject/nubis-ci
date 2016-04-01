@@ -1,4 +1,5 @@
 resource "atlas_artifact" "nubis-ci" {
+  count = "${var.enabled}"
   name = "nubisproject/nubis-ci"
   type = "amazon.image"
 
@@ -21,6 +22,7 @@ provider "aws" {
 
 # Create a new load balancer
 resource "aws_elb" "ci" {
+  count = "${var.enabled}"
   name = "ci-elb-${var.project}"
   subnets = ["${split(",", var.public_subnets)}"]
 
@@ -49,6 +51,7 @@ resource "aws_elb" "ci" {
 }
 
 resource "aws_security_group" "elb" {
+  count = "${var.enabled}"
   name = "ci-elb-${var.project}"
   description = "Allow inbound traffic for CI ${var.project}"
 
@@ -71,6 +74,7 @@ resource "aws_security_group" "elb" {
 }
 
 resource "aws_security_group" "ci" {
+  count = "${var.enabled}"
   name = "ci-${var.project}"
   description = "Allow inbound traffic for CI ${var.project}"
 
@@ -104,6 +108,7 @@ resource "aws_security_group" "ci" {
 }
 
 resource "aws_autoscaling_group" "ci" {
+  count = "${var.enabled}"
   vpc_zone_identifier = ["${split(",", var.private_subnets)}"]
 
   # This is on purpose, when the LC changes, will force creation of a new ASG
@@ -130,6 +135,7 @@ resource "aws_autoscaling_group" "ci" {
 }
 
 resource "aws_launch_configuration" "ci" {
+  count = "${var.enabled}"
     # Fugly hack to work around limitations of TFs atlas provider, unfortunately, this is the only known
     # way to extract an AMI id by region from AWS, yuck
     image_id = "${element(split(":", element(split(",", atlas_artifact.nubis-ci.id), lookup(var.atlas_region_map, var.region))), 1)}"
@@ -163,6 +169,7 @@ EOF
 }
 
 resource "aws_route53_record" "ci" {
+  count = "${var.enabled}"
    zone_id = "${var.zone_id}"
    name = "ci.${var.project}.${var.environment}"
    type = "CNAME"
@@ -171,6 +178,7 @@ resource "aws_route53_record" "ci" {
 }
 
 resource "aws_s3_bucket" "ci_artifacts" {
+  count = "${var.enabled}"
     bucket = "${var.s3_bucket_name}"
     acl = "private"
 
@@ -181,6 +189,7 @@ resource "aws_s3_bucket" "ci_artifacts" {
 }
 
 resource "aws_iam_instance_profile" "ci" {
+  count = "${var.enabled}"
     name = "ci-${var.project}-${var.environment}-${var.region}"
     roles = [
       "${aws_iam_role.ci.name}",
@@ -188,6 +197,7 @@ resource "aws_iam_instance_profile" "ci" {
 }
 
 resource "aws_iam_role" "ci" {
+  count = "${var.enabled}"
     name = "ci-${var.project}-${var.environment}-${var.region}"
     path = "/"
     assume_role_policy = <<EOF
@@ -208,6 +218,7 @@ EOF
 }
 
 resource "aws_iam_role_policy" "ci_artifacts" {
+  count = "${var.enabled}"
     name    = "ci-${var.project}-${var.environment}-${var.region}-artifacts"
     role    = "${aws_iam_role.ci.id}"
     policy  = <<EOF
@@ -236,6 +247,7 @@ EOF
 }
 
 resource "aws_iam_role_policy" "ci_build" {
+  count = "${var.enabled}"
     name    = "ci-${var.project}-${var.environment}-${var.region}-build"
     role    = "${aws_iam_role.ci.id}"
     policy  = <<EOF
@@ -280,6 +292,7 @@ EOF
 }
 
 resource "aws_iam_role_policy" "ci_deploy" {
+  count = "${var.enabled}"
     name    = "ci-${var.project}-${var.environment}-${var.region}-deploy"
     role    = "${aws_iam_role.ci.id}"
     policy  = <<EOF

@@ -10,6 +10,10 @@ variable "nubis_domain" {
   default = "nubis.allizom.org"
 }
 
+variable "enabled" {
+  default = "1"
+}
+
 variable "region" {
   default = "us-east-1"
   description = "The region of AWS, for AMI lookups and where to launch"
