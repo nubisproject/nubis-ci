@@ -1,5 +1,4 @@
-variable "aws_access_key" {}
-variable "aws_secret_key" {}
+variable "aws_profile" {}
 
 variable "environment" {
   description = "Name of the environment this deployment is for"
