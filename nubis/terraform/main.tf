@@ -2,6 +2,8 @@ resource "atlas_artifact" "nubis-ci" {
   name = "nubisproject/nubis-ci"
   type = "amazon.image"
 
+  lifecycle { create_before_destroy = true }
+
   metadata {
         project_version = "${var.version}"
     }
