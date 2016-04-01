@@ -47,7 +47,12 @@ resource "aws_elb" "ci" {
   security_groups = [
     "${aws_security_group.elb.id}"
   ]
-
+    
+  tags = {
+    Region = "${var.region}"
+    Environment = "${var.environment}"
+    TechnicalContact = "${var.technical_contact}"
+  }
 }
 
 resource "aws_security_group" "elb" {
@@ -71,6 +76,11 @@ resource "aws_security_group" "elb" {
       cidr_blocks = ["0.0.0.0/0"]
   }
 
+  tags = {
+    Region = "${var.region}"
+    Environment = "${var.environment}"
+    TechnicalContact = "${var.technical_contact}"
+  }
 }
 
 resource "aws_security_group" "ci" {
@@ -105,6 +115,11 @@ resource "aws_security_group" "ci" {
       cidr_blocks = ["0.0.0.0/0"]
   }
 
+  tags = {
+    Region = "${var.region}"
+    Environment = "${var.environment}"
+    TechnicalContact = "${var.technical_contact}"
+  }
 }
 
 resource "aws_autoscaling_group" "ci" {
@@ -129,6 +144,11 @@ resource "aws_autoscaling_group" "ci" {
   tag {
     key = "Name"
     value = "CI server for ${var.project} (${atlas_artifact.nubis-ci.metadata_full.project_version})"
+    propagate_at_launch = true
+  }
+  tag {
+    key = "TechnicalContact"
+    value = "${var.technical_contact}"
     propagate_at_launch = true
   }
 
@@ -165,16 +185,15 @@ NUBIS_CI_GITHUB_CLIENT_TOKEN=${var.github_oauth_client_id}
 NUBIS_CI_GITHUB_CLIENT_SECRET=${var.github_oauth_client_secret}
 EOF
 
-    depends_on = ["aws_route53_record.ci"]
 }
 
 resource "aws_route53_record" "ci" {
   count = "${var.enabled}"
-   zone_id = "${var.zone_id}"
-   name = "ci.${var.project}.${var.environment}"
-   type = "CNAME"
-   ttl = "30"
-   records = ["dualstack.${aws_elb.ci.dns_name}"]
+  zone_id = "${var.zone_id}"
+  name = "ci.${var.project}.${var.environment}"
+  type = "CNAME"
+  ttl = "30"
+  records = ["dualstack.${aws_elb.ci.dns_name}"]
 }
 
 resource "aws_s3_bucket" "ci_artifacts" {
@@ -185,6 +204,7 @@ resource "aws_s3_bucket" "ci_artifacts" {
     tags = {
         Region = "${var.region}"
         Environment = "${var.environment}"
+        TechnicalContact = "${var.technical_contact}"
     }
 }
 
