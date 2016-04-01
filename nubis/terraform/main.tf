@@ -251,6 +251,7 @@ resource "aws_iam_role_policy" "ci_build" {
                 "ec2:DeleteVolume",
                 "ec2:CreateKeypair",
                 "ec2:DeleteKeypair",
+                "ec2:DescribeKeyPairs",
                 "ec2:CreateSecurityGroup",
                 "ec2:DeleteSecurityGroup",
                 "ec2:AuthorizeSecurityGroupIngress",
