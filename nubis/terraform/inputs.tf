@@ -101,6 +101,10 @@ variable "version" {
   description = "Version of nubis-ci to deploy"
 }
 
+variable "technical_contact" { 
+  default = "gozer@mozilla.com"
+}
+
 # Work around a limitation in TF, keep it an ordered list of
 # regions indexed at 0, must match what is being built as an
 # Artifact. WARNING: brittleness!
