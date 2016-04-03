@@ -156,9 +156,13 @@ resource "aws_autoscaling_group" "ci" {
 
 resource "aws_launch_configuration" "ci" {
   count = "${var.enabled}"
-    # Fugly hack to work around limitations of TFs atlas provider, unfortunately, this is the only known
-    # way to extract an AMI id by region from AWS, yuck
-    image_id = "${element(split(":", element(split(",", atlas_artifact.nubis-ci.id), lookup(var.atlas_region_map, var.region))), 1)}"
+
+    # Somewhat nasty, since Atlas doesn't have an elegant way to access the id for a region
+    # the id is "region:ami,region:ami,region:ami"
+    # so we split it all and find the index of the region
+    # add on, and pick that element
+    image_id = "${ element(split(",",replace(atlas_artifact.nubis-ci.id,":",",")) ,1 + index(split(",",replace(atlas_artifact.nubis-ci.id,":",",")), var.region)) }"
+
     instance_type = "m3.medium"
     key_name = "${var.key_name}"
     security_groups = [
@@ -199,6 +203,7 @@ resource "aws_route53_record" "ci" {
 resource "aws_s3_bucket" "ci_artifacts" {
   count = "${var.enabled}"
     bucket = "${var.s3_bucket_name}"
+
     acl = "private"
 
     tags = {
