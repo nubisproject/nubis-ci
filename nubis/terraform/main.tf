@@ -201,6 +201,8 @@ resource "aws_s3_bucket" "ci_artifacts" {
     bucket = "${var.s3_bucket_name}"
     acl = "private"
 
+    force_destroy = true
+
     tags = {
         Region = "${var.region}"
         Environment = "${var.environment}"
