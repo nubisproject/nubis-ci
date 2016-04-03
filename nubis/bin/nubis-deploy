@@ -4,7 +4,7 @@
 eval `curl -fqs http://169.254.169.254/latest/user-data`
 
 if [ "$ami" = "" ]; then
-  ami=`cat artifacts/amis.txt | grep $region | cut -d: -f2`
+  ami=`cat artifacts/amis.txt | grep $region | cut -d: -f2 | head -n1`
 fi
 
 echo "Deploying AMI $ami into $environment/$region"
