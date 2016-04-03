@@ -20,6 +20,54 @@ provider "aws" {
     region = "${var.region}"
 }
 
+resource "tls_private_key" "ci" {
+  count = "${var.enabled}"
+  lifecycle { create_before_destroy = true }
+
+  algorithm = "RSA"
+}
+
+resource "tls_self_signed_cert" "ci" {
+    count = "${var.enabled}"
+    lifecycle { create_before_destroy = true }
+    key_algorithm = "${tls_private_key.ci.algorithm}"
+    private_key_pem = "${tls_private_key.ci.private_key_pem}"
+
+    # Certificate expires after 1 year
+    validity_period_hours = 4380
+
+    # Generate a new certificate if Terraform is run within 30 days
+    # of the certificate's expiration time.
+    early_renewal_hours = 1020
+
+    # Reasonable set of uses for a server SSL certificate.
+    allowed_uses = [
+        "key_encipherment",
+        "digital_signature",
+        "server_auth",
+    ]
+
+    subject {
+        common_name = "ci.${var.project}.${var.environment}.${var.nubis_domain}"
+        organization = "Mozilla Nubis"
+    }
+}
+
+resource "aws_iam_server_certificate" "ci" {
+    count = "${var.enabled}"
+    lifecycle { create_before_destroy = true }
+
+    name_prefix = "ci.${var.project}.${var.environment}."
+
+    certificate_body = "${tls_self_signed_cert.ci.cert_pem}"
+    private_key = "${tls_private_key.ci.private_key_pem}"
+
+    provisioner "local-exec" {
+      command = "sleep 30"
+    }
+}
+
+
 # Create a new load balancer
 resource "aws_elb" "ci" {
   count = "${var.enabled}"
@@ -31,7 +79,7 @@ resource "aws_elb" "ci" {
     instance_protocol = "http"
     lb_port = 443
     lb_protocol = "https"
-    ssl_certificate_id = "${var.https_cert_arn}"
+    ssl_certificate_id = "${aws_iam_server_certificate.ci.arn}"
   }
 
   health_check {
