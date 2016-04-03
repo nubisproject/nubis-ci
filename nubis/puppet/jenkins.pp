@@ -130,7 +130,7 @@ package { "unzip":
 }
 
 package { "git":
-    ensure => "1:1.9.1-1ubuntu0.2",
+    ensure => "1:1.9.1-1ubuntu0.3",
 }
 
 package { "make":
