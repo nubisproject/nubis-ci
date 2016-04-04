@@ -10,10 +10,6 @@ resource "atlas_artifact" "nubis-ci" {
     }
 }
 
-atlas {
-    name = "gozer/bugzilla-ci"
-}
-
 # Configure the AWS Provider
 provider "aws" {
     profile = "${var.aws_profile}" 
