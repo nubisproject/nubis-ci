@@ -101,5 +101,5 @@ variable "version" {
 }
 
 variable "technical_contact" { 
-  default = "gozer@mozilla.com"
+  default = "infra-aws@mozilla.com"
 }
