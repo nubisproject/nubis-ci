@@ -1391,7 +1391,7 @@ package { 'libtasn1-6':
   ensure => '3.4-3ubuntu0.3',
 }
 package { 'libtdb1':
-  ensure => '1.2.12-1',
+  ensure => '1.3.8-0ubuntu0.14.04.1',
 }
 package { 'libterm-ui-perl':
   ensure => '0.42-1',
