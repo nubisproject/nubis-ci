@@ -30,6 +30,7 @@ chmod 644 /var/lib/jenkins/secrets/slave-to-master-security-kill-switch
 
 # Drop main configurations
 cp /etc/nubis.d/jenkins-config.xml /var/lib/jenkins/config.xml
+cp /etc/nubis.d/jenkins-proxy.xml /var/lib/jenkins/proxy.xml
 cp /etc/nubis.d/jenkins-location.xml /var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration.xml
 cp /etc/nubis.d/jenkins-s3bucketpublisher.xml /var/lib/jenkins/hudson.plugins.s3.S3BucketPublisher.xml
 

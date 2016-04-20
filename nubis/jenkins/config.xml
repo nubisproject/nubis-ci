@@ -62,7 +62,11 @@
           <default>
             <comparator class="hudson.util.CaseInsensitiveComparator"/>
           </default>
-          <int>1</int>
+          <int>3</int>
+          <string>http_proxy</string>
+          <string>http://proxy.service.consul:3128/</string>
+          <string>https_proxy</string>
+          <string>http://proxy.service.consul:3128/</string>
           <string>PATH</string>
           <string>/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/opt/nubis-builder/bin</string>
         </tree-map>

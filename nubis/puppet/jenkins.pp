@@ -10,11 +10,11 @@ nubis::discovery::service { 'jenkins':
 }
 
 class { 'jenkins':
-  version => "1.656",
+  version => "1.658",
   configure_firewall => false,
   config_hash => {
     'JAVA_ARGS' => {
-      'value' => '-Djava.awt.headless=true -Dhudson.diyChunking=false'
+      'value' => '-Djava.awt.headless=true -Dhudson.diyChunking=false -Dhttp.proxyHost=proxy.service.consul -Dhttp.proxyPort=3128 -Dhttps.proxyHost=proxy.service.consul -Dhttps.proxyPort=3128'
     },
   },
 }
