@@ -7,3 +7,4 @@ mod 'darin/zypprepo', '1.0.2'
 
 # Jenkins itself
 mod 'rtyler/jenkins', '1.6.1'
+mod 'camptocamp/archive', '0.8.1'
