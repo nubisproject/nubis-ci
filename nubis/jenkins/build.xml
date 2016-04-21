@@ -50,7 +50,13 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>nubis-builder build --packer-option &quot;-machine-readable&quot;</command>
+      <command>http_proxy=&quot;$HTTP_PROXY&quot;
+https_proxy=&quot;$HTTPS_PROXY&quot;
+
+export http_proxy
+export https_proxy
+
+nubis-builder build --packer-option &quot;-machine-readable&quot;</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
       <command>rm -rf artifacts
