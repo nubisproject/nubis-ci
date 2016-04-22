@@ -9,8 +9,11 @@ nubis::discovery::service { 'jenkins':
   interval => "30s",
 }
 
+package { 'daemon':
+  ensure => 'present'
+}->
 class { 'jenkins':
-  version => "2.0",
+  direct_download => "http://pkg.jenkins-ci.org/debian/binary/jenkins_1.658_all.deb",
   configure_firewall => false,
   config_hash => {
     'JAVA_ARGS' => {
