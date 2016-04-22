@@ -44,7 +44,7 @@ resource "tls_self_signed_cert" "ci" {
     ]
 
     subject {
-        common_name = "ci.${var.project}.${var.environment}.${var.region}.${var.nubis_domain}"
+        common_name = "ci.${var.project}.${var.environment}.${var.region}.${var.account_name}.${var.nubis_domain}"
         organization = "Mozilla Nubis"
     }
 }
@@ -53,7 +53,7 @@ resource "aws_iam_server_certificate" "ci" {
     count = "${var.enabled}"
     lifecycle { create_before_destroy = true }
 
-    name_prefix = "ci.${var.project}.${var.environment}.${var.region}."
+    name_prefix = "ci.${var.project}.${var.environment}.${var.region}.${var.account_name}."
 
     certificate_body = "${tls_self_signed_cert.ci.cert_pem}"
     private_key = "${tls_private_key.ci.private_key_pem}"
