@@ -56,7 +56,9 @@ https_proxy=&quot;$HTTPS_PROXY&quot;
 export http_proxy
 export https_proxy
 
+consulate kv set nubis-nat-admin/admin/config/IptablesAllowTCP &quot;[ 22 ]&quot;
 nubis-builder build --packer-option &quot;-machine-readable&quot;</command>
+consulate kv rm nubis-nat-admin/admin/config/IptablesAllowTCP
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
       <command>rm -rf artifacts
@@ -68,6 +70,9 @@ mkdir artifacts
 if [ -d nubis/cloudformation ]; then
   rsync -av nubis/cloudformation/ artifacts/
   rsync -av ../builds/$BUILD_NUMBER/log artifacts/log
+fi
+if [ -d nubis/builder/artifacts ]; then
+  rsync -av nubis/builder/artifacts/ artifacts/
 fi
 </command>
     </hudson.tasks.Shell>
