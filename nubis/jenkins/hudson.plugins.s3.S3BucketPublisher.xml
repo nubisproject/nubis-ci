@@ -4,8 +4,6 @@
     <hudson.plugins.s3.S3Profile>
       <name>nubis-ci</name>
       <accessKey></accessKey>
-      <proxyHost>proxy.service.consul</proxyHost>
-      <proxyPort>3128</proxyPort>
       <useRole>true</useRole>
       <signedUrlExpirySeconds>60</signedUrlExpirySeconds>
     </hudson.plugins.s3.S3Profile>
