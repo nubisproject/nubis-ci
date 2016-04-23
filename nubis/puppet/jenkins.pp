@@ -39,22 +39,22 @@ class { 'jenkins':
 ## ADDITIONAL PLUGINS ##
 
 jenkins::plugin { "git":
-    version => "2.4.1",
+    version => "2.4.4",
   update_url => 'https://updates.jenkins.io',
 }
 
 jenkins::plugin { "github":
-    version => "1.14.2",
+    version => "1.18.2",
   update_url => 'https://updates.jenkins.io',
 }
 
 jenkins::plugin { "github-api":
-    version => "1.71",
+    version => "1.75",
   update_url => 'https://updates.jenkins.io',
 }
 
 jenkins::plugin { "github-oauth":
-    version => "0.22.2",
+    version => "0.22.3",
   update_url => 'https://updates.jenkins.io',
 }
 
@@ -64,7 +64,7 @@ jenkins::plugin { "multiple-scms":
 }
 
 jenkins::plugin { "parameterized-trigger":
-    version => "2.29",
+    version => "2.30",
   update_url => 'https://updates.jenkins.io',
 }
 
@@ -79,7 +79,7 @@ jenkins::plugin { "token-macro":
 }
 
 jenkins::plugin { "s3":
-    version => "0.8",
+    version => "0.9.3",
   update_url => 'https://updates.jenkins.io',
 }
 
@@ -89,17 +89,17 @@ jenkins::plugin { "plain-credentials":
 }
 
 jenkins::plugin { "aws-java-sdk":
-    version => "1.10.42",
+    version => "1.10.45",
   update_url => 'https://updates.jenkins.io',
 }
 
 jenkins::plugin { "copyartifact":
-    version => "1.37",
+    version => "1.38",
   update_url => 'https://updates.jenkins.io',
 }
 
 jenkins::plugin { "git-client" :
-    version => "1.19.1",
+    version => "1.19.6",
   update_url => 'https://updates.jenkins.io',
 }
 
@@ -119,7 +119,7 @@ jenkins::plugin { "rebuild" :
 }
 
 jenkins::plugin { "promoted-builds":
-    version => "2.24.1",
+    version => "2.25",
   update_url => 'https://updates.jenkins.io',
 }
 
