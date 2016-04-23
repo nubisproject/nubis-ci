@@ -307,6 +307,7 @@ resource "aws_iam_role_policy" "ci_artifacts" {
             "Effect": "Allow",
             "Action": [
                 "s3:PutObject",
+                "s3:ListObject",
                 "s3:GetObject",
                 "s3:DeleteObject"
             ],
@@ -351,6 +352,7 @@ resource "aws_iam_role_policy" "ci_build" {
                 "ec2:DescribeSnapshots",
                 "ec2:DescribeImages",
                 "ec2:RegisterImage",
+                "ec2:DeregisterImage",
                 "ec2:CreateTags",
                 "ec2:ModifyImageAttribute",
                 "ec2:DescribeRegions"
