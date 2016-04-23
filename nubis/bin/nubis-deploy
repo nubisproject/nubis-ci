@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -l
 
 # Consume user-data
 eval `curl -fqs http://169.254.169.254/latest/user-data`
