@@ -50,12 +50,8 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>http_proxy=&quot;$HTTP_PROXY&quot;
-https_proxy=&quot;$HTTPS_PROXY&quot;
-
-export http_proxy
-export https_proxy
-
+      <command>
+. /etc/profile.d/proxy.sh
 consulate kv set nubis-nat-admin/admin/config/IptablesAllowTCP &quot;[ 22 ]&quot;
 nubis-builder build --packer-option &quot;-machine-readable&quot;</command>
 consulate kv rm nubis-nat-admin/admin/config/IptablesAllowTCP
