@@ -301,7 +301,7 @@ resource "aws_iam_role_policy" "ci_artifacts" {
             "Action": [
                 "s3:ListBucket"
             ],
-            "Resource": [ "arn:aws:s3:::${aws_s3_bucket.ci_artifacts.id}" ]
+            "Resource": [ "${aws_s3_bucket.ci_artifacts.arn}" ]
         },
         {
             "Effect": "Allow",
@@ -310,7 +310,7 @@ resource "aws_iam_role_policy" "ci_artifacts" {
                 "s3:GetObject",
                 "s3:DeleteObject"
             ],
-            "Resource": [ "arn:aws:s3:::${aws_s3_bucket.ci_artifacts.id}/*" ]
+            "Resource": [ "${aws_s3_bucket.ci_artifacts.arn}/*" ]
         }
     ]
 }
