@@ -15,6 +15,8 @@ package { 'daemon':
 class { 'jenkins':
   direct_download => "http://pkg.jenkins-ci.org/debian/binary/jenkins_1.658_all.deb",
   configure_firewall => false,
+  service_enable => false,
+  service_ensure => false,
   config_hash => {
     'JAVA_ARGS' => {
       'value' => '-Djava.awt.headless=true -Dhudson.diyChunking=false -Dhttp.proxyHost=proxy.service.consul -Dhttp.proxyPort=3128 -Dhttps.proxyHost=proxy.service.consul -Dhttps.proxyPort=3128'
