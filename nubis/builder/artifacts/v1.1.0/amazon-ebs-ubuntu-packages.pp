@@ -506,7 +506,7 @@ package { 'java-common':
   ensure => '0.51',
 }
 package { 'jenkins':
-  ensure => '1.656',
+  ensure => '1.658',
 }
 package { 'jmespath':
   ensure => '0.9.0',
@@ -1718,7 +1718,7 @@ package { 'mtr-tiny':
   ensure => '0.85-2',
 }
 package { 'multi_json':
-  ensure => ['1.11.2'],
+  ensure => ['1.11.3'],
 }
 package { 'multiarch-support':
   ensure => '2.19-0ubuntu6.7',
@@ -2240,10 +2240,10 @@ package { 'tmux':
   ensure => '1.8-5',
 }
 package { 'tzdata':
-  ensure => '2016c-0ubuntu0.14.04',
+  ensure => '2016d-0ubuntu0.14.04',
 }
 package { 'tzdata-java':
-  ensure => '2016c-0ubuntu0.14.04',
+  ensure => '2016d-0ubuntu0.14.04',
 }
 package { 'tzinfo':
   ensure => ['1.2.2'],
