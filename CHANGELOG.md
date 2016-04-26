@@ -1,6 +1,6 @@
 # Change Log
 
-## [v1.1.0](https://github.com/nubisproject/nubis-ci/tree/v1.1.0) (2016-04-18)
+## [v1.1.0](https://github.com/nubisproject/nubis-ci/tree/v1.1.0) (2016-04-26)
 [Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v1.0.1...v1.1.0)
 
 **Implemented enhancements:**
@@ -10,6 +10,13 @@
 
 **Closed issues:**
 
+- \[proxy\] Configure Jenkins to use the proxies [\#242](https://github.com/nubisproject/nubis-ci/issues/242)
+- Admins list needs to be an XML list, not comma delimited anymore [\#253](https://github.com/nubisproject/nubis-ci/issues/253)
+- deployment job needs proxy awareness [\#252](https://github.com/nubisproject/nubis-ci/issues/252)
+- Account Name missing from SSL cerficicate name [\#249](https://github.com/nubisproject/nubis-ci/issues/249)
+- Return our IAM role as an output [\#248](https://github.com/nubisproject/nubis-ci/issues/248)
+- SSL cert for CI is missing the region portion [\#245](https://github.com/nubisproject/nubis-ci/issues/245)
+- Use nubis-builder v1.1.0 as released [\#243](https://github.com/nubisproject/nubis-ci/issues/243)
 - Upgrade packer to 0.10.0 [\#236](https://github.com/nubisproject/nubis-ci/issues/236)
 - Upgrade Terraform to 0.6.14 [\#233](https://github.com/nubisproject/nubis-ci/issues/233)
 - Upgrade Jenkins to 1.656 [\#232](https://github.com/nubisproject/nubis-ci/issues/232)
@@ -52,15 +59,23 @@
 - Use confd for configuration instead of the static plethora of user-data we currently [\#142](https://github.com/nubisproject/nubis-ci/issues/142)
 - \[cli\] Enable CLI access over http [\#135](https://github.com/nubisproject/nubis-ci/issues/135)
 - Update to latest nubis-builder [\#122](https://github.com/nubisproject/nubis-ci/issues/122)
-- \#jenkinssharedpassword - Jenkins uses a shared password for user authentication [\#103](https://github.com/nubisproject/nubis-ci/issues/103)
 - Enable SSL [\#89](https://github.com/nubisproject/nubis-ci/issues/89)
 - Set the default region based on the region we are launched in. [\#85](https://github.com/nubisproject/nubis-ci/issues/85)
 - \#jenkinsuserdata - Jenkins shared password is available in instance user\_data [\#82](https://github.com/nubisproject/nubis-ci/issues/82)
-- \#productjenkinscreateiamroles - Product developers have the ability to gain full control of the product account [\#80](https://github.com/nubisproject/nubis-ci/issues/80)
 - Tag v1.1.0 release [\#76](https://github.com/nubisproject/nubis-ci/issues/76)
+- Tag v1.1.0 release [\#139](https://github.com/nubisproject/nubis-ci/issues/139)
+- \#jenkinssharedpassword - Jenkins uses a shared password for user authentication [\#103](https://github.com/nubisproject/nubis-ci/issues/103)
+- \#productjenkinscreateiamroles - Product developers have the ability to gain full control of the product account [\#80](https://github.com/nubisproject/nubis-ci/issues/80)
 
 **Merged pull requests:**
 
+- Lists of admins was broken, needs to be proper XML array Fixes \#253 [\#255](https://github.com/nubisproject/nubis-ci/pull/255) ([gozer](https://github.com/gozer))
+- Make CI proxy-friendly [\#254](https://github.com/nubisproject/nubis-ci/pull/254) ([gozer](https://github.com/gozer))
+- Output our IAM Role so it can be used to be granted privileges higher up. [\#251](https://github.com/nubisproject/nubis-ci/pull/251) ([gozer](https://github.com/gozer))
+- Add missing account\_name to SSL name [\#250](https://github.com/nubisproject/nubis-ci/pull/250) ([gozer](https://github.com/gozer))
+- Add the region to the ssl certificate [\#246](https://github.com/nubisproject/nubis-ci/pull/246) ([gozer](https://github.com/gozer))
+- Use nubis-builder v1.1.0 [\#244](https://github.com/nubisproject/nubis-ci/pull/244) ([gozer](https://github.com/gozer))
+- Update CHANGELOG for v1.1.0 release [\#241](https://github.com/nubisproject/nubis-ci/pull/241) ([tinnightcap](https://github.com/tinnightcap))
 - Update builder artifacts for v1.1.0 release [\#240](https://github.com/nubisproject/nubis-ci/pull/240) ([tinnightcap](https://github.com/tinnightcap))
 - Update versions for  release [\#239](https://github.com/nubisproject/nubis-ci/pull/239) ([tinnightcap](https://github.com/tinnightcap))
 - Cleanups [\#238](https://github.com/nubisproject/nubis-ci/pull/238) ([gozer](https://github.com/gozer))
