@@ -9,12 +9,17 @@ nubis::discovery::service { 'jenkins':
   interval => "30s",
 }
 
+package { 'daemon':
+  ensure => 'present'
+}->
 class { 'jenkins':
-  version => "1.656",
+  direct_download => "http://pkg.jenkins-ci.org/debian/binary/jenkins_1.658_all.deb",
   configure_firewall => false,
+  service_enable => false,
+  service_ensure => false,
   config_hash => {
     'JAVA_ARGS' => {
-      'value' => '-Djava.awt.headless=true -Dhudson.diyChunking=false'
+      'value' => '-Djava.awt.headless=true -Dhudson.diyChunking=false -Dhttp.proxyHost=proxy.service.consul -Dhttp.proxyPort=3128 -Dhttps.proxyHost=proxy.service.consul -Dhttps.proxyPort=3128'
     },
   },
 }
@@ -35,80 +40,104 @@ class { 'jenkins':
 
 ## ADDITIONAL PLUGINS ##
 
+jenkins::plugin { "icon-shim":
+    version => "2.0.3",
+  update_url => 'https://updates.jenkins.io',
+}
+
 jenkins::plugin { "git":
-    version => "2.4.1"
+    version => "2.4.4",
+  update_url => 'https://updates.jenkins.io',
 }
 
 jenkins::plugin { "github":
-    version => "1.14.2"
+    version => "1.18.2",
+  update_url => 'https://updates.jenkins.io',
 }
 
 jenkins::plugin { "github-api":
-    version => "1.71"
+    version => "1.75",
+  update_url => 'https://updates.jenkins.io',
 }
 
 jenkins::plugin { "github-oauth":
-    version => "0.22.2"
+    version => "0.22.3",
+  update_url => 'https://updates.jenkins.io',
 }
 
 jenkins::plugin { "multiple-scms":
-    version => "0.5"
+    version => "0.5",
+  update_url => 'https://updates.jenkins.io',
 }
 
 jenkins::plugin { "parameterized-trigger":
-    version => "2.29"
+    version => "2.30",
+  update_url => 'https://updates.jenkins.io',
 }
 
 jenkins::plugin { "jackson2-api":
-    version => "2.5.4"
+    version => "2.5.4",
+  update_url => 'https://updates.jenkins.io',
 }
 
 jenkins::plugin { "token-macro":
-    version => "1.12.1"
+    version => "1.12.1",
+  update_url => 'https://updates.jenkins.io',
 }
 
 jenkins::plugin { "s3":
-    version => "0.8"
+    version => "0.10.1",
+  update_url => 'https://updates.jenkins.io',
 }
 
 jenkins::plugin { "plain-credentials":
-    version => "1.1"
+    version => "1.1",
+  update_url => 'https://updates.jenkins.io',
 }
 
 jenkins::plugin { "aws-java-sdk":
-    version => "1.10.42"
+    version => "1.10.45",
+  update_url => 'https://updates.jenkins.io',
 }
 
 jenkins::plugin { "copyartifact":
-    version => "1.37"
+    version => "1.38",
+  update_url => 'https://updates.jenkins.io',
 }
 
 jenkins::plugin { "git-client" :
-    version => "1.19.1"
+    version => "1.19.6",
+  update_url => 'https://updates.jenkins.io',
 }
 
 jenkins::plugin { "scm-api" :
-    version => "1.0"
+    version => "1.0",
+  update_url => 'https://updates.jenkins.io',
 }
 
 jenkins::plugin { "ansible" :
-    version => "0.4"
+    version => "0.4",
+  update_url => 'https://updates.jenkins.io',
 }
 
 jenkins::plugin { "rebuild" :
-    version => "1.25"
+    version => "1.25",
+  update_url => 'https://updates.jenkins.io',
 }
 
 jenkins::plugin { "promoted-builds":
-    version => "2.24.1"
+    version => "2.25",
+  update_url => 'https://updates.jenkins.io',
 }
 
 jenkins::plugin { "pegdown-formatter":
-    version => "1.3"
+    version => "1.3",
+  update_url => 'https://updates.jenkins.io',
 }
 
 jenkins::plugin { "thinBackup":
-    version => "1.7.4"
+    version => "1.7.4",
+  update_url => 'https://updates.jenkins.io',
 }
 
 # This is for librarian-puppet, below, and somewhat ugly

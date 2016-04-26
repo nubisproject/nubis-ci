@@ -12,9 +12,6 @@ AWS_REGION=`curl -s http://169.254.169.254/latest/dynamic/instance-identity/docu
 #XXX: Needs to be configurable/discovered
 NUBIS_AMI_BUCKET="nubis-amis"
 
-# Stop jenkins for reconfiguration
-service jenkins stop
-
 # shell parse our userdata
 eval `curl -fq http://169.254.169.254/latest/user-data`
 
@@ -30,6 +27,7 @@ chmod 644 /var/lib/jenkins/secrets/slave-to-master-security-kill-switch
 
 # Drop main configurations
 cp /etc/nubis.d/jenkins-config.xml /var/lib/jenkins/config.xml
+cp /etc/nubis.d/jenkins-proxy.xml /var/lib/jenkins/proxy.xml
 cp /etc/nubis.d/jenkins-location.xml /var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration.xml
 cp /etc/nubis.d/jenkins-s3bucketpublisher.xml /var/lib/jenkins/hudson.plugins.s3.S3BucketPublisher.xml
 
@@ -70,8 +68,10 @@ perl -pi -e"s[%%REGIONS%%][$REGIONS_STRING]g" /var/lib/jenkins/jobs/$NUBIS_CI_NA
 sed -i -e"s/%%NUBIS_CI_EMAIL%%/$NUBIS_CI_EMAIL/g" /var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml /var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml
 
 # GitHub Authentication
-perl -pi -e "s[%%NUBIS_CI_GITHUB_ADMINS%%][$NUBIS_CI_GITHUB_ADMINS]g" /var/lib/jenkins/config.xml
-perl -pi -e "s[%%NUBIS_CI_GITHUB_ORGANIZATIONS%%][$NUBIS_CI_GITHUB_ORGANIZATIONS]g" /var/lib/jenkins/config.xml
+
+perl -pi -e"\$admins=join qq(\n), map { qq(<string>\$_</string>) } split(q(,), q($NUBIS_CI_GITHUB_ADMINS)); s[%%NUBIS_CI_GITHUB_ADMINS%%][\$admins]g" /var/lib/jenkins/config.xml
+perl -pi -e"\$orgs=join qq(\n), map { qq(<string>\$_</string>) } split(q(,), q($NUBIS_CI_GITHUB_ORGANIZATIONS)); s[%%NUBIS_CI_GITHUB_ORGANIZATIONS%%][\$orgs]g" /var/lib/jenkins/config.xml
+
 perl -pi -e "s[%%NUBIS_CI_GITHUB_CLIENT_TOKEN%%][$NUBIS_CI_GITHUB_CLIENT_TOKEN]g" /var/lib/jenkins/config.xml
 perl -pi -e "s[%%NUBIS_CI_GITHUB_CLIENT_SECRET%%][$NUBIS_CI_GITHUB_CLIENT_SECRET]g" /var/lib/jenkins/config.xml
 

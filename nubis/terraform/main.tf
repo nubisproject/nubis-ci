@@ -301,16 +301,17 @@ resource "aws_iam_role_policy" "ci_artifacts" {
             "Action": [
                 "s3:ListBucket"
             ],
-            "Resource": [ "arn:aws:s3:::${aws_s3_bucket.ci_artifacts.id}" ]
+            "Resource": [ "${aws_s3_bucket.ci_artifacts.arn}" ]
         },
         {
             "Effect": "Allow",
             "Action": [
                 "s3:PutObject",
+                "s3:ListObject",
                 "s3:GetObject",
                 "s3:DeleteObject"
             ],
-            "Resource": [ "arn:aws:s3:::${aws_s3_bucket.ci_artifacts.id}/*" ]
+            "Resource": [ "${aws_s3_bucket.ci_artifacts.arn}/*" ]
         }
     ]
 }
@@ -351,6 +352,7 @@ resource "aws_iam_role_policy" "ci_build" {
                 "ec2:DescribeSnapshots",
                 "ec2:DescribeImages",
                 "ec2:RegisterImage",
+                "ec2:DeregisterImage",
                 "ec2:CreateTags",
                 "ec2:ModifyImageAttribute",
                 "ec2:DescribeRegions"

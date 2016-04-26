@@ -50,7 +50,11 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>nubis-builder build --packer-option &quot;-machine-readable&quot;</command>
+      <command>
+. /etc/profile.d/proxy.sh
+consulate kv set nubis-nat-admin/admin/config/IptablesAllowTCP &quot;[ 22 ]&quot;
+nubis-builder build --packer-option &quot;-machine-readable&quot;</command>
+consulate kv rm nubis-nat-admin/admin/config/IptablesAllowTCP
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
       <command>rm -rf artifacts
@@ -62,6 +66,9 @@ mkdir artifacts
 if [ -d nubis/cloudformation ]; then
   rsync -av nubis/cloudformation/ artifacts/
   rsync -av ../builds/$BUILD_NUMBER/log artifacts/log
+fi
+if [ -d nubis/builder/artifacts ]; then
+  rsync -av nubis/builder/artifacts/ artifacts/
 fi
 </command>
     </hudson.tasks.Shell>
@@ -75,23 +82,6 @@ fi
       <defaultExcludes>true</defaultExcludes>
       <caseSensitive>true</caseSensitive>
     </hudson.tasks.ArtifactArchiver>
-    <hudson.plugins.s3.S3BucketPublisher plugin="s3@0.7">
-      <profileName>nubis-ci</profileName>
-      <entries>
-        <hudson.plugins.s3.Entry>
-          <bucket>%%NUBIS_CI_BUCKET%%</bucket>
-          <sourceFile>artifacts/*</sourceFile>
-          <storageClass>STANDARD</storageClass>
-          <selectedRegion>%%NUBIS_CI_BUCKET_REGION%%</selectedRegion>
-          <noUploadOnFailure>true</noUploadOnFailure>
-          <uploadFromSlave>false</uploadFromSlave>
-          <managedArtifacts>true</managedArtifacts>
-          <useServerSideEncryption>false</useServerSideEncryption>
-          <flatten>false</flatten>
-        </hudson.plugins.s3.Entry>
-      </entries>
-      <userMetadata/>
-    </hudson.plugins.s3.S3BucketPublisher>
     <hudson.tasks.Mailer plugin="mailer@1.11">
       <recipients>%%NUBIS_CI_EMAIL%%</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>

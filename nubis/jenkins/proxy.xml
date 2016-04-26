@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<proxy>
+  <name>proxy.service.consul</name>
+  <port>3128</port>
+  <secretPassword></secretPassword>
+</proxy>
