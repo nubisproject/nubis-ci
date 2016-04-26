@@ -40,6 +40,11 @@ class { 'jenkins':
 
 ## ADDITIONAL PLUGINS ##
 
+jenkins::plugin { "icon-shim":
+    version => "2.0.3",
+  update_url => 'https://updates.jenkins.io',
+}
+
 jenkins::plugin { "git":
     version => "2.4.4",
   update_url => 'https://updates.jenkins.io',
