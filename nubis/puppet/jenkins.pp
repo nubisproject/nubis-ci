@@ -86,7 +86,7 @@ jenkins::plugin { "token-macro":
 }
 
 jenkins::plugin { "s3":
-    version => "0.9.3",
+    version => "0.10.1",
   update_url => 'https://updates.jenkins.io',
 }
 
