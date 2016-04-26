@@ -10,10 +10,10 @@
   <authorizationStrategy class="org.jenkinsci.plugins.GithubAuthorizationStrategy" plugin="github-oauth@0.22.2">
     <rootACL>
       <organizationNameList class="linked-list">
-        <string>%%NUBIS_CI_GITHUB_ORGANIZATIONS%%</string>
+        %%NUBIS_CI_GITHUB_ORGANIZATIONS%%
       </organizationNameList>
       <adminUserNameList class="linked-list">
-        <string>%%NUBIS_CI_GITHUB_ADMINS%%</string>
+        %%NUBIS_CI_GITHUB_ADMINS%%
       </adminUserNameList>
       <authenticatedUserReadPermission>true</authenticatedUserReadPermission>
       <useRepositoryPermissions>true</useRepositoryPermissions>
