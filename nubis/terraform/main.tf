@@ -252,6 +252,10 @@ resource "aws_s3_bucket" "ci_artifacts" {
 
     force_destroy = true
 
+    versioning {
+      enabled = true
+    }
+
     tags = {
         Region = "${var.region}"
         Environment = "${var.environment}"
