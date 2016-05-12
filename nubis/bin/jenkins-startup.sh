@@ -72,6 +72,16 @@ sed -i -e"s/%%NUBIS_CI_EMAIL%%/$NUBIS_CI_EMAIL/g" /var/lib/jenkins/jobs/$NUBIS_C
 perl -pi -e"\$admins=join qq(\n), map { qq(<string>\$_</string>) } split(q(,), q($NUBIS_CI_GITHUB_ADMINS)); s[%%NUBIS_CI_GITHUB_ADMINS%%][\$admins]g" /var/lib/jenkins/config.xml
 perl -pi -e"\$orgs=join qq(\n), map { qq(<string>\$_</string>) } split(q(,), q($NUBIS_CI_GITHUB_ORGANIZATIONS)); s[%%NUBIS_CI_GITHUB_ORGANIZATIONS%%][\$orgs]g" /var/lib/jenkins/config.xml
 
+
+# Retrieve secrets with nubis-secret if not in user-data
+if [ "$NUBIS_CI_GITHUB_CLIENT_TOKEN" == "" ]; then
+  NUBIS_CI_GITHUB_CLIENT_TOKEN=$(nubis-secret get ci/github_oauth_client_id)
+fi
+
+if [ "$NUBIS_CI_GITHUB_CLIENT_SECRET" == "" ]; then
+  NUBIS_CI_GITHUB_CLIENT_SECRET=$(nubis-secret get ci/github_oauth_client_secret)
+fi
+
 perl -pi -e "s[%%NUBIS_CI_GITHUB_CLIENT_TOKEN%%][$NUBIS_CI_GITHUB_CLIENT_TOKEN]g" /var/lib/jenkins/config.xml
 perl -pi -e "s[%%NUBIS_CI_GITHUB_CLIENT_SECRET%%][$NUBIS_CI_GITHUB_CLIENT_SECRET]g" /var/lib/jenkins/config.xml
 
