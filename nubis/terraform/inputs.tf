@@ -103,3 +103,7 @@ variable "version" {
 variable "technical_contact" { 
   default = "infra-aws@mozilla.com"
 }
+
+variable "credstash_key" {
+
+}

@@ -229,8 +229,6 @@ NUBIS_CI_BUCKET_REGION=${var.region}
 NUBIS_CI_EMAIL=${var.email}
 NUBIS_CI_GITHUB_ADMINS=${var.admins}
 NUBIS_CI_GITHUB_ORGANIZATIONS=${var.organizations}
-NUBIS_CI_GITHUB_CLIENT_TOKEN=${var.github_oauth_client_id}
-NUBIS_CI_GITHUB_CLIENT_SECRET=${var.github_oauth_client_secret}
 EOF
 
 }
@@ -462,4 +460,30 @@ resource "aws_iam_role_policy" "ci_deploy" {
     ]
 }
 EOF
+}
+
+# This null resource is responsible for publishing secrets to Credstash
+resource "null_resource" "credstash" {
+  count = "${var.enabled}"
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  # Important to list here every variable that affects what needs to be put into credstash
+  triggers {
+    github_oauth_client_id = "${var.github_oauth_client_id}"
+    github_oauth_client_secret = "${var.github_oauth_client_secret}"
+    region           = "${var.region}"
+    context          = "region=${var.region} environment=${var.environment} service=${var.project}"
+    credstash        = "credstash -r ${var.region} put -k ${var.credstash_key} -a ${var.project}/${var.environment}/ci"
+  }
+
+  provisioner "local-exec" {
+    command = "${self.triggers.credstash}/github_oauth_client_id ${var.github_oauth_client_id} ${self.triggers.context}"
+  }
+
+  provisioner "local-exec" {
+    command = "${self.triggers.credstash}/github_oauth_client_secret ${var.github_oauth_client_secret} ${self.triggers.context}"
+  }
 }
