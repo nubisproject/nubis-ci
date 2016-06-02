@@ -52,7 +52,7 @@ jenkins::plugin { "git":
 }
 
 jenkins::plugin { "github":
-    version => "1.18.2",
+    version => "1.19.1",
   update_url => 'https://updates.jenkins.io',
 }
 
@@ -62,12 +62,12 @@ jenkins::plugin { "github-api":
 }
 
 jenkins::plugin { "github-oauth":
-    version => "0.22.3",
+    version => "0.24",
   update_url => 'https://updates.jenkins.io',
 }
 
 jenkins::plugin { "multiple-scms":
-    version => "0.5",
+    version => "0.6",
   update_url => 'https://updates.jenkins.io',
 }
 
@@ -87,17 +87,17 @@ jenkins::plugin { "token-macro":
 }
 
 jenkins::plugin { "s3":
-    version => "0.10.1",
+    version => "0.10.3",
   update_url => 'https://updates.jenkins.io',
 }
 
 jenkins::plugin { "plain-credentials":
-    version => "1.1",
+    version => "1.2",
   update_url => 'https://updates.jenkins.io',
 }
 
 jenkins::plugin { "aws-java-sdk":
-    version => "1.10.45",
+    version => "1.10.45.2",
   update_url => 'https://updates.jenkins.io',
 }
 
@@ -117,7 +117,7 @@ jenkins::plugin { "scm-api" :
 }
 
 jenkins::plugin { "ansible" :
-    version => "0.4",
+    version => "0.5",
   update_url => 'https://updates.jenkins.io',
 }
 
