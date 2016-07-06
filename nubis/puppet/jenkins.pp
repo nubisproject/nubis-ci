@@ -13,7 +13,7 @@ package { 'daemon':
   ensure => 'present'
 }->
 class { 'jenkins':
-  version => '1.651.2',
+  version => '1.651.3',
   lts => true,
   configure_firewall => false,
   service_enable => false,
@@ -147,7 +147,7 @@ package { "ruby-dev":
 }
 
 package { "librarian-puppet":
-  ensure => "2.2.1",
+  ensure => "2.2.3",
   provider => "gem",
   require => [
     Package["ruby-dev"],
