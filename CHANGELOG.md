@@ -1,5 +1,29 @@
 # Change Log
 
+## [v1.2.0](https://github.com/nubisproject/nubis-ci/tree/v1.2.0) (2016-07-07)
+[Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v1.1.0...v1.2.0)
+
+**Closed issues:**
+
+- Upgrade plugins [\#268](https://github.com/nubisproject/nubis-ci/issues/268)
+- Start v1.2.0-dev cycle [\#263](https://github.com/nubisproject/nubis-ci/issues/263)
+- Update to Jenkins LTS \(1.651.2\) [\#261](https://github.com/nubisproject/nubis-ci/issues/261)
+- Enable S3 versionning [\#259](https://github.com/nubisproject/nubis-ci/issues/259)
+- Move GitHub secrets into credstash [\#257](https://github.com/nubisproject/nubis-ci/issues/257)
+- Move GitHub OAuth application tokens under the nubisproject organization [\#183](https://github.com/nubisproject/nubis-ci/issues/183)
+- Convert terraform to cloudformation [\#74](https://github.com/nubisproject/nubis-ci/issues/74)
+
+**Merged pull requests:**
+
+- Updating versions for release build [\#271](https://github.com/nubisproject/nubis-ci/pull/271) ([tinnightcap](https://github.com/tinnightcap))
+- fixup [\#270](https://github.com/nubisproject/nubis-ci/pull/270) ([gozer](https://github.com/gozer))
+- Update plugins for freshness and breakeage with Jenkins 1.651.2 [\#269](https://github.com/nubisproject/nubis-ci/pull/269) ([gozer](https://github.com/gozer))
+- Explicitely install MarkupSafe==0.23 as it now appears to be a missing dependency somehow [\#267](https://github.com/nubisproject/nubis-ci/pull/267) ([gozer](https://github.com/gozer))
+- Move GitHub OAuth secrets to credstash [\#265](https://github.com/nubisproject/nubis-ci/pull/265) ([gozer](https://github.com/gozer))
+- Move to 1.2.0-dev [\#264](https://github.com/nubisproject/nubis-ci/pull/264) ([gozer](https://github.com/gozer))
+- Upgrade to Jenkins LTS at 1.651.2 [\#262](https://github.com/nubisproject/nubis-ci/pull/262) ([gozer](https://github.com/gozer))
+- Enable S3 versionning [\#260](https://github.com/nubisproject/nubis-ci/pull/260) ([gozer](https://github.com/gozer))
+
 ## [v1.1.0](https://github.com/nubisproject/nubis-ci/tree/v1.1.0) (2016-04-26)
 [Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v1.0.1...v1.1.0)
 
@@ -10,13 +34,13 @@
 
 **Closed issues:**
 
-- \[proxy\] Configure Jenkins to use the proxies [\#242](https://github.com/nubisproject/nubis-ci/issues/242)
 - Admins list needs to be an XML list, not comma delimited anymore [\#253](https://github.com/nubisproject/nubis-ci/issues/253)
 - deployment job needs proxy awareness [\#252](https://github.com/nubisproject/nubis-ci/issues/252)
 - Account Name missing from SSL cerficicate name [\#249](https://github.com/nubisproject/nubis-ci/issues/249)
 - Return our IAM role as an output [\#248](https://github.com/nubisproject/nubis-ci/issues/248)
 - SSL cert for CI is missing the region portion [\#245](https://github.com/nubisproject/nubis-ci/issues/245)
 - Use nubis-builder v1.1.0 as released [\#243](https://github.com/nubisproject/nubis-ci/issues/243)
+- \[proxy\] Configure Jenkins to use the proxies [\#242](https://github.com/nubisproject/nubis-ci/issues/242)
 - Upgrade packer to 0.10.0 [\#236](https://github.com/nubisproject/nubis-ci/issues/236)
 - Upgrade Terraform to 0.6.14 [\#233](https://github.com/nubisproject/nubis-ci/issues/233)
 - Upgrade Jenkins to 1.656 [\#232](https://github.com/nubisproject/nubis-ci/issues/232)
