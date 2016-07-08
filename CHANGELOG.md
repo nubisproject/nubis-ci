@@ -1,5 +1,17 @@
 # Change Log
 
+## [v1.2.0](https://github.com/nubisproject/nubis-ci/tree/v1.2.0) (2016-07-08)
+[Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v1.2.0...v1.2.0)
+
+**Closed issues:**
+
+- Pin Jenkins at 1.651.3 since LTS has now bumped to 2.x [\#274](https://github.com/nubisproject/nubis-ci/issues/274)
+
+**Merged pull requests:**
+
+- Update builder artifacts for v1.2.0 release [\#276](https://github.com/nubisproject/nubis-ci/pull/276) ([tinnightcap](https://github.com/tinnightcap))
+- Pin Jenkins at 1.651.3 since LTS has now flipped over to 2.x [\#275](https://github.com/nubisproject/nubis-ci/pull/275) ([gozer](https://github.com/gozer))
+
 ## [v1.2.0](https://github.com/nubisproject/nubis-ci/tree/v1.2.0) (2016-07-07)
 [Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v1.1.0...v1.2.0)
 
@@ -15,6 +27,7 @@
 
 **Merged pull requests:**
 
+- Update CHANGELOG for v1.2.0 release [\#273](https://github.com/nubisproject/nubis-ci/pull/273) ([tinnightcap](https://github.com/tinnightcap))
 - Updating versions for release build [\#271](https://github.com/nubisproject/nubis-ci/pull/271) ([tinnightcap](https://github.com/tinnightcap))
 - fixup [\#270](https://github.com/nubisproject/nubis-ci/pull/270) ([gozer](https://github.com/gozer))
 - Update plugins for freshness and breakeage with Jenkins 1.651.2 [\#269](https://github.com/nubisproject/nubis-ci/pull/269) ([gozer](https://github.com/gozer))
