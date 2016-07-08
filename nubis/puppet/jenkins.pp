@@ -13,8 +13,7 @@ package { 'daemon':
   ensure => 'present'
 }->
 class { 'jenkins':
-  version => '1.651.3',
-  lts => true,
+  direct_download => 'http://pkg.jenkins-ci.org/debian-stable/binary/jenkins_1.651.3_all.deb',
   configure_firewall => false,
   service_enable => false,
   service_ensure => false,
