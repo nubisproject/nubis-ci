@@ -1,24 +1,47 @@
 # Change Log
 
-## [v1.2.0](https://github.com/nubisproject/nubis-ci/tree/v1.2.0) (2016-07-08)
+## [v1.2.1](https://github.com/nubisproject/nubis-ci/tree/v1.2.1) (2016-07-30)
+[Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v1.2.0...v1.2.1)
+
+**Closed issues:**
+
+- Give deploy IAM privileges to deal with DB Parameter Groups [\#280](https://github.com/nubisproject/nubis-ci/issues/280)
+
+**Merged pull requests:**
+
+- Update builder artifacts for v1.2.1 release [\#283](https://github.com/nubisproject/nubis-ci/pull/283) ([tinnightcap](https://github.com/tinnightcap))
+- Update nubis-builder version [\#282](https://github.com/nubisproject/nubis-ci/pull/282) ([tinnightcap](https://github.com/tinnightcap))
+- Add required privileges to manage DB Parameter groups [\#281](https://github.com/nubisproject/nubis-ci/pull/281) ([gozer](https://github.com/gozer))
+- Update builder artifacts for v1.3.0-dev release [\#279](https://github.com/nubisproject/nubis-ci/pull/279) ([tinnightcap](https://github.com/tinnightcap))
+- Update CHANGELOG for v1.2.0 release [\#278](https://github.com/nubisproject/nubis-ci/pull/278) ([tinnightcap](https://github.com/tinnightcap))
+- Update CHANGELOG for v1.2.0 release [\#277](https://github.com/nubisproject/nubis-ci/pull/277) ([tinnightcap](https://github.com/tinnightcap))
+- Update builder artifacts for v1.2.0 release [\#276](https://github.com/nubisproject/nubis-ci/pull/276) ([tinnightcap](https://github.com/tinnightcap))
+- Pin Jenkins at 1.651.3 since LTS has now flipped over to 2.x [\#275](https://github.com/nubisproject/nubis-ci/pull/275) ([gozer](https://github.com/gozer))
+
+## [v1.2.0](https://github.com/nubisproject/nubis-ci/tree/v1.2.0) (2016-07-07)
 [Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v1.1.0...v1.2.0)
 
 **Closed issues:**
 
+- Move GitHub OAuth application tokens under the nubisproject organization [\#183](https://github.com/nubisproject/nubis-ci/issues/183)
+- Convert terraform to cloudformation [\#74](https://github.com/nubisproject/nubis-ci/issues/74)
 - Pin Jenkins at 1.651.3 since LTS has now bumped to 2.x [\#274](https://github.com/nubisproject/nubis-ci/issues/274)
+- Tag v1.2.0 release [\#272](https://github.com/nubisproject/nubis-ci/issues/272)
 - Upgrade plugins [\#268](https://github.com/nubisproject/nubis-ci/issues/268)
 - Start v1.2.0-dev cycle [\#263](https://github.com/nubisproject/nubis-ci/issues/263)
 - Update to Jenkins LTS \(1.651.2\) [\#261](https://github.com/nubisproject/nubis-ci/issues/261)
 - Enable S3 versionning [\#259](https://github.com/nubisproject/nubis-ci/issues/259)
 - Move GitHub secrets into credstash [\#257](https://github.com/nubisproject/nubis-ci/issues/257)
-- Move GitHub OAuth application tokens under the nubisproject organization [\#183](https://github.com/nubisproject/nubis-ci/issues/183)
-- Convert terraform to cloudformation [\#74](https://github.com/nubisproject/nubis-ci/issues/74)
+- Admins list needs to be an XML list, not comma delimited anymore [\#253](https://github.com/nubisproject/nubis-ci/issues/253)
+- deployment job needs proxy awareness [\#252](https://github.com/nubisproject/nubis-ci/issues/252)
+- Account Name missing from SSL cerficicate name [\#249](https://github.com/nubisproject/nubis-ci/issues/249)
+- Return our IAM role as an output [\#248](https://github.com/nubisproject/nubis-ci/issues/248)
+- SSL cert for CI is missing the region portion [\#245](https://github.com/nubisproject/nubis-ci/issues/245)
+- Use nubis-builder v1.1.0 as released [\#243](https://github.com/nubisproject/nubis-ci/issues/243)
+- \[proxy\] Configure Jenkins to use the proxies [\#242](https://github.com/nubisproject/nubis-ci/issues/242)
 
 **Merged pull requests:**
 
-- Update CHANGELOG for v1.2.0 release [\#277](https://github.com/nubisproject/nubis-ci/pull/277) ([tinnightcap](https://github.com/tinnightcap))
-- Update builder artifacts for v1.2.0 release [\#276](https://github.com/nubisproject/nubis-ci/pull/276) ([tinnightcap](https://github.com/tinnightcap))
-- Pin Jenkins at 1.651.3 since LTS has now flipped over to 2.x [\#275](https://github.com/nubisproject/nubis-ci/pull/275) ([gozer](https://github.com/gozer))
 - Update CHANGELOG for v1.2.0 release [\#273](https://github.com/nubisproject/nubis-ci/pull/273) ([tinnightcap](https://github.com/tinnightcap))
 - Updating versions for release build [\#271](https://github.com/nubisproject/nubis-ci/pull/271) ([tinnightcap](https://github.com/tinnightcap))
 - fixup [\#270](https://github.com/nubisproject/nubis-ci/pull/270) ([gozer](https://github.com/gozer))
@@ -39,13 +62,6 @@
 
 **Closed issues:**
 
-- Admins list needs to be an XML list, not comma delimited anymore [\#253](https://github.com/nubisproject/nubis-ci/issues/253)
-- deployment job needs proxy awareness [\#252](https://github.com/nubisproject/nubis-ci/issues/252)
-- Account Name missing from SSL cerficicate name [\#249](https://github.com/nubisproject/nubis-ci/issues/249)
-- Return our IAM role as an output [\#248](https://github.com/nubisproject/nubis-ci/issues/248)
-- SSL cert for CI is missing the region portion [\#245](https://github.com/nubisproject/nubis-ci/issues/245)
-- Use nubis-builder v1.1.0 as released [\#243](https://github.com/nubisproject/nubis-ci/issues/243)
-- \[proxy\] Configure Jenkins to use the proxies [\#242](https://github.com/nubisproject/nubis-ci/issues/242)
 - Upgrade packer to 0.10.0 [\#236](https://github.com/nubisproject/nubis-ci/issues/236)
 - Upgrade Terraform to 0.6.14 [\#233](https://github.com/nubisproject/nubis-ci/issues/233)
 - Upgrade Jenkins to 1.656 [\#232](https://github.com/nubisproject/nubis-ci/issues/232)
