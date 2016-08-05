@@ -1,10 +1,18 @@
 # Change Log
 
+## [v1.2.3](https://github.com/nubisproject/nubis-ci/tree/v1.2.3) (2016-08-05)
+[Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v1.2.2...v1.2.3)
+
+**Merged pull requests:**
+
+- Update builder artifacts for v1.2.3 release [\#288](https://github.com/nubisproject/nubis-ci/pull/288) ([gozer](https://github.com/gozer))
+
 ## [v1.2.2](https://github.com/nubisproject/nubis-ci/tree/v1.2.2) (2016-08-02)
 [Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v1.2.1...v1.2.2)
 
 **Merged pull requests:**
 
+- Update CHANGELOG for v1.2.2 release [\#286](https://github.com/nubisproject/nubis-ci/pull/286) ([tinnightcap](https://github.com/tinnightcap))
 - Update builder artifacts for v1.2.2 release [\#285](https://github.com/nubisproject/nubis-ci/pull/285) ([tinnightcap](https://github.com/tinnightcap))
 
 ## [v1.2.1](https://github.com/nubisproject/nubis-ci/tree/v1.2.1) (2016-07-30)
