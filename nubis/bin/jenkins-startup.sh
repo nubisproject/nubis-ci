@@ -88,7 +88,7 @@ cat <<EOF | tee /opt/nubis-builder/secrets/variables.json
 {
   "variables": {
     "aws_region": "$AWS_REGION",
-    "ami_regions" "$(IFS=, ; echo "${REGIONS[*]}")",
+    "ami_regions" "$(IFS=, ; echo "${REGIONS[*]}")"
   }
 }
 EOF
