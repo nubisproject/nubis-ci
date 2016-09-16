@@ -6,11 +6,7 @@ wget -O /tmp/default.js http://updates.jenkins-ci.org/update-center.json
 sed '1d;$d' /tmp/default.js > /tmp/default.json
 curl -X POST -H "Accept: application/json" -d @/tmp/default.json http://localhost:8080/updateCenter/byId/default/postBack
 
-AWS_ACCOUNT_ID=`curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | jq -r '.accountId'`
 AWS_REGION=`curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | jq -r '.region'`
-
-#XXX: Needs to be configurable/discovered
-NUBIS_AMI_BUCKET="nubis-amis"
 
 # shell parse our userdata
 eval `curl -fq http://169.254.169.254/latest/user-data`
@@ -91,13 +87,8 @@ chown -R jenkins:jenkins /var/lib/jenkins
 cat <<EOF | tee /opt/nubis-builder/secrets/variables.json
 {
   "variables": {
-    "aws_account_id": "$AWS_ACCOUNT_ID",
     "aws_region": "$AWS_REGION",
-    "aws_instance_s3_bucket": "$NUBIS_AMI_BUCKET",
-    "aws_x509_cert_path": "/full/path/to/secrets/aws.crt.pem",
-    "aws_x509_key_path": "/full/path/to/secrets/aws.key.pem",
-    "iam_instance_profile": "",
-    "iam_instance_role": ""
+    "ami_regions" "$(IFS=, ; echo "${REGIONS[*]}")",
   }
 }
 EOF
