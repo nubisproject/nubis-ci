@@ -426,6 +426,7 @@ resource "aws_iam_role_policy" "ci_deploy" {
                 "elasticloadbalancing:DescribeLoadBalancerAttributes",
                 "elasticloadbalancing:AddTags",
                 "elasticloadbalancing:AttachLoadBalancerToSubnets",
+                "elasticloadbalancing:DescribeInstanceHealth",
                 "rds:CreateDBInstance",
                 "rds:CreateDBSubnetGroup",
                 "rds:DeleteDBSubnetGroup",
