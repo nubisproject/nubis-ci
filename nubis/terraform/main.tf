@@ -440,6 +440,7 @@ resource "aws_iam_role_policy" "ci_deploy" {
                 "route53:ListHostedZones",
                 "route53:GetHostedZone",
                 "cloudwatch:PutMetricAlarm",
+                "iam:GetRole",
                 "iam:CreateUser",
                 "iam:CreateRole",
                 "iam:CreateAccessKey",
