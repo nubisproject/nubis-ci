@@ -414,6 +414,7 @@ resource "aws_iam_role_policy" "ci_deploy" {
                 "elasticache:CreateCacheCluster",
                 "elasticache:DescribeCacheClusters",
                 "elasticache:DeleteCacheCluster",
+                "elasticloadbalancing:ApplySecurityGroupsToLoadBalancer",
                 "elasticloadbalancing:ConfigureHealthCheck",
                 "elasticloadbalancing:CreateLoadBalancer",
                 "elasticloadbalancing:DeleteLoadBalancer",
