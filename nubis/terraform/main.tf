@@ -423,6 +423,7 @@ resource "aws_iam_role_policy" "ci_deploy" {
                 "elasticloadbalancing:SetLoadBalancerPoliciesOfListener",
                 "elasticloadbalancing:DeleteLoadBalancerListeners",
                 "elasticloadbalancing:CreateLoadBalancerListeners",
+                "elasticloadbalancing:DescribeLoadBalancerAttributes",
                 "rds:CreateDBInstance",
                 "rds:CreateDBSubnetGroup",
                 "rds:DeleteDBSubnetGroup",
