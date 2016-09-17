@@ -22,8 +22,8 @@ file { "/usr/local/bin/jq":
 vcsrepo { "/opt/nubis-builder":
   ensure   => present,
   provider => git,
-  source   => 'https://github.com/Nubisproject/nubis-builder.git',
-  revision => "v1.2.3"
+  source   => 'https://github.com/nubisproject/nubis-builder.git',
+  revision => "v1.3.0-dev",
 }
 
 # XXX: need to move to puppet-packer
@@ -37,7 +37,7 @@ staging::extract { 'packer.zip':
 
 # XXX: need to move to puppet-terraform	
 staging::file { 'terraform.zip':
-  source => "https://releases.hashicorp.com/terraform/0.6.14/terraform_0.6.14_linux_amd64.zip"
+  source => "https://releases.hashicorp.com/terraform/0.6.16/terraform_0.6.16_linux_amd64.zip"
 } ->
 staging::extract { 'terraform.zip':
   target  => "/usr/local/bin",
