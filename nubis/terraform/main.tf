@@ -385,6 +385,7 @@ resource "aws_iam_role_policy" "ci_deploy" {
                 "autoscaling:DescribeAutoScalingGroup",
                 "autoscaling:DescribeAutoScalingGroups",
                 "autoscaling:DescribeLaunchConfigurations",
+                "autoscaling:DescribePolicies",
                 "autoscaling:UpdateAutoScalingGroup",
                 "autoscaling:DescribeScalingActivities",
                 "autoscaling:DeleteAutoScalingGroup",
