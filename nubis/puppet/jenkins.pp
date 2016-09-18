@@ -40,6 +40,16 @@ class { 'jenkins':
 
 ## ADDITIONAL PLUGINS ##
 
+jenkins::plugin { "prometheus":
+    version => "1.0.6",
+  update_url => 'https://updates.jenkins.io',
+}
+
+jenkins::plugin { "metrics":
+    version => "3.1.2.9",
+  update_url => 'https://updates.jenkins.io',
+}
+
 jenkins::plugin { "icon-shim":
     version => "2.0.3",
   update_url => 'https://updates.jenkins.io',
