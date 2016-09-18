@@ -499,6 +499,7 @@ resource "null_resource" "credstash" {
     region           = "${var.region}"
     context          = "region=${var.region} environment=${var.environment} service=${var.project}"
     credstash        = "credstash -r ${var.region} put -k ${var.credstash_key} -a ${var.project}/${var.environment}/ci"
+    version = "${var.version}"
   }
 
   provisioner "local-exec" {
