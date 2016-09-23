@@ -21,18 +21,16 @@ if [ -d nubis/terraform ]; then
 
   cd nubis/terraform
 
+  # Cleanup remote state (make sure doens't leak between environments
+  terraform remote config -disable=true
+  rm -f terraform.tfstate*
+
+  # Setup remote state fresh
   terraform remote config \
     -backend=consul \
     -backend-config="path=deploy/$service_name/$environment/tf-state" \
 
   terraform get -update=true
-
-  terraform plan \
-    -var account=$NUBIS_ACCOUNT \
-    -var region=$region \
-    -var environment=$environment \
-    -var service_name=$service_name \
-    -var ami=$ami
 
   terraform apply \
     -var account=$NUBIS_ACCOUNT \
@@ -40,6 +38,9 @@ if [ -d nubis/terraform ]; then
     -var environment=$environment \
     -var service_name=$service_name \
     -var ami=$ami
+
+  terraform remote config -disable=true
+  rm -f terraform.tfstate*
 
 elif [ -f $CF_TEMPLATE ]; then
 echo "Running CloudFormation"
