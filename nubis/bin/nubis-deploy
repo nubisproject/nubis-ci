@@ -15,11 +15,11 @@ VARIABLES=$WORKSPACE/../vars.yaml
 
 FULL_STACK_NAME=$stack_name-$environment
 
-if [ -d nubis/terraform ]; then
+if [ -d artifacts/nubis/terraform ]; then
   # Verify SSL cert later
   export CONSUL_HTTP_SSL_VERIFY=0
 
-  cd nubis/terraform
+  cd artifacts/nubis/terraform
 
   # Cleanup remote state (make sure doens't leak between environments
   terraform remote config -disable=true
