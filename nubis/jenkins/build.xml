@@ -90,7 +90,7 @@ fi
       <caseSensitive>true</caseSensitive>
     </hudson.tasks.ArtifactArchiver>
     <hudson.tasks.Mailer plugin="mailer@1.18">
-      <recipients>infra-aws@mozilla.com</recipients>
+      <recipients>%%NUBIS_CI_EMAIL%%</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
