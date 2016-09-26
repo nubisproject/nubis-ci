@@ -6,5 +6,5 @@ mod 'puppetlabs/java','1.4.3'
 mod 'darin/zypprepo', '1.0.2'
 
 # Jenkins itself
-mod 'rtyler/jenkins', '1.6.1'
+mod 'rtyler/jenkins', '1.7.0'
 mod 'camptocamp/archive', '0.8.1'
