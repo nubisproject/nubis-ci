@@ -1,23 +1,21 @@
 include nubis_discovery
 
-# XXX: This will need some post-bootup magic to include a project-specific tag, known only at bootup
-# XXX: Environment too ?
 nubis::discovery::service { 'jenkins':
-  tags => [ 'jenkins' ],
-  port => "8080",
-  check => "/usr/bin/curl -is http://localhost:8080/cc.xml",
-  interval => "30s",
+  tags     => [ 'jenkins' ],
+  port     => '8080',
+  check    => '/usr/bin/curl -fis http://localhost:8080/cc.xml',
+  interval => '30s',
 }
 
 package { 'daemon':
   ensure => 'present'
 }->
 class { 'jenkins':
-  direct_download => 'http://pkg.jenkins-ci.org/debian-stable/binary/jenkins_1.651.3_all.deb',
+  version            => '2.7.4',
   configure_firewall => false,
-  service_enable => false,
-  service_ensure => false,
-  config_hash => {
+  service_enable     => false,
+  service_ensure     => 'stopped',
+  config_hash        => {
     'JAVA_ARGS' => {
       'value' => '-Djava.awt.headless=true -Dhudson.diyChunking=false -Dhttp.proxyHost=proxy.service.consul -Dhttp.proxyPort=3128 -Dhttps.proxyHost=proxy.service.consul -Dhttps.proxyPort=3128'
     },
@@ -40,114 +38,147 @@ class { 'jenkins':
 
 ## ADDITIONAL PLUGINS ##
 
-jenkins::plugin { "prometheus":
-    version => "1.0.6",
-  update_url => 'https://updates.jenkins.io',
+jenkins::plugin { 'prometheus':
+    version => '1.0.6',
 }
 
-jenkins::plugin { "metrics":
-    version => "3.1.2.9",
-  update_url => 'https://updates.jenkins.io',
+jenkins::plugin { 'workflow-job':
+    version => '2.7',
 }
 
-jenkins::plugin { "icon-shim":
-    version => "2.0.3",
-  update_url => 'https://updates.jenkins.io',
+jenkins::plugin { 'workflow-api':
+    version => '2.4',
+}
+jenkins::plugin { 'workflow-support':
+    version => '2.6',
+}
+jenkins::plugin { 'metrics':
+    version => '3.1.2.9',
 }
 
-jenkins::plugin { "git":
-    version => "2.4.4",
-  update_url => 'https://updates.jenkins.io',
+jenkins::plugin { 'icon-shim':
+    version => '2.0.3',
 }
 
-jenkins::plugin { "github":
-    version => "1.19.1",
-  update_url => 'https://updates.jenkins.io',
+jenkins::plugin { 'git':
+    version => '3.0.0',
 }
 
-jenkins::plugin { "github-api":
-    version => "1.75",
-  update_url => 'https://updates.jenkins.io',
+jenkins::plugin { 'github':
+    version => '1.21.1',
 }
 
-jenkins::plugin { "github-oauth":
-    version => "0.24",
-  update_url => 'https://updates.jenkins.io',
+jenkins::plugin { 'github-api':
+    version => '1.77',
 }
 
-jenkins::plugin { "multiple-scms":
-    version => "0.6",
-  update_url => 'https://updates.jenkins.io',
+jenkins::plugin { 'maven-plugin':
+    version => '2.13',
+}
+jenkins::plugin { 'javadoc':
+    version => '1.4',
+}
+jenkins::plugin { 'github-oauth':
+    version => '0.24',
+}
+jenkins::plugin { 'workflow-scm-step':
+    version => '2.2',
+}
+jenkins::plugin { 'workflow-step-api':
+    version => '2.4',
+}
+jenkins::plugin { 'multiple-scms':
+    version => '0.6',
 }
 
-jenkins::plugin { "parameterized-trigger":
-    version => "2.30",
-  update_url => 'https://updates.jenkins.io',
+jenkins::plugin { 'script-security':
+    version => '1.23',
 }
 
-jenkins::plugin { "jackson2-api":
-    version => "2.5.4",
-  update_url => 'https://updates.jenkins.io',
+jenkins::plugin { 'parameterized-trigger':
+    version => '2.32',
 }
 
-jenkins::plugin { "token-macro":
-    version => "1.12.1",
-  update_url => 'https://updates.jenkins.io',
+jenkins::plugin { 'jackson2-api':
+    version => '2.7.3',
 }
 
-jenkins::plugin { "s3":
-    version => "0.10.3",
-  update_url => 'https://updates.jenkins.io',
+jenkins::plugin { 'token-macro':
+    version => '2.0',
 }
 
-jenkins::plugin { "plain-credentials":
-    version => "1.2",
-  update_url => 'https://updates.jenkins.io',
+jenkins::plugin { 's3':
+    version => '0.10.9',
 }
 
-jenkins::plugin { "aws-java-sdk":
-    version => "1.10.45.2",
-  update_url => 'https://updates.jenkins.io',
+jenkins::plugin { 'plain-credentials':
+    version => '1.2',
 }
 
-jenkins::plugin { "copyartifact":
-    version => "1.38",
-  update_url => 'https://updates.jenkins.io',
+jenkins::plugin { 'aws-java-sdk':
+    version => '1.11.37',
 }
 
-jenkins::plugin { "git-client" :
-    version => "1.19.6",
-  update_url => 'https://updates.jenkins.io',
+jenkins::plugin { 'copyartifact':
+    version => '1.38.1',
 }
 
-jenkins::plugin { "scm-api" :
-    version => "1.0",
-  update_url => 'https://updates.jenkins.io',
+jenkins::plugin { 'matrix-project':
+    version => '1.7.1',
 }
 
-jenkins::plugin { "ansible" :
-    version => "0.5",
-  update_url => 'https://updates.jenkins.io',
+jenkins::plugin { 'conditional-buildstep':
+    version => '1.3.5',
+}
+jenkins::plugin { 'run-condition':
+    version => '1.0',
+}
+jenkins::plugin { 'ssh-credentials':
+    version => '1.12',
 }
 
-jenkins::plugin { "rebuild" :
-    version => "1.25",
-  update_url => 'https://updates.jenkins.io',
+jenkins::plugin { 'mailer':
+    version => '1.18',
 }
 
-jenkins::plugin { "promoted-builds":
-    version => "2.25",
-  update_url => 'https://updates.jenkins.io',
+jenkins::plugin { 'display-url-api':
+    version => '0.5',
 }
 
-jenkins::plugin { "pegdown-formatter":
-    version => "1.3",
-  update_url => 'https://updates.jenkins.io',
+jenkins::plugin { 'junit':
+    version => '1.18',
 }
 
-jenkins::plugin { "thinBackup":
-    version => "1.7.4",
-  update_url => 'https://updates.jenkins.io',
+jenkins::plugin { 'structs':
+    version => '1.5',
+}
+
+jenkins::plugin { 'git-client' :
+    version => '2.0.0',
+}
+
+jenkins::plugin { 'scm-api' :
+    version => '1.3',
+}
+
+jenkins::plugin { 'ansible' :
+    version => '0.5',
+}
+
+jenkins::plugin { 'rebuild' :
+    version => '1.25',
+}
+
+jenkins::plugin { 'promoted-builds':
+    version => '2.27',
+}
+
+jenkins::plugin { 'pegdown-formatter':
+    version => '1.3',
+}
+
+jenkins::plugin { 'thinBackup':
+    version => '1.7.4',
 }
 
 # This is for librarian-puppet, below, and somewhat ugly
