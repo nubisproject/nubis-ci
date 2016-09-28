@@ -1,8 +1,4 @@
 language: ruby
 
-cache:
- - bundler
- - ccache
-
 script:
   - "puppet-lint --no-80chars-check --no-140chars-check --fail-on-warnings nubis/puppet/*pp"
