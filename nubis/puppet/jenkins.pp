@@ -182,51 +182,51 @@ jenkins::plugin { 'thinBackup':
 }
 
 # This is for librarian-puppet, below, and somewhat ugly
-package { "ruby-dev":
-  ensure => "1:1.9.3.4",
+package { 'ruby-dev':
+  ensure => '1:1.9.3.4',
 }
 
-package { "librarian-puppet":
-  ensure => "2.2.3",
-  provider => "gem",
-  require => [
-    Package["ruby-dev"],
+package { 'librarian-puppet':
+  ensure   => '2.2.3',
+  provider => 'gem',
+  require  => [
+    Package['ruby-dev'],
   ],
 }
 
 # These are Ubuntu specific versions, needs fixing, but not with/without latest ?
-package { "unzip":
-    ensure => "6.0-9ubuntu1.5",
+package { 'unzip':
+    ensure => '6.0-9ubuntu1.5',
 }
 
-package { "git":
-    ensure => "1:1.9.1-1ubuntu0.3",
+package { 'git':
+    ensure => '1:1.9.1-1ubuntu0.3',
 }
 
-package { "make":
-    ensure => "3.81-8.2ubuntu3",
+package { 'make':
+    ensure => '3.81-8.2ubuntu3',
 }
 
 # Needed because current ansible/boto has bugs with STS tokens
 
 class { 'python':
   version => 'system',
-  pip => true,
-  dev => true,
+  pip     => true,
+  dev     => true,
 }
 
 python::pip { 'boto':
-  ensure => '2.38.0',
+  ensure  => '2.38.0',
   require => Class['python'],
 }
 
 python::pip { 'ansible':
-  ensure => '1.9.4',
+  ensure  => '1.9.4',
   require => Class['python'],
 }
 
 python::pip { 'MarkupSafe':
-  ensure => '0.23',
+  ensure  => '0.23',
   require => Class['python'],
 }
 
@@ -249,12 +249,12 @@ proxy_port = 3128
 "
 }
 
-wget::fetch { "download latest cloudformation ansible module (bugfix)":
-  source => 'https://raw.githubusercontent.com/ansible/ansible-modules-core/e25605cd5bca003a5071aebbdaeb2887e8e5c659/cloud/amazon/cloudformation.py',
+wget::fetch { 'download latest cloudformation ansible module (bugfix)':
+  source      => 'https://raw.githubusercontent.com/ansible/ansible-modules-core/e25605cd5bca003a5071aebbdaeb2887e8e5c659/cloud/amazon/cloudformation.py',
   destination => '/usr/local/lib/python2.7/dist-packages/ansible/modules/core/cloud/amazon/cloudformation.py',
-  verbose => true,
-  redownload => true, # The file already exists, we replace it
-  require => [
+  verbose     => true,
+  redownload  => true, # The file already exists, we replace it
+  require     => [
     Python::Pip['ansible'],
   ]
 }
