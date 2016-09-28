@@ -1,2 +1,7 @@
 language: generic
 script: "uname -a"
+
+addons:
+  apt:
+    packages:
+    - shellcheck
