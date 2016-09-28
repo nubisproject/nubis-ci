@@ -2,6 +2,3 @@ language: ruby
 
 script:
   - "puppet-lint --fail-on-warnings nubis/puppet/*pp"
-env:
-  - PUPPET_VERSION=3.8.6
-  - PUPPET_VERSION=3.7.4
