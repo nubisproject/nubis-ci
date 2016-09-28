@@ -50,7 +50,7 @@ jenkins::plugin { 'workflow-api':
     version => '2.4',
 }
 jenkins::plugin { 'workflow-support':
-    version => '2.6',
+    version => '2.8',
 }
 jenkins::plugin { 'metrics':
     version => '3.1.2.9',
@@ -112,7 +112,7 @@ jenkins::plugin { 's3':
 }
 
 jenkins::plugin { 'plain-credentials':
-    version => '1.2',
+    version => '1.3',
 }
 
 jenkins::plugin { 'aws-java-sdk':
@@ -230,6 +230,25 @@ python::pip { 'MarkupSafe':
   require => Class['python'],
 }
 
+python::pip { 's3cmd':
+  ensure => '1.6.1',
+  require => Class['python'],
+}
+
+file { "/var/lib/jenkins/.s3cfg":
+  require => [
+    Class['jenkins'],
+    Python::Pip['s3cmd'],
+  ],
+  owner => "jenkins",
+  group => "jenkins",
+  mode  => "0640",
+  content => "[default]
+proxy_host = proxy.service.consul
+proxy_port = 3128
+"
+}
+
 wget::fetch { "download latest cloudformation ansible module (bugfix)":
   source => 'https://raw.githubusercontent.com/ansible/ansible-modules-core/e25605cd5bca003a5071aebbdaeb2887e8e5c659/cloud/amazon/cloudformation.py',
   destination => '/usr/local/lib/python2.7/dist-packages/ansible/modules/core/cloud/amazon/cloudformation.py',
@@ -238,4 +257,18 @@ wget::fetch { "download latest cloudformation ansible module (bugfix)":
   require => [
     Python::Pip['ansible'],
   ]
+}
+
+cron { 'jenkins-s3-backups':
+  ensure => 'present',
+  command => 's3cmd --quiet sync /mnt/jenkins/ s3://$(nubis-metadata NUBIS_CI_BUCKET)/',
+  hour => '*',
+  minute => '*/15',
+  user => 'jenkins',
+  environment => [
+    "PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:/opt/aws/bin",
+  ],
+  require => [
+    Class['jenkins'],
+  ],
 }

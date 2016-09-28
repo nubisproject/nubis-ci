@@ -11,6 +11,31 @@ AWS_REGION=`curl -s http://169.254.169.254/latest/dynamic/instance-identity/docu
 # shell parse our userdata
 eval `curl -fq http://169.254.169.254/latest/user-data`
 
+## BACKUPS
+## Important to do first, so that what we generate can overwrite what we are restoring from
+## Otherwise no way to change generated files as part of upgrades
+
+# Prepare our backup dump directory
+BACKUP_DIR=/mnt/jenkins
+
+mkdir $BACKUP_DIR
+chown jenkins:jenkins $BACKUP_DIR
+
+# Pull latest backups
+su - jenkins -c "s3cmd --quiet sync s3://$(nubis-metadata NUBIS_CI_BUCKET)/ $BACKUP_DIR/"
+
+# Build our latest backup chain with incrementals
+LAST_FULL=$(basename $(ls -1d $BACKUP_DIR/{FULL,DIFF}* | sort -t- -k2 | grep FULL | tail -n1))
+INCREMENTALS=$(ls -1d $BACKUP_DIR/{FULL,DIFF}* | sort -t- -k2  | sed -e "1,/$LAST_FULL/d" | xargs -n1 basename)
+
+# Recover from latest backup
+for BACKUP in $LAST_FULL $INCREMENTALS; do
+  echo "Restoring from $BACKUP_DIR/$BACKUP/"
+  su - jenkins -c "rsync -av $BACKUP_DIR/$BACKUP/ /var/lib/jenkins/"
+done
+
+## BACKUP END
+
 # Create the job directories
 mkdir -p /var/lib/jenkins/jobs/$NUBIS_CI_NAME-build
 mkdir -p /var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment
@@ -26,6 +51,8 @@ cp /etc/nubis.d/jenkins-config.xml /var/lib/jenkins/config.xml
 cp /etc/nubis.d/jenkins-proxy.xml /var/lib/jenkins/proxy.xml
 cp /etc/nubis.d/jenkins-location.xml /var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration.xml
 cp /etc/nubis.d/jenkins-s3bucketpublisher.xml /var/lib/jenkins/hudson.plugins.s3.S3BucketPublisher.xml
+cp /etc/nubis.d/jenkins-thinBackup.xml /var/lib/jenkins/thinBackup.xml
+cp /etc/nubis.d/jenkins-ssh.xml /var/lib/jenkins/org.jenkinsci.main.modules.sshd.SSHD.xml
 
 # Drop project configuration for jenkins
 cp /etc/nubis.d/jenkins-build-config.xml /var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml
