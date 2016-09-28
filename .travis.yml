@@ -1,6 +1,8 @@
 language: generic
 addons:
   apt:
+    sources:
+    - ubuntu-toolchain-r-test
     packages:
     - shellcheck
 
