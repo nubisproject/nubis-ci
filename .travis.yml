@@ -5,4 +5,4 @@ cache:
  - ccache
 
 script:
-  - "puppet-lint --fail-on-warnings nubis/puppet/*pp"
+  - "puppet-lint --no-80chars-check --no-140chars-check --fail-on-warnings nubis/puppet/*pp"
