@@ -1,7 +1,8 @@
 language: generic
-script: "uname -a"
-
 addons:
   apt:
     packages:
     - shellcheck
+
+script:
+  - "shellcheck nubis/bin/*"
