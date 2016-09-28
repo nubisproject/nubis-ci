@@ -1,10 +1,4 @@
-language: generic
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - shellcheck
+language: ruby
 
 script:
-  - "shellcheck nubis/bin/*"
+  - "puppet-lint nubis/puppet/*pp"
