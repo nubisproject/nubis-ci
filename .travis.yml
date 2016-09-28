@@ -1,4 +1,8 @@
 language: ruby
 
+cache:
+ - bundler
+ - ccache
+
 script:
   - "puppet-lint --fail-on-warnings nubis/puppet/*pp"
