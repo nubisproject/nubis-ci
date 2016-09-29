@@ -66,13 +66,7 @@
       "source": "nubis/bin/jenkins-startup.sh",
       "destination": "/tmp/jenkins-startup.sh",
       "order": 26
-    },
-    {
-      "type": "file",
-      "source": "nubis/bin/sts",
-      "destination": "/tmp/sts",
-      "order": 27
-    },
+    }
     {
       "type": "file",
       "source": "nubis/bin/nubis-deploy",
@@ -98,8 +92,7 @@
         "sudo mv /tmp/jenkins-startup.sh /etc/nubis.d/jenkins",
         "sudo mv /tmp/confd/*.toml /etc/confd/conf.d/",
         "sudo mv /tmp/confd/*.tmpl /etc/confd/templates/",
-        "sudo mv /tmp/sts /tmp/nubis-deploy /usr/local/bin/",
-        "sudo chmod 755 /etc/nubis.d/jenkins /usr/local/bin/sts /usr/local/bin/nubis-deploy",
+        "sudo chmod 755 /etc/nubis.d/jenkins /usr/local/bin/nubis-deploy",
         "sudo mv /tmp/jenkins-*.xml /etc/nubis.d/"
       ],
       "order": 30
