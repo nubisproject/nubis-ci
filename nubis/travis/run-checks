@@ -12,7 +12,9 @@ find nubis/ -path nubis/travis/vendor -prune -o -name '*.json' -print0 | xargs -
 
 if [ -f "nubis/Puppetfile" ]; then
   echo "Installing specified puppet modules"
-  ( cd nubis && bundle exec librarian-puppet install --verbose )
+  ( cd nubis && bundle exec librarian-puppet install )
+  echo "Installed puppet modules are:"
+  ( cd nubis && bundle exec librarian-puppet show )
   echo "Checking for outdated puppet modules"
   ( cd nubis && bundle exec librarian-puppet outdated )
 fi
