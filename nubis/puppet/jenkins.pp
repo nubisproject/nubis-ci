@@ -231,18 +231,18 @@ python::pip { 'MarkupSafe':
 }
 
 python::pip { 's3cmd':
-  ensure => '1.6.1',
+  ensure  => '1.6.1',
   require => Class['python'],
 }
 
-file { "/var/lib/jenkins/.s3cfg":
+file { '/var/lib/jenkins/.s3cfg':
   require => [
     Class['jenkins'],
     Python::Pip['s3cmd'],
   ],
-  owner => "jenkins",
-  group => "jenkins",
-  mode  => "0640",
+  owner   => 'jenkins',
+  group   => 'jenkins',
+  mode    => '0640',
   content => "[default]
 proxy_host = proxy.service.consul
 proxy_port = 3128
@@ -260,15 +260,15 @@ wget::fetch { 'download latest cloudformation ansible module (bugfix)':
 }
 
 cron { 'jenkins-s3-backups':
-  ensure => 'present',
-  command => 's3cmd --quiet sync /mnt/jenkins/ s3://$(nubis-metadata NUBIS_CI_BUCKET)/',
-  hour => '*',
-  minute => '*/15',
-  user => 'jenkins',
+  ensure      => 'present',
+  command     => 's3cmd --quiet sync /mnt/jenkins/ s3://$(nubis-metadata NUBIS_CI_BUCKET)/',
+  hour        => '*',
+  minute      => '*/15',
+  user        => 'jenkins',
   environment => [
-    "PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:/opt/aws/bin",
+    'PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:/opt/aws/bin',
   ],
-  require => [
+  require     => [
     Class['jenkins'],
   ],
 }
