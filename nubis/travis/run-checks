@@ -1,0 +1,9 @@
+#!/bin/bash
+set -xe
+
+set -e
+# Run Puppet Lint
+puppet-lint --no-80chars-check --no-140chars-check --fail-on-warnings nubis/puppet/*pp
+
+# Run shellcheck
+find nubis/ -type f -print | xargs file | grep 'shell script' | cut -d: -f1 | xargs shellcheck

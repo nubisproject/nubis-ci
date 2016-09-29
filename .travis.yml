@@ -1,6 +1,8 @@
 language: ruby
 sudo: false
 
+gemfile: nubis/travis/Gemfile
+
 addons:
   apt:
     sources:
