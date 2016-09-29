@@ -6,7 +6,6 @@ cache:
   directories:
   - ${HOME}/bin
   - nubis/librarian-puppet
-  - nubis/Puppetfile.lock
 addons:
   apt:
     sources:
