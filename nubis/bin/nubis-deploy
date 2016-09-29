@@ -1,10 +1,17 @@
 #!/bin/bash -l
 
+declare region
+declare environment
+declare key_name
+declare stack_name
+declare owner
+declare service_name
+
 # Consume user-data
-eval `curl -fqs http://169.254.169.254/latest/user-data`
+eval "$(curl -fqs http://169.254.169.254/latest/user-data)"
 
 if [ "$ami" = "" ]; then
-  ami=`cat artifacts/amis.txt | grep $region | cut -d: -f2 | head -n1`
+  ami=$(grep "$region" artifacts/amis.txt | cut -d: -f2 | head -n1)
 fi
 
 echo "Deploying AMI $ami into $environment/$region"
@@ -31,35 +38,35 @@ if [ -d artifacts/terraform ]; then
   terraform get -update=true artifacts/terraform
 
   terraform apply \
-    -var account=$NUBIS_ACCOUNT \
-    -var region=$region \
-    -var environment=$environment \
-    -var service_name=$service_name \
-    -var ami=$ami \
+    -var account="$NUBIS_ACCOUNT" \
+    -var region="$region" \
+    -var environment="$environment" \
+    -var service_name="$service_name" \
+    -var ami="$ami" \
     artifacts/terraform
 
   terraform remote config -disable=true
   rm -f terraform.tfstate*
 
-elif [ -f $CF_TEMPLATE ]; then
+elif [ -f "$CF_TEMPLATE" ]; then
 echo "Running CloudFormation"
 ansible-playbook -i localhost, \
-  $PLAYBOOK \
-  -e stack_name=$FULL_STACK_NAME \
-  -e owner=$owner \
-  -e service_name=$service_name \
-  -e key_name=$key_name \
-  -e region=$region \
-  -e env=$environment \
-  -e ami=$ami \
-  -e template=$CF_TEMPLATE \
-  -e @$VARIABLES
+  "$PLAYBOOK" \
+  -e stack_name="$FULL_STACK_NAME" \
+  -e owner="$owner" \
+  -e service_name="$service_name" \
+  -e key_name="$key_name" \
+  -e region="$region" \
+  -e env="$environment" \
+  -e ami="$ami" \
+  -e template="$CF_TEMPLATE" \
+  -e "@$VARIABLES"
 
 export CONSUL_ENDPOINT
 CONSUL_ENDPOINT="public.consul.$environment.$region.$NUBIS_ACCOUNT.$NUBIS_DOMAIN"
 
 echo "Injecting into Consul"
-PROJECT_NAME=$service_name NUBIS_ENVIRONMENT=$environment nubis-consul --quiet --region $region --stack-name $FULL_STACK_NAME get-and-update
+PROJECT_NAME=$service_name NUBIS_ENVIRONMENT=$environment nubis-consul --quiet --region "$region" --stack-name "$FULL_STACK_NAME" get-and-update
 
 fi
 

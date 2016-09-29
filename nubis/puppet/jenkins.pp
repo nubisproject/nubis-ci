@@ -182,93 +182,93 @@ jenkins::plugin { 'thinBackup':
 }
 
 # This is for librarian-puppet, below, and somewhat ugly
-package { "ruby-dev":
-  ensure => "1:1.9.3.4",
+package { 'ruby-dev':
+  ensure => '1:1.9.3.4',
 }
 
-package { "librarian-puppet":
-  ensure => "2.2.3",
-  provider => "gem",
-  require => [
-    Package["ruby-dev"],
+package { 'librarian-puppet':
+  ensure   => '2.2.3',
+  provider => 'gem',
+  require  => [
+    Package['ruby-dev'],
   ],
 }
 
 # These are Ubuntu specific versions, needs fixing, but not with/without latest ?
-package { "unzip":
-    ensure => "6.0-9ubuntu1.5",
+package { 'unzip':
+    ensure => '6.0-9ubuntu1.5',
 }
 
-package { "git":
-    ensure => "1:1.9.1-1ubuntu0.3",
+package { 'git':
+    ensure => '1:1.9.1-1ubuntu0.3',
 }
 
-package { "make":
-    ensure => "3.81-8.2ubuntu3",
+package { 'make':
+    ensure => '3.81-8.2ubuntu3',
 }
 
 # Needed because current ansible/boto has bugs with STS tokens
 
 class { 'python':
   version => 'system',
-  pip => true,
-  dev => true,
+  pip     => true,
+  dev     => true,
 }
 
 python::pip { 'boto':
-  ensure => '2.38.0',
+  ensure  => '2.38.0',
   require => Class['python'],
 }
 
 python::pip { 'ansible':
-  ensure => '1.9.4',
+  ensure  => '1.9.4',
   require => Class['python'],
 }
 
 python::pip { 'MarkupSafe':
-  ensure => '0.23',
+  ensure  => '0.23',
   require => Class['python'],
 }
 
 python::pip { 's3cmd':
-  ensure => '1.6.1',
+  ensure  => '1.6.1',
   require => Class['python'],
 }
 
-file { "/var/lib/jenkins/.s3cfg":
+file { '/var/lib/jenkins/.s3cfg':
   require => [
     Class['jenkins'],
     Python::Pip['s3cmd'],
   ],
-  owner => "jenkins",
-  group => "jenkins",
-  mode  => "0640",
+  owner   => 'jenkins',
+  group   => 'jenkins',
+  mode    => '0640',
   content => "[default]
 proxy_host = proxy.service.consul
 proxy_port = 3128
 "
 }
 
-wget::fetch { "download latest cloudformation ansible module (bugfix)":
-  source => 'https://raw.githubusercontent.com/ansible/ansible-modules-core/e25605cd5bca003a5071aebbdaeb2887e8e5c659/cloud/amazon/cloudformation.py',
+wget::fetch { 'download latest cloudformation ansible module (bugfix)':
+  source      => 'https://raw.githubusercontent.com/ansible/ansible-modules-core/e25605cd5bca003a5071aebbdaeb2887e8e5c659/cloud/amazon/cloudformation.py',
   destination => '/usr/local/lib/python2.7/dist-packages/ansible/modules/core/cloud/amazon/cloudformation.py',
-  verbose => true,
-  redownload => true, # The file already exists, we replace it
-  require => [
+  verbose     => true,
+  redownload  => true, # The file already exists, we replace it
+  require     => [
     Python::Pip['ansible'],
   ]
 }
 
 cron { 'jenkins-s3-backups':
-  ensure => 'present',
-  command => 's3cmd --quiet sync /mnt/jenkins/ s3://$(nubis-metadata NUBIS_CI_BUCKET)/',
-  hour => '*',
-  minute => '*/15',
-  user => 'jenkins',
+  ensure      => 'present',
+  command     => 's3cmd --quiet sync /mnt/jenkins/ s3://$(nubis-metadata NUBIS_CI_BUCKET)/',
+  hour        => '*',
+  minute      => '*/15',
+  user        => 'jenkins',
   environment => [
-    "PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:/opt/aws/bin",
+    'PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:/opt/aws/bin',
   ],
-  require => [
+  require     => [
     Class['jenkins'],
   ],
 }
