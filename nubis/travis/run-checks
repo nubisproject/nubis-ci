@@ -12,5 +12,5 @@ find nubis/ -path nubis/travis/vendor -prune -o -name '*.json' -print0 | xargs -
 
 if [ -f "nubis/Puppetfile" ]; then
   echo "Checking for outdated puppet modules"
-  ( cd nubis && librarian-puppet outdated )
+  ( cd nubis && bundle exec librarian-puppet outdated )
 fi
