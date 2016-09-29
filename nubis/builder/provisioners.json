@@ -66,7 +66,7 @@
       "source": "nubis/bin/jenkins-startup.sh",
       "destination": "/tmp/jenkins-startup.sh",
       "order": 26
-    }
+    },
     {
       "type": "file",
       "source": "nubis/bin/nubis-deploy",
