@@ -11,7 +11,8 @@ echo "Running JSON Lint"
 find nubis/ -path nubis/travis/vendor -prune -o -name '*.json' -print0 | xargs -0 bundle exec jsonlint
 
 if [ -f "nubis/Puppetfile" ]; then
+  echo "Installing specified puppet modules"
+  ( cd nubis && bundle exec librarian-puppet install --verbose )
   echo "Checking for outdated puppet modules"
-  ( cd nubis && bundle exec librarian-puppet install )
   ( cd nubis && bundle exec librarian-puppet outdated )
 fi
