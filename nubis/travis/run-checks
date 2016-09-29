@@ -1,10 +1,6 @@
 #!/bin/bash
 set -e
 
-env
-ls $HOME/bin
-find $HOME -name 'puppet-lint'
-
 echo "Running Puppet Lint"
 puppet-lint --no-80chars-check --no-140chars-check --fail-on-warnings nubis/puppet/*pp
 
