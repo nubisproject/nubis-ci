@@ -92,6 +92,7 @@
         "sudo mv /tmp/jenkins-startup.sh /etc/nubis.d/jenkins",
         "sudo mv /tmp/confd/*.toml /etc/confd/conf.d/",
         "sudo mv /tmp/confd/*.tmpl /etc/confd/templates/",
+        "sudo mv /tmp/nubis-deploy /usr/local/bin/nubis-deploy",
         "sudo chmod 755 /etc/nubis.d/jenkins /usr/local/bin/nubis-deploy",
         "sudo mv /tmp/jenkins-*.xml /etc/nubis.d/"
       ],
