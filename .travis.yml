@@ -3,6 +3,8 @@ sudo: false
 gemfile: nubis/travis/Gemfile
 cache:
   bundler: true
+  directories:
+  - ${HOME}/bin
 addons:
   apt:
     sources:
