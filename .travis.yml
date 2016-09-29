@@ -3,6 +3,9 @@ sudo: false
 
 gemfile: nubis/travis/Gemfile
 
+cache:
+  bundler: true
+
 addons:
   apt:
     sources:
