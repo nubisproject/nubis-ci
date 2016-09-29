@@ -1,18 +1,16 @@
 language: ruby
 sudo: false
-
 gemfile: nubis/travis/Gemfile
-
 cache:
   bundler: true
-
 addons:
   apt:
     sources:
     - debian-sid
     packages:
     - shellcheck
-
 script:
-  - "puppet-lint --no-80chars-check --no-140chars-check --fail-on-warnings nubis/puppet/*pp"
-  - "find nubis/ -type f -print | xargs file | grep 'shell script' | cut -d: -f1 | xargs shellcheck"
+- nubis/travis/run-checks
+notifications:
+  slack:
+    secure: BOCXR7eMQf58Js9mvH5e4eORWoZFxiIuVRv1ooZu3LyDGBMZX8fsMfSKzuVV6dYMCVrMBCXVtXOkf6A3nXsWDA0U4gLHlJcdOZdC/x8LNL7o6SoUJL7AlSuo4ea7G7NVVnAkS1j+DeFQ0zMcOwOPiDfZB7blP6THHLCQ/2yfcxwiXoS8IXp7S8UectEvCgrGRUPFrDb97oxGT07KLEuCSllkMKrr/Hh3wUjNegoWz8wnkdEOAHuzS4WulUd4STcCAG0EYaP1yMOATMJUj7YiyC+d1K9FQDZkwYldInO7mgLGH0bUxQxwOveePogT6QT8aJC7ppMR3kwjG9Zf2zddFc0fTvNjfNcQM5dbH1mqLMgQKu3rN1gNSMRWqw/ctP8EUn3Ti/JeoObFMUTnmjkDV0GHR/ZAyjm9reyy3yMF4D8L2xxXTMXfrK/Z6+omaPprneHM5JvhKE+EGuTAuuwFVivXnYNyz1cmdaeHGWCTjwmxFO7qNpiOxQtiOCiQsb09mQc7T/sI4JDCksh4gqG693xrGiHi+zHL+yq6A9FaRtSitdA5M4vNl3vy1YHYKkBUXM/cl1Nfq4Wh5N4vk0NOIF5tEF0ZSMjt5h2tXIz6AHuQGNWFluNDb4lT1jbCs8PzK6tXU3JocmovN18twdGMBULAuN27fiPGs9Mie3CoX5M=
