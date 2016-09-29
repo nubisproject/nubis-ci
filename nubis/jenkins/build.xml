@@ -75,14 +75,15 @@ if [ -d nubis/terraform ]; then
   rsync -av nubis/terraform artifacts/
 fi
 if [ -d nubis/builder/artifacts ]; then
-  rsync -av nubis/builder/artifacts/ artifacts/
+  mkdir -p artifacts/builder/
+  rsync -av nubis/builder/artifacts/ artifacts/builder/
 fi
 </command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
     <hudson.tasks.ArtifactArchiver>
-      <artifacts>artifacts/*</artifacts>
+      <artifacts>artifacts/**</artifacts>
       <allowEmptyArchive>false</allowEmptyArchive>
       <onlyIfSuccessful>false</onlyIfSuccessful>
       <fingerprint>true</fingerprint>

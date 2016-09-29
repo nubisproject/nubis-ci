@@ -1,93 +1,108 @@
 {
   "provisioners": [
-   {
-    "type": "shell",
-    "inline" : ["sudo apt-get update"],
-    "order": 5
-  },
-  {
-    "type": "file",
-    "source": "nubis/jenkins/deployment.xml",
-    "destination": "/tmp/jenkins-deployment-config.xml",
-    "order": 21
-  },
-  {
-    "type": "file",
-    "source": "nubis/jenkins/build.xml",
-    "destination": "/tmp/jenkins-build-config.xml",
-    "order": 22
-  },
-  {
-    "type": "file",
-    "source": "nubis/jenkins/build-promotion-deployed.xml",
-    "destination": "/tmp/jenkins-build-promotion-deployed-config.xml",
-    "order": 22
-  },  {
-    "type": "file",
-    "source": "nubis/jenkins/config.xml",
-    "destination": "/tmp/jenkins-config.xml",
-    "order": 23
-  },
-  {
-    "type": "file",
-    "source": "nubis/jenkins/jenkins.model.JenkinsLocationConfiguration.xml",
-    "destination": "/tmp/jenkins-location.xml",
-    "order": 24
-  },
-  {
-    "type": "file",
-    "source": "nubis/jenkins/hudson.plugins.s3.S3BucketPublisher.xml",
-    "destination": "/tmp/jenkins-s3bucketpublisher.xml",
-    "order": 25
-  },  
-  {
-    "type": "file",
-    "source": "nubis/jenkins/proxy.xml",
-    "destination": "/tmp/jenkins-proxy.xml",
-    "order": 25
-  },
-  {
-    "type": "file",
-    "source": "nubis/bin/jenkins-startup.sh",
-    "destination": "/tmp/jenkins-startup.sh",
-    "order": 26
-  },
-  {
-    "type": "file",
-    "source": "nubis/bin/sts",
-    "destination": "/tmp/sts",
-    "order": 27
-  },
-  {
-    "type": "file",
-    "source": "nubis/bin/nubis-deploy",
-    "destination": "/tmp/nubis-deploy",
-    "order": 28
-  },
-  {
-    "type": "shell",
-    "inline": [
-      "mkdir /tmp/confd"
-    ],
-    "order": 28
-  },
-  {
-    "type": "file",
-    "source": "nubis/files/confd/",
-    "destination": "/tmp/confd/",
-    "order": 29
-  },  
-  {
-    "type": "shell",
+    {
+      "type": "shell",
       "inline": [
-	"sudo mv /tmp/jenkins-startup.sh /etc/nubis.d/jenkins",
-	"sudo mv /tmp/confd/*.toml /etc/confd/conf.d/",
-	"sudo mv /tmp/confd/*.tmpl /etc/confd/templates/",
-	"sudo mv /tmp/sts /tmp/nubis-deploy /usr/local/bin/",
-	"sudo chmod 755 /etc/nubis.d/jenkins /usr/local/bin/sts /usr/local/bin/nubis-deploy",
-	"sudo mv /tmp/jenkins-*.xml /etc/nubis.d/"
+        "sudo apt-get update"
       ],
-    "order": 30
-  }
+      "order": 5
+    },
+    {
+      "type": "file",
+      "source": "nubis/jenkins/deployment.xml",
+      "destination": "/tmp/jenkins-deployment-config.xml",
+      "order": 21
+    },
+    {
+      "type": "file",
+      "source": "nubis/jenkins/build.xml",
+      "destination": "/tmp/jenkins-build-config.xml",
+      "order": 22
+    },
+    {
+      "type": "file",
+      "source": "nubis/jenkins/build-promotion-deployed.xml",
+      "destination": "/tmp/jenkins-build-promotion-deployed-config.xml",
+      "order": 22
+    },
+    {
+      "type": "file",
+      "source": "nubis/jenkins/config.xml",
+      "destination": "/tmp/jenkins-config.xml",
+      "order": 23
+    },
+    {
+      "type": "file",
+      "source": "nubis/jenkins/jenkins.model.JenkinsLocationConfiguration.xml",
+      "destination": "/tmp/jenkins-location.xml",
+      "order": 24
+    },
+    {
+      "type": "file",
+      "source": "nubis/jenkins/hudson.plugins.s3.S3BucketPublisher.xml",
+      "destination": "/tmp/jenkins-s3bucketpublisher.xml",
+      "order": 25
+    },
+    {
+      "type": "file",
+      "source": "nubis/jenkins/thinBackup.xml",
+      "destination": "/tmp/jenkins-thinBackup.xml",
+      "order": 25
+    },
+    {
+      "type": "file",
+      "source": "nubis/jenkins/org.jenkinsci.main.modules.sshd.SSHD.xml",
+      "destination": "/tmp/jenkins-ssh.xml",
+      "order": 25
+    },
+    {
+      "type": "file",
+      "source": "nubis/jenkins/proxy.xml",
+      "destination": "/tmp/jenkins-proxy.xml",
+      "order": 25
+    },
+    {
+      "type": "file",
+      "source": "nubis/bin/jenkins-startup.sh",
+      "destination": "/tmp/jenkins-startup.sh",
+      "order": 26
+    },
+    {
+      "type": "file",
+      "source": "nubis/bin/sts",
+      "destination": "/tmp/sts",
+      "order": 27
+    },
+    {
+      "type": "file",
+      "source": "nubis/bin/nubis-deploy",
+      "destination": "/tmp/nubis-deploy",
+      "order": 28
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "mkdir /tmp/confd"
+      ],
+      "order": 28
+    },
+    {
+      "type": "file",
+      "source": "nubis/files/confd/",
+      "destination": "/tmp/confd/",
+      "order": 29
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "sudo mv /tmp/jenkins-startup.sh /etc/nubis.d/jenkins",
+        "sudo mv /tmp/confd/*.toml /etc/confd/conf.d/",
+        "sudo mv /tmp/confd/*.tmpl /etc/confd/templates/",
+        "sudo mv /tmp/sts /tmp/nubis-deploy /usr/local/bin/",
+        "sudo chmod 755 /etc/nubis.d/jenkins /usr/local/bin/sts /usr/local/bin/nubis-deploy",
+        "sudo mv /tmp/jenkins-*.xml /etc/nubis.d/"
+      ],
+      "order": 30
+    }
   ]
 }
