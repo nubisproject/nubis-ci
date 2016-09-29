@@ -2,10 +2,10 @@
 set -e
 
 echo "Running Puppet Lint"
-puppet-lint --no-80chars-check --no-140chars-check --fail-on-warnings nubis/puppet/*pp
+bundle exec puppet-lint --no-80chars-check --no-140chars-check --fail-on-warnings nubis/puppet/*pp
 
 echo "Running ShellCheck"
 find nubis/ -type f -print0 | xargs -0 file | grep 'shell script' | cut -d: -f1 | xargs shellcheck
 
 echo "Running JSON Lint"
-find nubis/ -name '*.json' -print0 | xargs -0 jsonlint
+find nubis/ -name '*.json' -print0 | xargs -0 bundle exec jsonlint
