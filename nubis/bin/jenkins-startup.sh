@@ -25,10 +25,17 @@ chown jenkins:jenkins $BACKUP_DIR
 su - jenkins -c "s3cmd --quiet sync s3://$(nubis-metadata NUBIS_CI_BUCKET)/ $BACKUP_DIR/"
 
 # Build our latest backup chain with incrementals
-LAST_FULL=$(basename $(ls -1d $BACKUP_DIR/{FULL,DIFF}* | sort -t- -k2 | grep FULL | tail -n1))
-INCREMENTALS=$(ls -1d $BACKUP_DIR/{FULL,DIFF}* | sort -t- -k2  | sed -e "1,/$LAST_FULL/d" | xargs -n1 basename)
 
-# Recover from latest backup
+# List all backups in proper order
+ALL_BACKUPS=$(find $BACKUP_DIR -maxdepth 1 -type d   -name 'FULL*' -o -name 'DIFF*' | sort -t- -k2)
+
+# Find the last full backup
+LAST_FULL=$(basename "$(echo "$ALL_BACKUPS" | grep FULL | tail -n1)")
+
+# And all following incrementals
+INCREMENTALS=$(echo "$ALL_BACKUPS" | sed -e "1,/$LAST_FULL/d" | xargs -n1 basename)
+
+# Recover from latest backup (full + incrementals)
 for BACKUP in $LAST_FULL $INCREMENTALS; do
   echo "Restoring from $BACKUP_DIR/$BACKUP/"
   su - jenkins -c "rsync -av $BACKUP_DIR/$BACKUP/ /var/lib/jenkins/"
