@@ -5,10 +5,10 @@ echo "Running Puppet Lint"
 bundle exec puppet-lint --no-80chars-check --no-140chars-check --fail-on-warnings nubis/puppet/*pp
 
 echo "Running ShellCheck"
-find nubis/ -type f -print0 | xargs -0 file | grep 'shell script' | cut -d: -f1 | xargs shellcheck
+find nubis/ -path nubis/travis/vendor -prune -o -type f -print0 | xargs -0 file | grep 'shell script' | cut -d: -f1 | xargs shellcheck
 
 echo "Running JSON Lint"
-find nubis/ -name '*.json' -print0 | xargs -0 bundle exec jsonlint
+find nubis/ -path nubis/travis/vendor -prune -o -name '*.json' -print0 | xargs -0 bundle exec jsonlint
 
 if [ -f "nubis/Puppetfile" ]; then
   echo "Checking for outdated puppet modules"
