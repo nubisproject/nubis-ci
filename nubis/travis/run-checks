@@ -9,3 +9,8 @@ find nubis/ -type f -print0 | xargs -0 file | grep 'shell script' | cut -d: -f1 
 
 echo "Running JSON Lint"
 find nubis/ -name '*.json' -print0 | xargs -0 bundle exec jsonlint
+
+if [ -f "nubis/Puppetfile" ]; then
+  echo "Checking for outdated puppet modules"
+  ( cd nubis && librarian-puppet outdated )
+fi
