@@ -1,4 +1,4 @@
-# nubis-ci
+# nubis-ci [![Build Status](https://travis-ci.org/nubisproject/nubis-ci.svg?branch=master)](https://travis-ci.org/nubisproject/nubis-ci)
 
 ## Quick start
 0. `git clone git@github.com:nubisproject/nubis-base.git`
