@@ -29,7 +29,7 @@ if [ -d artifacts/terraform ]; then
   export CONSUL_HTTP_SSL_VERIFY=0
 
   # Cleanup remote state (make sure doens't leak between environments
-  terraform remote config -disable=true
+  terraform remote config -disable=true || true
   rm -f terraform.tfstate*
 
   # Setup remote state fresh
