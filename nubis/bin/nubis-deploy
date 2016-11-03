@@ -1,5 +1,7 @@
 #!/bin/bash -l
 
+set -e
+
 declare region
 declare environment
 declare key_name
