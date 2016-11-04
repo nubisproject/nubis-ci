@@ -43,14 +43,14 @@ jenkins::plugin { 'prometheus':
 }
 
 jenkins::plugin { 'workflow-job':
-    version => '2.7',
+    version => '2.8',
 }
 
 jenkins::plugin { 'workflow-api':
-    version => '2.4',
+    version => '2.5',
 }
 jenkins::plugin { 'workflow-support':
-    version => '2.8',
+    version => '2.10',
 }
 jenkins::plugin { 'metrics':
     version => '3.1.2.9',
@@ -65,15 +65,15 @@ jenkins::plugin { 'git':
 }
 
 jenkins::plugin { 'github':
-    version => '1.21.1',
+    version => '1.22.4',
 }
 
 jenkins::plugin { 'github-api':
-    version => '1.77',
+    version => '1.79',
 }
 
 jenkins::plugin { 'maven-plugin':
-    version => '2.13',
+    version => '2.14',
 }
 jenkins::plugin { 'javadoc':
     version => '1.4',
@@ -85,14 +85,14 @@ jenkins::plugin { 'workflow-scm-step':
     version => '2.2',
 }
 jenkins::plugin { 'workflow-step-api':
-    version => '2.4',
+    version => '2.5',
 }
 jenkins::plugin { 'multiple-scms':
     version => '0.6',
 }
 
 jenkins::plugin { 'script-security':
-    version => '1.23',
+    version => '1.24',
 }
 
 jenkins::plugin { 'parameterized-trigger':
@@ -108,7 +108,7 @@ jenkins::plugin { 'token-macro':
 }
 
 jenkins::plugin { 's3':
-    version => '0.10.9',
+    version => '0.10.10',
 }
 
 jenkins::plugin { 'plain-credentials':
@@ -146,7 +146,7 @@ jenkins::plugin { 'display-url-api':
 }
 
 jenkins::plugin { 'junit':
-    version => '1.18',
+    version => '1.19',
 }
 
 jenkins::plugin { 'structs':
