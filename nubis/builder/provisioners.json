@@ -9,6 +9,12 @@
     },
     {
       "type": "file",
+      "source": "nubis/jenkins/jenkins-slack.xml",
+      "destination": "/tmp/jenkins-slack.xml",
+      "order": 21
+    },
+    {
+      "type": "file",
       "source": "nubis/jenkins/deployment.xml",
       "destination": "/tmp/jenkins-deployment-config.xml",
       "order": 21

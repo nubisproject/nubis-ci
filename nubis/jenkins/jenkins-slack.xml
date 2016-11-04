@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jenkins.plugins.slack.SlackNotifier_-DescriptorImpl plugin="slack@2.0.1">
+  <teamDomain>%%NUBIS_CI_SLACK_DOMAIN%%</teamDomain>
+  <token>%%NUBIS_CI_SLACK_TOKEN%%</token>
+  <room>%%NUBIS_CI_SLACK_CHANNEL%%</room>
+</jenkins.plugins.slack.SlackNotifier_-DescriptorImpl>
