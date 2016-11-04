@@ -229,6 +229,8 @@ NUBIS_CI_BUCKET_REGION=${var.region}
 NUBIS_CI_EMAIL=${var.email}
 NUBIS_CI_GITHUB_ADMINS=${var.admins}
 NUBIS_CI_GITHUB_ORGANIZATIONS=${var.organizations}
+NUBIS_CI_SLACK_CHANNEL="${var.slack_channel}"
+NUBIS_CI_SLACK_DOMAIN="${var.slack_domain}"
 EOF
 
 }
@@ -496,6 +498,7 @@ resource "null_resource" "credstash" {
   triggers {
     github_oauth_client_id = "${var.github_oauth_client_id}"
     github_oauth_client_secret = "${var.github_oauth_client_secret}"
+    slack_token      = "${var.slack_token}"
     region           = "${var.region}"
     context          = "region=${var.region} environment=${var.environment} service=${var.project}"
     credstash        = "credstash -r ${var.region} put -k ${var.credstash_key} -a ${var.project}/${var.environment}/ci"
@@ -508,5 +511,9 @@ resource "null_resource" "credstash" {
 
   provisioner "local-exec" {
     command = "${self.triggers.credstash}/github_oauth_client_secret ${var.github_oauth_client_secret} ${self.triggers.context}"
+  }
+
+  provisioner "local-exec" {
+    command = "${self.triggers.credstash}/slack_token ${var.slack_token} ${self.triggers.context}"
   }
 }
