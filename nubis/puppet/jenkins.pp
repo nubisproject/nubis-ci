@@ -38,6 +38,10 @@ class { 'jenkins':
 
 ## ADDITIONAL PLUGINS ##
 
+jenkins::plugin { 'slack':
+    version => '2.0.1',
+}
+
 jenkins::plugin { 'prometheus':
     version => '1.0.6',
 }

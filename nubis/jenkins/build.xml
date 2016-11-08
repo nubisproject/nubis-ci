@@ -115,6 +115,7 @@ fi
         </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
       </configs>
     </hudson.plugins.parameterizedtrigger.BuildTrigger>
+    %%SLACK_NOTIFIER%%
   </publishers>
   <buildWrappers/>
 </project>
