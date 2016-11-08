@@ -79,8 +79,8 @@ resource "aws_elb" "ci" {
   }
 
   health_check {
-    healthy_threshold = 2
-    unhealthy_threshold = 2
+    healthy_threshold = 3
+    unhealthy_threshold = 3
     timeout = 10
     target = "HTTP:8080/cc.xml"
     interval = 30 
@@ -179,7 +179,7 @@ resource "aws_autoscaling_group" "ci" {
 
   max_size = "2"
   min_size = "0"
-  health_check_grace_period = 300
+  health_check_grace_period = 600
   health_check_type = "ELB"
   desired_capacity = "1"
   force_delete = true
