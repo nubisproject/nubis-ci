@@ -107,3 +107,15 @@ variable "technical_contact" {
 variable "credstash_key" {
 
 }
+
+variable "slack_domain" {
+  default = "nubisproject"
+}
+
+variable "slack_channel" {
+  default = "#changes"
+}
+
+variable "slack_token" {
+  default = ""
+}

@@ -34,11 +34,6 @@ This is a deployment job that can impact production, **use with care**
           <defaultValue>%%NUBIS_CI_NAME%%</defaultValue>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
-          <name>iam_role</name>
-          <description></description>
-          <defaultValue></defaultValue>
-        </hudson.model.StringParameterDefinition>
-        <hudson.model.StringParameterDefinition>
           <name>ami</name>
           <description></description>
           <defaultValue></defaultValue>
@@ -120,6 +115,7 @@ This is a deployment job that can impact production, **use with care**
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>false</sendToIndividuals>
     </hudson.tasks.Mailer>
+    %%SLACK_NOTIFIER%%
   </publishers>
   <buildWrappers/>
 </project>
