@@ -51,7 +51,7 @@ jenkins::plugin { 'workflow-job':
 }
 
 jenkins::plugin { 'workflow-api':
-    version => '2.5',
+    version => '2.6',
 }
 jenkins::plugin { 'workflow-support':
     version => '2.10',
@@ -158,7 +158,7 @@ jenkins::plugin { 'structs':
 }
 
 jenkins::plugin { 'git-client' :
-    version => '2.0.0',
+    version => '2.1.0',
 }
 
 jenkins::plugin { 'scm-api' :
