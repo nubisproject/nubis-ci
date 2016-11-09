@@ -73,8 +73,14 @@ perl -pi -e "s[%%NUBIS_CI_NAME%%][$NUBIS_CI_NAME]g" "/var/lib/jenkins/jobs/$NUBI
 # Fix Location Config
 perl -pi -e "s[%%NUBIS_PROJECT_URL%%][$NUBIS_PROJECT_URL]g" /var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration.xml
 
+# Default Git Branches
+if [ "$NUBIS_GIT_BRANCHES" == "" ]; then
+  NUBIS_GIT_BRANCHES="**"
+fi
+
 ## General Config
 perl -pi -e "s[%%NUBIS_GIT_REPO%%][$NUBIS_GIT_REPO]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml"
+perl -pi -e "s[%%NUBIS_GIT_BRANCHES%%][$NUBIS_GIT_BRANCHES]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml"
 perl -pi -e "s[%%NUBIS_CI_NAME%%][$NUBIS_CI_NAME]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml"
 
 ## Configure S3 plugin
@@ -84,6 +90,7 @@ perl -pi -e "s[%%NUBIS_CI_BUCKET_REGION%%][$NUBIS_CI_BUCKET_REGION]g" "/var/lib/
 # Drop deployment configuration for jenkins
 cp /etc/nubis.d/jenkins-deployment-config.xml "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml"
 perl -pi -e "s[%%NUBIS_GIT_REPO%%][$NUBIS_GIT_REPO]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml"
+perl -pi -e "s[%%NUBIS_GIT_BRANCHES%%][$NUBIS_GIT_BRANCHES]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml"
 perl -pi -e "s[%%NUBIS_CI_NAME%%][$NUBIS_CI_NAME]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml"
 
 # Discover available regions

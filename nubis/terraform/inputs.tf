@@ -42,6 +42,11 @@ variable "git_repo" {
   default = "https://github.com/mozilla/nubis-ci.git"
 }
 
+variable "git_branches" {
+  description = "List of Git branch specs to follow"
+  default = "refs/heads/master"
+}
+
 variable "project" {
   description = "Name of the Nubis project"
   default = "ci"
