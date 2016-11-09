@@ -224,6 +224,7 @@ NUBIS_DOMAIN=${var.nubis_domain}
 NUBIS_PROJECT_URL=https://${aws_route53_record.ci.fqdn}/
 NUBIS_CI_NAME=${var.project}
 NUBIS_GIT_REPO=${var.git_repo}
+NUBIS_GIT_BRANCHES="${var.git_branches}"
 NUBIS_CI_BUCKET=${aws_s3_bucket.ci_artifacts.id}
 NUBIS_CI_BUCKET_REGION=${var.region}
 NUBIS_CI_EMAIL=${var.email}

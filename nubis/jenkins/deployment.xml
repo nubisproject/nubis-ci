@@ -73,7 +73,7 @@ This is a deployment job that can impact production, **use with care**
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>**</name>
+        <name>%%NUBIS_GIT_BRANCHES%%</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
