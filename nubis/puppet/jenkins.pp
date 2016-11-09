@@ -38,6 +38,14 @@ class { 'jenkins':
 
 ## ADDITIONAL PLUGINS ##
 
+jenkins::plugin { 'embeddable-build-status':
+    version => '1.9',
+}
+
+jenkins::plugin { 'bouncycastle-api':
+    version => '2.16.0',
+}
+
 jenkins::plugin { 'slack':
     version => '2.0.1',
 }
