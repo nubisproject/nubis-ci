@@ -55,7 +55,7 @@ jenkins::plugin { 'prometheus':
 }
 
 jenkins::plugin { 'workflow-job':
-    version => '2.8',
+    version => '2.9',
 }
 
 jenkins::plugin { 'workflow-api':
@@ -94,7 +94,7 @@ jenkins::plugin { 'github-oauth':
     version => '0.24',
 }
 jenkins::plugin { 'workflow-scm-step':
-    version => '2.2',
+    version => '2.3',
 }
 jenkins::plugin { 'workflow-step-api':
     version => '2.5',
