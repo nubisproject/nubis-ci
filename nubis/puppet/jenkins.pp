@@ -62,7 +62,7 @@ jenkins::plugin { 'workflow-api':
     version => '2.6',
 }
 jenkins::plugin { 'workflow-support':
-    version => '2.10',
+    version => '2.11',
 }
 jenkins::plugin { 'metrics':
     version => '3.1.2.9',
@@ -77,7 +77,7 @@ jenkins::plugin { 'git':
 }
 
 jenkins::plugin { 'github':
-    version => '1.22.4',
+    version => '1.23.0',
 }
 
 jenkins::plugin { 'github-api':
