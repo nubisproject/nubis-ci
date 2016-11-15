@@ -80,6 +80,10 @@ variable "ssh_security_group_id" {
   description = "ID of that SG"
 }
 
+variable monitoring_security_group_id {
+  description = "ID of that SG"
+}
+
 variable "public_subnets" {
   description = "Public Subnets IDs, comma-separated"
 }
