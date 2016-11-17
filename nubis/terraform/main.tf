@@ -139,7 +139,8 @@ resource "aws_security_group" "ci" {
       to_port = 8080
       protocol = "tcp"
       security_groups = [
-       "${aws_security_group.elb.id}"
+       "${aws_security_group.elb.id}",
+       "${var.monitoring_security_group_id}"
       ]
   }
   
