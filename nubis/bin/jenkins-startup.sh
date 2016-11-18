@@ -173,6 +173,12 @@ cat <<EOF | tee /opt/nubis-builder/secrets/variables.json
 }
 EOF
 
+# Retrieve and install the SSL certs for Consul in stage/prod in our trusted SSL store
+for e in stage prod; do
+  unicreds --region "$AWS_REGION" get "nubis/$e/ssl/public-cacert" -E "environment:$e" -E "region:$AWS_REGION" -E service:nubis > /usr/local/share/ca-certificates/consul-public-$e.crt
+done
+update-ca-certificates
+
 # Manually fix our confd stuff (missing confd puppet support)
 find /etc/confd/conf.d -type f -name '*.toml' -print0 | xargs -0 --verbose sed -i -e "s/%%NUBIS_CI_NAME%%/$NUBIS_CI_NAME/g"
 service confd reload
