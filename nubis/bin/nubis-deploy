@@ -90,3 +90,21 @@ if [ -d nubis/proxy ]; then
   done
 fi
 
+# XXX: Needs to move in its own tool
+if [ -d nubis/monitoring ]; then
+  echo "Injecting Monitoring rules"
+  CONSUL_ENDPOINT="public.consul.$environment.$region.$NUBIS_ACCOUNT.$NUBIS_DOMAIN"
+
+  cd nubis/monitoring
+
+  consulate  --api-port 443 --api-scheme https --api-host "$CONSUL_ENDPOINT" kv mkdir "monitoring/$environment/$service_name/" 2>/dev/null
+
+  for rule in *.prom; do
+    echo " + $rule"
+    consulate  --api-port 443 --api-scheme https --api-host "$CONSUL_ENDPOINT" kv set "monitoring/$environment/$service_name/$rule" "$(cat "$rule")" 2>/dev/null
+  done
+
+  cd ../..
+
+fi
+
