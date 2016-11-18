@@ -11,7 +11,7 @@ package { 'daemon':
   ensure => 'present'
 }->
 class { 'jenkins':
-  version            => '2.19.2',
+  version            => '2.19.3',
   configure_firewall => false,
   service_enable     => false,
   service_ensure     => 'stopped',
