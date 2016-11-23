@@ -233,6 +233,8 @@ NUBIS_CI_GITHUB_ADMINS=${var.admins}
 NUBIS_CI_GITHUB_ORGANIZATIONS=${var.organizations}
 NUBIS_CI_SLACK_CHANNEL="${var.slack_channel}"
 NUBIS_CI_SLACK_DOMAIN="${var.slack_domain}"
+NUBIS_SUDO_GROUPS="${var.nubis_sudo_groups}"
+NUBIS_USER_GROUPS="${var.nubis_user_groups}"
 EOF
 
 }
