@@ -54,7 +54,7 @@
   <builders>
     <hudson.tasks.Shell>
       <command>
-. /etc/profile.d/proxy.sh
+. /etc/profile.d/proxy.sh &gt; /dev/null 2&gt;&amp;1
 consulate kv set nubis-nat-admin/admin/config/IptablesAllowTCP &quot;[ 22 ]&quot;
 nubis-builder build --packer-option &quot;-machine-readable&quot;</command>
 consulate kv rm nubis-nat-admin/admin/config/IptablesAllowTCP
