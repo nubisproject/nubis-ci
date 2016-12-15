@@ -273,7 +273,7 @@ wget::fetch { 'download latest cloudformation ansible module (bugfix)':
 
 cron { 'jenkins-s3-backups':
   ensure      => 'present',
-  command     => 'test -f /mnt/jenkins/.initial-sync && s3cmd --quiet sync --exclude=.initial-sync --delete /mnt/jenkins/ s3://$(nubis-metadata NUBIS_CI_BUCKET)/',
+  command     => 'nubis-cron jenkins-s3-backups "test -f /mnt/jenkins/.initial-sync && s3cmd --quiet sync --exclude=.initial-sync --delete /mnt/jenkins/ s3://$(nubis-metadata NUBIS_CI_BUCKET)/"',
   hour        => '*',
   minute      => '*/15',
   user        => 'jenkins',
