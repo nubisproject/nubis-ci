@@ -8,3 +8,5 @@ terraform.tfstate
 terraform.tfstate.backup
 override.tf
 nubis/builder/artifacts/*-dev/
+.~lock.*
+
