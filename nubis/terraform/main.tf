@@ -491,8 +491,8 @@ resource "aws_iam_role_policy" "ci_deploy" {
 EOF
 }
 
-# This null resource is responsible for publishing secrets to Credstash
-resource "null_resource" "credstash" {
+# This null resource is responsible for publishing secrets to Unicreds
+resource "null_resource" "unicreds" {
   count = "${var.enabled}"
 
   lifecycle {
@@ -505,20 +505,20 @@ resource "null_resource" "credstash" {
     github_oauth_client_secret = "${var.github_oauth_client_secret}"
     slack_token      = "${var.slack_token}"
     region           = "${var.region}"
-    context          = "region=${var.region} environment=${var.environment} service=${var.project}"
-    credstash        = "credstash -r ${var.region} put -k ${var.credstash_key} -a ${var.project}/${var.environment}/ci"
-    version = "${var.version}"
+    context          = "-E region:${var.region} -E environment:${var.environment} -E service:${var.project}"
+    unicreds         = "unicreds -r ${var.region} put -k ${var.credstash_key} ${var.project}/${var.environment}/ci"
+    version          = "${var.version}"
   }
 
   provisioner "local-exec" {
-    command = "${self.triggers.credstash}/github_oauth_client_id ${var.github_oauth_client_id} ${self.triggers.context}"
+    command = "${self.triggers.unicreds}/github_oauth_client_id ${var.github_oauth_client_id} ${self.triggers.context}"
   }
 
   provisioner "local-exec" {
-    command = "${self.triggers.credstash}/github_oauth_client_secret ${var.github_oauth_client_secret} ${self.triggers.context}"
+    command = "${self.triggers.unicreds}/github_oauth_client_secret ${var.github_oauth_client_secret} ${self.triggers.context}"
   }
 
   provisioner "local-exec" {
-    command = "${self.triggers.credstash}/slack_token ${var.slack_token} ${self.triggers.context}"
+    command = "${self.triggers.unicreds}/slack_token ${var.slack_token} ${self.triggers.context}"
   }
 }
