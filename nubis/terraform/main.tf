@@ -219,7 +219,7 @@ resource "aws_launch_configuration" "ci" {
 
     user_data = <<EOF
 NUBIS_ACCOUNT=${var.account_name}
-NUBIS_PROJECT=ci
+NUBIS_PROJECT=${var.project}
 NUBIS_ENVIRONMENT=${var.environment}
 NUBIS_DOMAIN=${var.nubis_domain}
 NUBIS_PROJECT_URL=https://${aws_route53_record.ci.fqdn}/
