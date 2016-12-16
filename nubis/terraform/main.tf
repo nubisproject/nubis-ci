@@ -202,6 +202,8 @@ resource "aws_autoscaling_group" "ci" {
 resource "aws_launch_configuration" "ci" {
   count = "${var.enabled}"
 
+  name_prefix = "ci-${var.project}-"
+
     # Somewhat nasty, since Atlas doesn't have an elegant way to access the id for a region
     # the id is "region:ami,region:ami,region:ami"
     # so we split it all and find the index of the region
