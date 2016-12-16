@@ -11,7 +11,7 @@ package { 'daemon':
   ensure => 'present'
 }->
 class { 'jenkins':
-  version            => '2.19.3',
+  version            => '2.19.4',
   configure_firewall => false,
   service_enable     => false,
   service_ensure     => 'stopped',
@@ -47,7 +47,7 @@ jenkins::plugin { 'bouncycastle-api':
 }
 
 jenkins::plugin { 'slack':
-    version => '2.0.1',
+    version => '2.1',
 }
 
 jenkins::plugin { 'prometheus':
@@ -59,7 +59,7 @@ jenkins::plugin { 'workflow-job':
 }
 
 jenkins::plugin { 'workflow-api':
-    version => '2.6',
+    version => '2.8',
 }
 jenkins::plugin { 'workflow-support':
     version => '2.11',
@@ -73,15 +73,15 @@ jenkins::plugin { 'icon-shim':
 }
 
 jenkins::plugin { 'git':
-    version => '3.0.0',
+    version => '3.0.1',
 }
 
 jenkins::plugin { 'github':
-    version => '1.23.0',
+    version => '1.25.0',
 }
 
 jenkins::plugin { 'github-api':
-    version => '1.79',
+    version => '1.80',
 }
 
 jenkins::plugin { 'maven-plugin':
@@ -91,13 +91,13 @@ jenkins::plugin { 'javadoc':
     version => '1.4',
 }
 jenkins::plugin { 'github-oauth':
-    version => '0.24',
+    version => '0.25',
 }
 jenkins::plugin { 'workflow-scm-step':
     version => '2.3',
 }
 jenkins::plugin { 'workflow-step-api':
-    version => '2.5',
+    version => '2.6',
 }
 jenkins::plugin { 'multiple-scms':
     version => '0.6',
@@ -128,7 +128,7 @@ jenkins::plugin { 'plain-credentials':
 }
 
 jenkins::plugin { 'aws-java-sdk':
-    version => '1.11.37',
+    version => '1.11.66',
 }
 
 jenkins::plugin { 'copyartifact':
@@ -182,7 +182,7 @@ jenkins::plugin { 'rebuild' :
 }
 
 jenkins::plugin { 'promoted-builds':
-    version => '2.27',
+    version => '2.28',
 }
 
 jenkins::plugin { 'pegdown-formatter':
@@ -190,7 +190,7 @@ jenkins::plugin { 'pegdown-formatter':
 }
 
 jenkins::plugin { 'thinBackup':
-    version => '1.7.4',
+    version => '1.9',
 }
 
 # This is for librarian-puppet, below, and somewhat ugly
