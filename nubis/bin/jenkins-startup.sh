@@ -140,7 +140,6 @@ if [ "$NUBIS_CI_SLACK_TOKEN" != "" ]; then
     <jenkins.plugins.slack.SlackNotifier plugin="slack@2.0.1">
       <teamDomain></teamDomain>
       <authToken></authToken>
-      <buildServerUrl></buildServerUrl>
       <room></room>
       <startNotification>true</startNotification>
       <notifySuccess>true</notifySuccess>
