@@ -1,10 +1,97 @@
 # Change Log
 
+## [v1.3.0](https://github.com/nubisproject/nubis-ci/tree/v1.3.0) (2016-12-20)
+[Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v1.2.3...v1.3.0)
+
+**Implemented enhancements:**
+
+- Move jenkins data to secondary disk [\#31](https://github.com/nubisproject/nubis-ci/issues/31)
+
+**Fixed bugs:**
+
+- Failed to deploy a new stack should delete it [\#73](https://github.com/nubisproject/nubis-ci/issues/73)
+- Ansible hides cloudformation success/failure [\#72](https://github.com/nubisproject/nubis-ci/issues/72)
+
+**Closed issues:**
+
+- Update Jenkins and plugins [\#348](https://github.com/nubisproject/nubis-ci/issues/348)
+- Expose nubis\_sudo\_groups and nubid\_user\_groups to userdata [\#342](https://github.com/nubisproject/nubis-ci/issues/342)
+- \[monitoring\] Inject monitoring rules in target deployment Consul [\#340](https://github.com/nubisproject/nubis-ci/issues/340)
+- Upgrade Jenkins to 2.19.3 [\#338](https://github.com/nubisproject/nubis-ci/issues/338)
+- \[plugins\] Upgrades [\#335](https://github.com/nubisproject/nubis-ci/issues/335)
+- Allow Prometheus to scrape our metrics endpoint [\#333](https://github.com/nubisproject/nubis-ci/issues/333)
+- Upgrade jenkins plugins [\#331](https://github.com/nubisproject/nubis-ci/issues/331)
+- \[jenkins\] Disable CLI completely [\#328](https://github.com/nubisproject/nubis-ci/issues/328)
+- \[tf\] Convert to using unicreds [\#327](https://github.com/nubisproject/nubis-ci/issues/327)
+- Allow specifying which branches to follow from Git [\#325](https://github.com/nubisproject/nubis-ci/issues/325)
+- Ensure our S3 backups expire along with Jenkins's configured expiry [\#323](https://github.com/nubisproject/nubis-ci/issues/323)
+- Install embeddable-build-status plugin [\#321](https://github.com/nubisproject/nubis-ci/issues/321)
+- \[upgrade\] Outdated workflow-api and git-client plugins [\#319](https://github.com/nubisproject/nubis-ci/issues/319)
+- \[deployment\] get rid of the now useless iam\_role argument [\#316](https://github.com/nubisproject/nubis-ci/issues/316)
+- Support Slack Notifications [\#315](https://github.com/nubisproject/nubis-ci/issues/315)
+- Upgrade Jenkins plugins [\#313](https://github.com/nubisproject/nubis-ci/issues/313)
+- \[deploy\] Fail the deployment job if Terraform fails [\#310](https://github.com/nubisproject/nubis-ci/issues/310)
+- Packer doesn't support us-east-2 yet [\#307](https://github.com/nubisproject/nubis-ci/issues/307)
+- Upgrade Jenkins to 2.19.22 [\#306](https://github.com/nubisproject/nubis-ci/issues/306)
+- Archive nubis/terraform/ as artifacts [\#300](https://github.com/nubisproject/nubis-ci/issues/300)
+- When talking to Consul during deploys, acquire the proper CA to validate the cert [\#297](https://github.com/nubisproject/nubis-ci/issues/297)
+- Add support for Terraform [\#292](https://github.com/nubisproject/nubis-ci/issues/292)
+- Simplify nubis-builder's variables.json [\#291](https://github.com/nubisproject/nubis-ci/issues/291)
+- \[datadog\] Install Jenkins DataDog plugin [\#287](https://github.com/nubisproject/nubis-ci/issues/287)
+- Ansible is missing python-markupsafe [\#266](https://github.com/nubisproject/nubis-ci/issues/266)
+- Upgrade to Jenkins 2.0 [\#247](https://github.com/nubisproject/nubis-ci/issues/247)
+- \[nubis-deploy\] Update the proxy injection prefix, as it has changed since nat and proxy merged [\#190](https://github.com/nubisproject/nubis-ci/issues/190)
+- Use terraform to drive CloudFormation instead of Ansible [\#179](https://github.com/nubisproject/nubis-ci/issues/179)
+- Use thinbackup plugin to perform regular backups [\#145](https://github.com/nubisproject/nubis-ci/issues/145)
+- Set next build number on boot from what's known in the S3 bucket [\#96](https://github.com/nubisproject/nubis-ci/issues/96)
+
+**Merged pull requests:**
+
+- Update builder artifacts for v1.3.0 release [\#352](https://github.com/nubisproject/nubis-ci/pull/352) ([tinnightcap](https://github.com/tinnightcap))
+- Convert from credstash to unicreds [\#351](https://github.com/nubisproject/nubis-ci/pull/351) ([gozer](https://github.com/gozer))
+- Upgrade Jenkins to 2.19.4 [\#350](https://github.com/nubisproject/nubis-ci/pull/350) ([gozer](https://github.com/gozer))
+- Upgrade Jenkins to 2.19.4 [\#349](https://github.com/nubisproject/nubis-ci/pull/349) ([gozer](https://github.com/gozer))
+- Fix Links [\#347](https://github.com/nubisproject/nubis-ci/pull/347) ([tinnightcap](https://github.com/tinnightcap))
+- Add Documentation [\#346](https://github.com/nubisproject/nubis-ci/pull/346) ([tinnightcap](https://github.com/tinnightcap))
+- update to nubis-travis v0.1.3 [\#345](https://github.com/nubisproject/nubis-ci/pull/345) ([gozer](https://github.com/gozer))
+- Silence the profile.sh script [\#344](https://github.com/nubisproject/nubis-ci/pull/344) ([gozer](https://github.com/gozer))
+- Expose nubis\_sudo\_groups and nubis\_user\_groups userdata [\#343](https://github.com/nubisproject/nubis-ci/pull/343) ([limed](https://github.com/limed))
+- Push monitoring rules in Consul [\#341](https://github.com/nubisproject/nubis-ci/pull/341) ([gozer](https://github.com/gozer))
+- Upgrade to Jenkins 2.19.3 [\#339](https://github.com/nubisproject/nubis-ci/pull/339) ([gozer](https://github.com/gozer))
+- Use unicreds to retrieve the public SSL certs for stage/prod [\#337](https://github.com/nubisproject/nubis-ci/pull/337) ([gozer](https://github.com/gozer))
+- More upgrades to github and pipeline plugins [\#336](https://github.com/nubisproject/nubis-ci/pull/336) ([gozer](https://github.com/gozer))
+- Pass in the monitoring SG so we can trust it [\#334](https://github.com/nubisproject/nubis-ci/pull/334) ([gozer](https://github.com/gozer))
+- Upgrade plugins [\#332](https://github.com/nubisproject/nubis-ci/pull/332) ([gozer](https://github.com/gozer))
+- Disable Jenkins CLI [\#329](https://github.com/nubisproject/nubis-ci/pull/329) ([gozer](https://github.com/gozer))
+- Add a git\_branches option to specify which branches to build [\#326](https://github.com/nubisproject/nubis-ci/pull/326) ([gozer](https://github.com/gozer))
+- Make sure we sync to s3 with --delete [\#324](https://github.com/nubisproject/nubis-ci/pull/324) ([gozer](https://github.com/gozer))
+- Install embeddable-build-status@1.9 [\#322](https://github.com/nubisproject/nubis-ci/pull/322) ([gozer](https://github.com/gozer))
+- Upgrade Jenkins plugins [\#320](https://github.com/nubisproject/nubis-ci/pull/320) ([gozer](https://github.com/gozer))
+- Fix travis-ci submodule [\#318](https://github.com/nubisproject/nubis-ci/pull/318) ([gozer](https://github.com/gozer))
+- Enable Slack notification in build and deployment jobs [\#317](https://github.com/nubisproject/nubis-ci/pull/317) ([gozer](https://github.com/gozer))
+- Upgrade jenkins plugins [\#314](https://github.com/nubisproject/nubis-ci/pull/314) ([gozer](https://github.com/gozer))
+- allow terraform remote to fail [\#312](https://github.com/nubisproject/nubis-ci/pull/312) ([gozer](https://github.com/gozer))
+- Simple error catching with set -e [\#311](https://github.com/nubisproject/nubis-ci/pull/311) ([gozer](https://github.com/gozer))
+- Upgrade to 2.19.2 [\#309](https://github.com/nubisproject/nubis-ci/pull/309) ([gozer](https://github.com/gozer))
+- Ignore us-east-2 since Packer rejects it [\#308](https://github.com/nubisproject/nubis-ci/pull/308) ([gozer](https://github.com/gozer))
+- Add Travis badge [\#305](https://github.com/nubisproject/nubis-ci/pull/305) ([gozer](https://github.com/gozer))
+- Basic Travis integration for some low-level testing [\#304](https://github.com/nubisproject/nubis-ci/pull/304) ([gozer](https://github.com/gozer))
+- Enable full backup support for Jenkins [\#303](https://github.com/nubisproject/nubis-ci/pull/303) ([gozer](https://github.com/gozer))
+- Upgrade to Jenkins 2.7.4 [\#302](https://github.com/nubisproject/nubis-ci/pull/302) ([gozer](https://github.com/gozer))
+- Copy nubis/terraform =\> artifacts/ if present [\#301](https://github.com/nubisproject/nubis-ci/pull/301) ([gozer](https://github.com/gozer))
+- Remove useless need for plan before apply [\#299](https://github.com/nubisproject/nubis-ci/pull/299) ([gozer](https://github.com/gozer))
+- \[dpaste\] Multitude of fixes for supporting Terraform deploys [\#298](https://github.com/nubisproject/nubis-ci/pull/298) ([gozer](https://github.com/gozer))
+- TF for deploys [\#295](https://github.com/nubisproject/nubis-ci/pull/295) ([gozer](https://github.com/gozer))
+- fix json tyop [\#294](https://github.com/nubisproject/nubis-ci/pull/294) ([gozer](https://github.com/gozer))
+- Remove unneeded nubis-builder variables [\#293](https://github.com/nubisproject/nubis-ci/pull/293) ([gozer](https://github.com/gozer))
+- Update builder artifacts for v1.3.0-dev release [\#290](https://github.com/nubisproject/nubis-ci/pull/290) ([gozer](https://github.com/gozer))
+
 ## [v1.2.3](https://github.com/nubisproject/nubis-ci/tree/v1.2.3) (2016-08-05)
 [Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v1.2.2...v1.2.3)
 
 **Merged pull requests:**
 
+- Update CHANGELOG for v1.2.3 release [\#289](https://github.com/nubisproject/nubis-ci/pull/289) ([gozer](https://github.com/gozer))
 - Update builder artifacts for v1.2.3 release [\#288](https://github.com/nubisproject/nubis-ci/pull/288) ([gozer](https://github.com/gozer))
 
 ## [v1.2.2](https://github.com/nubisproject/nubis-ci/tree/v1.2.2) (2016-08-02)
