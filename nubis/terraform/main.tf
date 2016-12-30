@@ -475,6 +475,9 @@ resource "aws_iam_role_policy" "ci_deploy" {
                 "iam:DeleteUser",
                 "iam:DeleteRolePolicy",
                 "iam:GetInstanceProfile",
+                "iam:GetUser",
+                "iam:GetRolePolicy",
+                "iam:GetUserPolicy",
                 "s3:*",
                 "lambda:InvokeFunction"
               ],
