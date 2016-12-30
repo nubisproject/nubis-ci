@@ -450,6 +450,8 @@ resource "aws_iam_role_policy" "ci_deploy" {
                 "elasticfilesystem:DeleteFileSystem",
                 "elasticfilesystem:CreateMountTarget",
                 "elasticfilesystem:DescribeMountTargets",
+                "elasticfilesystem:DescribeMountTargetSecurityGroups",
+                "elasticfilesystem:ModifyMountTargetSecurityGroups",
                 "elasticfilesystem:DeleteMountTarget",
                 "elasticfilesystem:CreateTags",
                 "elasticfilesystem:DescribeTags",
