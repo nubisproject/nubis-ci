@@ -10,7 +10,7 @@ declare owner
 declare service_name
 
 # Consume user-data
-eval "$(curl -fqs http://169.254.169.254/latest/user-data)"
+eval "$(nubis-metadata)"
 
 if [ "$ami" = "" ]; then
   ami=$(grep "$region" artifacts/amis.txt | cut -d: -f2 | head -n1)
@@ -24,10 +24,13 @@ VARIABLES=$WORKSPACE/../vars.yaml
 
 FULL_STACK_NAME=$stack_name-$environment
 
-if [ -d artifacts/terraform ]; then
-  # Verify SSL cert later
-  export CONSUL_HTTP_SSL_VERIFY=0
+export CONSUL_ENDPOINT
+CONSUL_ENDPOINT="public.consul.$environment.$region.$NUBIS_ACCOUNT.$NUBIS_DOMAIN"
 
+# Verify SSL cert later
+export CONSUL_HTTP_SSL_VERIFY=0
+
+if [ -d artifacts/terraform ]; then
   # Cleanup remote state (make sure doens't leak between environments
   terraform remote config -disable=true || true
   rm -f terraform.tfstate*
@@ -49,27 +52,22 @@ if [ -d artifacts/terraform ]; then
 
   terraform remote config -disable=true
   rm -f terraform.tfstate*
-
 elif [ -f "$CF_TEMPLATE" ]; then
-echo "Running CloudFormation"
-ansible-playbook -i localhost, \
-  "$PLAYBOOK" \
-  -e stack_name="$FULL_STACK_NAME" \
-  -e owner="$owner" \
-  -e service_name="$service_name" \
-  -e key_name="$key_name" \
-  -e region="$region" \
-  -e env="$environment" \
-  -e ami="$ami" \
-  -e template="$CF_TEMPLATE" \
-  -e "@$VARIABLES"
+  echo "Running CloudFormation"
+  ansible-playbook -i localhost, \
+    "$PLAYBOOK" \
+    -e stack_name="$FULL_STACK_NAME" \
+    -e owner="$owner" \
+    -e service_name="$service_name" \
+    -e key_name="$key_name" \
+    -e region="$region" \
+    -e env="$environment" \
+    -e ami="$ami" \
+    -e template="$CF_TEMPLATE" \
+    -e "@$VARIABLES"
 
-export CONSUL_ENDPOINT
-CONSUL_ENDPOINT="public.consul.$environment.$region.$NUBIS_ACCOUNT.$NUBIS_DOMAIN"
-
-echo "Injecting into Consul"
-PROJECT_NAME=$service_name NUBIS_ENVIRONMENT=$environment nubis-consul --quiet --region "$region" --stack-name "$FULL_STACK_NAME" get-and-update
-
+  echo "Injecting into Consul"
+  PROJECT_NAME=$service_name NUBIS_ENVIRONMENT=$environment nubis-consul --quiet --region "$region" --stack-name "$FULL_STACK_NAME" get-and-update
 fi
 
 ## XXX: Needs to move to its own tool
@@ -81,11 +79,11 @@ if [ -d nubis/proxy ]; then
   echo "Injecting $CONFIG_INJECT rules into $INJECT_PREFIX"
 
   # Make sure the container config/ key is present
-  curl --insecure -qfs -X PUT "https://$CONSUL_ENDPOINT/v1/kv/$INJECT_PREFIX/" >/dev/null
+  consulate  --api-port 443 --api-scheme https --api-host "$CONSUL_ENDPOINT" kv mkdir "$INJECT_PREFIX/" 2>/dev/null
 
   for r in $(find nubis/$CONFIG_INJECT/ -type f | grep -v \.md | cut -d/ -f3); do
     echo -n "$r "
-    curl --insecure -qfs -X PUT -d "@nubis/$CONFIG_INJECT/$r" "https://$CONSUL_ENDPOINT/v1/kv/$INJECT_PREFIX/$r"
+    consulate  --api-port 443 --api-scheme https --api-host "$CONSUL_ENDPOINT" kv set "$INJECT_PREFIX/$r" "$(cat "nubis/$CONFIG_INJECT/$r")" 2>/dev/null
     echo
   done
 fi
@@ -93,7 +91,6 @@ fi
 # XXX: Needs to move in its own tool
 if [ -d nubis/monitoring ]; then
   echo "Injecting Monitoring rules"
-  CONSUL_ENDPOINT="public.consul.$environment.$region.$NUBIS_ACCOUNT.$NUBIS_DOMAIN"
 
   cd nubis/monitoring
 
