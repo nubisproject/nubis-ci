@@ -3,5 +3,5 @@ output "elb" {
 }
 
 output "iam_role" {
-  value = "${aws_iam_role.ci.id}"
+  value = "${join(",",aws_iam_role.ci.*.id)}"
 }

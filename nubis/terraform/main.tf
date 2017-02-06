@@ -53,7 +53,7 @@ resource "aws_iam_server_certificate" "ci" {
     count = "${var.enabled}"
     lifecycle { create_before_destroy = true }
 
-    name_prefix = "ci.${var.project}.${var.environment}.${var.region}.${var.account_name}."
+    name_prefix = "ci-${var.project}-"
 
     certificate_body = "${tls_self_signed_cert.ci.cert_pem}"
     private_key = "${tls_private_key.ci.private_key_pem}"
@@ -188,7 +188,7 @@ resource "aws_autoscaling_group" "ci" {
 
   tag {
     key = "Name"
-    value = "CI server for ${var.project} (${atlas_artifact.nubis-ci.metadata_full.project_version})"
+    value = "CI server for ${var.project} (${atlas_artifact.nubis-ci.metadata_full["project_version"]})"
     propagate_at_launch = true
   }
   tag {
