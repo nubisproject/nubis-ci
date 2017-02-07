@@ -1,9 +1,7 @@
-resource "atlas_artifact" "nubis-ci" {
+data "atlas_artifact" "nubis-ci" {
   count = "${var.enabled}"
   name = "nubisproject/nubis-ci"
   type = "amazon.image"
-
-  lifecycle { create_before_destroy = true }
 
   metadata {
         project_version = "${var.version}"
@@ -188,7 +186,7 @@ resource "aws_autoscaling_group" "ci" {
 
   tag {
     key = "Name"
-    value = "CI server for ${var.project} (${atlas_artifact.nubis-ci.metadata_full["project_version"]})"
+    value = "CI server for ${var.project} (${data.atlas_artifact.nubis-ci.metadata_full["project_version"]})"
     propagate_at_launch = true
   }
   tag {
@@ -204,11 +202,7 @@ resource "aws_launch_configuration" "ci" {
 
   name_prefix = "ci-${var.project}-"
 
-    # Somewhat nasty, since Atlas doesn't have an elegant way to access the id for a region
-    # the id is "region:ami,region:ami,region:ami"
-    # so we split it all and find the index of the region
-    # add on, and pick that element
-    image_id = "${ element(split(",",replace(atlas_artifact.nubis-ci.id,":",",")) ,1 + index(split(",",replace(atlas_artifact.nubis-ci.id,":",",")), var.region)) }"
+  image_id = "${data.atlas_artifact.nubis-ci.metadata_full["region-${var.aws_region}"]}"
 
     instance_type = "m3.medium"
     key_name = "${var.key_name}"
