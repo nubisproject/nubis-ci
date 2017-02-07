@@ -202,7 +202,7 @@ resource "aws_launch_configuration" "ci" {
 
   name_prefix = "ci-${var.project}-"
 
-  image_id = "${data.atlas_artifact.nubis-ci.metadata_full["region-${var.aws_region}"]}"
+  image_id = "${data.atlas_artifact.nubis-ci.metadata_full["region-${var.region}"]}"
 
     instance_type = "m3.medium"
     key_name = "${var.key_name}"
