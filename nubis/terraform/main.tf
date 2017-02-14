@@ -204,7 +204,7 @@ resource "aws_launch_configuration" "ci" {
 
   image_id = "${data.atlas_artifact.nubis-ci.metadata_full["region-${var.region}"]}"
 
-    instance_type = "m3.medium"
+    instance_type = "t2.nano"
     key_name = "${var.key_name}"
     security_groups = [
       "${aws_security_group.ci.id}",
