@@ -1,17 +1,14 @@
-data "atlas_artifact" "nubis-ci" {
-  count = "${var.enabled}"
-  name = "nubisproject/nubis-ci"
-  type = "amazon.image"
-
-  metadata {
-        project_version = "${var.version}"
-    }
-}
-
 # Configure the AWS Provider
 provider "aws" {
-    profile = "${var.aws_profile}" 
     region = "${var.region}"
+}
+
+module "ci-image" {
+  source = "github.com/nubisproject/nubis-deploy///modules/images?ref=master"
+
+  region  = "${var.region}"
+  version = "${var.version}"
+  project = "nubis-ci"
 }
 
 resource "tls_private_key" "ci" {
@@ -186,7 +183,7 @@ resource "aws_autoscaling_group" "ci" {
 
   tag {
     key = "Name"
-    value = "CI server for ${var.project} (${data.atlas_artifact.nubis-ci.metadata_full["project_version"]})"
+    value = "CI server for ${var.project} (${var.version})"
     propagate_at_launch = true
   }
   tag {
@@ -202,7 +199,7 @@ resource "aws_launch_configuration" "ci" {
 
   name_prefix = "ci-${var.project}-"
 
-  image_id = "${data.atlas_artifact.nubis-ci.metadata_full["region-${var.region}"]}"
+  image_id = "${module.ci-image.image_id}"
 
     instance_type = "t2.nano"
     key_name = "${var.key_name}"
