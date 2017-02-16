@@ -1,5 +1,7 @@
 #XXX: Needs released version
 
+$terraform_version = '0.8.7'
+
 package { 'awscli':
   ensure => latest,
 }
@@ -37,7 +39,7 @@ staging::extract { 'packer.zip':
 
 # XXX: need to move to puppet-terraform	
 staging::file { 'terraform.zip':
-  source => 'https://releases.hashicorp.com/terraform/0.6.16/terraform_0.6.16_linux_amd64.zip'
+  source => "https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip"
 } ->
 staging::extract { 'terraform.zip':
   target  => '/usr/local/bin',
