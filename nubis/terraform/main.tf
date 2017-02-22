@@ -330,7 +330,10 @@ resource "aws_iam_role_policy" "ci_build" {
         {
               "Effect": "Allow",
               "Action": [
-                "iam:PassRole",
+                "ec2:DescribeSpotPriceHistory",
+                "ec2:RequestSpotInstances",
+                "ec2:CancelSpotInstanceRequests",
+                "ec2:DescribeSpotInstanceRequests",
                 "ec2:CopyImage",
                 "ec2:AttachVolume",
                 "ec2:CreateVolume",
