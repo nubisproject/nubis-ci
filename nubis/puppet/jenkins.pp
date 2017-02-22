@@ -123,6 +123,10 @@ jenkins::plugin { 's3':
     version => '0.10.11',
 }
 
+jenkins::plugin { 'credentials':
+    version => '2.1.11',
+}
+
 jenkins::plugin { 'plain-credentials':
     version => '1.4',
 }
@@ -170,7 +174,7 @@ jenkins::plugin { 'git-client' :
 }
 
 jenkins::plugin { 'scm-api' :
-    version => '2.0.4',
+    version => '2.0.7',
 }
 
 jenkins::plugin { 'ansible' :
