@@ -38,6 +38,10 @@ class { 'jenkins':
 
 ## ADDITIONAL PLUGINS ##
 
+jenkins::plugin { 'naginator':
+    version => '1.17.2',
+}
+
 jenkins::plugin { 'embeddable-build-status':
     version => '1.9',
 }
