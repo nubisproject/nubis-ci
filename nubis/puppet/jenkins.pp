@@ -127,10 +127,6 @@ jenkins::plugin { 's3':
     version => '0.10.11',
 }
 
-jenkins::plugin { 'credentials':
-    version => '2.1.11',
-}
-
 jenkins::plugin { 'plain-credentials':
     version => '1.4',
 }
