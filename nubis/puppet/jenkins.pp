@@ -11,7 +11,7 @@ package { 'daemon':
   ensure => 'present'
 }->
 class { 'jenkins':
-  version            => '2.32.2',
+  version            => '2.32.3',
   configure_firewall => false,
   service_enable     => false,
   service_ensure     => 'stopped',
@@ -37,6 +37,10 @@ class { 'jenkins':
 #}
 
 ## ADDITIONAL PLUGINS ##
+
+jenkins::plugin { 'naginator':
+    version => '1.17.2',
+}
 
 jenkins::plugin { 'embeddable-build-status':
     version => '1.9',
@@ -121,10 +125,6 @@ jenkins::plugin { 'token-macro':
 
 jenkins::plugin { 's3':
     version => '0.10.11',
-}
-
-jenkins::plugin { 'credentials':
-    version => '2.1.11',
 }
 
 jenkins::plugin { 'plain-credentials':
@@ -216,7 +216,7 @@ package { 'unzip':
 }
 
 package { 'git':
-    ensure => '1:1.9.1-1ubuntu0.3',
+    ensure => '1:1.9.1-1ubuntu0.4',
 }
 
 package { 'make':
