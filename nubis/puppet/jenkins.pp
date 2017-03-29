@@ -38,6 +38,10 @@ class { 'jenkins':
 
 ## ADDITIONAL PLUGINS ##
 
+jenkins::plugin { 'ansicolor':
+    version => '0.5.0',
+}
+
 jenkins::plugin { 'naginator':
     version => '1.17.2',
 }
