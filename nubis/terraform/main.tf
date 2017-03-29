@@ -180,7 +180,6 @@ resource "aws_autoscaling_group" "ci" {
   desired_capacity = "1"
   force_delete = true
   launch_configuration = "${aws_launch_configuration.ci.name}"
-  enable_monitoring = false
 
   tag {
     key = "Name"
@@ -210,6 +209,8 @@ resource "aws_launch_configuration" "ci" {
       "${var.shared_services_security_group_id}",
     ]
     iam_instance_profile = "${aws_iam_instance_profile.ci.name}"
+
+    enable_monitoring = false
 
     user_data = <<EOF
 NUBIS_ACCOUNT=${var.account_name}
