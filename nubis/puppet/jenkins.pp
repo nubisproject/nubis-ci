@@ -174,7 +174,7 @@ jenkins::plugin { 'structs':
 }
 
 jenkins::plugin { 'git-client' :
-    version => '2.2.1',
+    version => '2.1.0'
 }
 
 jenkins::plugin { 'scm-api' :
