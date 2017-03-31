@@ -38,6 +38,10 @@ class { 'jenkins':
 
 ## ADDITIONAL PLUGINS ##
 
+jenkins::plugin { 'ansicolor':
+    version => '0.5.0',
+}
+
 jenkins::plugin { 'naginator':
     version => '1.17.2',
 }
@@ -170,7 +174,7 @@ jenkins::plugin { 'structs':
 }
 
 jenkins::plugin { 'git-client' :
-    version => '2.2.1',
+    version => '2.1.0'
 }
 
 jenkins::plugin { 'scm-api' :

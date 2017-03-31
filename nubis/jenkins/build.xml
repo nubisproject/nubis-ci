@@ -117,5 +117,9 @@ fi
     </hudson.plugins.parameterizedtrigger.BuildTrigger>
     %%SLACK_NOTIFIER%%
   </publishers>
-  <buildWrappers/>
+  <buildWrappers>
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.0">
+      <colorMapName>xterm</colorMapName>
+    </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
+  </buildWrappers>
 </project>
