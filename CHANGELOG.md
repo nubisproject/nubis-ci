@@ -1,6 +1,20 @@
 # Change Log
 
-## [v1.4.0](https://github.com/nubisproject/nubis-ci/tree/v1.4.0) (2017-03-23)
+## [v1.4.0](https://github.com/nubisproject/nubis-ci/tree/v1.4.0) (2017-03-31)
+[Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v1.4.0...v1.4.0)
+
+**Closed issues:**
+
+- Set packer option -color=false or colorize output [\#405](https://github.com/nubisproject/nubis-ci/issues/405)
+
+**Merged pull requests:**
+
+- Upgrade to Jenkins 2.46.1 [\#410](https://github.com/nubisproject/nubis-ci/pull/410) ([gozer](https://github.com/gozer))
+- Downgrade git-client plugin because of submodule bug [\#408](https://github.com/nubisproject/nubis-ci/pull/408) ([gozer](https://github.com/gozer))
+- Add ANSI color support [\#406](https://github.com/nubisproject/nubis-ci/pull/406) ([gozer](https://github.com/gozer))
+- Fix typo, enable\_monitoring belongs in the launch\_configuration [\#403](https://github.com/nubisproject/nubis-ci/pull/403) ([gozer](https://github.com/gozer))
+
+## [v1.4.0](https://github.com/nubisproject/nubis-ci/tree/v1.4.0) (2017-03-29)
 [Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v1.3.0...v1.4.0)
 
 **Closed issues:**
@@ -25,9 +39,13 @@
 - Upgrade to Jenkins 2.32.1 [\#360](https://github.com/nubisproject/nubis-ci/issues/360)
 - Upgrade to packer 0.12.1 [\#358](https://github.com/nubisproject/nubis-ci/issues/358)
 - Proxy rules injection broken [\#355](https://github.com/nubisproject/nubis-ci/issues/355)
+- Tag v1.4.0 release [\#396](https://github.com/nubisproject/nubis-ci/issues/396)
 
 **Merged pull requests:**
 
+- Fix typo, enable\_monitoring belongs in the launch\_configuration [\#404](https://github.com/nubisproject/nubis-ci/pull/404) ([gozer](https://github.com/gozer))
+- Merge v1.4.0 release into develop. \[skip ci\] [\#402](https://github.com/nubisproject/nubis-ci/pull/402) ([tinnightcap](https://github.com/tinnightcap))
+- Update CHANGELOG for v1.4.0 release \[skip ci\] [\#401](https://github.com/nubisproject/nubis-ci/pull/401) ([tinnightcap](https://github.com/tinnightcap))
 - Upgrade Jenkins to 2.32.2 and git to 1:1.9.1-1ubuntu0.4 [\#400](https://github.com/nubisproject/nubis-ci/pull/400) ([gozer](https://github.com/gozer))
 - upgrade git to 1:1.9.1-1ubuntu0.4 [\#399](https://github.com/nubisproject/nubis-ci/pull/399) ([gozer](https://github.com/gozer))
 - Don't manage credentials, let puppet-jenkins have at it [\#398](https://github.com/nubisproject/nubis-ci/pull/398) ([gozer](https://github.com/gozer))
