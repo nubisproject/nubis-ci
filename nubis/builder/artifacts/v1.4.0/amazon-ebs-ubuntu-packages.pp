@@ -380,7 +380,7 @@ package { 'gettext-base':
   ensure => '0.18.3.1-1ubuntu3',
 }
 package { 'gettext-setup':
-  ensure => ['0.18'],
+  ensure => ['0.20'],
 }
 package { 'gir1.2-glib-2.0':
   ensure => '1.40.0-1ubuntu0.2',
@@ -500,7 +500,7 @@ package { 'java-common':
   ensure => '0.51',
 }
 package { 'jenkins':
-  ensure => '2.32.3',
+  ensure => '2.46.1',
 }
 package { 'jmespath':
   ensure => '0.9.2',
