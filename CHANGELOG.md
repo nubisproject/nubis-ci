@@ -1,24 +1,40 @@
 # Change Log
 
-## [v1.4.0](https://github.com/nubisproject/nubis-ci/tree/v1.4.0) (2017-03-31)
-[Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v1.4.0...v1.4.0)
+## [v1.4.1](https://github.com/nubisproject/nubis-ci/tree/v1.4.1) (2017-04-11)
+[Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v1.4.1...v1.4.1)
 
 **Closed issues:**
 
-- Set packer option -color=false or colorize output [\#405](https://github.com/nubisproject/nubis-ci/issues/405)
+- Upgrade to nubis-builder v1.5.1 [\#423](https://github.com/nubisproject/nubis-ci/issues/423)
 
 **Merged pull requests:**
 
-- Upgrade to Jenkins 2.46.1 [\#410](https://github.com/nubisproject/nubis-ci/pull/410) ([gozer](https://github.com/gozer))
-- Downgrade git-client plugin because of submodule bug [\#408](https://github.com/nubisproject/nubis-ci/pull/408) ([gozer](https://github.com/gozer))
-- Add ANSI color support [\#406](https://github.com/nubisproject/nubis-ci/pull/406) ([gozer](https://github.com/gozer))
-- Fix typo, enable\_monitoring belongs in the launch\_configuration [\#403](https://github.com/nubisproject/nubis-ci/pull/403) ([gozer](https://github.com/gozer))
+- Upgrade to nubis-builder v1.5.1 [\#424](https://github.com/nubisproject/nubis-ci/pull/424) ([gozer](https://github.com/gozer))
 
-## [v1.4.0](https://github.com/nubisproject/nubis-ci/tree/v1.4.0) (2017-03-29)
+## [v1.4.1](https://github.com/nubisproject/nubis-ci/tree/v1.4.1) (2017-04-11)
+[Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v1.4.0...v1.4.1)
+
+**Closed issues:**
+
+- Upgrade to nubis-builder v1.5.0 [\#418](https://github.com/nubisproject/nubis-ci/issues/418)
+- \[packer\] Upgrade Packer to v1.0.0 [\#415](https://github.com/nubisproject/nubis-ci/issues/415)
+- \[iam\] Add missing permissions [\#413](https://github.com/nubisproject/nubis-ci/issues/413)
+- Tag v1.4.1 release [\#420](https://github.com/nubisproject/nubis-ci/issues/420)
+
+**Merged pull requests:**
+
+- Merge v1.4.1 release into develop. \[skip ci\] [\#422](https://github.com/nubisproject/nubis-ci/pull/422) ([tinnightcap](https://github.com/tinnightcap))
+- Update CHANGELOG for v1.4.1 release \[skip ci\] [\#421](https://github.com/nubisproject/nubis-ci/pull/421) ([tinnightcap](https://github.com/tinnightcap))
+- Upgrade to nubis-builder v1.5.0 [\#419](https://github.com/nubisproject/nubis-ci/pull/419) ([gozer](https://github.com/gozer))
+- Upgrade to Packer 1.0.0 [\#416](https://github.com/nubisproject/nubis-ci/pull/416) ([gozer](https://github.com/gozer))
+- \[iam\] Add missing tagging permission for RDS/ElastiCache resources [\#414](https://github.com/nubisproject/nubis-ci/pull/414) ([gozer](https://github.com/gozer))
+
+## [v1.4.0](https://github.com/nubisproject/nubis-ci/tree/v1.4.0) (2017-03-31)
 [Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v1.3.0...v1.4.0)
 
 **Closed issues:**
 
+- Set packer option -color=false or colorize output [\#405](https://github.com/nubisproject/nubis-ci/issues/405)
 - dont include the credentials plugin [\#397](https://github.com/nubisproject/nubis-ci/issues/397)
 - Tag v1.3.1 release [\#395](https://github.com/nubisproject/nubis-ci/issues/395)
 - Tag v1.3.1 release [\#394](https://github.com/nubisproject/nubis-ci/issues/394)
@@ -39,11 +55,18 @@
 - Upgrade to Jenkins 2.32.1 [\#360](https://github.com/nubisproject/nubis-ci/issues/360)
 - Upgrade to packer 0.12.1 [\#358](https://github.com/nubisproject/nubis-ci/issues/358)
 - Proxy rules injection broken [\#355](https://github.com/nubisproject/nubis-ci/issues/355)
+- Tag v1.4.0 release [\#409](https://github.com/nubisproject/nubis-ci/issues/409)
 - Tag v1.4.0 release [\#396](https://github.com/nubisproject/nubis-ci/issues/396)
 
 **Merged pull requests:**
 
+- Merge v1.4.0 release into develop. \[skip ci\] [\#412](https://github.com/nubisproject/nubis-ci/pull/412) ([tinnightcap](https://github.com/tinnightcap))
+- Update CHANGELOG for v1.4.0 release \[skip ci\] [\#411](https://github.com/nubisproject/nubis-ci/pull/411) ([tinnightcap](https://github.com/tinnightcap))
+- Upgrade to Jenkins 2.46.1 [\#410](https://github.com/nubisproject/nubis-ci/pull/410) ([gozer](https://github.com/gozer))
+- Downgrade git-client plugin because of submodule bug [\#408](https://github.com/nubisproject/nubis-ci/pull/408) ([gozer](https://github.com/gozer))
+- Add ANSI color support [\#406](https://github.com/nubisproject/nubis-ci/pull/406) ([gozer](https://github.com/gozer))
 - Fix typo, enable\_monitoring belongs in the launch\_configuration [\#404](https://github.com/nubisproject/nubis-ci/pull/404) ([gozer](https://github.com/gozer))
+- Fix typo, enable\_monitoring belongs in the launch\_configuration [\#403](https://github.com/nubisproject/nubis-ci/pull/403) ([gozer](https://github.com/gozer))
 - Merge v1.4.0 release into develop. \[skip ci\] [\#402](https://github.com/nubisproject/nubis-ci/pull/402) ([tinnightcap](https://github.com/tinnightcap))
 - Update CHANGELOG for v1.4.0 release \[skip ci\] [\#401](https://github.com/nubisproject/nubis-ci/pull/401) ([tinnightcap](https://github.com/tinnightcap))
 - Upgrade Jenkins to 2.32.2 and git to 1:1.9.1-1ubuntu0.4 [\#400](https://github.com/nubisproject/nubis-ci/pull/400) ([gozer](https://github.com/gozer))
@@ -53,7 +76,6 @@
 - Retry deployment jobs that fail with the Terraform has encountered a bug message [\#390](https://github.com/nubisproject/nubis-ci/pull/390) ([gozer](https://github.com/gozer))
 - Add missing IAM permissions for spot instances [\#388](https://github.com/nubisproject/nubis-ci/pull/388) ([gozer](https://github.com/gozer))
 - Upgrade 2 missed plugins from the last upgrade cycle [\#386](https://github.com/nubisproject/nubis-ci/pull/386) ([gozer](https://github.com/gozer))
-- Upgrade outdated Jenkins plugins [\#384](https://github.com/nubisproject/nubis-ci/pull/384) ([gozer](https://github.com/gozer))
 - Upgrade to Terraform 0.8.7 [\#382](https://github.com/nubisproject/nubis-ci/pull/382) ([gozer](https://github.com/gozer))
 - Remove Atlas and use aws\_ami instead [\#378](https://github.com/nubisproject/nubis-ci/pull/378) ([gozer](https://github.com/gozer))
 - Upgrade to nubis-builder v1.3.1 [\#375](https://github.com/nubisproject/nubis-ci/pull/375) ([gozer](https://github.com/gozer))
@@ -61,7 +83,6 @@
 - Upgrade to Packer 0.12.2 [\#373](https://github.com/nubisproject/nubis-ci/pull/373) ([gozer](https://github.com/gozer))
 - Shrink down to t2.nano [\#372](https://github.com/nubisproject/nubis-ci/pull/372) ([gozer](https://github.com/gozer))
 - Terraform 0.8 Upgrade [\#368](https://github.com/nubisproject/nubis-ci/pull/368) ([gozer](https://github.com/gozer))
-- Upgrade to LTS 2.32.2 [\#366](https://github.com/nubisproject/nubis-ci/pull/366) ([gozer](https://github.com/gozer))
 - Make sure we start at the 0-th line when ordering/finding our backup chain [\#364](https://github.com/nubisproject/nubis-ci/pull/364) ([gozer](https://github.com/gozer))
 - Update builder artifacts for v1.4.0-dev release [\#362](https://github.com/nubisproject/nubis-ci/pull/362) ([tinnightcap](https://github.com/tinnightcap))
 - Update Jenkins to 2.32.1 [\#361](https://github.com/nubisproject/nubis-ci/pull/361) ([tinnightcap](https://github.com/tinnightcap))
@@ -352,8 +373,6 @@
 - Upgrade packer to 0.8.6 [\#154](https://github.com/nubisproject/nubis-ci/pull/154) ([gozer](https://github.com/gozer))
 - Inject proxy rules into destination consul [\#150](https://github.com/nubisproject/nubis-ci/pull/150) ([gozer](https://github.com/gozer))
 - Upgrade to v1.642 [\#149](https://github.com/nubisproject/nubis-ci/pull/149) ([gozer](https://github.com/gozer))
-- Convert ELBs to https:// only [\#144](https://github.com/nubisproject/nubis-ci/pull/144) ([gozer](https://github.com/gozer))
-- Use GitHub for Authentication & Authorization. [\#143](https://github.com/nubisproject/nubis-ci/pull/143) ([gozer](https://github.com/gozer))
 - Enable client access over HTTP workaround [\#141](https://github.com/nubisproject/nubis-ci/pull/141) ([gozer](https://github.com/gozer))
 - upgrade jenkins to 1.639 [\#140](https://github.com/nubisproject/nubis-ci/pull/140) ([gozer](https://github.com/gozer))
 
@@ -400,12 +419,7 @@
 - Add more missing IAM privileges for CF deploys [\#129](https://github.com/nubisproject/nubis-ci/pull/129) ([gozer](https://github.com/gozer))
 - Update plugins [\#128](https://github.com/nubisproject/nubis-ci/pull/128) ([gozer](https://github.com/gozer))
 - More IAM updates [\#126](https://github.com/nubisproject/nubis-ci/pull/126) ([gozer](https://github.com/gozer))
-- Pin ansible cloudformation module at e25605cd5bca003a5071aebbdaeb2887e8e5c659 [\#125](https://github.com/nubisproject/nubis-ci/pull/125) ([gozer](https://github.com/gozer))
-- Use the new --region argument to nubis-consul [\#123](https://github.com/nubisproject/nubis-ci/pull/123) ([gozer](https://github.com/gozer))
-- Cleanup our puppet and stop polluting base with our requirements [\#121](https://github.com/nubisproject/nubis-ci/pull/121) ([gozer](https://github.com/gozer))
-- Revert back to using Ubuntu's packages [\#119](https://github.com/nubisproject/nubis-ci/pull/119) ([gozer](https://github.com/gozer))
 - Add --quiet to nubis-consul to \*not\* echo values injected [\#116](https://github.com/nubisproject/nubis-ci/pull/116) ([gozer](https://github.com/gozer))
-- Upgrade nubis-builder to v1.0.3 [\#115](https://github.com/nubisproject/nubis-ci/pull/115) ([gozer](https://github.com/gozer))
 - add some more required IAM privileges [\#114](https://github.com/nubisproject/nubis-ci/pull/114) ([gozer](https://github.com/gozer))
 - Add SSH Security group input [\#111](https://github.com/nubisproject/nubis-ci/pull/111) ([gozer](https://github.com/gozer))
 - Just cleanups and default updates [\#109](https://github.com/nubisproject/nubis-ci/pull/109) ([gozer](https://github.com/gozer))
