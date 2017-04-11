@@ -1,6 +1,8 @@
 #XXX: Needs released version
 
 $terraform_version = '0.8.7'
+$packer_version = '1.0.0'
+$nubis_builder_version = 'v1.5.0'
 
 package { 'awscli':
   ensure => latest,
@@ -25,12 +27,12 @@ vcsrepo { '/opt/nubis-builder':
   ensure   => present,
   provider => git,
   source   => 'https://github.com/nubisproject/nubis-builder.git',
-  revision => 'v1.3.1',
+  revision => $nubis_builder_version,
 }
 
 # XXX: need to move to puppet-packer
 staging::file { 'packer.zip':
-  source => 'https://releases.hashicorp.com/packer/0.12.2/packer_0.12.2_linux_amd64.zip'
+  source => "https://releases.hashicorp.com/packer/${packer_version}/packer_${packer_version}_linux_amd64.zip"
 } ->
 staging::extract { 'packer.zip':
   target  => '/usr/local/bin',
