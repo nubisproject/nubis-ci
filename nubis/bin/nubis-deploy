@@ -10,6 +10,7 @@ declare service_name
 eval "$(nubis-metadata)"
 
 if [ "$ami" = "" ]; then
+  # shellcheck disable=SC2016
   ami=$(jq -r '.last_run_uuid as $uuid | .builds[] | select (.packer_run_uuid == $uuid) .artifact_id' artifacts/builder/AMIs.json | sed -e's/,/\n/g' | grep "$region:" | cut -d: -f2)
 fi
 
