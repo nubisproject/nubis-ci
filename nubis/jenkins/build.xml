@@ -56,7 +56,7 @@
       <command>
 . /etc/profile.d/proxy.sh &gt; /dev/null 2&gt;&amp;1
 consulate kv set nat/admin/config/IptablesAllowTCP &quot;[ 22 ]&quot;
-nubis-builder build --instance-type c3.large --spot --packer-option &quot;-machine-readable&quot;</command>
+nubis-builder build --instance-type c3.large --spot</command>
 consulate kv rm nat/admin/config/IptablesAllowTCP
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
@@ -65,12 +65,7 @@ mkdir artifacts
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>cat ../builds/$BUILD_NUMBER/log | grep &apos;,artifact,&apos; | grep &apos;,id,&apos; | cut -d, -f6 | sed -e&apos;s/%!(PACKER_COMMA)/\n/g&apos; &gt; artifacts/amis.txt
-rsync -av ../builds/$BUILD_NUMBER/log artifacts/log
-
-if [ -d nubis/cloudformation ]; then
-  rsync -av nubis/cloudformation/ artifacts/
-fi
+      <command>
 if [ -d nubis/terraform ]; then
   rsync -av nubis/terraform artifacts/
 fi
@@ -102,12 +97,6 @@ fi
             <hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
               <properties>environment=stage</properties>
             </hudson.plugins.parameterizedtrigger.PredefinedBuildParameters>
-            <hudson.plugins.parameterizedtrigger.FileBuildParameters>
-              <propertiesFile>artifacts/amis.txt</propertiesFile>
-              <failTriggerOnMissing>true</failTriggerOnMissing>
-              <useMatrixChild>false</useMatrixChild>
-              <onlyExactRuns>false</onlyExactRuns>
-            </hudson.plugins.parameterizedtrigger.FileBuildParameters>
           </configs>
           <projects>%%NUBIS_CI_NAME%%-deployment</projects>
           <condition>SUCCESS</condition>
