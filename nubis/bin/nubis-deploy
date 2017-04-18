@@ -4,27 +4,19 @@ set -e
 
 declare region
 declare environment
-declare key_name
-declare stack_name
-declare owner
 declare service_name
 
 # Consume user-data
 eval "$(nubis-metadata)"
 
 if [ "$ami" = "" ]; then
-  ami=$(grep "$region" artifacts/amis.txt | cut -d: -f2 | head -n1)
+  ami=$(jq -r '.last_run_uuid as $uuid | .builds[] | select (.packer_run_uuid == $uuid) .artifact_id' artifacts/builder/AMIs.json | sed -e's/,/\n/g' | grep "$region:" | cut -d: -f2)
 fi
 
 echo "Deploying AMI $ami into $environment/$region"
 
-CF_TEMPLATE=$WORKSPACE/artifacts/main.json
-PLAYBOOK=$WORKSPACE/../ansible.yaml
 VARIABLES=$WORKSPACE/../vars.yaml
 
-FULL_STACK_NAME=$stack_name-$environment
-
-export CONSUL_ENDPOINT
 CONSUL_ENDPOINT="public.consul.$environment.$region.$NUBIS_ACCOUNT.$NUBIS_DOMAIN"
 
 # Verify SSL cert later
@@ -43,6 +35,7 @@ if [ -d artifacts/terraform ]; then
   terraform get -update=true artifacts/terraform
 
   terraform apply \
+    -var-file "$VARIABLES" \
     -var account="$NUBIS_ACCOUNT" \
     -var region="$region" \
     -var environment="$environment" \
@@ -52,22 +45,6 @@ if [ -d artifacts/terraform ]; then
 
   terraform remote config -disable=true
   rm -f terraform.tfstate*
-elif [ -f "$CF_TEMPLATE" ]; then
-  echo "Running CloudFormation"
-  ansible-playbook -i localhost, \
-    "$PLAYBOOK" \
-    -e stack_name="$FULL_STACK_NAME" \
-    -e owner="$owner" \
-    -e service_name="$service_name" \
-    -e key_name="$key_name" \
-    -e region="$region" \
-    -e env="$environment" \
-    -e ami="$ami" \
-    -e template="$CF_TEMPLATE" \
-    -e "@$VARIABLES"
-
-  echo "Injecting into Consul"
-  PROJECT_NAME=$service_name NUBIS_ENVIRONMENT=$environment nubis-consul --quiet --region "$region" --stack-name "$FULL_STACK_NAME" get-and-update
 fi
 
 ## XXX: Needs to move to its own tool
@@ -79,7 +56,7 @@ if [ -d nubis/proxy ]; then
   echo "Injecting $CONFIG_INJECT rules into $INJECT_PREFIX"
 
   # Make sure the container config/ key is present
-  consulate  --api-port 443 --api-scheme https --api-host "$CONSUL_ENDPOINT" kv mkdir "$INJECT_PREFIX/" 2>/dev/null
+  consulate --api-port 443 --api-scheme https --api-host "$CONSUL_ENDPOINT" kv mkdir "$INJECT_PREFIX/" 2>/dev/null
 
   for r in $(find nubis/$CONFIG_INJECT/ -type f | grep -v \.md | cut -d/ -f3); do
     echo -n "$r "
@@ -94,7 +71,7 @@ if [ -d nubis/monitoring ]; then
 
   cd nubis/monitoring
 
-  consulate  --api-port 443 --api-scheme https --api-host "$CONSUL_ENDPOINT" kv mkdir "monitoring/$environment/$service_name/" 2>/dev/null
+  consulate --api-port 443 --api-scheme https --api-host "$CONSUL_ENDPOINT" kv mkdir "monitoring/$environment/$service_name/" 2>/dev/null
 
   for rule in *.prom; do
     echo " + $rule"
@@ -104,4 +81,3 @@ if [ -d nubis/monitoring ]; then
   cd ../..
 
 fi
-
