@@ -180,6 +180,7 @@ resource "aws_autoscaling_group" "ci" {
   desired_capacity = "1"
   force_delete = true
   launch_configuration = "${aws_launch_configuration.ci.name}"
+  enable_monitoring = false
 
   tag {
     key = "Name"
