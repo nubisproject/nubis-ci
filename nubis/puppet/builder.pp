@@ -1,6 +1,6 @@
 #XXX: Needs released version
 
-$terraform_version = '0.8.7'
+$terraform_version = '0.8.8'
 $packer_version = '1.0.0'
 $nubis_builder_version = 'v1.5.1'
 
