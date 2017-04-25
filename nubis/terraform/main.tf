@@ -404,6 +404,7 @@ resource "aws_iam_role_policy" "ci_deploy" {
                 "autoscaling:EnableMetricsCollection",
                 "cloudformation:*",
                 "ec2:createTags",
+                "ec2:DeleteTags",
                 "ec2:CreateSecurityGroup",
                 "ec2:DescribeAvailabilityZones",
                 "ec2:DescribeInstances",
