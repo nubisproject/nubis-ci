@@ -10,3 +10,4 @@ override.tf
 nubis/builder/artifacts/*-dev/
 .~lock.*
 
+nubis/builder/artifacts/AMIs.json
