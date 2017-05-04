@@ -402,7 +402,6 @@ resource "aws_iam_role_policy" "ci_deploy" {
                 "autoscaling:CreateOrUpdateTags",
                 "autoscaling:DescribeAutoScalingInstances",
                 "autoscaling:EnableMetricsCollection",
-                "cloudformation:*",
                 "ec2:createTags",
                 "ec2:deleteTags",
                 "ec2:CreateSecurityGroup",
