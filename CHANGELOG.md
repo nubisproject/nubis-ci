@@ -1,5 +1,17 @@
 # Change Log
 
+## [v1.4.2](https://github.com/nubisproject/nubis-ci/tree/v1.4.2) (2017-05-05)
+[Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v1.4.2...v1.4.2)
+
+**Closed issues:**
+
+- Make use of nubis-builder generated AMIs.json [\#407](https://github.com/nubisproject/nubis-ci/issues/407)
+- Remove CloudFormation support [\#357](https://github.com/nubisproject/nubis-ci/issues/357)
+
+**Merged pull requests:**
+
+- Remove CloudFormation leftovers [\#441](https://github.com/nubisproject/nubis-ci/pull/441) ([gozer](https://github.com/gozer))
+
 ## [v1.4.2](https://github.com/nubisproject/nubis-ci/tree/v1.4.2) (2017-05-03)
 [Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v1.4.1...v1.4.2)
 
@@ -11,9 +23,12 @@
 - Add nubis/builder/artifacts/AMIs.json to .gitignore [\#430](https://github.com/nubisproject/nubis-ci/issues/430)
 - \[terraform\] Upgrade Terraform to 0.8.8 [\#417](https://github.com/nubisproject/nubis-ci/issues/417)
 - \[Datadog\] Enable Jenkins plugin [\#130](https://github.com/nubisproject/nubis-ci/issues/130)
+- Tag v1.4.2 release [\#442](https://github.com/nubisproject/nubis-ci/issues/442)
+- Tag v1.4.2 release [\#438](https://github.com/nubisproject/nubis-ci/issues/438)
 
 **Merged pull requests:**
 
+- Update CHANGELOG for v1.4.2 release \[skip ci\] [\#439](https://github.com/nubisproject/nubis-ci/pull/439) ([tinnightcap](https://github.com/tinnightcap))
 - Upgrade puppetlabs/java and camptocamp/archive [\#437](https://github.com/nubisproject/nubis-ci/pull/437) ([gozer](https://github.com/gozer))
 - Upgrade Jenkins to 2.46.2 [\#435](https://github.com/nubisproject/nubis-ci/pull/435) ([gozer](https://github.com/gozer))
 - Add missing ec2:DeleteTags permissions [\#433](https://github.com/nubisproject/nubis-ci/pull/433) ([gozer](https://github.com/gozer))
