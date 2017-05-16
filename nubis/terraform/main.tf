@@ -400,6 +400,7 @@ resource "aws_iam_role_policy" "ci_deploy" {
                 "autoscaling:SetDesiredCapacity",
                 "autoscaling:PutScalingPolicy",
                 "autoscaling:CreateOrUpdateTags",
+                "autoscaling:DeleteTags",
                 "autoscaling:DescribeAutoScalingInstances",
                 "autoscaling:EnableMetricsCollection",
                 "cloudformation:*",
