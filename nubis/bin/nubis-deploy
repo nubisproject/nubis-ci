@@ -16,7 +16,7 @@ fi
 
 echo "Deploying AMI $ami into $environment/$region"
 
-VARIABLES=$WORKSPACE/../vars.yaml
+VARIABLES=$WORKSPACE/../vars.tfvars
 
 CONSUL_ENDPOINT="public.consul.$environment.$region.$NUBIS_ACCOUNT.$NUBIS_DOMAIN"
 
