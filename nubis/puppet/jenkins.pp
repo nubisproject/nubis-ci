@@ -12,7 +12,6 @@ package { 'daemon':
 }->
 class { 'jenkins':
   version            => '2.46.3',
-  prefix             => '/jenkins',
   configure_firewall => false,
   service_enable     => false,
   service_ensure     => 'stopped',
