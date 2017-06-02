@@ -19,7 +19,7 @@ class { 'jenkins':
     'JENKINS_ARGS' => {
       'value' => '--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --prefix=$PREFIX'
     },
-    'JAVA_ARGS' => {
+    'JAVA_ARGS'    => {
       'value' => '-Djava.awt.headless=true -Dhudson.diyChunking=false -Dhttp.proxyHost=proxy.service.consul -Dhttp.proxyPort=3128 -Dhttps.proxyHost=proxy.service.consul -Dhttps.proxyPort=3128'
     },
   },
