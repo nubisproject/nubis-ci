@@ -41,6 +41,30 @@ class { 'jenkins':
 
 ## ADDITIONAL PLUGINS ##
 
+jenkins::plugin { 'ace-editor':
+    version => '1.1',
+}
+
+jenkins::plugin { 'jquery-detached':
+    version => '1.2.1',
+}
+
+jenkins::plugin { 'cloudbees-folder':
+    version => '6.0.4',
+}
+
+jenkins::plugin { 'matrix-auth':
+    version => '1.6',
+}
+
+jenkins::plugin { 'reverse-proxy-auth-plugin':
+    version => '1.5',
+}
+
+jenkins::plugin { 'ldap':
+    version => '1.15',
+}
+
 jenkins::plugin { 'ansicolor':
     version => '0.5.0',
 }
@@ -54,29 +78,43 @@ jenkins::plugin { 'embeddable-build-status':
 }
 
 jenkins::plugin { 'bouncycastle-api':
-    version => '2.16.0',
+    version => '2.16.1',
 }
 
 jenkins::plugin { 'slack':
-    version => '2.1',
+    version => '2.2',
 }
 
 jenkins::plugin { 'prometheus':
     version => '1.0.6',
 }
 
+jenkins::plugin { 'workflow-cps':
+    version => '2.33',
+}
+
 jenkins::plugin { 'workflow-job':
-    version => '2.10',
+    version => '2.11',
 }
 
 jenkins::plugin { 'workflow-api':
-    version => '2.11',
+    version => '2.16',
 }
+
 jenkins::plugin { 'workflow-support':
-    version => '2.13',
+    version => '2.14',
 }
+
+jenkins::plugin { 'workflow-multibranch':
+    version => '2.15',
+}
+
+jenkins::plugin { 'branch-api':
+    version => '2.0.9',
+}
+
 jenkins::plugin { 'metrics':
-    version => '3.1.2.9',
+    version => '3.1.2.10',
 }
 
 jenkins::plugin { 'icon-shim':
@@ -84,15 +122,19 @@ jenkins::plugin { 'icon-shim':
 }
 
 jenkins::plugin { 'git':
-    version => '3.0.5',
+    version => '3.3.0',
 }
 
 jenkins::plugin { 'github':
-    version => '1.26.0',
+    version => '1.27.0',
 }
 
 jenkins::plugin { 'github-api':
-    version => '1.84',
+    version => '1.85.1',
+}
+
+jenkins::plugin { 'github-branch-source':
+    version => '2.0.6',
 }
 
 jenkins::plugin { 'maven-plugin':
@@ -102,24 +144,24 @@ jenkins::plugin { 'javadoc':
     version => '1.4',
 }
 jenkins::plugin { 'github-oauth':
-    version => '0.25',
+    version => '0.27',
 }
 jenkins::plugin { 'workflow-scm-step':
-    version => '2.3',
+    version => '2.4',
 }
 jenkins::plugin { 'workflow-step-api':
-    version => '2.9',
+    version => '2.10',
 }
 jenkins::plugin { 'multiple-scms':
     version => '0.6',
 }
 
 jenkins::plugin { 'script-security':
-    version => '1.26',
+    version => '1.27',
 }
 
 jenkins::plugin { 'parameterized-trigger':
-    version => '2.32',
+    version => '2.33',
 }
 
 jenkins::plugin { 'jackson2-api':
@@ -127,11 +169,11 @@ jenkins::plugin { 'jackson2-api':
 }
 
 jenkins::plugin { 'token-macro':
-    version => '2.0',
+    version => '2.1',
 }
 
 jenkins::plugin { 's3':
-    version => '0.10.11',
+    version => '0.10.12',
 }
 
 jenkins::plugin { 'plain-credentials':
@@ -139,7 +181,7 @@ jenkins::plugin { 'plain-credentials':
 }
 
 jenkins::plugin { 'aws-java-sdk':
-    version => '1.11.68',
+    version => '1.11.119',
 }
 
 jenkins::plugin { 'copyartifact':
@@ -147,7 +189,7 @@ jenkins::plugin { 'copyartifact':
 }
 
 jenkins::plugin { 'matrix-project':
-    version => '1.8',
+    version => '1.11',
 }
 
 jenkins::plugin { 'conditional-buildstep':
@@ -161,11 +203,11 @@ jenkins::plugin { 'ssh-credentials':
 }
 
 jenkins::plugin { 'mailer':
-    version => '1.19',
+    version => '1.20',
 }
 
 jenkins::plugin { 'display-url-api':
-    version => '1.1.1',
+    version => '2.0',
 }
 
 jenkins::plugin { 'junit':
@@ -173,15 +215,15 @@ jenkins::plugin { 'junit':
 }
 
 jenkins::plugin { 'structs':
-    version => '1.6',
+    version => '1.7',
 }
 
 jenkins::plugin { 'git-client' :
-    version => '2.1.0'
+    version => '2.4.6'
 }
 
 jenkins::plugin { 'scm-api' :
-    version => '2.0.7',
+    version => '2.1.1',
 }
 
 jenkins::plugin { 'rebuild' :
