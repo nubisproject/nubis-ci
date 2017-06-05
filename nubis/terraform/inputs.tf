@@ -84,6 +84,11 @@ variable monitoring_security_group_id {
   description = "ID of that SG"
 }
 
+variable sso_security_group_id {
+  description = "ID of that SG"
+  default = ""
+}
+
 variable "public_subnets" {
   description = "Public Subnets IDs, comma-separated"
 }

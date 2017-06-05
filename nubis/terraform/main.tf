@@ -77,7 +77,7 @@ resource "aws_elb" "ci" {
     healthy_threshold = 3
     unhealthy_threshold = 3
     timeout = 10
-    target = "HTTP:8080/cc.xml"
+    target = "HTTP:8080/jenkins/cc.xml"
     interval = 30 
   }
 
@@ -135,7 +135,8 @@ resource "aws_security_group" "ci" {
       protocol = "tcp"
       security_groups = [
        "${aws_security_group.elb.id}",
-       "${var.monitoring_security_group_id}"
+       "${var.monitoring_security_group_id}",
+       "${var.sso_security_group_id}",
       ]
   }
   
