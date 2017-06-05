@@ -90,7 +90,7 @@ jenkins::plugin { 'prometheus':
 }
 
 jenkins::plugin { 'workflow-cps':
-    version => '2.33',
+    version => '2.34',
 }
 
 jenkins::plugin { 'workflow-job':
