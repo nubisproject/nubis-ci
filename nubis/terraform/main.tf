@@ -524,21 +524,22 @@ resource "null_resource" "unicreds" {
 
   # Important to list here every variable that affects what needs to be put into credstash
   triggers {
-    github_oauth_client_id = "${var.github_oauth_client_id}"
-    github_oauth_client_secret = "${var.github_oauth_client_secret}"
     slack_token      = "${var.slack_token}"
     region           = "${var.region}"
     context          = "-E region:${var.region} -E environment:${var.environment} -E service:${var.project}"
     unicreds         = "unicreds -r ${var.region} put -k ${var.credstash_key} ${var.project}/${var.environment}/ci"
+    unicreds_rm      = "unicreds -r ${var.region} delete -k ${var.credstash_key} ${var.project}/${var.environment}/ci"
     version          = "${var.version}"
   }
 
+  # XXX: Cleanup
   provisioner "local-exec" {
-    command = "${self.triggers.unicreds}/github_oauth_client_id ${var.github_oauth_client_id} ${self.triggers.context}"
+    command = "${self.triggers.unicreds_rm}/github_oauth_client_id"
   }
 
+  # XXX: Cleanup
   provisioner "local-exec" {
-    command = "${self.triggers.unicreds}/github_oauth_client_secret ${var.github_oauth_client_secret} ${self.triggers.context}"
+    command = "${self.triggers.unicreds_rm}/github_oauth_client_secret"
   }
 
   provisioner "local-exec" {
