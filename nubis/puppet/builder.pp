@@ -1,5 +1,3 @@
-#XXX: Needs released version
-
 $terraform_version = '0.8.8'
 $packer_version = '1.0.0'
 $nubis_builder_version = 'v1.5.1'
@@ -10,17 +8,6 @@ package { 'awscli':
 
 package { 'rsync':
   ensure => present
-}
-
-# XXX: We require jq 1.5, not in repos yet
-exec { 'wget-jq':
-  creates => '/usr/local/bin/jq',
-  command => '/usr/bin/curl -Lfqs -o /usr/local/bin/jq https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64'
-} ->
-file { '/usr/local/bin/jq':
-  owner => 0,
-  group => 0,
-  mode  => '0755',
 }
 
 vcsrepo { '/opt/nubis-builder':
