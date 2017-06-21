@@ -156,8 +156,8 @@ if [ "$NUBIS_CI_SLACK_TOKEN" != "" ]; then
       <notifyRepeatedFailure>false</notifyRepeatedFailure>
       <includeTestSummary>false</includeTestSummary>
       <commitInfoChoice>NONE</commitInfoChoice>
-      <includeCustomMessage>false</includeCustomMessage>
-      <customMessage></customMessage>
+      <includeCustomMessage>true</includeCustomMessage>
+      <customMessage>environment:\\\$environment</customMessage>
     </jenkins.plugins.slack.SlackNotifier>
 EOF
 fi
