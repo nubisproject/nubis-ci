@@ -32,7 +32,12 @@
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
-  <triggers/>
+  <triggers>
+    <hudson.triggers.SCMTrigger>
+      <spec>H/15 * * * *</spec>
+      <ignorePostCommitHooks>false</ignorePostCommitHooks>
+    </hudson.triggers.SCMTrigger>
+  </triggers>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <javaposse.jobdsl.plugin.ExecuteDslScripts plugin="job-dsl@1.63">
@@ -78,6 +83,11 @@ sites.each {
       choiceParam(&apos;environment&apos;, [&apos;stage&apos;,&apos;prod&apos;])
       choiceParam(&apos;region&apos;, [&apos;us-west-2&apos;,&apos;us-east-1&apos;])
     }
+
+    steps {
+      shell(&apos;&apos;&apos;
+        nubis-deploy
+      &apos;&apos;&apos;.stripIndent())
 
     publishers {
         mailer(&apos;infra-aws@mozilla.com&apos;, true, true)
