@@ -45,8 +45,8 @@ done
 ## BACKUP END
 
 # Create the job directories
-mkdir -p "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build"
-mkdir -p "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment"
+#mkdir -p "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build"
+#mkdir -p "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment"
 
 # Security (http://jenkins-ci.org/security-144)
 mkdir -p /var/lib/jenkins/secrets
@@ -63,12 +63,12 @@ cp /etc/nubis.d/jenkins-thinBackup.xml /var/lib/jenkins/thinBackup.xml
 cp /etc/nubis.d/jenkins-ssh.xml /var/lib/jenkins/org.jenkinsci.main.modules.sshd.SSHD.xml
 
 # Drop project configuration for jenkins
-cp /etc/nubis.d/jenkins-build-config.xml "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml"
+#cp /etc/nubis.d/jenkins-build-config.xml "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml"
 
 # Drop promotion configuration
-mkdir -p "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/promotions/Deployed"
-cp /etc/nubis.d/jenkins-build-promotion-deployed-config.xml "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/promotions/Deployed/config.xml"
-perl -pi -e "s[%%NUBIS_CI_NAME%%][$NUBIS_CI_NAME]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/promotions/Deployed/config.xml"
+#mkdir -p "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/promotions/Deployed"
+#cp /etc/nubis.d/jenkins-build-promotion-deployed-config.xml "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/promotions/Deployed/config.xml"
+#perl -pi -e "s[%%NUBIS_CI_NAME%%][$NUBIS_CI_NAME]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/promotions/Deployed/config.xml"
 
 # Fix Location Config
 perl -pi -e "s[%%NUBIS_PROJECT_URL%%][$NUBIS_PROJECT_URL]g" /var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration.xml
@@ -79,34 +79,39 @@ if [ "$NUBIS_GIT_BRANCHES" == "" ]; then
 fi
 
 ## General Config
-perl -pi -e "s[%%NUBIS_GIT_REPO%%][$NUBIS_GIT_REPO]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml"
-perl -pi -e "s[%%NUBIS_GIT_BRANCHES%%][$NUBIS_GIT_BRANCHES]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml"
-perl -pi -e "s[%%NUBIS_CI_NAME%%][$NUBIS_CI_NAME]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml"
+#perl -pi -e "s[%%NUBIS_GIT_REPO%%][$NUBIS_GIT_REPO]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml"
+#perl -pi -e "s[%%NUBIS_GIT_BRANCHES%%][$NUBIS_GIT_BRANCHES]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml"
+#perl -pi -e "s[%%NUBIS_CI_NAME%%][$NUBIS_CI_NAME]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml"
 
 ## Configure S3 plugin
-perl -pi -e "s[%%NUBIS_CI_BUCKET%%][$NUBIS_CI_BUCKET]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml"
-perl -pi -e "s[%%NUBIS_CI_BUCKET_REGION%%][$NUBIS_CI_BUCKET_REGION]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml"
+#perl -pi -e "s[%%NUBIS_CI_BUCKET%%][$NUBIS_CI_BUCKET]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml"
+#perl -pi -e "s[%%NUBIS_CI_BUCKET_REGION%%][$NUBIS_CI_BUCKET_REGION]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml"
 
 # Drop deployment configuration for jenkins
-cp /etc/nubis.d/jenkins-deployment-config.xml "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml"
-perl -pi -e "s[%%NUBIS_GIT_REPO%%][$NUBIS_GIT_REPO]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml"
-perl -pi -e "s[%%NUBIS_GIT_BRANCHES%%][$NUBIS_GIT_BRANCHES]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml"
-perl -pi -e "s[%%NUBIS_CI_NAME%%][$NUBIS_CI_NAME]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml"
+#cp /etc/nubis.d/jenkins-deployment-config.xml "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml"
+#perl -pi -e "s[%%NUBIS_GIT_REPO%%][$NUBIS_GIT_REPO]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml"
+#perl -pi -e "s[%%NUBIS_GIT_BRANCHES%%][$NUBIS_GIT_BRANCHES]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml"
+#perl -pi -e "s[%%NUBIS_CI_NAME%%][$NUBIS_CI_NAME]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml"
+
+# Seed configuration
+cp -a /var/lib/jenkins/jobs/00-seed/nubis-config.xml  /var/lib/jenkins/jobs/00-seed/config.xml
+perl -pi -e "s[%%NUBIS_GIT_REPO%%][$NUBIS_GIT_REPO]g" "/var/lib/jenkins/jobs/00-seed/config.xml"
 
 # Discover available regions
-  # All regions according to AWS (US only), with our own first
+# All regions according to AWS (US only), with our own first
 
-  # XXX: packer doesn't support us-east-2 yet
-  REGIONS=($AWS_REGION $(aws --region "$AWS_REGION" ec2 describe-regions | jq -r '.Regions[] | .RegionName' | grep -E "^us-" | grep -v "$AWS_REGION" | grep -v us-east-2 | sort))
+# XXX: packer doesn't support us-east-2 yet
+REGIONS=($AWS_REGION $(aws --region "$AWS_REGION" ec2 describe-regions | jq -r '.Regions[] | .RegionName' | grep -E "^us-" | grep -v "$AWS_REGION" | grep -v us-east-2 | sort))
 
-  # build a XML chunk
-  for region in ${REGIONS[*]}; do
-    REGIONS_STRING="$REGIONS_STRING<string>$region</string>"
-  done
-perl -pi -e"s[%%REGIONS%%][$REGIONS_STRING]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml"
+# build a XML chunk
+for region in ${REGIONS[*]}; do
+  REGIONS_STRING="$REGIONS_STRING<string>$region</string>"
+done
+
+#perl -pi -e"s[%%REGIONS%%][$REGIONS_STRING]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml"
 
 # Owner e-mail
-sed -i -e"s/%%NUBIS_CI_EMAIL%%/$NUBIS_CI_EMAIL/g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml"
+#sed -i -e"s/%%NUBIS_CI_EMAIL%%/$NUBIS_CI_EMAIL/g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml"
 
 # Fix permissions for sudo and user groups
 SUDO_PERMISSIONS=""
@@ -163,7 +168,7 @@ EOF
 fi
 
 # Set or erase the Slack Notifier section of the job configs
-perl -pi -e "s[%%SLACK_NOTIFIER%%][$SLACK_NOTIFIER]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml"
+#perl -pi -e "s[%%SLACK_NOTIFIER%%][$SLACK_NOTIFIER]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml"
 
 # Make sure jenkins owns this stuff
 chown -R jenkins:jenkins /var/lib/jenkins
@@ -181,6 +186,7 @@ EOF
 for e in stage prod; do
   unicreds --region "$AWS_REGION" get "nubis/$e/ssl/public-cacert" -E "environment:$e" -E "region:$AWS_REGION" -E service:nubis > /usr/local/share/ca-certificates/consul-public-$e.crt
 done
+
 update-ca-certificates
 
 # Manually fix our confd stuff (missing confd puppet support)

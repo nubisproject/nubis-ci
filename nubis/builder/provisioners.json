@@ -15,18 +15,6 @@
     },
     {
       "type": "file",
-      "source": "nubis/jenkins/deployment.xml",
-      "destination": "/tmp/jenkins-deployment-config.xml",
-      "order": 21
-    },
-    {
-      "type": "file",
-      "source": "nubis/jenkins/build.xml",
-      "destination": "/tmp/jenkins-build-config.xml",
-      "order": 22
-    },
-    {
-      "type": "file",
       "source": "nubis/jenkins/build-promotion-deployed.xml",
       "destination": "/tmp/jenkins-build-promotion-deployed-config.xml",
       "order": 22

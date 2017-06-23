@@ -18,6 +18,10 @@ echo "Deploying AMI $ami into $environment/$region"
 
 VARIABLES=$WORKSPACE/../vars.tfvars
 
+if [ ! -f "$VARIABLES" ]; then
+  touch $VARIABLES
+fi
+
 CONSUL_ENDPOINT="public.consul.$environment.$region.$NUBIS_ACCOUNT.$NUBIS_DOMAIN"
 
 # Verify SSL cert later
