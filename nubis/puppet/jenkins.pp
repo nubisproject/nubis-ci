@@ -11,7 +11,8 @@ package { 'daemon':
   ensure => 'present'
 }->
 class { 'jenkins':
-  version            => '2.60.1',
+  #version            => '2.46.3',
+  direct_download    => 'https://pkg.jenkins.io/debian-stable/binary/jenkins_2.46.3_all.deb',
   configure_firewall => false,
   service_enable     => false,
   service_ensure     => 'stopped',
