@@ -51,6 +51,12 @@
     },
     {
       "type": "file",
+      "source": "nubis/jenkins/javaposse.jobdsl.plugin.GlobalJobDslSecurityConfiguration.xml",
+      "destination": "/tmp/jenkins-dsl-configuration.xml",
+      "order": 25
+    },
+    {
+      "type": "file",
       "source": "nubis/jenkins/proxy.xml",
       "destination": "/tmp/jenkins-proxy.xml",
       "order": 25
