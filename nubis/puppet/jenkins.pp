@@ -11,7 +11,8 @@ package { 'daemon':
   ensure => 'present'
 }->
 class { 'jenkins':
-  version            => '2.60.1',
+  #version            => '2.46.3',
+  direct_download    => 'https://pkg.jenkins.io/debian-stable/binary/jenkins_2.46.3_all.deb',
   configure_firewall => false,
   service_enable     => false,
   service_ensure     => 'stopped',
@@ -38,209 +39,6 @@ class { 'jenkins':
 #  check_script   => '/usr/bin/wget -q -O- http://localhost:8080/cc.xml',
 #  check_interval => '10s',
 #}
-
-## ADDITIONAL PLUGINS ##
-
-jenkins::plugin { 'ace-editor':
-    version => '1.1',
-}
-
-jenkins::plugin { 'jquery-detached':
-    version => '1.2.1',
-}
-
-jenkins::plugin { 'cloudbees-folder':
-    version => '6.0.4',
-}
-
-jenkins::plugin { 'matrix-auth':
-    version => '1.6',
-}
-
-jenkins::plugin { 'reverse-proxy-auth-plugin':
-    version => '1.5',
-}
-
-jenkins::plugin { 'ldap':
-    version => '1.15',
-}
-
-jenkins::plugin { 'ansicolor':
-    version => '0.5.0',
-}
-
-jenkins::plugin { 'naginator':
-    version => '1.17.2',
-}
-
-jenkins::plugin { 'embeddable-build-status':
-    version => '1.9',
-}
-
-jenkins::plugin { 'bouncycastle-api':
-    version => '2.16.1',
-}
-
-jenkins::plugin { 'slack':
-    version => '2.2',
-}
-
-jenkins::plugin { 'prometheus':
-    version => '1.0.6',
-}
-
-jenkins::plugin { 'workflow-cps':
-    version => '2.34',
-}
-
-jenkins::plugin { 'workflow-job':
-    version => '2.11',
-}
-
-jenkins::plugin { 'workflow-api':
-    version => '2.16',
-}
-
-jenkins::plugin { 'workflow-support':
-    version => '2.14',
-}
-
-jenkins::plugin { 'workflow-multibranch':
-    version => '2.15',
-}
-
-jenkins::plugin { 'branch-api':
-    version => '2.0.9',
-}
-
-jenkins::plugin { 'metrics':
-    version => '3.1.2.10',
-}
-
-jenkins::plugin { 'icon-shim':
-    version => '2.0.3',
-}
-
-jenkins::plugin { 'git':
-    version => '3.3.0',
-}
-
-jenkins::plugin { 'github':
-    version => '1.27.0',
-}
-
-jenkins::plugin { 'github-api':
-    version => '1.85.1',
-}
-
-jenkins::plugin { 'github-branch-source':
-    version => '2.0.6',
-}
-
-jenkins::plugin { 'maven-plugin':
-    version => '2.15.1',
-}
-jenkins::plugin { 'javadoc':
-    version => '1.4',
-}
-jenkins::plugin { 'github-oauth':
-    version => '0.27',
-}
-jenkins::plugin { 'workflow-scm-step':
-    version => '2.4',
-}
-jenkins::plugin { 'workflow-step-api':
-    version => '2.10',
-}
-jenkins::plugin { 'multiple-scms':
-    version => '0.6',
-}
-
-jenkins::plugin { 'script-security':
-    version => '1.27',
-}
-
-jenkins::plugin { 'parameterized-trigger':
-    version => '2.33',
-}
-
-jenkins::plugin { 'jackson2-api':
-    version => '2.7.3',
-}
-
-jenkins::plugin { 'token-macro':
-    version => '2.1',
-}
-
-jenkins::plugin { 's3':
-    version => '0.10.12',
-}
-
-jenkins::plugin { 'plain-credentials':
-    version => '1.4',
-}
-
-jenkins::plugin { 'aws-java-sdk':
-    version => '1.11.119',
-}
-
-jenkins::plugin { 'copyartifact':
-    version => '1.38.1',
-}
-
-jenkins::plugin { 'matrix-project':
-    version => '1.11',
-}
-
-jenkins::plugin { 'conditional-buildstep':
-    version => '1.3.5',
-}
-jenkins::plugin { 'run-condition':
-    version => '1.0',
-}
-jenkins::plugin { 'ssh-credentials':
-    version => '1.13',
-}
-
-jenkins::plugin { 'mailer':
-    version => '1.20',
-}
-
-jenkins::plugin { 'display-url-api':
-    version => '2.0',
-}
-
-jenkins::plugin { 'junit':
-    version => '1.20',
-}
-
-jenkins::plugin { 'structs':
-    version => '1.7',
-}
-
-jenkins::plugin { 'git-client' :
-    version => '2.4.6'
-}
-
-jenkins::plugin { 'scm-api' :
-    version => '2.1.1',
-}
-
-jenkins::plugin { 'rebuild' :
-    version => '1.25',
-}
-
-jenkins::plugin { 'promoted-builds':
-    version => '2.28.1',
-}
-
-jenkins::plugin { 'pegdown-formatter':
-    version => '1.3',
-}
-
-jenkins::plugin { 'thinBackup':
-    version => '1.9',
-}
 
 # This is for librarian-puppet, below, and somewhat ugly
 package { 'ruby-dev':
@@ -315,6 +113,30 @@ cron { 'jenkins-s3-backups':
     'PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:/opt/aws/bin',
   ],
   require     => [
+    Class['jenkins'],
+  ],
+}
+
+file { '/var/lib/jenkins/jobs/00-seed':
+  ensure => directory,
+  owner  => 'jenkins',
+  group  => 'jenkins',
+  mode   => '0755',
+  require => [
+    File['/var/lib/jenkins/jobs'],
+    Class['jenkins'],
+  ],
+}
+
+file { '/var/lib/jenkins/jobs/00-seed/nubis-config.xml':
+  ensure  => file,
+  owner   => root,
+  group   => root,
+  mode    => '0644',
+  source  => 'puppet:///nubis/files/seed.xml',
+
+  require => [
+    File['/var/lib/jenkins/jobs/00-seed'],
     Class['jenkins'],
   ],
 }
