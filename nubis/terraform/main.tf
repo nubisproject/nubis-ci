@@ -77,7 +77,7 @@ resource "aws_elb" "ci" {
     healthy_threshold = 3
     unhealthy_threshold = 3
     timeout = 10
-    target = "HTTP:8080/cc.xml"
+    target = "HTTP:8080/jenkins/cc.xml"
     interval = 30 
   }
 
@@ -135,7 +135,8 @@ resource "aws_security_group" "ci" {
       protocol = "tcp"
       security_groups = [
        "${aws_security_group.elb.id}",
-       "${var.monitoring_security_group_id}"
+       "${var.monitoring_security_group_id}",
+       "${var.sso_security_group_id}",
       ]
   }
   
@@ -217,7 +218,7 @@ NUBIS_ACCOUNT=${var.account_name}
 NUBIS_PROJECT=${var.project}
 NUBIS_ENVIRONMENT=${var.environment}
 NUBIS_DOMAIN=${var.nubis_domain}
-NUBIS_PROJECT_URL=https://${aws_route53_record.ci.fqdn}/
+NUBIS_PROJECT_URL=https://sso.${var.environment}.${var.region}.${var.account_name}.${var.nubis_domain}/jenkins/
 NUBIS_CI_NAME=${var.project}
 NUBIS_GIT_REPO=${var.git_repo}
 NUBIS_GIT_BRANCHES="${var.git_branches}"
@@ -400,10 +401,11 @@ resource "aws_iam_role_policy" "ci_deploy" {
                 "autoscaling:SetDesiredCapacity",
                 "autoscaling:PutScalingPolicy",
                 "autoscaling:CreateOrUpdateTags",
+                "autoscaling:DeleteTags",
                 "autoscaling:DescribeAutoScalingInstances",
                 "autoscaling:EnableMetricsCollection",
-                "cloudformation:*",
                 "ec2:createTags",
+                "ec2:deleteTags",
                 "ec2:CreateSecurityGroup",
                 "ec2:DescribeAvailabilityZones",
                 "ec2:DescribeInstances",
@@ -522,21 +524,22 @@ resource "null_resource" "unicreds" {
 
   # Important to list here every variable that affects what needs to be put into credstash
   triggers {
-    github_oauth_client_id = "${var.github_oauth_client_id}"
-    github_oauth_client_secret = "${var.github_oauth_client_secret}"
     slack_token      = "${var.slack_token}"
     region           = "${var.region}"
     context          = "-E region:${var.region} -E environment:${var.environment} -E service:${var.project}"
     unicreds         = "unicreds -r ${var.region} put -k ${var.credstash_key} ${var.project}/${var.environment}/ci"
+    unicreds_rm      = "unicreds -r ${var.region} delete -k ${var.credstash_key} ${var.project}/${var.environment}/ci"
     version          = "${var.version}"
   }
 
+  # XXX: Cleanup
   provisioner "local-exec" {
-    command = "${self.triggers.unicreds}/github_oauth_client_id ${var.github_oauth_client_id} ${self.triggers.context}"
+    command = "${self.triggers.unicreds_rm}/github_oauth_client_id"
   }
 
+  # XXX: Cleanup
   provisioner "local-exec" {
-    command = "${self.triggers.unicreds}/github_oauth_client_secret ${var.github_oauth_client_secret} ${self.triggers.context}"
+    command = "${self.triggers.unicreds_rm}/github_oauth_client_secret"
   }
 
   provisioner "local-exec" {

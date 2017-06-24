@@ -108,23 +108,28 @@ perl -pi -e"s[%%REGIONS%%][$REGIONS_STRING]g" "/var/lib/jenkins/jobs/$NUBIS_CI_N
 # Owner e-mail
 sed -i -e"s/%%NUBIS_CI_EMAIL%%/$NUBIS_CI_EMAIL/g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml"
 
-# GitHub Authentication
+# Fix permissions for sudo and user groups
+SUDO_PERMISSIONS=""
+IFS=,; for sudo in $NUBIS_SUDO_GROUPS; do
+  SUDO_PERMISSIONS="$SUDO_PERMISSIONS
+  <permission>hudson.model.Hudson.Administer:$sudo</permission>"
+done
 
-perl -pi -e"\$admins=join qq(\n), map { qq(<string>\$_</string>) } split(q(,), q($NUBIS_CI_GITHUB_ADMINS)); s[%%NUBIS_CI_GITHUB_ADMINS%%][\$admins]g" /var/lib/jenkins/config.xml
-perl -pi -e"\$orgs=join qq(\n), map { qq(<string>\$_</string>) } split(q(,), q($NUBIS_CI_GITHUB_ORGANIZATIONS)); s[%%NUBIS_CI_GITHUB_ORGANIZATIONS%%][\$orgs]g" /var/lib/jenkins/config.xml
+USER_PERMISSIONS=""
+IFS=,; for user in $NUBIS_USER_GROUPS; do
+USER_PERMISSIONS="$USER_PERMISSIONS
+    <permission>hudson.model.Hudson.Read:$user</permission>
+    <permission>hudson.model.Item.Build:$user</permission>
+    <permission>hudson.model.Item.Cancel:$user</permission>
+    <permission>hudson.model.Item.Discover:$user</permission>
+    <permission>hudson.model.Item.Read:$user</permission>
+    <permission>hudson.model.Item.ViewStatus:$user</permission>
+    <permission>hudson.model.Item.Workspace:$user</permission>
+    <permission>hudson.model.View.Read:$user</permission>"
+done
 
-
-# Retrieve secrets with nubis-secret if not in user-data
-if [ "$NUBIS_CI_GITHUB_CLIENT_TOKEN" == "" ]; then
-  NUBIS_CI_GITHUB_CLIENT_TOKEN=$(nubis-secret get ci/github_oauth_client_id)
-fi
-
-if [ "$NUBIS_CI_GITHUB_CLIENT_SECRET" == "" ]; then
-  NUBIS_CI_GITHUB_CLIENT_SECRET=$(nubis-secret get ci/github_oauth_client_secret)
-fi
-
-perl -pi -e "s[%%NUBIS_CI_GITHUB_CLIENT_TOKEN%%][$NUBIS_CI_GITHUB_CLIENT_TOKEN]g" /var/lib/jenkins/config.xml
-perl -pi -e "s[%%NUBIS_CI_GITHUB_CLIENT_SECRET%%][$NUBIS_CI_GITHUB_CLIENT_SECRET]g" /var/lib/jenkins/config.xml
+perl -pi -e "s[%%NUBIS_SUDO_PERMISSIONS%%][$SUDO_PERMISSIONS]g" /var/lib/jenkins/config.xml
+perl -pi -e "s[%%NUBIS_USER_PERMISSIONS%%][$USER_PERMISSIONS]g" /var/lib/jenkins/config.xml
 
 # Slack
 NUBIS_CI_SLACK_TOKEN=$(nubis-secret get ci/slack_token)
@@ -151,8 +156,8 @@ if [ "$NUBIS_CI_SLACK_TOKEN" != "" ]; then
       <notifyRepeatedFailure>false</notifyRepeatedFailure>
       <includeTestSummary>false</includeTestSummary>
       <commitInfoChoice>NONE</commitInfoChoice>
-      <includeCustomMessage>false</includeCustomMessage>
-      <customMessage></customMessage>
+      <includeCustomMessage>true</includeCustomMessage>
+      <customMessage>environment:\\\$environment</customMessage>
     </jenkins.plugins.slack.SlackNotifier>
 EOF
 fi

@@ -29,14 +29,6 @@ variable "organizations" {
   default = "nubisproject"
 }
 
-variable "github_oauth_client_id" {
-  description = "GitHub OAuth client id"
-}
-
-variable "github_oauth_client_secret" {
-  description = "GitHub OAuth client secret"
-}
-
 variable "git_repo" {
   description = "URL to git repo to build"
   default = "https://github.com/mozilla/nubis-ci.git"
@@ -82,6 +74,11 @@ variable "ssh_security_group_id" {
 
 variable monitoring_security_group_id {
   description = "ID of that SG"
+}
+
+variable sso_security_group_id {
+  description = "ID of that SG"
+  default = ""
 }
 
 variable "public_subnets" {

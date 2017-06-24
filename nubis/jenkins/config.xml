@@ -7,35 +7,87 @@
   <numExecutors>2</numExecutors>
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
-  <authorizationStrategy class="org.jenkinsci.plugins.GithubAuthorizationStrategy" plugin="github-oauth@0.22.2">
-    <rootACL>
-      <organizationNameList class="linked-list">
-        %%NUBIS_CI_GITHUB_ORGANIZATIONS%%
-      </organizationNameList>
-      <adminUserNameList class="linked-list">
-        %%NUBIS_CI_GITHUB_ADMINS%%
-      </adminUserNameList>
-      <authenticatedUserReadPermission>true</authenticatedUserReadPermission>
-      <useRepositoryPermissions>true</useRepositoryPermissions>
-      <authenticatedUserCreateJobPermission>false</authenticatedUserCreateJobPermission>
-      <allowGithubWebHookPermission>true</allowGithubWebHookPermission>
-      <allowCcTrayPermission>true</allowCcTrayPermission>
-      <allowAnonymousReadPermission>true</allowAnonymousReadPermission>
-      <allowAnonymousJobStatusPermission>true</allowAnonymousJobStatusPermission>
-    </rootACL>
+  <authorizationStrategy class="hudson.security.GlobalMatrixAuthorizationStrategy">
+    %%NUBIS_SUDO_PERMISSIONS%%
+    %%NUBIS_USER_PERMISSIONS%%
+    <permission>hudson.model.Hudson.Read:anonymous</permission>
+    <permission>hudson.model.Item.Discover:anonymous</permission>
+    <permission>hudson.model.Item.Read:anonymous</permission>
+    <permission>hudson.model.Item.ViewStatus:anonymous</permission>
+    <permission>hudson.model.Item.Workspace:anonymous</permission>
+    <permission>hudson.model.View.Read:anonymous</permission>
   </authorizationStrategy>
-  <securityRealm class="org.jenkinsci.plugins.GithubSecurityRealm">
-    <githubWebUri>https://github.com</githubWebUri>
-    <githubApiUri>https://api.github.com</githubApiUri>
-    <clientID>%%NUBIS_CI_GITHUB_CLIENT_TOKEN%%</clientID>
-    <clientSecret>%%NUBIS_CI_GITHUB_CLIENT_SECRET%%</clientSecret>
-    <oauthScopes>read:org,user:email</oauthScopes>
+  <securityRealm class="org.jenkinsci.plugins.reverse_proxy_auth.ReverseProxySecurityRealm" plugin="reverse-proxy-auth-plugin@1.5">
+    <proxyTemplate/>
+    <authContext/>
+    <authorityUpdateCache/>
+    <inhibitInferRootDN>false</inhibitInferRootDN>
+    <userSearchBase></userSearchBase>
+    <userSearch>uid={0}</userSearch>
+    <updateInterval>15</updateInterval>
+    <forwardedUser>OIDC_CLAIM_email</forwardedUser>
+    <headerGroups>OIDC_CLAIM_groups</headerGroups>
+    <headerGroupsDelimiter>,</headerGroupsDelimiter>
+    <disableLdapEmailResolver>true</disableLdapEmailResolver>
+    <displayNameLdapAttribute></displayNameLdapAttribute>
+    <emailAddressLdapAttribute></emailAddressLdapAttribute>
   </securityRealm>
   <disableRememberMe>false</disableRememberMe>
   <projectNamingStrategy class="jenkins.model.ProjectNamingStrategy$DefaultProjectNamingStrategy"/>
   <workspaceDir>${ITEM_ROOTDIR}/workspace</workspaceDir>
   <buildsDir>${ITEM_ROOTDIR}/builds</buildsDir>
-  <markupFormatter class="org.jenkins_ci.plugins.pegdown_formatter.PegDownFormatter"/>
+  <markupFormatter class="org.jenkins_ci.plugins.pegdown_formatter.PegDownFormatter" plugin="pegdown-formatter@1.3">
+    <flags>262399</flags>
+    <extensions>
+      <org.jenkins__ci.plugins.pegdown__formatter.PegDownExtension>
+        <name>SUPPRESS_ALL_HTML</name>
+        <flag>196608</flag>
+        <selected>false</selected>
+      </org.jenkins__ci.plugins.pegdown__formatter.PegDownExtension>
+    </extensions>
+    <advancedExtensions>
+      <org.jenkins__ci.plugins.pegdown__formatter.PegDownExtension>
+        <name>ABBREVIATIONS</name>
+        <flag>4</flag>
+        <selected>true</selected>
+      </org.jenkins__ci.plugins.pegdown__formatter.PegDownExtension>
+      <org.jenkins__ci.plugins.pegdown__formatter.PegDownExtension>
+        <name>AUTOLINKS</name>
+        <flag>16</flag>
+        <selected>true</selected>
+      </org.jenkins__ci.plugins.pegdown__formatter.PegDownExtension>
+      <org.jenkins__ci.plugins.pegdown__formatter.PegDownExtension>
+        <name>DEFINITIONS</name>
+        <flag>64</flag>
+        <selected>true</selected>
+      </org.jenkins__ci.plugins.pegdown__formatter.PegDownExtension>
+      <org.jenkins__ci.plugins.pegdown__formatter.PegDownExtension>
+        <name>FENCED_CODE_BLOCKS</name>
+        <flag>128</flag>
+        <selected>true</selected>
+      </org.jenkins__ci.plugins.pegdown__formatter.PegDownExtension>
+      <org.jenkins__ci.plugins.pegdown__formatter.PegDownExtension>
+        <name>HARDWRAPS</name>
+        <flag>8</flag>
+        <selected>true</selected>
+      </org.jenkins__ci.plugins.pegdown__formatter.PegDownExtension>
+      <org.jenkins__ci.plugins.pegdown__formatter.PegDownExtension>
+        <name>NO_FOLLOW_LINKS</name>
+        <flag>262144</flag>
+        <selected>true</selected>
+      </org.jenkins__ci.plugins.pegdown__formatter.PegDownExtension>
+      <org.jenkins__ci.plugins.pegdown__formatter.PegDownExtension>
+        <name>SMARTYPANTS</name>
+        <flag>3</flag>
+        <selected>true</selected>
+      </org.jenkins__ci.plugins.pegdown__formatter.PegDownExtension>
+      <org.jenkins__ci.plugins.pegdown__formatter.PegDownExtension>
+        <name>TABLES</name>
+        <flag>32</flag>
+        <selected>true</selected>
+      </org.jenkins__ci.plugins.pegdown__formatter.PegDownExtension>
+    </advancedExtensions>
+  </markupFormatter>
   <jdks/>
   <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>
   <myViewsTabBar class="hudson.views.DefaultMyViewsTabBar"/>
@@ -44,13 +96,13 @@
   <views>
     <hudson.model.AllView>
       <owner class="hudson" reference="../../.."/>
-      <name>All</name>
+      <name>all</name>
       <filterExecutors>false</filterExecutors>
       <filterQueue>false</filterQueue>
       <properties class="hudson.model.View$PropertyList"/>
     </hudson.model.AllView>
   </views>
-  <primaryView>All</primaryView>
+  <primaryView>all</primaryView>
   <slaveAgentPort>-1</slaveAgentPort>
   <label></label>
   <nodeProperties/>
