@@ -1,0 +1,13 @@
+{
+  "builds": [
+    {
+      "name": "amazon-ebs-ubuntu",
+      "builder_type": "amazon-ebs",
+      "build_time": 1498335223,
+      "files": null,
+      "artifact_id": "ap-northeast-1:ami-55a8bf32,ap-northeast-2:ami-af15cac1,ap-southeast-1:ami-e379f680,ap-southeast-2:ami-0c8d9d6f,eu-central-1:ami-a79335c8,eu-west-1:ami-466b7120,sa-east-1:ami-102c467c,us-east-1:ami-e3bb8ef5,us-west-1:ami-b4476bd4,us-west-2:ami-cabbafb3",
+      "packer_run_uuid": "a6fa6462-4436-f7d2-6a5e-9c9b09df70eb"
+    }
+  ],
+  "last_run_uuid": "a6fa6462-4436-f7d2-6a5e-9c9b09df70eb"
+}
