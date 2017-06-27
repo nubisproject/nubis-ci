@@ -3,6 +3,6 @@ Jenkins.instance.pluginManager.plugins.sort().each{
   if (plugin.getShortName() == 'credentials') {
     next 
   }
-  println ("jenkins::plugin { '${plugin.getShortName()}':\n  ensure => '${plugin.getVersion()}'\n}\n")
+  println ("jenkins::plugin { '${plugin.getShortName()}':\n  version => '${plugin.getVersion()}'\n}\n")
 }
 
