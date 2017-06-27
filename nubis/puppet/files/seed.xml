@@ -65,7 +65,7 @@ try {
 sites.each {
    def site_name = it.key
    def site_config = it.value
-   println(&quot;Site ${site_name} has repo at ${site_config[&apos;repo&apos;] }&quot;) 
+   println(&quot;Site ${site_name} has repo at ${site_config[&apos;repo&apos;] }&quot;)
 
   freeStyleJob(&quot;${site_name}-deployment&quot;) {
     description(&quot;&quot;&quot;
@@ -73,7 +73,7 @@ sites.each {
     #WARNING WARNING
     This is a deployment job that can impact production, **use with care**
     &quot;&quot;&quot;.stripIndent())
-    
+
     parameters {
       stringParam(&apos;stack_name&apos;, site_name)
       stringParam(&apos;owner&apos;, &apos;infra-aws@mozilla.com&apos;)
@@ -84,55 +84,29 @@ sites.each {
       choiceParam(&apos;region&apos;, [&apos;us-west-2&apos;,&apos;us-east-1&apos;])
     }
 
-    steps {
-      shell(&apos;&apos;&apos;
-        nubis-deploy
-      &apos;&apos;&apos;.stripIndent())
-
-    publishers {
-        mailer(&apos;infra-aws@mozilla.com&apos;, true, true)
-        slackNotifier {
-          notifyAborted(true)
-          notifyBackToNormal(true)
-          notifyFailure(true)
-          notifyNotBuilt(true)
-          notifyRegression(true)
-          notifyRepeatedFailure(true)
-          notifySuccess(true)
-          notifyUnstable(true)
-          startNotification(true)
-          customMessage(&apos;Environment:$environment&apos;)
-          includeCustomMessage(true)
-        } 
-        naginatorPublisher {
-          rerunIfUnstable(false)
-          maxSchedule(3)
-          checkRegexp(true)
-          rerunMatrixPart(false)
-          regexpForRerun(&quot;This is a bug with Terraform and should be reported as a GitHub Issue&quot;)
-          delay {
-            fixedDelay {
-              delay(60)
-            }
-           }
-         }
-     }
-  }
-
-  freeStyleJob(&quot;${site_name}-build&quot;) {
-    description(&quot;${site_name}-build&quot;)
-    
     wrappers {
         colorizeOutput()
         timestamps()
     }
-    
-    properties {
-      copyArtifactPermissionProperty {
-         projectNames(&quot;${site_name}-deployment&quot;)
-      }
+
+    steps {
+      copyArtifacts(&quot;${site_name}-build&quot;) {
+            //includePatterns(&apos;*.xml&apos;, &apos;*.properties&apos;)
+            //excludePatterns(&apos;test.xml&apos;, &apos;test.properties&apos;)
+            //targetDirectory(&apos;files&apos;)
+            //flatten()
+            //optional()
+            buildSelector {
+                upstreamBuild {
+                  fallbackToLastSuccessful(true)
+                }
+            }
+        }
+      shell(&apos;&apos;&apos;
+        nubis-deploy
+      &apos;&apos;&apos;.stripIndent())
     }
-    
+
     scm {
       git{
             remote {
@@ -152,11 +126,75 @@ sites.each {
         }
       }
     }
-    
+
+    publishers {
+        mailer(&apos;infra-aws@mozilla.com&apos;, true, true)
+        slackNotifier {
+          notifyAborted(true)
+          notifyBackToNormal(true)
+          notifyFailure(true)
+          notifyNotBuilt(true)
+          notifyRegression(true)
+          notifyRepeatedFailure(true)
+          notifySuccess(true)
+          notifyUnstable(true)
+          startNotification(true)
+          customMessage(&apos;Environment:$environment&apos;)
+          includeCustomMessage(true)
+        }
+        naginatorPublisher {
+          rerunIfUnstable(false)
+          maxSchedule(3)
+          checkRegexp(true)
+          rerunMatrixPart(false)
+          regexpForRerun(&quot;This is a bug with Terraform and should be reported as a GitHub Issue&quot;)
+          delay {
+            fixedDelay {
+              delay(60)
+            }
+           }
+         }
+     }
+  }
+
+  freeStyleJob(&quot;${site_name}-build&quot;) {
+    description(&quot;${site_name}-build&quot;)
+
+    wrappers {
+        colorizeOutput()
+        timestamps()
+    }
+
+    properties {
+      copyArtifactPermissionProperty {
+         projectNames(&quot;${site_name}-deployment&quot;)
+      }
+    }
+
+    scm {
+      git{
+            remote {
+                name(&apos;origin&apos;)
+                url(site_config[&apos;repo&apos;])
+            }
+            branch(&apos;master&apos;)
+        extensions {
+          submoduleOption {
+            disableSubmodules(false)
+            recursiveSubmodules(true)
+            trackingSubmodules(false)
+            parentCredentials(false)
+            timeout(60)
+            reference(&apos;&apos;)
+          }
+        }
+      }
+    }
+
     triggers {
         scm(&quot;H/15 * * * *&quot;)
     }
-    
+
     steps {
       shell(&apos;&apos;&apos;
         . /etc/profile.d/proxy.sh &gt; /dev/null 2&gt;&amp;1
@@ -175,9 +213,9 @@ sites.each {
           mkdir -p artifacts/builder/
           rsync -av nubis/builder/artifacts/ artifacts/builder/
         fi
-      &apos;&apos;&apos;.stripIndent())      
+      &apos;&apos;&apos;.stripIndent())
     }
-    
+
     publishers {
         archiveArtifacts(&apos;artifacts/**&apos;)
         downstreamParameterized {
