@@ -50,6 +50,15 @@ package { 'librarian-puppet':
   provider => 'gem',
   require  => [
     Package['ruby-dev'],
+    Package['puppet_forge'],
+  ],
+}
+
+package { 'puppet_forge':
+  ensure   => '2.2.6',
+  provider => 'gem',
+  require  => [
+    Package['ruby-dev'],
   ],
 }
 
