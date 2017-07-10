@@ -202,7 +202,7 @@ resource "aws_launch_configuration" "ci" {
 
   image_id = "${module.ci-image.image_id}"
 
-    instance_type = "t2.micro"
+    instance_type = "${var.instance_type}"
     key_name = "${var.key_name}"
     security_groups = [
       "${aws_security_group.ci.id}",
