@@ -1,18 +1,36 @@
 # Change Log
 
-## [v1.4.2](https://github.com/nubisproject/nubis-ci/tree/v1.4.2) (2017-05-05)
-[Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v1.4.2...v1.4.2)
+## [v1.5.0](https://github.com/nubisproject/nubis-ci/tree/v1.5.0) (2017-06-24)
+[Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v1.4.2...v1.5.0)
+
+**Fixed bugs:**
+
+- Devs do not have build access [\#456](https://github.com/nubisproject/nubis-ci/issues/456)
 
 **Closed issues:**
 
-- Make use of nubis-builder generated AMIs.json [\#407](https://github.com/nubisproject/nubis-ci/issues/407)
-- Remove CloudFormation support [\#357](https://github.com/nubisproject/nubis-ci/issues/357)
+- Downgrade Jenkins to 2.46.3 [\#463](https://github.com/nubisproject/nubis-ci/issues/463)
+- Determine Jenkins groups ACLs from NUBIS\_{USER,SUDO} inputs [\#458](https://github.com/nubisproject/nubis-ci/issues/458)
+- Add environment to Slack notifications [\#457](https://github.com/nubisproject/nubis-ci/issues/457)
+- Use jq 1.5 from nubis-base [\#450](https://github.com/nubisproject/nubis-ci/issues/450)
+- Terraform needs tfvars file [\#448](https://github.com/nubisproject/nubis-ci/issues/448)
+- Add missing autoscaling:DeleteTags deploy permission [\#446](https://github.com/nubisproject/nubis-ci/issues/446)
 
 **Merged pull requests:**
 
-- Remove CloudFormation leftovers [\#441](https://github.com/nubisproject/nubis-ci/pull/441) ([gozer](https://github.com/gozer))
+- Downgrade Jenkins [\#464](https://github.com/nubisproject/nubis-ci/pull/464) ([gozer](https://github.com/gozer))
+- Upgrade Jenkins to 2.60.1 [\#461](https://github.com/nubisproject/nubis-ci/pull/461) ([gozer](https://github.com/gozer))
+- Compute permissions from groups provided at boot time [\#460](https://github.com/nubisproject/nubis-ci/pull/460) ([gozer](https://github.com/gozer))
+- Add custom Slack message to report environment [\#459](https://github.com/nubisproject/nubis-ci/pull/459) ([gozer](https://github.com/gozer))
+- fix Jenkins self-reporting url [\#455](https://github.com/nubisproject/nubis-ci/pull/455) ([gozer](https://github.com/gozer))
+- We can rely on JQ 1.5 being in base now [\#454](https://github.com/nubisproject/nubis-ci/pull/454) ([gozer](https://github.com/gozer))
+- \[plugin\] Upgrade workflow-cps [\#453](https://github.com/nubisproject/nubis-ci/pull/453) ([gozer](https://github.com/gozer))
+- Remove/Cleanup Github OAuth secrets [\#452](https://github.com/nubisproject/nubis-ci/pull/452) ([gozer](https://github.com/gozer))
+- Add support for SSO [\#451](https://github.com/nubisproject/nubis-ci/pull/451) ([gozer](https://github.com/gozer))
+- Convert arbitrary variable to Terraform .tfvars file [\#449](https://github.com/nubisproject/nubis-ci/pull/449) ([gozer](https://github.com/gozer))
+- Add missing autoscaling:DeleteTags permission to deploy role [\#447](https://github.com/nubisproject/nubis-ci/pull/447) ([gozer](https://github.com/gozer))
 
-## [v1.4.2](https://github.com/nubisproject/nubis-ci/tree/v1.4.2) (2017-05-03)
+## [v1.4.2](https://github.com/nubisproject/nubis-ci/tree/v1.4.2) (2017-05-05)
 [Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v1.4.1...v1.4.2)
 
 **Closed issues:**
@@ -22,12 +40,18 @@
 - Add missing ec2:DeleteTags permission [\#432](https://github.com/nubisproject/nubis-ci/issues/432)
 - Add nubis/builder/artifacts/AMIs.json to .gitignore [\#430](https://github.com/nubisproject/nubis-ci/issues/430)
 - \[terraform\] Upgrade Terraform to 0.8.8 [\#417](https://github.com/nubisproject/nubis-ci/issues/417)
+- Make use of nubis-builder generated AMIs.json [\#407](https://github.com/nubisproject/nubis-ci/issues/407)
+- Remove CloudFormation support [\#357](https://github.com/nubisproject/nubis-ci/issues/357)
 - \[Datadog\] Enable Jenkins plugin [\#130](https://github.com/nubisproject/nubis-ci/issues/130)
+- Tag v1.4.2 release [\#443](https://github.com/nubisproject/nubis-ci/issues/443)
 - Tag v1.4.2 release [\#442](https://github.com/nubisproject/nubis-ci/issues/442)
 - Tag v1.4.2 release [\#438](https://github.com/nubisproject/nubis-ci/issues/438)
 
 **Merged pull requests:**
 
+- Merge v1.4.2 release into develop. \[skip ci\] [\#445](https://github.com/nubisproject/nubis-ci/pull/445) ([tinnightcap](https://github.com/tinnightcap))
+- Update CHANGELOG for v1.4.2 release \[skip ci\] [\#444](https://github.com/nubisproject/nubis-ci/pull/444) ([tinnightcap](https://github.com/tinnightcap))
+- Remove CloudFormation leftovers [\#441](https://github.com/nubisproject/nubis-ci/pull/441) ([gozer](https://github.com/gozer))
 - Update CHANGELOG for v1.4.2 release \[skip ci\] [\#439](https://github.com/nubisproject/nubis-ci/pull/439) ([tinnightcap](https://github.com/tinnightcap))
 - Upgrade puppetlabs/java and camptocamp/archive [\#437](https://github.com/nubisproject/nubis-ci/pull/437) ([gozer](https://github.com/gozer))
 - Upgrade Jenkins to 2.46.2 [\#435](https://github.com/nubisproject/nubis-ci/pull/435) ([gozer](https://github.com/gozer))
