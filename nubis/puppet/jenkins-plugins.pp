@@ -17,15 +17,15 @@ jenkins::plugin { 'aws-java-sdk':
 }
 
 jenkins::plugin { 'bouncycastle-api':
-  version => '2.16.1'
+  version => '2.16.2'
 }
 
 jenkins::plugin { 'branch-api':
-  version => '2.0.10'
+  version => '2.0.11'
 }
 
 jenkins::plugin { 'cloudbees-folder':
-  version => '6.0.4'
+  version => '6.1.0'
 }
 
 jenkins::plugin { 'conditional-buildstep':
@@ -45,11 +45,11 @@ jenkins::plugin { 'embeddable-build-status':
 }
 
 jenkins::plugin { 'git':
-  version => '3.3.0'
+  version => '3.5.0'
 }
 
 jenkins::plugin { 'git-client':
-  version => '2.4.6'
+  version => '2.5.0'
 }
 
 jenkins::plugin { 'git-server':
@@ -61,11 +61,11 @@ jenkins::plugin { 'github':
 }
 
 jenkins::plugin { 'github-api':
-  version => '1.85.1'
+  version => '1.86'
 }
 
 jenkins::plugin { 'github-branch-source':
-  version => '2.0.6'
+  version => '2.2.3'
 }
 
 jenkins::plugin { 'github-oauth':
@@ -85,7 +85,7 @@ jenkins::plugin { 'javadoc':
 }
 
 jenkins::plugin { 'job-dsl':
-  version => '1.63'
+  version => '1.64'
 }
 
 jenkins::plugin { 'jquery-detached':
@@ -97,7 +97,7 @@ jenkins::plugin { 'junit':
 }
 
 jenkins::plugin { 'ldap':
-  version => '1.15'
+  version => '1.16'
 }
 
 jenkins::plugin { 'mailer':
@@ -105,7 +105,7 @@ jenkins::plugin { 'mailer':
 }
 
 jenkins::plugin { 'matrix-auth':
-  version => '1.6'
+  version => '1.7'
 }
 
 jenkins::plugin { 'matrix-project':
@@ -113,7 +113,7 @@ jenkins::plugin { 'matrix-project':
 }
 
 jenkins::plugin { 'maven-plugin':
-  version => '2.16'
+  version => '2.17'
 }
 
 jenkins::plugin { 'metrics':
@@ -129,7 +129,7 @@ jenkins::plugin { 'naginator':
 }
 
 jenkins::plugin { 'parameterized-trigger':
-  version => '2.34'
+  version => '2.35.1'
 }
 
 jenkins::plugin { 'pegdown-formatter':
@@ -165,11 +165,11 @@ jenkins::plugin { 's3':
 }
 
 jenkins::plugin { 'scm-api':
-  version => '2.1.1'
+  version => '2.2.0'
 }
 
 jenkins::plugin { 'script-security':
-  version => '1.29'
+  version => '1.30'
 }
 
 jenkins::plugin { 'slack':
@@ -181,7 +181,7 @@ jenkins::plugin { 'ssh-credentials':
 }
 
 jenkins::plugin { 'structs':
-  version => '1.8'
+  version => '1.9'
 }
 
 jenkins::plugin { 'thinBackup':
@@ -197,11 +197,11 @@ jenkins::plugin { 'token-macro':
 }
 
 jenkins::plugin { 'workflow-api':
-  version => '2.17'
+  version => '2.19'
 }
 
 jenkins::plugin { 'workflow-cps':
-  version => '2.36'
+  version => '2.37'
 }
 
 jenkins::plugin { 'workflow-cps-global-lib':
@@ -209,7 +209,7 @@ jenkins::plugin { 'workflow-cps-global-lib':
 }
 
 jenkins::plugin { 'workflow-job':
-  version => '2.11.1'
+  version => '2.12.1'
 }
 
 jenkins::plugin { 'workflow-multibranch':
@@ -217,11 +217,11 @@ jenkins::plugin { 'workflow-multibranch':
 }
 
 jenkins::plugin { 'workflow-scm-step':
-  version => '2.5'
+  version => '2.6'
 }
 
 jenkins::plugin { 'workflow-step-api':
-  version => '2.11'
+  version => '2.12'
 }
 
 jenkins::plugin { 'workflow-support':
