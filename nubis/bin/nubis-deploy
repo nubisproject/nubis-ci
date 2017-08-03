@@ -14,12 +14,23 @@ if [ "$ami" = "" ]; then
   ami=$(jq -r '.last_run_uuid as $uuid | .builds[] | select (.packer_run_uuid == $uuid) .artifact_id' artifacts/builder/AMIs.json | sed -e's/,/\n/g' | grep "$region:" | cut -d: -f2)
 fi
 
-echo "Deploying AMI $ami into $environment/$region"
+action=$1
+
+if [ "$action" = "" ] || [ "$action" = "apply" ]; then
+  action="apply"
+elif [ "$action" = "destroy" ]; then
+  terraform_extra_args="-force"
+else
+  echo "Unknown action: $action"
+  exit 1
+fi
+
+echo "Deploying AMI $ami into $environment/$region ($action)"
 
 VARIABLES=$WORKSPACE/../vars.tfvars
 
 if [ ! -f "$VARIABLES" ]; then
-  touch $VARIABLES
+  touch "$VARIABLES"
 fi
 
 CONSUL_ENDPOINT="public.consul.$environment.$region.$NUBIS_ACCOUNT.$NUBIS_DOMAIN"
@@ -39,13 +50,14 @@ if [ -d artifacts/terraform ]; then
 
   terraform get -update=true artifacts/terraform
 
-  terraform apply \
+  terraform $action \
     -var-file "$VARIABLES" \
     -var account="$NUBIS_ACCOUNT" \
     -var region="$region" \
     -var environment="$environment" \
     -var service_name="$service_name" \
     -var ami="$ami" \
+    $terraform_extra_args \
     artifacts/terraform
 
   terraform remote config -disable=true

@@ -81,6 +81,7 @@ sites.each {
       stringParam(&apos;ami&apos;,&apos;&apos;)
       stringParam(&apos;key_name&apos;, &apos;nubis&apos;)
       choiceParam(&apos;environment&apos;, [&apos;stage&apos;,&apos;prod&apos;])
+      choiceParam(&apos;action&apos;, [&apos;apply&apos;,&apos;destroy&apos;])
       choiceParam(&apos;region&apos;, [&apos;us-west-2&apos;,&apos;us-east-1&apos;])
     }
 
@@ -103,7 +104,7 @@ sites.each {
             }
         }
       shell(&apos;&apos;&apos;
-        nubis-deploy
+        nubis-deploy $action
       &apos;&apos;&apos;.stripIndent())
     }
 
