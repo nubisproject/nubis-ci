@@ -9,13 +9,20 @@ nubis::discovery::service { 'jenkins':
 
 package { 'daemon':
   ensure => 'present'
-}->
+}
+
+
+# We need Java 8
+class { 'java8' :
+}
+
 class { 'jenkins':
-  #version            => '2.46.3',
-  direct_download    => 'https://pkg.jenkins.io/debian-stable/binary/jenkins_2.46.3_all.deb',
+  version            => '2.60.2',
+  #direct_download    => 'https://pkg.jenkins.io/debian-stable/binary/jenkins_2.46.3_all.deb',
   configure_firewall => false,
   service_enable     => false,
   service_ensure     => 'stopped',
+  install_java       => false,
   config_hash        => {
     'JENKINS_ARGS' => {
       'value' => '--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --prefix=$PREFIX --requestHeaderSize=16384'
@@ -24,6 +31,10 @@ class { 'jenkins':
       'value' => '-Djava.awt.headless=true -Dhudson.diyChunking=false -Dhttp.proxyHost=proxy.service.consul -Dhttp.proxyPort=3128 -Dhttps.proxyHost=proxy.service.consul -Dhttps.proxyPort=3128'
     },
   },
+  require => [
+    Class['java8'],
+    Package['daemon'],
+  ]
 }
 
 # Will eventually need to pull this from the registry
@@ -73,6 +84,37 @@ package { 'git':
 
 package { 'make':
     ensure => '3.81-8.2ubuntu3',
+}
+
+# Needed for encrypted repos
+
+#class { 'apt':
+#  update => {
+#    frequency => 'reluctantly',
+#  },
+#}
+
+apt::source { 'git-crypt':
+  location => 'http://download.opensuse.org/repositories/home:/gozer:/git-crypt/xUbuntu_14.04',
+  release  => './',
+  repos    => '',
+  key      => {
+    'id'     => '0x82E5981AED54CCD6A969BB12F21EC402D8368140',
+    'source' => 'http://download.opensuse.org/repositories/home:/gozer:/git-crypt/xUbuntu_14.04/Release.key',
+  },
+}
+
+package { 'git-crypt':
+  ensure => '0.5.0-2',
+  require => [
+    Apt::Source['git-crypt'],
+    Exec['apt_update'],
+  ]
+}
+
+# In case we need entropy for key generation and all
+package { 'rng-tools':
+  ensure => '4-0ubuntu2.1',
 }
 
 # Needed because current boto has bugs with STS tokens
