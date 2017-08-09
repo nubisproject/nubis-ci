@@ -25,7 +25,7 @@ jenkins::plugin { 'branch-api':
 }
 
 jenkins::plugin { 'cloudbees-folder':
-  version => '6.1.0'
+  version => '6.1.2'
 }
 
 jenkins::plugin { 'conditional-buildstep':
@@ -45,7 +45,7 @@ jenkins::plugin { 'embeddable-build-status':
 }
 
 jenkins::plugin { 'git':
-  version => '3.5.0'
+  version => '3.5.1'
 }
 
 jenkins::plugin { 'git-client':
@@ -57,7 +57,7 @@ jenkins::plugin { 'git-server':
 }
 
 jenkins::plugin { 'github':
-  version => '1.27.0'
+  version => '1.28.0'
 }
 
 jenkins::plugin { 'github-api':
@@ -93,7 +93,7 @@ jenkins::plugin { 'jquery-detached':
 }
 
 jenkins::plugin { 'junit':
-  version => '1.20'
+  version => '1.21'
 }
 
 jenkins::plugin { 'ldap':
@@ -169,7 +169,7 @@ jenkins::plugin { 'scm-api':
 }
 
 jenkins::plugin { 'script-security':
-  version => '1.30'
+  version => '1.31'
 }
 
 jenkins::plugin { 'slack':
@@ -181,7 +181,7 @@ jenkins::plugin { 'ssh-credentials':
 }
 
 jenkins::plugin { 'structs':
-  version => '1.9'
+  version => '1.10'
 }
 
 jenkins::plugin { 'thinBackup':
@@ -197,11 +197,11 @@ jenkins::plugin { 'token-macro':
 }
 
 jenkins::plugin { 'workflow-api':
-  version => '2.19'
+  version => '2.20'
 }
 
 jenkins::plugin { 'workflow-cps':
-  version => '2.37'
+  version => '2.39'
 }
 
 jenkins::plugin { 'workflow-cps-global-lib':
@@ -209,7 +209,7 @@ jenkins::plugin { 'workflow-cps-global-lib':
 }
 
 jenkins::plugin { 'workflow-job':
-  version => '2.12.1'
+  version => '2.12.2'
 }
 
 jenkins::plugin { 'workflow-multibranch':
