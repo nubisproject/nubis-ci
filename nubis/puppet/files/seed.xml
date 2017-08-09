@@ -199,7 +199,7 @@ sites.each {
     steps {
       shell(&apos;&apos;&apos;
         . /etc/profile.d/proxy.sh &gt; /dev/null 2&gt;&amp;1
-        consulate kv set nat/admin/config/IptablesAllowTCP &quot;[ 22 ]&quot;
+        consulate kv set nat/$(nubis-metadata NUBIS_ENVIRONMENT)/config/IptablesAllowTCP &quot;[ 22 ]&quot;
         nubis-builder build --instance-type c3.large --spot
       &apos;&apos;&apos;.stripIndent())
       shell(&apos;&apos;&apos;
