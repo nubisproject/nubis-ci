@@ -266,9 +266,7 @@ resource "aws_s3_bucket" "ci_artifacts" {
 resource "aws_iam_instance_profile" "ci" {
   count = "${var.enabled}"
     name = "ci-${var.project}-${var.environment}-${var.region}"
-    roles = [
-      "${aws_iam_role.ci.name}",
-    ]
+    role = "${aws_iam_role.ci.name}"
 }
 
 resource "aws_iam_role" "ci" {
