@@ -246,7 +246,7 @@ resource "aws_route53_record" "ci" {
 
 resource "aws_s3_bucket" "ci_artifacts" {
   count = "${var.enabled}"
-    bucket = "${var.s3_bucket_name}"
+    bucket_prefix = "ci-${var.project}-artifacts-"
 
     acl = "private"
 
