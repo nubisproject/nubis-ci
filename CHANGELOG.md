@@ -1,5 +1,16 @@
 # Change Log
 
+## [v1.5.1](https://github.com/nubisproject/nubis-ci/tree/v1.5.1) (2017-08-18)
+[Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v1.5.0...v1.5.1)
+
+**Closed issues:**
+
+- Allow large HTTP headers [\#468](https://github.com/nubisproject/nubis-ci/issues/468)
+
+**Merged pull requests:**
+
+- Bump maximum header size to 16K [\#469](https://github.com/nubisproject/nubis-ci/pull/469) ([gozer](https://github.com/gozer))
+
 ## [v1.5.0](https://github.com/nubisproject/nubis-ci/tree/v1.5.0) (2017-06-24)
 [Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v1.4.2...v1.5.0)
 
@@ -15,9 +26,12 @@
 - Use jq 1.5 from nubis-base [\#450](https://github.com/nubisproject/nubis-ci/issues/450)
 - Terraform needs tfvars file [\#448](https://github.com/nubisproject/nubis-ci/issues/448)
 - Add missing autoscaling:DeleteTags deploy permission [\#446](https://github.com/nubisproject/nubis-ci/issues/446)
+- Tag v1.5.0 release [\#465](https://github.com/nubisproject/nubis-ci/issues/465)
 
 **Merged pull requests:**
 
+- Merge v1.5.0 release into develop. \[skip ci\] [\#467](https://github.com/nubisproject/nubis-ci/pull/467) ([tinnightcap](https://github.com/tinnightcap))
+- Update CHANGELOG for v1.5.0 release \[skip ci\] [\#466](https://github.com/nubisproject/nubis-ci/pull/466) ([tinnightcap](https://github.com/tinnightcap))
 - Downgrade Jenkins [\#464](https://github.com/nubisproject/nubis-ci/pull/464) ([gozer](https://github.com/gozer))
 - Upgrade Jenkins to 2.60.1 [\#461](https://github.com/nubisproject/nubis-ci/pull/461) ([gozer](https://github.com/gozer))
 - Compute permissions from groups provided at boot time [\#460](https://github.com/nubisproject/nubis-ci/pull/460) ([gozer](https://github.com/gozer))
