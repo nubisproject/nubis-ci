@@ -18,7 +18,7 @@ class { 'jenkins':
   service_ensure     => 'stopped',
   config_hash        => {
     'JENKINS_ARGS' => {
-      'value' => '--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --prefix=$PREFIX'
+      'value' => '--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --prefix=$PREFIX --requestHeaderSize=16384'
     },
     'JAVA_ARGS'    => {
       'value' => '-Djava.awt.headless=true -Dhudson.diyChunking=false -Dhttp.proxyHost=proxy.service.consul -Dhttp.proxyPort=3128 -Dhttps.proxyHost=proxy.service.consul -Dhttps.proxyPort=3128'
@@ -262,7 +262,7 @@ package { 'unzip':
 }
 
 package { 'git':
-    ensure => '1:1.9.1-1ubuntu0.5',
+    ensure => '1:1.9.1-1ubuntu0.6',
 }
 
 package { 'make':
