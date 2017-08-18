@@ -262,7 +262,7 @@ package { 'unzip':
 }
 
 package { 'git':
-    ensure => '1:1.9.1-1ubuntu0.5',
+    ensure => '1:1.9.1-1ubuntu0.6',
 }
 
 package { 'make':
