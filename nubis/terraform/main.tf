@@ -155,7 +155,7 @@ resource "aws_launch_configuration" "ci" {
 
   image_id = "${module.ci-image.image_id}"
 
-    instance_type = "t2.micro"
+    instance_type = "${var.instance_type}"
     key_name = "${var.key_name}"
     security_groups = [
       "${aws_security_group.ci.id}",
@@ -175,7 +175,7 @@ NUBIS_DOMAIN=${var.nubis_domain}
 NUBIS_PROJECT_URL=https://sso.${var.environment}.${var.region}.${var.account_name}.${var.nubis_domain}/jenkins/
 NUBIS_CI_NAME=${var.project}
 NUBIS_GIT_REPO=${var.git_repo}
-NUBIS_GIT_BRANCHES="${var.git_branches}"
+NUBIS_GIT_BRANCHES="${var.>>git_branches}"
 NUBIS_CI_BUCKET=${aws_s3_bucket.ci_artifacts.id}
 NUBIS_CI_BUCKET_REGION=${var.region}
 NUBIS_CI_EMAIL=${var.email}
@@ -463,8 +463,8 @@ resource "aws_iam_role_policy" "ci_deploy" {
                 "iam:GetUser",
                 "iam:GetRolePolicy",
                 "iam:GetUserPolicy",
-		"iam:DeleteInstanceProfile",
-		"iam:ListInstanceProfilesForRole",
+                "iam:DeleteInstanceProfile",
+                "iam:ListInstanceProfilesForRole",
                 "s3:*",
                 "lambda:InvokeFunction"
               ],

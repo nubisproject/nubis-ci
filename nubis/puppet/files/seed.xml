@@ -1,0 +1,246 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty plugin="naginator@1.17.2">
+      <optOut>false</optOut>
+    </com.chikli.hudson.plugin.naginator.NaginatorOptOutProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.25">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.3.0">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>%%NUBIS_GIT_REPO%%</url>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>*/master</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="list"/>
+    <extensions/>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers>
+    <hudson.triggers.SCMTrigger>
+      <spec>H/15 * * * *</spec>
+      <ignorePostCommitHooks>false</ignorePostCommitHooks>
+    </hudson.triggers.SCMTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <javaposse.jobdsl.plugin.ExecuteDslScripts plugin="job-dsl@1.63">
+      <scriptText>@Grab(&apos;org.yaml:snakeyaml:1.17&apos;)
+import org.yaml.snakeyaml.Yaml
+Yaml parser = new Yaml()
+
+def site_configuration_path = &quot;nubis/sites.yaml&quot;
+
+def default_name = &quot;nubis-metadata NUBIS_CI_NAME&quot;.execute().text.trim()
+def default_git_repo = &quot;nubis-metadata NUBIS_GIT_REPO&quot;.execute().text.trim()
+
+def sites
+
+try {
+  sites = parser.load(readFileFromWorkspace(site_configuration_path))
+  println(&quot;Setting up multi-site project&quot;)
+} catch(Exception ex) {
+  println(&quot;Defaulting to single project ${default_name} because ${ex}&quot;);
+  sites = [:]
+  sites[default_name] = [:]
+  sites[default_name][&apos;repo&apos;] = default_git_repo
+}
+
+sites.each {
+   def site_name = it.key
+   def site_config = it.value
+   println(&quot;Site ${site_name} has repo at ${site_config[&apos;repo&apos;] }&quot;)
+
+  freeStyleJob(&quot;${site_name}-deployment&quot;) {
+    description(&quot;&quot;&quot;
+    ##${site_name}
+    #WARNING WARNING
+    This is a deployment job that can impact production, **use with care**
+    &quot;&quot;&quot;.stripIndent())
+
+    parameters {
+      stringParam(&apos;stack_name&apos;, site_name)
+      stringParam(&apos;owner&apos;, &apos;infra-aws@mozilla.com&apos;)
+      stringParam(&apos;service_name&apos;, site_name)
+      stringParam(&apos;ami&apos;,&apos;&apos;)
+      stringParam(&apos;key_name&apos;, &apos;nubis&apos;)
+      choiceParam(&apos;environment&apos;, [&apos;stage&apos;,&apos;prod&apos;])
+      choiceParam(&apos;action&apos;, [&apos;apply&apos;,&apos;destroy&apos;])
+      choiceParam(&apos;region&apos;, [&apos;us-west-2&apos;,&apos;us-east-1&apos;])
+    }
+
+    wrappers {
+        colorizeOutput()
+        timestamps()
+    }
+
+    steps {
+      copyArtifacts(&quot;${site_name}-build&quot;) {
+            //includePatterns(&apos;*.xml&apos;, &apos;*.properties&apos;)
+            //excludePatterns(&apos;test.xml&apos;, &apos;test.properties&apos;)
+            //targetDirectory(&apos;files&apos;)
+            //flatten()
+            //optional()
+            buildSelector {
+                upstreamBuild {
+                  fallbackToLastSuccessful(true)
+                }
+            }
+        }
+      shell(&apos;&apos;&apos;
+        nubis-ci-deploy $action
+      &apos;&apos;&apos;.stripIndent())
+    }
+
+    scm {
+      git{
+            remote {
+                name(&apos;origin&apos;)
+                url(site_config[&apos;repo&apos;])
+            }
+            branch(&apos;master&apos;)
+        extensions {
+          submoduleOption {
+            disableSubmodules(false)
+            recursiveSubmodules(true)
+            trackingSubmodules(false)
+            parentCredentials(false)
+            timeout(60)
+            reference(&apos;&apos;)
+          }
+        }
+      }
+    }
+
+    publishers {
+        mailer(&apos;infra-aws@mozilla.com&apos;, true, true)
+        slackNotifier {
+          notifyAborted(true)
+          notifyBackToNormal(true)
+          notifyFailure(true)
+          notifyNotBuilt(true)
+          notifyRegression(true)
+          notifyRepeatedFailure(true)
+          notifySuccess(true)
+          notifyUnstable(true)
+          startNotification(true)
+          customMessage(&apos;Environment:$environment&apos;)
+          includeCustomMessage(true)
+        }
+        naginatorPublisher {
+          rerunIfUnstable(false)
+          maxSchedule(3)
+          checkRegexp(true)
+          rerunMatrixPart(false)
+          regexpForRerun(&quot;This is a bug with Terraform and should be reported as a GitHub Issue&quot;)
+          delay {
+            fixedDelay {
+              delay(60)
+            }
+           }
+         }
+     }
+  }
+
+  freeStyleJob(&quot;${site_name}-build&quot;) {
+    description(&quot;${site_name}-build&quot;)
+
+    wrappers {
+        colorizeOutput()
+        timestamps()
+    }
+
+    properties {
+      copyArtifactPermissionProperty {
+         projectNames(&quot;${site_name}-deployment&quot;)
+      }
+    }
+
+    scm {
+      git{
+            remote {
+                name(&apos;origin&apos;)
+                url(site_config[&apos;repo&apos;])
+            }
+            branch(&apos;master&apos;)
+        extensions {
+          submoduleOption {
+            disableSubmodules(false)
+            recursiveSubmodules(true)
+            trackingSubmodules(false)
+            parentCredentials(false)
+            timeout(60)
+            reference(&apos;&apos;)
+          }
+        }
+      }
+    }
+
+    triggers {
+        scm(&quot;H/15 * * * *&quot;)
+    }
+
+    steps {
+      shell(&apos;&apos;&apos;
+        nubis-ci-build
+      &apos;&apos;&apos;.stripIndent())
+    }
+
+    publishers {
+        archiveArtifacts(&apos;artifacts/**&apos;)
+        downstreamParameterized {
+            trigger(&quot;${site_name}-deployment&quot;) {
+                condition(&apos;UNSTABLE_OR_BETTER&apos;)
+                parameters {
+                    predefinedBuildParameters {
+                      properties(&quot;environment=stage&quot;)
+                    }
+                }
+            }
+        }
+        mailer(&apos;infra-aws@mozilla.com&apos;, true, true)
+        slackNotifier {
+          notifyAborted(true)
+          notifyBackToNormal(true)
+          notifyFailure(true)
+          notifyNotBuilt(true)
+          notifyRegression(true)
+          notifyRepeatedFailure(true)
+          notifySuccess(true)
+          notifyUnstable(true)
+          startNotification(true)
+        }
+    }
+  }
+}</scriptText>
+      <usingScriptText>true</usingScriptText>
+      <sandbox>false</sandbox>
+      <ignoreExisting>false</ignoreExisting>
+      <ignoreMissingFiles>false</ignoreMissingFiles>
+      <failOnMissingPlugin>false</failOnMissingPlugin>
+      <unstableOnDeprecation>false</unstableOnDeprecation>
+      <removedJobAction>DELETE</removedJobAction>
+      <removedViewAction>DELETE</removedViewAction>
+      <removedConfigFilesAction>DELETE</removedConfigFilesAction>
+      <lookupStrategy>JENKINS_ROOT</lookupStrategy>
+    </javaposse.jobdsl.plugin.ExecuteDslScripts>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>
