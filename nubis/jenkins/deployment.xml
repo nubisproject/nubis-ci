@@ -18,16 +18,11 @@ This is a deployment job that can impact production, **use with care**
             </a>
           </choices>
         </hudson.model.ChoiceParameterDefinition>
-        <hudson.model.ChoiceParameterDefinition>
+        <hudson.model.StringParameterDefinition>
           <name>environment</name>
           <description></description>
-          <choices class="java.util.Arrays$ArrayList">
-            <a class="string-array">
-              <string>stage</string>
-              <string>prod</string>
-            </a>
-          </choices>
-        </hudson.model.ChoiceParameterDefinition>
+          <defaultValue>stage</defaultValue>
+        </hudson.model.StringParameterDefinition>	
         <hudson.model.StringParameterDefinition>
           <name>stack_name</name>
           <description></description>
@@ -106,7 +101,7 @@ This is a deployment job that can impact production, **use with care**
       <doNotFingerprintArtifacts>false</doNotFingerprintArtifacts>
     </hudson.plugins.copyartifact.CopyArtifact>
     <hudson.tasks.Shell>
-      <command>nubis-deploy</command>
+      <command>nubis-ci-deploy</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
@@ -132,5 +127,10 @@ This is a deployment job that can impact production, **use with care**
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.0">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
+      <org.jenkinsci.plugins.buildnamesetter.BuildNameSetter plugin="build-name-setter@1.6.7">
+        <template>#${BUILD_NUMBER} - %%NUBIS_ARENA%%/${environment}</template>
+        <runAtStart>true</runAtStart>
+      <runAtEnd>true</runAtEnd>
+    </org.jenkinsci.plugins.buildnamesetter.BuildNameSetter>
   </buildWrappers>
 </project>

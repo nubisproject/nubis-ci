@@ -54,26 +54,8 @@
   <builders>
     <hudson.tasks.Shell>
       <command>
-. /etc/profile.d/proxy.sh &gt; /dev/null 2&gt;&amp;1
-consulate kv set nat/admin/config/IptablesAllowTCP &quot;[ 22 ]&quot;
-nubis-builder build --instance-type c3.large --spot</command>
-consulate kv rm nat/admin/config/IptablesAllowTCP
-    </hudson.tasks.Shell>
-    <hudson.tasks.Shell>
-      <command>rm -rf artifacts
-mkdir artifacts
-</command>
-    </hudson.tasks.Shell>
-    <hudson.tasks.Shell>
-      <command>
-if [ -d nubis/terraform ]; then
-  rsync -av nubis/terraform artifacts/
-fi
-if [ -d nubis/builder/artifacts ]; then
-  mkdir -p artifacts/builder/
-  rsync -av nubis/builder/artifacts/ artifacts/builder/
-fi
-</command>
+      nubis-ci-build
+      </command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>

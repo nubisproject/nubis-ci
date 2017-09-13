@@ -1,0 +1,31 @@
+#!/bin/bash -l
+
+set -x
+
+env
+
+NUBIS_ARENA=$(nubis-metadata NUBIS_ARENA)
+
+consulate kv set nat/$NUBIS_ARENA/config/IptablesAllowTCP '[ 22 ]'
+nubis-builder build --instance-type c3.large --spot
+consulate kv rm nat/$NUBIS_ARENA/config/IptablesAllowTCP
+
+rm -rf artifacts
+mkdir artifacts
+
+if [ -d nubis/terraform ]; then
+  rsync -av nubis/terraform artifacts/
+fi
+
+if [ -d nubis/proxy ]; then
+  rsync -av nubis/proxy artifacts/
+fi
+
+if [ -d nubis/monitoring ]; then
+  rsync -av nubis/monitoring artifacts/
+fi
+
+if [ -d nubis/builder/artifacts ]; then
+  mkdir -p artifacts/builder/
+  rsync -av nubis/builder/artifacts/ artifacts/builder/
+fi

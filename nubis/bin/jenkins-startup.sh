@@ -6,10 +6,10 @@ wget -O /tmp/default.js http://updates.jenkins-ci.org/update-center.json
 sed '1d;$d' /tmp/default.js > /tmp/default.json
 curl -X POST -H "Accept: application/json" -d @/tmp/default.json http://localhost:8080/updateCenter/byId/default/postBack
 
-AWS_REGION=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | jq -r '.region')
+AWS_REGION=$(nubis-region)
 
 # shell parse our userdata
-eval "$(curl -fq http://169.254.169.254/latest/user-data)"
+eval "$(nubis-metadata)"
 
 ## BACKUPS
 ## Important to do first, so that what we generate can overwrite what we are restoring from
@@ -92,6 +92,7 @@ cp /etc/nubis.d/jenkins-deployment-config.xml "/var/lib/jenkins/jobs/$NUBIS_CI_N
 perl -pi -e "s[%%NUBIS_GIT_REPO%%][$NUBIS_GIT_REPO]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml"
 perl -pi -e "s[%%NUBIS_GIT_BRANCHES%%][$NUBIS_GIT_BRANCHES]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml"
 perl -pi -e "s[%%NUBIS_CI_NAME%%][$NUBIS_CI_NAME]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml"
+perl -pi -e "s[%%NUBIS_ARENA%%][$NUBIS_ARENA]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml"
 
 # Discover available regions
   # All regions according to AWS (US only), with our own first

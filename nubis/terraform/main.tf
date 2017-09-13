@@ -11,66 +11,19 @@ module "ci-image" {
   project = "nubis-ci"
 }
 
-resource "tls_private_key" "ci" {
-  count = "${var.enabled}"
-  lifecycle { create_before_destroy = true }
-
-  algorithm = "RSA"
-}
-
-resource "tls_self_signed_cert" "ci" {
-    count = "${var.enabled}"
-    lifecycle { create_before_destroy = true }
-    key_algorithm = "${tls_private_key.ci.algorithm}"
-    private_key_pem = "${tls_private_key.ci.private_key_pem}"
-
-    # Certificate expires after 1 year
-    validity_period_hours = 4380
-
-    # Generate a new certificate if Terraform is run within 30 days
-    # of the certificate's expiration time.
-    early_renewal_hours = 1020
-
-    # Reasonable set of uses for a server SSL certificate.
-    allowed_uses = [
-        "key_encipherment",
-        "digital_signature",
-        "server_auth",
-    ]
-
-    subject {
-        common_name = "ci.${var.project}.${var.environment}.${var.region}.${var.account_name}.${var.nubis_domain}"
-        organization = "Mozilla Nubis"
-    }
-}
-
-resource "aws_iam_server_certificate" "ci" {
-    count = "${var.enabled}"
-    lifecycle { create_before_destroy = true }
-
-    name_prefix = "ci-${var.project}-"
-
-    certificate_body = "${tls_self_signed_cert.ci.cert_pem}"
-    private_key = "${tls_private_key.ci.private_key_pem}"
-
-    provisioner "local-exec" {
-      command = "sleep 30"
-    }
-}
-
-
 # Create a new load balancer
 resource "aws_elb" "ci" {
   count = "${var.enabled}"
   name = "ci-elb-${var.project}"
   subnets = ["${split(",", var.public_subnets)}"]
 
+  internal = true
+
   listener {
     instance_port = 8080
     instance_protocol = "http"
-    lb_port = 443
-    lb_protocol = "https"
-    ssl_certificate_id = "${aws_iam_server_certificate.ci.arn}"
+    lb_port = 80
+    lb_protocol = "http"
   }
 
   health_check {
@@ -89,7 +42,7 @@ resource "aws_elb" "ci" {
     
   tags = {
     Region = "${var.region}"
-    Environment = "${var.environment}"
+    Arena = "${var.environment}"
     TechnicalContact = "${var.technical_contact}"
   }
 }
@@ -102,8 +55,8 @@ resource "aws_security_group" "elb" {
   vpc_id = "${var.vpc_id}"
 
   ingress {
-      from_port = 443
-      to_port = 443
+      from_port = 80
+      to_port = 80
       protocol = "tcp"
       cidr_blocks = ["0.0.0.0/0"]
   }
@@ -117,7 +70,7 @@ resource "aws_security_group" "elb" {
 
   tags = {
     Region = "${var.region}"
-    Environment = "${var.environment}"
+    Arena = "${var.environment}"
     TechnicalContact = "${var.technical_contact}"
   }
 }
@@ -158,7 +111,7 @@ resource "aws_security_group" "ci" {
 
   tags = {
     Region = "${var.region}"
-    Environment = "${var.environment}"
+    Arena = "${var.environment}"
     TechnicalContact = "${var.technical_contact}"
   }
 }
@@ -217,6 +170,7 @@ resource "aws_launch_configuration" "ci" {
 NUBIS_ACCOUNT=${var.account_name}
 NUBIS_PROJECT=${var.project}
 NUBIS_ENVIRONMENT=${var.environment}
+NUBIS_ARENA=${var.environment}
 NUBIS_DOMAIN=${var.nubis_domain}
 NUBIS_PROJECT_URL=https://sso.${var.environment}.${var.region}.${var.account_name}.${var.nubis_domain}/jenkins/
 NUBIS_CI_NAME=${var.project}
@@ -235,15 +189,6 @@ EOF
 
 }
 
-resource "aws_route53_record" "ci" {
-  count = "${var.enabled}"
-  zone_id = "${var.zone_id}"
-  name = "ci.${var.project}.${var.environment}"
-  type = "CNAME"
-  ttl = "30"
-  records = ["dualstack.${aws_elb.ci.dns_name}"]
-}
-
 resource "aws_s3_bucket" "ci_artifacts" {
   count = "${var.enabled}"
     bucket_prefix = "ci-${var.project}-artifacts-"
@@ -258,7 +203,7 @@ resource "aws_s3_bucket" "ci_artifacts" {
 
     tags = {
         Region = "${var.region}"
-        Environment = "${var.environment}"
+        Arena = "${var.environment}"
         TechnicalContact = "${var.technical_contact}"
     }
 }
@@ -294,43 +239,66 @@ resource "aws_iam_role_policy" "ci_artifacts" {
   count = "${var.enabled}"
     name    = "ci-${var.project}-${var.environment}-${var.region}-artifacts"
     role    = "${aws_iam_role.ci.id}"
-    policy  = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-                "s3:ListBucket"
-            ],
-            "Resource": [ "${aws_s3_bucket.ci_artifacts.arn}" ]
-        },
-        {
-            "Effect": "Allow",
-            "Action": [
-                "s3:PutObject",
-                "s3:ListObject",
-                "s3:GetObject",
-                "s3:DeleteObject"
-            ],
-            "Resource": [ "${aws_s3_bucket.ci_artifacts.arn}/*" ]
-        }
-    ]
+    policy  = "${data.aws_iam_policy_document.ci_artifacts.json}"
 }
-EOF
+
+data "aws_iam_policy_document" "ci_artifacts" {
+  count = "${var.enabled}"
+  statement {
+    sid = "AllBuckets"
+
+    actions = [
+      "s3:ListAllMyBuckets",
+      "s3:GetBucketLocation",
+    ]
+
+    resources = [
+      "arn:aws:s3:::*",
+    ]
+  }
+
+  statement {
+    sid = "ListBucket"
+    
+    actions = [
+      "s3:ListBucket",
+    ]
+
+    resources = [
+      "${aws_s3_bucket.ci_artifacts.arn}",
+    ]
+  }
+
+  statement {
+    sid = "ActInBucket"
+    
+    actions = [
+      "s3:PutObject",
+      "s3:ListObject",
+      "s3:GetObject",
+      "s3:DeleteObject"
+    ]
+
+    resources = [
+      "${aws_s3_bucket.ci_artifacts.arn}",
+      "${aws_s3_bucket.ci_artifacts.arn}/*",
+    ]
+  }
 }
 
 resource "aws_iam_role_policy" "ci_build" {
   count = "${var.enabled}"
     name    = "ci-${var.project}-${var.environment}-${var.region}-build"
     role    = "${aws_iam_role.ci.id}"
-    policy  = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-              "Effect": "Allow",
-              "Action": [
+    policy  = "${data.aws_iam_policy_document.ci_build.json}"
+}
+
+data "aws_iam_policy_document" "ci_build" {
+  count = "${var.enabled}"
+  statement {
+    sid = "build"
+
+    actions = [
                 "iam:PassRole",
                 "ec2:DescribeSpotPriceHistory",
                 "ec2:RequestSpotInstances",
@@ -363,13 +331,13 @@ resource "aws_iam_role_policy" "ci_build" {
                 "ec2:DeregisterImage",
                 "ec2:CreateTags",
                 "ec2:ModifyImageAttribute",
-                "ec2:DescribeRegions"
-              ],
-              "Resource": "*"
-            }
+                "ec2:DescribeRegions",
     ]
-}
-EOF
+
+    resources = [
+      "*",
+    ]
+  }
 }
 
 resource "aws_iam_role_policy" "ci_deploy" {
@@ -402,6 +370,7 @@ resource "aws_iam_role_policy" "ci_deploy" {
                 "autoscaling:DeleteTags",
                 "autoscaling:DescribeAutoScalingInstances",
                 "autoscaling:EnableMetricsCollection",
+		"autoscaling:SetInstanceHealth",
                 "ec2:createTags",
                 "ec2:deleteTags",
                 "ec2:CreateSecurityGroup",
@@ -494,6 +463,8 @@ resource "aws_iam_role_policy" "ci_deploy" {
                 "iam:GetUser",
                 "iam:GetRolePolicy",
                 "iam:GetUserPolicy",
+		"iam:DeleteInstanceProfile",
+		"iam:ListInstanceProfilesForRole",
                 "s3:*",
                 "lambda:InvokeFunction"
               ],
@@ -524,7 +495,7 @@ resource "null_resource" "unicreds" {
   triggers {
     slack_token      = "${var.slack_token}"
     region           = "${var.region}"
-    context          = "-E region:${var.region} -E environment:${var.environment} -E service:${var.project}"
+    context          = "-E region:${var.region} -E arena:${var.environment} -E service:${var.project}"
     unicreds         = "unicreds -r ${var.region} put -k ${var.credstash_key} ${var.project}/${var.environment}/ci"
     unicreds_rm      = "unicreds -r ${var.region} delete -k ${var.credstash_key} ${var.project}/${var.environment}/ci"
     version          = "${var.version}"

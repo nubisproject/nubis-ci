@@ -42,6 +42,10 @@ class { 'jenkins':
 
 ## ADDITIONAL PLUGINS ##
 
+jenkins::plugin { 'build-name-setter':
+    version => '1.6.7',
+}
+
 jenkins::plugin { 'ace-editor':
     version => '1.1',
 }
@@ -262,7 +266,7 @@ package { 'unzip':
 }
 
 package { 'git':
-    ensure => '1:1.9.1-1ubuntu0.5',
+    ensure => 'latest',
 }
 
 package { 'make':

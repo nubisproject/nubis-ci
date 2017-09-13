@@ -10,11 +10,30 @@ package { 'rsync':
   ensure => present
 }
 
+file { '/usr/local/bin/nubis-ci-build':
+  ensure => file,
+  owner  => root,
+  group  => root,
+  mode   => '0755',
+  source => 'puppet:///nubis/files/nubis-ci-build',
+}
+
+file { '/usr/local/bin/nubis-ci-deploy':
+  ensure => file,
+  owner  => root,
+  group  => root,
+  mode   => '0755',
+  source => 'puppet:///nubis/files/nubis-ci-deploy',
+}
+
 vcsrepo { '/opt/nubis-builder':
   ensure   => present,
   provider => git,
   source   => 'https://github.com/nubisproject/nubis-builder.git',
   revision => $nubis_builder_version,
+  require => [
+    Package['git'],
+  ],
 }
 
 # XXX: need to move to puppet-packer
