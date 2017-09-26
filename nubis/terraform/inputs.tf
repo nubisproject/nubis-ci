@@ -1,8 +1,6 @@
-variable "aws_profile" {}
-
-variable "environment" {
-  description = "Name of the environment this deployment is for"
-  default = "sandbox"
+variable "arena" {
+  description = "Name of the arena this deployment is for"
+  default = "core"
 }
 
 variable "nubis_domain" {

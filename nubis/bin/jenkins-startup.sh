@@ -96,7 +96,7 @@ fi
 #perl -pi -e "s[%%NUBIS_ARENA%%][$NUBIS_ARENA]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml"
 
 # Seed configuration
-cp -a /var/lib/jenkins/jobs/00-seed/nubis-config.xml  /var/lib/jenkins/jobs/00-seed/config.xml
+cp -a /etc/nubis.d/jenkins-seed-config.xml /var/lib/jenkins/jobs/00-seed/config.xml
 perl -pi -e "s[%%NUBIS_GIT_REPO%%][$NUBIS_GIT_REPO]g" "/var/lib/jenkins/jobs/00-seed/config.xml"
 
 # Discover available regions

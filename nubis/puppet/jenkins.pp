@@ -17,7 +17,7 @@ class { 'java8' :
 }
 
 class { 'jenkins':
-  version            => '2.60.2',
+  version            => '2.73.1',
   #direct_download    => 'https://pkg.jenkins.io/debian-stable/binary/jenkins_2.46.3_all.deb',
   configure_firewall => false,
   service_enable     => false,
@@ -36,12 +36,6 @@ class { 'jenkins':
     Package['daemon'],
   ]
 }
-
-# Will eventually need to pull this from the registry
-# jenkins::job { "nubis-ci":
-#  enabled => 0,
-#  config => template("/tmp/nubis-ci.xml.erb"),
-# }
 
 #XXX: Needs to be project-aware
 #consul::service { 'jenkins':
@@ -179,7 +173,7 @@ file { '/var/lib/jenkins/jobs/00-seed':
   ],
 }
 
-file { '/var/lib/jenkins/jobs/00-seed/nubis-config.xml':
+file { '/etc/nubis.d/jenkins-seed-config.xml':
   ensure  => file,
   owner   => root,
   group   => root,

@@ -1,9 +1,5 @@
 #!/bin/bash -l
 
-set -x
-
-env
-
 NUBIS_ARENA=$(nubis-metadata NUBIS_ARENA)
 
 consulate kv set nat/$NUBIS_ARENA/config/IptablesAllowTCP '[ 22 ]'

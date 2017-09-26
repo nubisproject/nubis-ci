@@ -42,7 +42,7 @@ resource "aws_elb" "ci" {
     
   tags = {
     Region = "${var.region}"
-    Arena = "${var.environment}"
+    Arena = "${var.arena}"
     TechnicalContact = "${var.technical_contact}"
   }
 }
@@ -70,7 +70,7 @@ resource "aws_security_group" "elb" {
 
   tags = {
     Region = "${var.region}"
-    Arena = "${var.environment}"
+    Arena = "${var.arena}"
     TechnicalContact = "${var.technical_contact}"
   }
 }
@@ -111,7 +111,7 @@ resource "aws_security_group" "ci" {
 
   tags = {
     Region = "${var.region}"
-    Arena = "${var.environment}"
+    Arena = "${var.arena}"
     TechnicalContact = "${var.technical_contact}"
   }
 }
@@ -145,6 +145,11 @@ resource "aws_autoscaling_group" "ci" {
     value = "${var.technical_contact}"
     propagate_at_launch = true
   }
+  tag {
+    key = "Arena"
+    value = "${var.arena}"
+    propagate_at_launch = true
+  }
 
 }
 
@@ -169,13 +174,12 @@ resource "aws_launch_configuration" "ci" {
     user_data = <<EOF
 NUBIS_ACCOUNT=${var.account_name}
 NUBIS_PROJECT=${var.project}
-NUBIS_ENVIRONMENT=${var.environment}
-NUBIS_ARENA=${var.environment}
+NUBIS_ARENA=${var.arena}
 NUBIS_DOMAIN=${var.nubis_domain}
-NUBIS_PROJECT_URL=https://sso.${var.environment}.${var.region}.${var.account_name}.${var.nubis_domain}/jenkins/
+NUBIS_PROJECT_URL=https://sso.${var.arena}.${var.region}.${var.account_name}.${var.nubis_domain}/jenkins/
 NUBIS_CI_NAME=${var.project}
 NUBIS_GIT_REPO=${var.git_repo}
-NUBIS_GIT_BRANCHES="${var.>>git_branches}"
+NUBIS_GIT_BRANCHES="${var.git_branches}"
 NUBIS_CI_BUCKET=${aws_s3_bucket.ci_artifacts.id}
 NUBIS_CI_BUCKET_REGION=${var.region}
 NUBIS_CI_EMAIL=${var.email}
@@ -203,20 +207,20 @@ resource "aws_s3_bucket" "ci_artifacts" {
 
     tags = {
         Region = "${var.region}"
-        Arena = "${var.environment}"
+        Arena = "${var.arena}"
         TechnicalContact = "${var.technical_contact}"
     }
 }
 
 resource "aws_iam_instance_profile" "ci" {
   count = "${var.enabled}"
-    name = "ci-${var.project}-${var.environment}-${var.region}"
+    name = "ci-${var.project}-${var.arena}-${var.region}"
     role = "${aws_iam_role.ci.name}"
 }
 
 resource "aws_iam_role" "ci" {
   count = "${var.enabled}"
-    name = "ci-${var.project}-${var.environment}-${var.region}"
+    name = "ci-${var.project}-${var.arena}-${var.region}"
     path = "/"
     assume_role_policy = <<EOF
 {
@@ -237,7 +241,7 @@ EOF
 
 resource "aws_iam_role_policy" "ci_artifacts" {
   count = "${var.enabled}"
-    name    = "ci-${var.project}-${var.environment}-${var.region}-artifacts"
+    name    = "ci-${var.project}-${var.arena}-${var.region}-artifacts"
     role    = "${aws_iam_role.ci.id}"
     policy  = "${data.aws_iam_policy_document.ci_artifacts.json}"
 }
@@ -288,7 +292,7 @@ data "aws_iam_policy_document" "ci_artifacts" {
 
 resource "aws_iam_role_policy" "ci_build" {
   count = "${var.enabled}"
-    name    = "ci-${var.project}-${var.environment}-${var.region}-build"
+    name    = "ci-${var.project}-${var.arena}-${var.region}-build"
     role    = "${aws_iam_role.ci.id}"
     policy  = "${data.aws_iam_policy_document.ci_build.json}"
 }
@@ -340,17 +344,13 @@ data "aws_iam_policy_document" "ci_build" {
   }
 }
 
-resource "aws_iam_role_policy" "ci_deploy" {
-  count = "${var.enabled}"
-    name    = "ci-${var.project}-${var.environment}-${var.region}-deploy"
-    role    = "${aws_iam_role.ci.id}"
-    policy  = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-    {
-              "Effect": "Allow",
-              "Action": [
+data "aws_iam_policy_document" "ci_deploy" {
+    count = "${var.enabled}"
+    
+ statement {
+    sid = "deploy"
+
+    actions = [
                 "autoscaling:CreateAutoScalingGroup",
                 "autoscaling:CreateLaunchConfiguration",
                 "autoscaling:DeleteLaunchConfiguration",
@@ -466,21 +466,34 @@ resource "aws_iam_role_policy" "ci_deploy" {
                 "iam:DeleteInstanceProfile",
                 "iam:ListInstanceProfilesForRole",
                 "s3:*",
-                "lambda:InvokeFunction"
-              ],
-              "Resource": "*"
-            },
-            {
-              "Effect": "Allow",
-              "Action": [
-                "route53:ChangeResourceRecordSets",
-                "route53:ListResourceRecordSets"
-              ],
-              "Resource": "arn:aws:route53:::hostedzone/${var.zone_id}"
-            }
+                "lambda:InvokeFunction",
     ]
+
+    resources = [
+      "*",
+    ]
+  }    
+
+  statement {
+    sid = "DNS"
+    
+    actions = [
+       "route53:ChangeResourceRecordSets",
+       "route53:ListResourceRecordSets",
+    ]
+
+    resources = [
+      "arn:aws:route53:::hostedzone/${var.zone_id}",
+    ]
+  }
+
 }
-EOF
+
+resource "aws_iam_role_policy" "ci_deploy" {
+  count = "${var.enabled}"
+  name    = "ci-${var.project}-${var.arena}-${var.region}-deploy"
+  role    = "${aws_iam_role.ci.id}"
+  policy  = "${data.aws_iam_policy_document.ci_deploy.json}"
 }
 
 # This null resource is responsible for publishing secrets to Unicreds
@@ -495,9 +508,9 @@ resource "null_resource" "unicreds" {
   triggers {
     slack_token      = "${var.slack_token}"
     region           = "${var.region}"
-    context          = "-E region:${var.region} -E arena:${var.environment} -E service:${var.project}"
-    unicreds         = "unicreds -r ${var.region} put -k ${var.credstash_key} ${var.project}/${var.environment}/ci"
-    unicreds_rm      = "unicreds -r ${var.region} delete -k ${var.credstash_key} ${var.project}/${var.environment}/ci"
+    context          = "-E region:${var.region} -E arena:${var.arena} -E service:${var.project}"
+    unicreds         = "unicreds -r ${var.region} put -k ${var.credstash_key} ${var.project}/${var.arena}/ci"
+    unicreds_rm      = "unicreds -r ${var.region} delete -k ${var.credstash_key} ${var.project}/${var.arena}/ci"
     version          = "${var.version}"
   }
 

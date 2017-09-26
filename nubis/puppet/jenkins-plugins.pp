@@ -5,7 +5,7 @@ jenkins::plugin { 'ace-editor':
 }
 
 jenkins::plugin { 'ansicolor':
-  version => '0.5.0'
+  version => '0.5.2'
 }
 
 jenkins::plugin { 'authorize-project':
@@ -22,6 +22,10 @@ jenkins::plugin { 'bouncycastle-api':
 
 jenkins::plugin { 'branch-api':
   version => '2.0.11'
+}
+
+jenkins::plugin { 'build-name-setter':
+  version => '1.6.7'
 }
 
 jenkins::plugin { 'cloudbees-folder':
@@ -61,7 +65,7 @@ jenkins::plugin { 'github':
 }
 
 jenkins::plugin { 'github-api':
-  version => '1.86'
+  version => '1.89'
 }
 
 jenkins::plugin { 'github-branch-source':
@@ -85,7 +89,7 @@ jenkins::plugin { 'javadoc':
 }
 
 jenkins::plugin { 'job-dsl':
-  version => '1.64'
+  version => '1.65'
 }
 
 jenkins::plugin { 'jquery-detached':
@@ -97,7 +101,7 @@ jenkins::plugin { 'junit':
 }
 
 jenkins::plugin { 'ldap':
-  version => '1.16'
+  version => '1.17'
 }
 
 jenkins::plugin { 'mailer':
@@ -128,12 +132,8 @@ jenkins::plugin { 'naginator':
   version => '1.17.2'
 }
 
-jenkins::plugin { 'build-name-setter':
-    version => '1.6.7',
-}
-
 jenkins::plugin { 'parameterized-trigger':
-  version => '2.35.1'
+  version => '2.35.2'
 }
 
 jenkins::plugin { 'pegdown-formatter':
@@ -145,11 +145,11 @@ jenkins::plugin { 'plain-credentials':
 }
 
 jenkins::plugin { 'prometheus':
-  version => '1.0.6'
+  version => '1.1.0'
 }
 
 jenkins::plugin { 'promoted-builds':
-  version => '2.29'
+  version => '2.29.1'
 }
 
 jenkins::plugin { 'rebuild':
@@ -169,19 +169,23 @@ jenkins::plugin { 's3':
 }
 
 jenkins::plugin { 'scm-api':
-  version => '2.2.0'
+  version => '2.2.2'
 }
 
 jenkins::plugin { 'script-security':
-  version => '1.31'
+  version => '1.34'
 }
 
 jenkins::plugin { 'slack':
-  version => '2.2'
+  version => '2.3'
 }
 
 jenkins::plugin { 'ssh-credentials':
   version => '1.13'
+}
+
+jenkins::plugin { 'startup-trigger-plugin':
+  version => '2.8'
 }
 
 jenkins::plugin { 'structs':
@@ -197,7 +201,7 @@ jenkins::plugin { 'timestamper':
 }
 
 jenkins::plugin { 'token-macro':
-  version => '2.1'
+  version => '2.3'
 }
 
 jenkins::plugin { 'workflow-api':
@@ -205,15 +209,15 @@ jenkins::plugin { 'workflow-api':
 }
 
 jenkins::plugin { 'workflow-cps':
-  version => '2.39'
+  version => '2.40'
 }
 
 jenkins::plugin { 'workflow-cps-global-lib':
-  version => '2.8'
+  version => '2.9'
 }
 
 jenkins::plugin { 'workflow-job':
-  version => '2.12.2'
+  version => '2.14.1'
 }
 
 jenkins::plugin { 'workflow-multibranch':
@@ -225,7 +229,7 @@ jenkins::plugin { 'workflow-scm-step':
 }
 
 jenkins::plugin { 'workflow-step-api':
-  version => '2.12'
+  version => '2.13'
 }
 
 jenkins::plugin { 'workflow-support':

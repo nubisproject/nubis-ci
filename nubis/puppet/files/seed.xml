@@ -12,7 +12,7 @@
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.3.0">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.5.1">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -33,6 +33,11 @@
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
+    <org.jvnet.hudson.plugins.triggers.startup.HudsonStartupTrigger plugin="startup-trigger-plugin@2.8">
+      <spec></spec>
+      <quietPeriod>0</quietPeriod>
+      <runOnChoice>ON_CONNECT</runOnChoice>
+    </org.jvnet.hudson.plugins.triggers.startup.HudsonStartupTrigger>
     <hudson.triggers.SCMTrigger>
       <spec>H/15 * * * *</spec>
       <ignorePostCommitHooks>false</ignorePostCommitHooks>
@@ -40,7 +45,7 @@
   </triggers>
   <concurrentBuild>false</concurrentBuild>
   <builders>
-    <javaposse.jobdsl.plugin.ExecuteDslScripts plugin="job-dsl@1.63">
+    <javaposse.jobdsl.plugin.ExecuteDslScripts plugin="job-dsl@1.65">
       <scriptText>@Grab(&apos;org.yaml:snakeyaml:1.17&apos;)
 import org.yaml.snakeyaml.Yaml
 Yaml parser = new Yaml()
@@ -49,6 +54,7 @@ def site_configuration_path = &quot;nubis/sites.yaml&quot;
 
 def default_name = &quot;nubis-metadata NUBIS_CI_NAME&quot;.execute().text.trim()
 def default_git_repo = &quot;nubis-metadata NUBIS_GIT_REPO&quot;.execute().text.trim()
+def arena = &quot;nubis-metadata NUBIS_ARENA&quot;.execute().text.trim()
 
 def sites
 
@@ -80,14 +86,19 @@ sites.each {
       stringParam(&apos;service_name&apos;, site_name)
       stringParam(&apos;ami&apos;,&apos;&apos;)
       stringParam(&apos;key_name&apos;, &apos;nubis&apos;)
-      choiceParam(&apos;environment&apos;, [&apos;stage&apos;,&apos;prod&apos;])
-      choiceParam(&apos;action&apos;, [&apos;apply&apos;,&apos;destroy&apos;])
+      stringParam(&apos;environment&apos;, &apos;stage&apos;)
+      choiceParam(&apos;action&apos;, [&apos;apply&apos;,&apos;plan&apos;,&apos;destroy&apos;])
       choiceParam(&apos;region&apos;, [&apos;us-west-2&apos;,&apos;us-east-1&apos;])
     }
 
     wrappers {
         colorizeOutput()
         timestamps()
+        buildNameSetter {
+          template(&apos;#${BUILD_NUMBER} - ${environment}/${action}&apos;)
+          runAtStart(true)
+          runAtEnd(true)
+      }
     }
 
     steps {
@@ -170,6 +181,16 @@ sites.each {
       copyArtifactPermissionProperty {
          projectNames(&quot;${site_name}-deployment&quot;)
       }
+
+      promotions {
+        promotion {
+          name(&apos;Deployed&apos;)
+          icon(&apos;star-gold&apos;)
+            conditions {
+                    downstream(false, &quot;${site_name}-deployment&quot;)
+             }
+        }
+      }
     }
 
     scm {
@@ -208,10 +229,9 @@ sites.each {
             trigger(&quot;${site_name}-deployment&quot;) {
                 condition(&apos;UNSTABLE_OR_BETTER&apos;)
                 parameters {
-                    predefinedBuildParameters {
-                      properties(&quot;environment=stage&quot;)
-                    }
+                    triggerWithNoParameters()
                 }
+
             }
         }
         mailer(&apos;infra-aws@mozilla.com&apos;, true, true)
