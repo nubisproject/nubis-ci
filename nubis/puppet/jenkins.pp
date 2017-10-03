@@ -73,7 +73,7 @@ package { 'unzip':
 }
 
 package { 'git':
-    ensure => 'latest',
+    ensure => '1:1.9.1-*'
 }
 
 package { 'make':

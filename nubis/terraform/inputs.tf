@@ -109,11 +109,11 @@ variable "credstash_key" {
 }
 
 variable "slack_domain" {
-  default = "nubisproject"
+  default = "mozilla"
 }
 
 variable "slack_channel" {
-  default = "#changes"
+  default = "#nubis-changes"
 }
 
 variable "slack_token" {
