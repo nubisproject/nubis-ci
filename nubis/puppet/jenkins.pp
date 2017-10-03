@@ -31,7 +31,7 @@ class { 'jenkins':
       'value' => '-Djava.awt.headless=true -Dhudson.diyChunking=false -Dhttp.proxyHost=proxy.service.consul -Dhttp.proxyPort=3128 -Dhttps.proxyHost=proxy.service.consul -Dhttps.proxyPort=3128'
     },
   },
-  require => [
+  require            => [
     Class['java8'],
     Package['daemon'],
   ]
@@ -99,7 +99,7 @@ apt::source { 'git-crypt':
 }
 
 package { 'git-crypt':
-  ensure => '0.5.0-2',
+  ensure  => '0.5.0-2',
   require => [
     Apt::Source['git-crypt'],
     Exec['apt_update'],
@@ -163,10 +163,10 @@ cron { 'jenkins-s3-backups':
 }
 
 file { '/var/lib/jenkins/jobs/00-seed':
-  ensure => directory,
-  owner  => 'jenkins',
-  group  => 'jenkins',
-  mode   => '0755',
+  ensure  => directory,
+  owner   => 'jenkins',
+  group   => 'jenkins',
+  mode    => '0755',
   require => [
     File['/var/lib/jenkins/jobs'],
     Class['jenkins'],
