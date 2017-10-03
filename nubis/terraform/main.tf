@@ -504,10 +504,11 @@ resource "null_resource" "unicreds" {
     create_before_destroy = true
   }
 
-  # Important to list here every variable that affects what needs to be put into credstash
+  # Important to list here every variable that affects what needs to be put into unicreds
   triggers {
     slack_token      = "${var.slack_token}"
     region           = "${var.region}"
+    consul_acl_token = "${var.consul_acl_token}"
     context          = "-E region:${var.region} -E arena:${var.arena} -E service:${var.project}"
     unicreds         = "unicreds -r ${var.region} put -k ${var.credstash_key} ${var.project}/${var.arena}/ci"
     unicreds_rm      = "unicreds -r ${var.region} delete -k ${var.credstash_key} ${var.project}/${var.arena}/ci"
@@ -527,4 +528,9 @@ resource "null_resource" "unicreds" {
   provisioner "local-exec" {
     command = "${self.triggers.unicreds}/slack_token ${var.slack_token} ${self.triggers.context}"
   }
+
+  provisioner "local-exec" {
+    command = "${self.triggers.unicreds}/consul_acl_token ${var.consul_acl_token} ${self.triggers.context}"
+  }
+
 }
