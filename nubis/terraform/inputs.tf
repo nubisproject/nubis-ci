@@ -131,3 +131,5 @@ variable nubis_user_groups {
 variable instance_type {
   default = "t2.micro"
 }
+
+variable consul_acl_token {}
