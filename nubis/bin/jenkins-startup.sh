@@ -140,37 +140,14 @@ perl -pi -e "s[%%NUBIS_USER_PERMISSIONS%%][$USER_PERMISSIONS]g" /var/lib/jenkins
 
 # Slack
 NUBIS_CI_SLACK_TOKEN=$(nubis-secret get ci/slack_token)
-SLACK_NOTIFIER=""
+
 if [ "$NUBIS_CI_SLACK_TOKEN" != "" ]; then
   echo "Enabling Slack in $NUBIS_CI_SLACK_DOMAIN/$NUBIS_CI_SLACK_CHANNEL"
   cp /etc/nubis.d/jenkins-slack.xml /var/lib/jenkins/jenkins.plugins.slack.SlackNotifier.xml
   perl -pi -e "s[%%NUBIS_CI_SLACK_TOKEN%%][$NUBIS_CI_SLACK_TOKEN]g" /var/lib/jenkins/jenkins.plugins.slack.SlackNotifier.xml
   perl -pi -e "s[%%NUBIS_CI_SLACK_CHANNEL%%][$NUBIS_CI_SLACK_CHANNEL]g" /var/lib/jenkins/jenkins.plugins.slack.SlackNotifier.xml
   perl -pi -e "s[%%NUBIS_CI_SLACK_DOMAIN%%][$NUBIS_CI_SLACK_DOMAIN]g" /var/lib/jenkins/jenkins.plugins.slack.SlackNotifier.xml
-
- read -r -d '' SLACK_NOTIFIER <<EOF
-    <jenkins.plugins.slack.SlackNotifier plugin="slack@2.0.1">
-      <teamDomain></teamDomain>
-      <authToken></authToken>
-      <room></room>
-      <startNotification>true</startNotification>
-      <notifySuccess>true</notifySuccess>
-      <notifyAborted>true</notifyAborted>
-      <notifyNotBuilt>true</notifyNotBuilt>
-      <notifyUnstable>true</notifyUnstable>
-      <notifyFailure>true</notifyFailure>
-      <notifyBackToNormal>true</notifyBackToNormal>
-      <notifyRepeatedFailure>false</notifyRepeatedFailure>
-      <includeTestSummary>false</includeTestSummary>
-      <commitInfoChoice>NONE</commitInfoChoice>
-      <includeCustomMessage>true</includeCustomMessage>
-      <customMessage>environment:\\\$environment</customMessage>
-    </jenkins.plugins.slack.SlackNotifier>
-EOF
 fi
-
-# Set or erase the Slack Notifier section of the job configs
-#perl -pi -e "s[%%SLACK_NOTIFIER%%][$SLACK_NOTIFIER]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml"
 
 # Make sure jenkins owns this stuff
 chown -R jenkins:jenkins /var/lib/jenkins
