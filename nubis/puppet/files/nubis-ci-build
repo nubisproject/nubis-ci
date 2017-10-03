@@ -1,10 +1,15 @@
 #!/bin/bash -l
 
+set -e
+
 NUBIS_ARENA=$(nubis-metadata NUBIS_ARENA)
 
-consulate kv set nat/$NUBIS_ARENA/config/IptablesAllowTCP '[ 22 ]'
+#XXX: Don't blindly squash but add/remove intelligently
+#XXX: echo '[ 25 ]' | jq '. |= .+ [22]' | jq '. |= .- [ 22 ]'
+
+consulate kv set "nat/$NUBIS_ARENA/config/IptablesAllowTCP" '[ 22 ]'
 nubis-builder build --instance-type c3.large --spot
-consulate kv rm nat/$NUBIS_ARENA/config/IptablesAllowTCP
+consulate kv rm "nat/$NUBIS_ARENA/config/IptablesAllowTCP"
 
 rm -rf artifacts
 mkdir artifacts
