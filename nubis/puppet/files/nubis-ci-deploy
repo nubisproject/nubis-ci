@@ -5,6 +5,14 @@ set -e
 declare region
 declare environment
 declare service_name
+declare TF_CONSUL_WORKAROUND
+
+cleanup () {
+  if [ ! -z "$TF_CONSUL_WORKAROUND" ]; then
+    rm -f "$TF_CONSUL_WORKAROUND" 2>/dev/null
+  fi
+}
+trap cleanup EXIT
 
 # Consume user-data
 eval "$(nubis-metadata)"
@@ -39,8 +47,10 @@ if [ -d artifacts/terraform ]; then
 
   rm -rf .terraform
 
+  TF_CONSUL_WORKAROUND=$(mktemp artifacts/terraform/nubis-state-XXXXXX.tf)
+
   # Workaround for TF bug https://github.com/hashicorp/terraform/issues/15761
-  echo 'terraform { backend "consul" { } }' > artifacts/terraform/nubis-state.tf
+  echo 'terraform { backend "consul" { } }' > "$TF_CONSUL_WORKAROUND"
 
   # Setup remote state fresh
   terraform init \
