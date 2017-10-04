@@ -8,6 +8,14 @@ jenkins::plugin { 'ansicolor':
   version => '0.5.2'
 }
 
+jenkins::plugin { 'antisamy-markup-formatter':
+  version => '1.5'
+}
+
+jenkins::plugin { 'apache-httpcomponents-client-4-api':
+  version => '4.5.3-2.0'
+}
+
 jenkins::plugin { 'authorize-project':
   version => '1.3.0'
 }
@@ -49,7 +57,7 @@ jenkins::plugin { 'embeddable-build-status':
 }
 
 jenkins::plugin { 'git':
-  version => '3.5.1'
+  version => '3.6.0'
 }
 
 jenkins::plugin { 'git-client':
@@ -96,6 +104,10 @@ jenkins::plugin { 'jquery-detached':
   version => '1.2.1'
 }
 
+jenkins::plugin { 'jsch':
+  version => '0.1.54.1'
+}
+
 jenkins::plugin { 'junit':
   version => '1.21'
 }
@@ -113,11 +125,11 @@ jenkins::plugin { 'matrix-auth':
 }
 
 jenkins::plugin { 'matrix-project':
-  version => '1.11'
+  version => '1.12'
 }
 
 jenkins::plugin { 'maven-plugin':
-  version => '2.17'
+  version => '3.0-rc2'
 }
 
 jenkins::plugin { 'metrics':
@@ -204,12 +216,16 @@ jenkins::plugin { 'token-macro':
   version => '2.3'
 }
 
+jenkins::plugin { 'windows-slaves':
+  version => '1.3.1'
+}
+
 jenkins::plugin { 'workflow-api':
-  version => '2.20'
+  version => '2.22'
 }
 
 jenkins::plugin { 'workflow-cps':
-  version => '2.40'
+  version => '2.41'
 }
 
 jenkins::plugin { 'workflow-cps-global-lib':
@@ -233,5 +249,5 @@ jenkins::plugin { 'workflow-step-api':
 }
 
 jenkins::plugin { 'workflow-support':
-  version => '2.14'
+  version => '2.15'
 }
