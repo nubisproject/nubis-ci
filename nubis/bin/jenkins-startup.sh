@@ -44,10 +44,6 @@ done
 
 ## BACKUP END
 
-# Create the job directories
-#mkdir -p "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build"
-#mkdir -p "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment"
-
 # Security (http://jenkins-ci.org/security-144)
 mkdir -p /var/lib/jenkins/secrets
 echo false > /var/lib/jenkins/secrets/slave-to-master-security-kill-switch
@@ -63,14 +59,6 @@ cp /etc/nubis.d/jenkins-thinBackup.xml /var/lib/jenkins/thinBackup.xml
 cp /etc/nubis.d/jenkins-ssh.xml /var/lib/jenkins/org.jenkinsci.main.modules.sshd.SSHD.xml
 cp /etc/nubis.d/jenkins-dsl-configuration.xml /var/lib/jenkins/javaposse.jobdsl.plugin.GlobalJobDslSecurityConfiguration.xml
 
-# Drop project configuration for jenkins
-#cp /etc/nubis.d/jenkins-build-config.xml "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml"
-
-# Drop promotion configuration
-#mkdir -p "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/promotions/Deployed"
-#cp /etc/nubis.d/jenkins-build-promotion-deployed-config.xml "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/promotions/Deployed/config.xml"
-#perl -pi -e "s[%%NUBIS_CI_NAME%%][$NUBIS_CI_NAME]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/promotions/Deployed/config.xml"
-
 # Fix Location Config
 perl -pi -e "s[%%NUBIS_PROJECT_URL%%][$NUBIS_PROJECT_URL]g" /var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration.xml
 
@@ -78,22 +66,6 @@ perl -pi -e "s[%%NUBIS_PROJECT_URL%%][$NUBIS_PROJECT_URL]g" /var/lib/jenkins/jen
 if [ "$NUBIS_GIT_BRANCHES" == "" ]; then
   NUBIS_GIT_BRANCHES="**"
 fi
-
-## General Config
-#perl -pi -e "s[%%NUBIS_GIT_REPO%%][$NUBIS_GIT_REPO]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml"
-#perl -pi -e "s[%%NUBIS_GIT_BRANCHES%%][$NUBIS_GIT_BRANCHES]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml"
-#perl -pi -e "s[%%NUBIS_CI_NAME%%][$NUBIS_CI_NAME]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml"
-
-## Configure S3 plugin
-#perl -pi -e "s[%%NUBIS_CI_BUCKET%%][$NUBIS_CI_BUCKET]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml"
-#perl -pi -e "s[%%NUBIS_CI_BUCKET_REGION%%][$NUBIS_CI_BUCKET_REGION]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml"
-
-# Drop deployment configuration for jenkins
-#cp /etc/nubis.d/jenkins-deployment-config.xml "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml"
-#perl -pi -e "s[%%NUBIS_GIT_REPO%%][$NUBIS_GIT_REPO]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml"
-#perl -pi -e "s[%%NUBIS_GIT_BRANCHES%%][$NUBIS_GIT_BRANCHES]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml"
-#perl -pi -e "s[%%NUBIS_CI_NAME%%][$NUBIS_CI_NAME]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml"
-#perl -pi -e "s[%%NUBIS_ARENA%%][$NUBIS_ARENA]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml"
 
 # Seed configuration
 cp -a /etc/nubis.d/jenkins-seed-config.xml /var/lib/jenkins/jobs/00-seed/config.xml
@@ -109,11 +81,6 @@ REGIONS=($AWS_REGION $(aws --region "$AWS_REGION" ec2 describe-regions | jq -r '
 for region in ${REGIONS[*]}; do
   REGIONS_STRING="$REGIONS_STRING<string>$region</string>"
 done
-
-#perl -pi -e"s[%%REGIONS%%][$REGIONS_STRING]g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml"
-
-# Owner e-mail
-#sed -i -e"s/%%NUBIS_CI_EMAIL%%/$NUBIS_CI_EMAIL/g" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-build/config.xml" "/var/lib/jenkins/jobs/$NUBIS_CI_NAME-deployment/config.xml"
 
 # Fix permissions for sudo and user groups
 SUDO_PERMISSIONS=""
