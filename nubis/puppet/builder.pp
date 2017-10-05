@@ -1,6 +1,6 @@
-$terraform_version = '0.8.8'
-$packer_version = '1.0.0'
-$nubis_builder_version = 'v1.5.1'
+$terraform_version = '0.10.5'
+$packer_version = '1.0.4'
+$nubis_builder_version = 'v1.6.0-dev'
 
 package { 'awscli':
   ensure => latest,
@@ -10,18 +10,37 @@ package { 'rsync':
   ensure => present
 }
 
+file { '/usr/local/bin/nubis-ci-build':
+  ensure => file,
+  owner  => root,
+  group  => root,
+  mode   => '0755',
+  source => 'puppet:///nubis/files/nubis-ci-build',
+}
+
+file { '/usr/local/bin/nubis-ci-deploy':
+  ensure => file,
+  owner  => root,
+  group  => root,
+  mode   => '0755',
+  source => 'puppet:///nubis/files/nubis-ci-deploy',
+}
+
 vcsrepo { '/opt/nubis-builder':
   ensure   => present,
   provider => git,
   source   => 'https://github.com/nubisproject/nubis-builder.git',
   revision => $nubis_builder_version,
+  require  => [
+    Package['git'],
+  ],
 }
 
 # XXX: need to move to puppet-packer
 staging::file { 'packer.zip':
   source => "https://releases.hashicorp.com/packer/${packer_version}/packer_${packer_version}_linux_amd64.zip"
-} ->
-staging::extract { 'packer.zip':
+}
+  -> staging::extract { 'packer.zip':
   target  => '/usr/local/bin',
   creates => '/usr/local/bin/packer',
 }
@@ -29,8 +48,8 @@ staging::extract { 'packer.zip':
 # XXX: need to move to puppet-terraform	
 staging::file { 'terraform.zip':
   source => "https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip"
-} ->
-staging::extract { 'terraform.zip':
+}
+  -> staging::extract { 'terraform.zip':
   target  => '/usr/local/bin',
   creates => '/usr/local/bin/terraform',
 }

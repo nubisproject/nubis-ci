@@ -1,8 +1,6 @@
-variable "aws_profile" {}
-
-variable "environment" {
-  description = "Name of the environment this deployment is for"
-  default = "sandbox"
+variable "arena" {
+  description = "Name of the arena this deployment is for"
+  default = "core"
 }
 
 variable "nubis_domain" {
@@ -93,10 +91,6 @@ variable "account_name" {
   description = "Name of the AWS account"
 }
 
-variable "s3_bucket_name" {
-  description = "Name of the S3 Bucket to store artifacts in"
-}
-
 variable "email" {
   description = "e-mail to send build notifications to"
   default = "gozer@mozilla.com"
@@ -133,3 +127,9 @@ variable nubis_sudo_groups {
 variable nubis_user_groups {
   default = ""
 }
+
+variable instance_type {
+  default = "t2.micro"
+}
+
+variable consul_acl_token {}
