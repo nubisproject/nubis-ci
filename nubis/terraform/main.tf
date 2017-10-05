@@ -135,6 +135,17 @@ resource "aws_autoscaling_group" "ci" {
   force_delete = true
   launch_configuration = "${aws_launch_configuration.ci.name}"
 
+  enabled_metrics = [
+    "GroupMinSize",
+    "GroupMaxSize",
+    "GroupDesiredCapacity",
+    "GroupInServiceInstances",
+    "GroupPendingInstances",
+    "GroupStandbyInstances",
+    "GroupTerminatingInstances",
+    "GroupTotalInstances",
+  ]
+
   tag {
     key = "Name"
     value = "CI server for ${var.project} (${var.version})"
