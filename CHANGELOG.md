@@ -1,14 +1,33 @@
 # Change Log
 
+## [v2.0.0](https://github.com/nubisproject/nubis-ci/tree/v2.0.0) (2017-10-05)
+[Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v1.5.1...v2.0.0)
+
+**Closed issues:**
+
+- Add destroy ability to the deployment target [\#470](https://github.com/nubisproject/nubis-ci/issues/470)
+
+**Merged pull requests:**
+
+- emit compact JSON [\#483](https://github.com/nubisproject/nubis-ci/pull/483) ([gozer](https://github.com/gozer))
+- Arena work including multi-project support [\#481](https://github.com/nubisproject/nubis-ci/pull/481) ([gozer](https://github.com/gozer))
+- Update nubis-travis to v1.4.0 [\#480](https://github.com/nubisproject/nubis-ci/pull/480) ([tinnightcap](https://github.com/tinnightcap))
+- Migrate to mozilla slack [\#479](https://github.com/nubisproject/nubis-ci/pull/479) ([tinnightcap](https://github.com/tinnightcap))
+- Change defaults to point to mozila slack [\#478](https://github.com/nubisproject/nubis-ci/pull/478) ([tinnightcap](https://github.com/tinnightcap))
+- Update git package version for release [\#473](https://github.com/nubisproject/nubis-ci/pull/473) ([tinnightcap](https://github.com/tinnightcap))
+
 ## [v1.5.1](https://github.com/nubisproject/nubis-ci/tree/v1.5.1) (2017-08-18)
 [Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v1.5.0...v1.5.1)
 
 **Closed issues:**
 
 - Allow large HTTP headers [\#468](https://github.com/nubisproject/nubis-ci/issues/468)
+- Tag v1.5.1 release [\#472](https://github.com/nubisproject/nubis-ci/issues/472)
 
 **Merged pull requests:**
 
+- Merge v1.5.1 release into develop. \[skip ci\] [\#475](https://github.com/nubisproject/nubis-ci/pull/475) ([tinnightcap](https://github.com/tinnightcap))
+- Update CHANGELOG for v1.5.1 release \[skip ci\] [\#474](https://github.com/nubisproject/nubis-ci/pull/474) ([tinnightcap](https://github.com/tinnightcap))
 - Bump maximum header size to 16K [\#469](https://github.com/nubisproject/nubis-ci/pull/469) ([gozer](https://github.com/gozer))
 
 ## [v1.5.0](https://github.com/nubisproject/nubis-ci/tree/v1.5.0) (2017-06-24)
