@@ -6,9 +6,12 @@
 **Closed issues:**
 
 - Add destroy ability to the deployment target [\#470](https://github.com/nubisproject/nubis-ci/issues/470)
+- Tag v2.0.0 release [\#484](https://github.com/nubisproject/nubis-ci/issues/484)
 
 **Merged pull requests:**
 
+- Merge v2.0.0 release into develop. \[skip ci\] [\#486](https://github.com/nubisproject/nubis-ci/pull/486) ([tinnightcap](https://github.com/tinnightcap))
+- Update CHANGELOG for v2.0.0 release \[skip ci\] [\#485](https://github.com/nubisproject/nubis-ci/pull/485) ([tinnightcap](https://github.com/tinnightcap))
 - emit compact JSON [\#483](https://github.com/nubisproject/nubis-ci/pull/483) ([gozer](https://github.com/gozer))
 - Arena work including multi-project support [\#481](https://github.com/nubisproject/nubis-ci/pull/481) ([gozer](https://github.com/gozer))
 - Update nubis-travis to v1.4.0 [\#480](https://github.com/nubisproject/nubis-ci/pull/480) ([tinnightcap](https://github.com/tinnightcap))
