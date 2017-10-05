@@ -1,29 +1,10 @@
 {
   "provisioners": [
     {
-      "type": "shell",
-      "inline": [
-        "sudo apt-get update"
-      ],
-      "order": 5
-    },
-    {
       "type": "file",
       "source": "nubis/jenkins/jenkins-slack.xml",
       "destination": "/tmp/jenkins-slack.xml",
       "order": 21
-    },
-    {
-      "type": "file",
-      "source": "nubis/jenkins/deployment.xml",
-      "destination": "/tmp/jenkins-deployment-config.xml",
-      "order": 21
-    },
-    {
-      "type": "file",
-      "source": "nubis/jenkins/build.xml",
-      "destination": "/tmp/jenkins-build-config.xml",
-      "order": 22
     },
     {
       "type": "file",
@@ -63,6 +44,12 @@
     },
     {
       "type": "file",
+      "source": "nubis/jenkins/javaposse.jobdsl.plugin.GlobalJobDslSecurityConfiguration.xml",
+      "destination": "/tmp/jenkins-dsl-configuration.xml",
+      "order": 25
+    },
+    {
+      "type": "file",
       "source": "nubis/jenkins/proxy.xml",
       "destination": "/tmp/jenkins-proxy.xml",
       "order": 25
@@ -74,32 +61,9 @@
       "order": 26
     },
     {
-      "type": "file",
-      "source": "nubis/bin/nubis-deploy",
-      "destination": "/tmp/nubis-deploy",
-      "order": 28
-    },
-    {
-      "type": "shell",
-      "inline": [
-        "mkdir /tmp/confd"
-      ],
-      "order": 28
-    },
-    {
-      "type": "file",
-      "source": "nubis/files/confd/",
-      "destination": "/tmp/confd/",
-      "order": 29
-    },
-    {
       "type": "shell",
       "inline": [
         "sudo mv /tmp/jenkins-startup.sh /etc/nubis.d/jenkins",
-        "sudo mv /tmp/confd/*.toml /etc/confd/conf.d/",
-        "sudo mv /tmp/confd/*.tmpl /etc/confd/templates/",
-        "sudo mv /tmp/nubis-deploy /usr/local/bin/nubis-deploy",
-        "sudo chmod 755 /etc/nubis.d/jenkins /usr/local/bin/nubis-deploy",
         "sudo mv /tmp/jenkins-*.xml /etc/nubis.d/"
       ],
       "order": 30

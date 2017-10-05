@@ -1,0 +1,112 @@
+#!/bin/bash -l
+
+set -e
+
+declare region
+declare environment
+declare service_name
+declare TF_CONSUL_WORKAROUND
+
+cleanup () {
+  if [ ! -z "$TF_CONSUL_WORKAROUND" ]; then
+    rm -f "$TF_CONSUL_WORKAROUND" 2>/dev/null
+  fi
+}
+trap cleanup EXIT
+
+# Consume user-data
+eval "$(nubis-metadata)"
+
+if [ "$ami" = "" ]; then
+  # shellcheck disable=SC2016
+  ami=$(jq -r '.last_run_uuid as $uuid | .builds[] | select (.packer_run_uuid == $uuid) .artifact_id' artifacts/builder/AMIs.json | sed -e's/,/\n/g' | grep "$region:" | cut -d: -f2)
+fi
+
+action=$1
+
+if [ "$action" = "" ] || [ "$action" = "apply" ]; then
+  action="apply"
+elif [ "$action" = "destroy" ]; then
+  terraform_extra_args="-force"
+elif [ "$action" = "plan" ]; then
+  true
+else
+  echo "Unknown action: $action"
+  exit 1
+fi
+
+echo "Deploying AMI $ami into $environment/$region ($action)"
+
+VARIABLES=$WORKSPACE/../vars.tfvars
+
+if [ ! -f "$VARIABLES" ]; then
+  touch "$VARIABLES"
+fi
+
+if [ -d artifacts/terraform ]; then
+
+  rm -rf .terraform
+
+  TF_CONSUL_WORKAROUND=$(mktemp artifacts/terraform/nubis-state-XXXXXX.tf)
+
+  # Workaround for TF bug https://github.com/hashicorp/terraform/issues/15761
+  echo 'terraform { backend "consul" { } }' > "$TF_CONSUL_WORKAROUND"
+
+  # Setup remote state fresh
+  terraform init \
+    -input=false \
+    -upgrade=true \
+    -backend-config="path=deploy/$service_name/$environment/tf-state" \
+    artifacts/terraform
+
+  terraform $action \
+    -input=false \
+    -var-file "$VARIABLES" \
+    -var account="$NUBIS_ACCOUNT" \
+    -var arena="$NUBIS_ARENA" \
+    -var region="$region" \
+    -var environment="$environment" \
+    -var service_name="$service_name" \
+    -var ami="$ami" \
+    $terraform_extra_args \
+    artifacts/terraform
+
+    rm -rf .terraform
+fi
+
+
+## XXX: Needs to move to its own tool
+## XXX: limit to nubis/proxy for the time being
+## XXX: Broken in Arenas atm
+if [ -d nubis/proxy ]; then
+  CONFIG_INJECT=proxy
+  INJECT_PREFIX="nubis-$CONFIG_INJECT-$NUBIS_ARENA/$environment/config"
+
+  echo "Injecting $CONFIG_INJECT rules into $INJECT_PREFIX"
+
+  # Make sure the container config/ key is present
+  consulate kv mkdir "$INJECT_PREFIX/" 2>/dev/null
+
+  for r in $(find nubis/$CONFIG_INJECT/ -type f | grep -v \.md | cut -d/ -f3); do
+    echo -n "$r "
+    consulate  kv set "$INJECT_PREFIX/$r" "$(cat "nubis/$CONFIG_INJECT/$r")" 2>/dev/null
+    echo
+  done
+fi
+
+# XXX: Needs to move in its own tool
+if [ -d nubis/monitoring ]; then
+  echo "Injecting Monitoring rules"
+
+  cd nubis/monitoring
+
+  consulate kv mkdir "monitoring/$NUBIS_ARENA/$environment/$service_name/" 2>/dev/null
+
+  for rule in *.prom; do
+    echo " + $rule"
+    consulate  kv set "monitoring/$NUBIS_ARENA/$environment/$service_name/$rule" "$(cat "$rule")" 2>/dev/null
+  done
+
+  cd ../..
+
+fi
