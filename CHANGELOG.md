@@ -1,15 +1,30 @@
 # Change Log
 
+## [v2.0.0](https://github.com/nubisproject/nubis-ci/tree/v2.0.0) (2017-10-06)
+[Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v2.0.0...v2.0.0)
+
+**Closed issues:**
+
+- \[unicreds\] Cleanup resources on destruction [\#490](https://github.com/nubisproject/nubis-ci/issues/490)
+
+**Merged pull requests:**
+
+- Update to nubis-builder v1.5.2 [\#492](https://github.com/nubisproject/nubis-ci/pull/492) ([tinnightcap](https://github.com/tinnightcap))
+- Cleanup unicreds secrets [\#491](https://github.com/nubisproject/nubis-ci/pull/491) ([gozer](https://github.com/gozer))
+
 ## [v2.0.0](https://github.com/nubisproject/nubis-ci/tree/v2.0.0) (2017-10-05)
 [Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v1.5.1...v2.0.0)
 
 **Closed issues:**
 
 - Add destroy ability to the deployment target [\#470](https://github.com/nubisproject/nubis-ci/issues/470)
+- Tag v2.0.0 release [\#487](https://github.com/nubisproject/nubis-ci/issues/487)
 - Tag v2.0.0 release [\#484](https://github.com/nubisproject/nubis-ci/issues/484)
 
 **Merged pull requests:**
 
+- Merge v2.0.0 release into develop. \[skip ci\] [\#489](https://github.com/nubisproject/nubis-ci/pull/489) ([tinnightcap](https://github.com/tinnightcap))
+- Update CHANGELOG for v2.0.0 release \[skip ci\] [\#488](https://github.com/nubisproject/nubis-ci/pull/488) ([tinnightcap](https://github.com/tinnightcap))
 - Merge v2.0.0 release into develop. \[skip ci\] [\#486](https://github.com/nubisproject/nubis-ci/pull/486) ([tinnightcap](https://github.com/tinnightcap))
 - Update CHANGELOG for v2.0.0 release \[skip ci\] [\#485](https://github.com/nubisproject/nubis-ci/pull/485) ([tinnightcap](https://github.com/tinnightcap))
 - emit compact JSON [\#483](https://github.com/nubisproject/nubis-ci/pull/483) ([gozer](https://github.com/gozer))
