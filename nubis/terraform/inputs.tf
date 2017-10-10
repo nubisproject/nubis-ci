@@ -132,4 +132,9 @@ variable instance_type {
   default = "t2.micro"
 }
 
+# Root storage size in Gigabytes
+variable "root_storage_size" {
+  default = "16"
+}
+
 variable consul_acl_token {}
