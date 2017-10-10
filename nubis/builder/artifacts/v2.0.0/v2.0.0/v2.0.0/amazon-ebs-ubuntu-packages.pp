@@ -983,7 +983,7 @@ package { 'librarian-puppet':
   ensure => ['2.2.3'],
 }
 package { 'librarianp':
-  ensure => ['0.6.4'],
+  ensure => ['0.6.3'],
 }
 package { 'libreadline6':
   ensure => '6.3-4ubuntu2',

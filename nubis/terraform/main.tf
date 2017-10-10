@@ -526,22 +526,22 @@ resource "null_resource" "unicreds" {
     version          = "${var.version}"
   }
 
-  # XXX: Cleanup
-  provisioner "local-exec" {
-    command = "${self.triggers.unicreds_rm}/github_oauth_client_id"
-  }
-
-  # XXX: Cleanup
-  provisioner "local-exec" {
-    command = "${self.triggers.unicreds_rm}/github_oauth_client_secret"
-  }
-
   provisioner "local-exec" {
     command = "${self.triggers.unicreds}/slack_token ${var.slack_token} ${self.triggers.context}"
   }
 
   provisioner "local-exec" {
+    when    = "destroy"
+    command = "${self.triggers.unicreds}/slack_token"
+  }
+
+  provisioner "local-exec" {
     command = "${self.triggers.unicreds}/consul_acl_token ${var.consul_acl_token} ${self.triggers.context}"
+  }
+
+  provisioner "local-exec" {
+    when    = "destroy"
+    command = "${self.triggers.unicreds}/consul_acl_token"
   }
 
 }
