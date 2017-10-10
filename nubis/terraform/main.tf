@@ -182,6 +182,11 @@ resource "aws_launch_configuration" "ci" {
 
     enable_monitoring = false
 
+    root_block_device = {
+      volume_size = "${var.root_storage_size}"
+      delete_on_termination = true
+    }
+
     user_data = <<EOF
 NUBIS_ACCOUNT=${var.account_name}
 NUBIS_PROJECT=${var.project}
