@@ -133,8 +133,9 @@ variable instance_type {
 }
 
 # Root storage size in Gigabytes
+# 0 means default for the instance type
 variable "root_storage_size" {
-  default = "16"
+  default = "0"
 }
 
 variable consul_acl_token {}
