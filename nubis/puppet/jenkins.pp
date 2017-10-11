@@ -11,13 +11,12 @@ package { 'daemon':
   ensure => 'present'
 }
 
-
 # We need Java 8
 class { 'java8' :
 }
 
 class { 'jenkins':
-  version            => '2.73.1',
+  version            => '2.73.2',
   #direct_download    => 'https://pkg.jenkins.io/debian-stable/binary/jenkins_2.46.3_all.deb',
   configure_firewall => false,
   service_enable     => false,
