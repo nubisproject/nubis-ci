@@ -537,7 +537,7 @@ resource "null_resource" "unicreds" {
 
   provisioner "local-exec" {
     when    = "destroy"
-    command = "${self.triggers.unicreds}/slack_token"
+    command = "${self.triggers.unicreds_rm}/slack_token"
   }
 
   provisioner "local-exec" {
@@ -546,7 +546,7 @@ resource "null_resource" "unicreds" {
 
   provisioner "local-exec" {
     when    = "destroy"
-    command = "${self.triggers.unicreds}/consul_acl_token"
+    command = "${self.triggers.unicreds_rm}/consul_acl_token"
   }
 
 }
