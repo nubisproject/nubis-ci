@@ -1,5 +1,33 @@
 # Change Log
 
+## [v2.0.1](https://github.com/nubisproject/nubis-ci/tree/v2.0.1) (2017-10-13)
+[Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v2.0.0...v2.0.1)
+
+**Implemented enhancements:**
+
+- Validate Consul certs [\#118](https://github.com/nubisproject/nubis-ci/issues/118)
+- Determine how to adapt automation for tagging/branching [\#58](https://github.com/nubisproject/nubis-ci/issues/58)
+
+**Closed issues:**
+
+- null\_resource to destroy slack\_token and consul\_acl\_token has typo [\#506](https://github.com/nubisproject/nubis-ci/issues/506)
+- \[jenkins\] Upgrade to latest version [\#504](https://github.com/nubisproject/nubis-ci/issues/504)
+- Don't add duplicate ports to the port exception list [\#500](https://github.com/nubisproject/nubis-ci/issues/500)
+- Include deployment arena in TF state path [\#499](https://github.com/nubisproject/nubis-ci/issues/499)
+- Make root volume size configurable [\#477](https://github.com/nubisproject/nubis-ci/issues/477)
+- Make instance type configurable [\#476](https://github.com/nubisproject/nubis-ci/issues/476)
+- Upgrade to Java 8 [\#462](https://github.com/nubisproject/nubis-ci/issues/462)
+- Wrap consulate kv nat invocation into a script of some sort [\#258](https://github.com/nubisproject/nubis-ci/issues/258)
+- Figure out how to extend the KMS based trust for reaching Consul in other VPCs [\#191](https://github.com/nubisproject/nubis-ci/issues/191)
+
+**Merged pull requests:**
+
+- Upgrade to Terraform 0.10.7 [\#508](https://github.com/nubisproject/nubis-ci/pull/508) ([gozer](https://github.com/gozer))
+- Fixing typo [\#507](https://github.com/nubisproject/nubis-ci/pull/507) ([limed](https://github.com/limed))
+- Upgrade Jenkins to 2.73.2 [\#505](https://github.com/nubisproject/nubis-ci/pull/505) ([gozer](https://github.com/gozer))
+- Make root\_storage\_size configurable [\#502](https://github.com/nubisproject/nubis-ci/pull/502) ([gozer](https://github.com/gozer))
+- Avoid adding duplicate ports to the exception list [\#501](https://github.com/nubisproject/nubis-ci/pull/501) ([gozer](https://github.com/gozer))
+
 ## [v2.0.0](https://github.com/nubisproject/nubis-ci/tree/v2.0.0) (2017-10-06)
 [Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v1.5.1...v2.0.0)
 
@@ -7,12 +35,15 @@
 
 - \[unicreds\] Cleanup resources on destruction [\#490](https://github.com/nubisproject/nubis-ci/issues/490)
 - Add destroy ability to the deployment target [\#470](https://github.com/nubisproject/nubis-ci/issues/470)
+- Tag v2.0.0 release [\#496](https://github.com/nubisproject/nubis-ci/issues/496)
 - Tag v2.0.0 release [\#493](https://github.com/nubisproject/nubis-ci/issues/493)
 - Tag v2.0.0 release [\#487](https://github.com/nubisproject/nubis-ci/issues/487)
 - Tag v2.0.0 release [\#484](https://github.com/nubisproject/nubis-ci/issues/484)
 
 **Merged pull requests:**
 
+- Merge v2.0.0 release into develop. \[skip ci\] [\#498](https://github.com/nubisproject/nubis-ci/pull/498) ([tinnightcap](https://github.com/tinnightcap))
+- Update CHANGELOG for v2.0.0 release \[skip ci\] [\#497](https://github.com/nubisproject/nubis-ci/pull/497) ([tinnightcap](https://github.com/tinnightcap))
 - Merge v2.0.0 release into develop. \[skip ci\] [\#495](https://github.com/nubisproject/nubis-ci/pull/495) ([tinnightcap](https://github.com/tinnightcap))
 - Update CHANGELOG for v2.0.0 release \[skip ci\] [\#494](https://github.com/nubisproject/nubis-ci/pull/494) ([tinnightcap](https://github.com/tinnightcap))
 - Update to nubis-builder v1.5.2 [\#492](https://github.com/nubisproject/nubis-ci/pull/492) ([tinnightcap](https://github.com/tinnightcap))
