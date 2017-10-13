@@ -182,6 +182,11 @@ resource "aws_launch_configuration" "ci" {
 
     enable_monitoring = false
 
+    root_block_device = {
+      volume_size = "${var.root_storage_size}"
+      delete_on_termination = true
+    }
+
     user_data = <<EOF
 NUBIS_ACCOUNT=${var.account_name}
 NUBIS_PROJECT=${var.project}
@@ -532,7 +537,7 @@ resource "null_resource" "unicreds" {
 
   provisioner "local-exec" {
     when    = "destroy"
-    command = "${self.triggers.unicreds}/slack_token"
+    command = "${self.triggers.unicreds_rm}/slack_token"
   }
 
   provisioner "local-exec" {
@@ -541,7 +546,7 @@ resource "null_resource" "unicreds" {
 
   provisioner "local-exec" {
     when    = "destroy"
-    command = "${self.triggers.unicreds}/consul_acl_token"
+    command = "${self.triggers.unicreds_rm}/consul_acl_token"
   }
 
 }

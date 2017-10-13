@@ -29,7 +29,7 @@ jenkins::plugin { 'bouncycastle-api':
 }
 
 jenkins::plugin { 'branch-api':
-  version => '2.0.11'
+  version => '2.0.14'
 }
 
 jenkins::plugin { 'build-name-setter':
@@ -49,7 +49,7 @@ jenkins::plugin { 'copyartifact':
 }
 
 jenkins::plugin { 'display-url-api':
-  version => '2.0'
+  version => '2.1.0'
 }
 
 jenkins::plugin { 'embeddable-build-status':
@@ -89,7 +89,7 @@ jenkins::plugin { 'icon-shim':
 }
 
 jenkins::plugin { 'jackson2-api':
-  version => '2.7.3'
+  version => '2.8.7.0'
 }
 
 jenkins::plugin { 'javadoc':
@@ -121,7 +121,7 @@ jenkins::plugin { 'mailer':
 }
 
 jenkins::plugin { 'matrix-auth':
-  version => '1.7'
+  version => '2.0'
 }
 
 jenkins::plugin { 'matrix-project':
@@ -129,7 +129,7 @@ jenkins::plugin { 'matrix-project':
 }
 
 jenkins::plugin { 'maven-plugin':
-  version => '3.0-rc2'
+  version => '3.0'
 }
 
 jenkins::plugin { 'metrics':
@@ -157,7 +157,7 @@ jenkins::plugin { 'plain-credentials':
 }
 
 jenkins::plugin { 'prometheus':
-  version => '1.1.0'
+  version => '1.1.1'
 }
 
 jenkins::plugin { 'promoted-builds':
@@ -181,7 +181,7 @@ jenkins::plugin { 's3':
 }
 
 jenkins::plugin { 'scm-api':
-  version => '2.2.2'
+  version => '2.2.3'
 }
 
 jenkins::plugin { 'script-security':

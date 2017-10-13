@@ -1,4 +1,4 @@
-$terraform_version = '0.10.5'
+$terraform_version = '0.10.7'
 $packer_version = '1.0.4'
 $nubis_builder_version = 'v1.5.2'
 
