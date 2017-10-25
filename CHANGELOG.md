@@ -1,5 +1,19 @@
 # Change Log
 
+## [v2.0.2](https://github.com/nubisproject/nubis-ci/tree/v2.0.2) (2017-10-25)
+[Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v2.0.1...v2.0.2)
+
+**Closed issues:**
+
+- Tag v2.0.2 release [\#514](https://github.com/nubisproject/nubis-ci/issues/514)
+
+**Merged pull requests:**
+
+- Merge v2.0.2 release into develop. \[skip ci\] [\#517](https://github.com/nubisproject/nubis-ci/pull/517) ([tinnightcap](https://github.com/tinnightcap))
+- Update CHANGELOG for v2.0.2 release \[skip ci\] [\#516](https://github.com/nubisproject/nubis-ci/pull/516) ([tinnightcap](https://github.com/tinnightcap))
+- Update CHANGELOG for v2.0.2 release \[skip ci\] [\#515](https://github.com/nubisproject/nubis-ci/pull/515) ([tinnightcap](https://github.com/tinnightcap))
+- Upgrade Jenkins plugins [\#513](https://github.com/nubisproject/nubis-ci/pull/513) ([gozer](https://github.com/gozer))
+
 ## [v2.0.1](https://github.com/nubisproject/nubis-ci/tree/v2.0.1) (2017-10-13)
 [Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v2.0.0...v2.0.1)
 
@@ -19,9 +33,12 @@
 - Upgrade to Java 8 [\#462](https://github.com/nubisproject/nubis-ci/issues/462)
 - Wrap consulate kv nat invocation into a script of some sort [\#258](https://github.com/nubisproject/nubis-ci/issues/258)
 - Figure out how to extend the KMS based trust for reaching Consul in other VPCs [\#191](https://github.com/nubisproject/nubis-ci/issues/191)
+- Tag v2.0.1 release [\#509](https://github.com/nubisproject/nubis-ci/issues/509)
 
 **Merged pull requests:**
 
+- Merge v2.0.1 release into develop. \[skip ci\] [\#511](https://github.com/nubisproject/nubis-ci/pull/511) ([tinnightcap](https://github.com/tinnightcap))
+- Update CHANGELOG for v2.0.1 release \[skip ci\] [\#510](https://github.com/nubisproject/nubis-ci/pull/510) ([tinnightcap](https://github.com/tinnightcap))
 - Upgrade to Terraform 0.10.7 [\#508](https://github.com/nubisproject/nubis-ci/pull/508) ([gozer](https://github.com/gozer))
 - Fixing typo [\#507](https://github.com/nubisproject/nubis-ci/pull/507) ([limed](https://github.com/limed))
 - Upgrade Jenkins to 2.73.2 [\#505](https://github.com/nubisproject/nubis-ci/pull/505) ([gozer](https://github.com/gozer))
