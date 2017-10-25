@@ -1,6 +1,6 @@
 # Change Log
 
-## [v2.0.2](https://github.com/nubisproject/nubis-ci/tree/v2.0.2) (2017-10-24)
+## [v2.0.2](https://github.com/nubisproject/nubis-ci/tree/v2.0.2) (2017-10-25)
 [Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v2.0.1...v2.0.2)
 
 **Merged pull requests:**
