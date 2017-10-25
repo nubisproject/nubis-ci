@@ -5,6 +5,7 @@
 
 **Merged pull requests:**
 
+- Update CHANGELOG for v2.0.2 release \[skip ci\] [\#515](https://github.com/nubisproject/nubis-ci/pull/515) ([tinnightcap](https://github.com/tinnightcap))
 - Upgrade Jenkins plugins [\#513](https://github.com/nubisproject/nubis-ci/pull/513) ([gozer](https://github.com/gozer))
 
 ## [v2.0.1](https://github.com/nubisproject/nubis-ci/tree/v2.0.1) (2017-10-13)
