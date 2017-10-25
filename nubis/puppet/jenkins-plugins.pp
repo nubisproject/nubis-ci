@@ -37,7 +37,7 @@ jenkins::plugin { 'build-name-setter':
 }
 
 jenkins::plugin { 'cloudbees-folder':
-  version => '6.1.2'
+  version => '6.2.1'
 }
 
 jenkins::plugin { 'conditional-buildstep':
@@ -77,7 +77,7 @@ jenkins::plugin { 'github-api':
 }
 
 jenkins::plugin { 'github-branch-source':
-  version => '2.2.3'
+  version => '2.2.4'
 }
 
 jenkins::plugin { 'github-oauth':
@@ -97,7 +97,7 @@ jenkins::plugin { 'javadoc':
 }
 
 jenkins::plugin { 'job-dsl':
-  version => '1.65'
+  version => '1.66'
 }
 
 jenkins::plugin { 'jquery-detached':
@@ -121,7 +121,7 @@ jenkins::plugin { 'mailer':
 }
 
 jenkins::plugin { 'matrix-auth':
-  version => '2.0'
+  version => '2.1'
 }
 
 jenkins::plugin { 'matrix-project':
@@ -161,11 +161,11 @@ jenkins::plugin { 'prometheus':
 }
 
 jenkins::plugin { 'promoted-builds':
-  version => '2.29.1'
+  version => '2.30'
 }
 
 jenkins::plugin { 'rebuild':
-  version => '1.25'
+  version => '1.27'
 }
 
 jenkins::plugin { 'reverse-proxy-auth-plugin':
@@ -233,7 +233,7 @@ jenkins::plugin { 'workflow-cps-global-lib':
 }
 
 jenkins::plugin { 'workflow-job':
-  version => '2.14.1'
+  version => '2.15'
 }
 
 jenkins::plugin { 'workflow-multibranch':
@@ -249,5 +249,5 @@ jenkins::plugin { 'workflow-step-api':
 }
 
 jenkins::plugin { 'workflow-support':
-  version => '2.15'
+  version => '2.16'
 }
