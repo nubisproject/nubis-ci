@@ -5,10 +5,13 @@
 
 **Closed issues:**
 
+- Tag v2.0.2 release [\#518](https://github.com/nubisproject/nubis-ci/issues/518)
 - Tag v2.0.2 release [\#514](https://github.com/nubisproject/nubis-ci/issues/514)
 
 **Merged pull requests:**
 
+- Merge v2.0.2 release into develop. \[skip ci\] [\#520](https://github.com/nubisproject/nubis-ci/pull/520) ([tinnightcap](https://github.com/tinnightcap))
+- Update CHANGELOG for v2.0.2 release \[skip ci\] [\#519](https://github.com/nubisproject/nubis-ci/pull/519) ([tinnightcap](https://github.com/tinnightcap))
 - Merge v2.0.2 release into develop. \[skip ci\] [\#517](https://github.com/nubisproject/nubis-ci/pull/517) ([tinnightcap](https://github.com/tinnightcap))
 - Update CHANGELOG for v2.0.2 release \[skip ci\] [\#516](https://github.com/nubisproject/nubis-ci/pull/516) ([tinnightcap](https://github.com/tinnightcap))
 - Update CHANGELOG for v2.0.2 release \[skip ci\] [\#515](https://github.com/nubisproject/nubis-ci/pull/515) ([tinnightcap](https://github.com/tinnightcap))
