@@ -455,6 +455,7 @@ data "aws_iam_policy_document" "ci_deploy" {
                 "rds:ResetDBParameterGroup",
                 "rds:AddTagsToResource",
                 "route53:CreateHostedZone",
+                "route53:DeleteHostedZone",
                 "route53:GetChange",
                 "route53:ListHostedZones",
                 "route53:GetHostedZone",
