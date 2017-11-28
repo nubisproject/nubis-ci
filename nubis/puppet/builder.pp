@@ -1,6 +1,6 @@
 $terraform_version = '0.10.7'
 $packer_version = '1.0.4'
-$nubis_builder_version = 'v1.5.2'
+$nubis_builder_version = 'v1.5.5'
 
 package { 'awscli':
   ensure => latest,
@@ -31,9 +31,6 @@ vcsrepo { '/opt/nubis-builder':
   provider => git,
   source   => 'https://github.com/nubisproject/nubis-builder.git',
   revision => $nubis_builder_version,
-  require  => [
-    Package['git'],
-  ],
 }
 
 # XXX: need to move to puppet-packer
