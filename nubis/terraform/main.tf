@@ -319,7 +319,6 @@ data "aws_iam_policy_document" "ci_build" {
     sid = "build"
 
     actions = [
-                "iam:PassRole",
                 "ec2:DescribeSpotPriceHistory",
                 "ec2:RequestSpotInstances",
                 "ec2:CancelSpotInstanceRequests",
