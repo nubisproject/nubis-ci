@@ -127,6 +127,7 @@ sites.each {
             }
             branch(&apos;master&apos;)
         extensions {
+          cleanBeforeCheckout()
           submoduleOption {
             disableSubmodules(false)
             recursiveSubmodules(true)
@@ -140,6 +141,20 @@ sites.each {
     }
 
     publishers {
+          discardBuildPublisher {
+		daysToKeep(&quot;14&quot;)
+		intervalDaysToKeep(&quot;&quot;)
+		numToKeep(&quot;250&quot;)
+		intervalNumToKeep(&quot;&quot;)
+		discardSuccess(false)
+		discardUnstable(false)
+		discardFailure(false)
+		discardNotBuilt(false)
+		discardAborted(false)
+		minLogFileSize(&quot;&quot;)
+		maxLogFileSize(&quot;&quot;)
+		regexp(&quot;&quot;)
+        }
         mailer(&apos;infra-aws@mozilla.com&apos;, true, true)
         slackNotifier {
           notifyAborted(true)
@@ -201,6 +216,7 @@ sites.each {
             }
             branch(&apos;master&apos;)
         extensions {
+          cleanBeforeCheckout()
           submoduleOption {
             disableSubmodules(false)
             recursiveSubmodules(true)
@@ -224,6 +240,21 @@ sites.each {
     }
 
     publishers {
+          discardBuildPublisher {
+		daysToKeep(&quot;14&quot;)
+		intervalDaysToKeep(&quot;&quot;)
+		numToKeep(&quot;250&quot;)
+		intervalNumToKeep(&quot;&quot;)
+		discardSuccess(false)
+		discardUnstable(false)
+		discardFailure(false)
+		discardNotBuilt(false)
+		discardAborted(false)
+		minLogFileSize(&quot;&quot;)
+		maxLogFileSize(&quot;&quot;)
+		regexp(&quot;&quot;)
+        }
+
         archiveArtifacts(&apos;artifacts/**&apos;)
         downstreamParameterized {
             trigger(&quot;${site_name}-deployment&quot;) {

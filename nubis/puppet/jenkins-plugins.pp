@@ -48,6 +48,10 @@ jenkins::plugin { 'copyartifact':
   version => '1.39'
 }
 
+jenkins::plugin { 'discard-old-build':
+  version => '1.05'
+}
+
 jenkins::plugin { 'display-url-api':
   version => '2.2.0'
 }
