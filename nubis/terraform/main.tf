@@ -461,6 +461,7 @@ data "aws_iam_policy_document" "ci_deploy" {
                 "cloudwatch:PutMetricAlarm",
                 "cloudwatch:DeleteAlarms",
                 "cloudwatch:DescribeAlarms",
+                "iam:PassRole",
                 "iam:GetRole",
                 "iam:CreateUser",
                 "iam:CreateRole",
