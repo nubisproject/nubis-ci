@@ -142,7 +142,7 @@ sites.each {
 
     publishers {
           discardBuildPublisher {
-		daysToKeep(&quot;14&quot;)
+		daysToKeep(&quot;30&quot;)
 		intervalDaysToKeep(&quot;&quot;)
 		numToKeep(&quot;250&quot;)
 		intervalNumToKeep(&quot;&quot;)
@@ -241,7 +241,7 @@ sites.each {
 
     publishers {
           discardBuildPublisher {
-		daysToKeep(&quot;14&quot;)
+		daysToKeep(&quot;30&quot;)
 		intervalDaysToKeep(&quot;&quot;)
 		numToKeep(&quot;250&quot;)
 		intervalNumToKeep(&quot;&quot;)
