@@ -31,7 +31,7 @@ resource "aws_elb" "ci" {
     unhealthy_threshold = 3
     timeout = 10
     target = "HTTP:8080/jenkins/cc.xml"
-    interval = 30 
+    interval = 30
   }
 
   cross_zone_load_balancing = true
@@ -39,7 +39,7 @@ resource "aws_elb" "ci" {
   security_groups = [
     "${aws_security_group.elb.id}"
   ]
-    
+
   tags = {
     Region = "${var.region}"
     Arena = "${var.arena}"
@@ -92,7 +92,7 @@ resource "aws_security_group" "ci" {
        "${var.sso_security_group_id}",
       ]
   }
-  
+
   ingress {
       from_port = 22
       to_port = 22
@@ -122,7 +122,7 @@ resource "aws_autoscaling_group" "ci" {
 
   # This is on purpose, when the LC changes, will force creation of a new ASG
   name = "ci-${var.project} - ${aws_launch_configuration.ci.name}"
-  
+
   load_balancers = [
    "${aws_elb.ci.name}"
   ]
@@ -279,7 +279,7 @@ data "aws_iam_policy_document" "ci_artifacts" {
 
   statement {
     sid = "ListBucket"
-    
+
     actions = [
       "s3:ListBucket",
     ]
@@ -291,7 +291,7 @@ data "aws_iam_policy_document" "ci_artifacts" {
 
   statement {
     sid = "ActInBucket"
-    
+
     actions = [
       "s3:PutObject",
       "s3:ListObject",
@@ -361,7 +361,7 @@ data "aws_iam_policy_document" "ci_build" {
 
 data "aws_iam_policy_document" "ci_deploy" {
     count = "${var.enabled}"
-    
+
  statement {
     sid = "deploy"
 
@@ -453,11 +453,20 @@ data "aws_iam_policy_document" "ci_deploy" {
                 "rds:ModifyDBParameterGroup",
                 "rds:ResetDBParameterGroup",
                 "rds:AddTagsToResource",
-                "route53:CreateHostedZone",
-                "route53:DeleteHostedZone",
-                "route53:GetChange",
+                "route53:GetHostedZone",
                 "route53:ListHostedZones",
                 "route53:GetHostedZone",
+                "route53:GetChange",
+                "route53:DeleteHostedZone",
+                "route53:CreateHostedZone",
+                "route53:CreateReusableDelegationSet",
+                "route53:DeleteReusableDelegationSet",
+                "route53:GetReusableDelegationSet",
+                "route53:UpdateHostedZoneComment",
+                "route53:ChangeTagsForResource",
+                "route53:ListTagsForResource",
+                "route53:ListResourceRecordSets",
+                "route53:ChangeResourceRecordSets",
                 "cloudwatch:PutMetricAlarm",
                 "cloudwatch:DeleteAlarms",
                 "cloudwatch:DescribeAlarms",
@@ -490,11 +499,11 @@ data "aws_iam_policy_document" "ci_deploy" {
     resources = [
       "*",
     ]
-  }    
+  }
 
   statement {
     sid = "DNS"
-    
+
     actions = [
        "route53:ChangeResourceRecordSets",
        "route53:ListResourceRecordSets",
