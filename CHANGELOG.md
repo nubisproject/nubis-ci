@@ -1,5 +1,43 @@
 # Change Log
 
+## [v2.0.4](https://github.com/nubisproject/nubis-ci/tree/v2.0.4) (2017-12-08)
+[Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v2.0.3...v2.0.4)
+
+**Closed issues:**
+
+- \[iam\] Add missing rds/elasticache tags permissions [\#539](https://github.com/nubisproject/nubis-ci/issues/539)
+- \[route53\] Additional perms for route53 [\#537](https://github.com/nubisproject/nubis-ci/issues/537)
+- Discard old builds [\#531](https://github.com/nubisproject/nubis-ci/issues/531)
+- \[iam\] route53:CreateHostedZone doesn't exist [\#527](https://github.com/nubisproject/nubis-ci/issues/527)
+- \[Jenkins\] Upgrade to 2.73.3 [\#526](https://github.com/nubisproject/nubis-ci/issues/526)
+- \[iam\] iam:DescribeAutoScalingGroup doesnt' exist [\#512](https://github.com/nubisproject/nubis-ci/issues/512)
+- \[security\] iam:PassRole is not needed anmoyre [\#471](https://github.com/nubisproject/nubis-ci/issues/471)
+
+**Merged pull requests:**
+
+- Add missing IAM permissions for tags on rds and elasticache [\#540](https://github.com/nubisproject/nubis-ci/pull/540) ([gozer](https://github.com/gozer))
+- Add IAM permission to get ci deploy r53 records [\#538](https://github.com/nubisproject/nubis-ci/pull/538) ([limed](https://github.com/limed))
+- Looks like creating IAM roles needs iam:PassRole [\#536](https://github.com/nubisproject/nubis-ci/pull/536) ([gozer](https://github.com/gozer))
+- Should have been 30 days [\#535](https://github.com/nubisproject/nubis-ci/pull/535) ([gozer](https://github.com/gozer))
+- Keep our builds from growing unbounded [\#534](https://github.com/nubisproject/nubis-ci/pull/534) ([gozer](https://github.com/gozer))
+- Bump nubis-builder to v1.5.6 [\#533](https://github.com/nubisproject/nubis-ci/pull/533) ([gozer](https://github.com/gozer))
+- iam:PassRole isn't needed anymore [\#532](https://github.com/nubisproject/nubis-ci/pull/532) ([gozer](https://github.com/gozer))
+- \[Centennial\] [\#530](https://github.com/nubisproject/nubis-ci/pull/530) ([gozer](https://github.com/gozer))
+- Remove libssl package from travis check [\#529](https://github.com/nubisproject/nubis-ci/pull/529) ([limed](https://github.com/limed))
+- Allow CI system to create a hosted zone [\#528](https://github.com/nubisproject/nubis-ci/pull/528) ([limed](https://github.com/limed))
+
+## [v2.0.3](https://github.com/nubisproject/nubis-ci/tree/v2.0.3) (2017-11-02)
+[Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v2.0.2...v2.0.3)
+
+**Closed issues:**
+
+- Tag v2.0.3 release [\#521](https://github.com/nubisproject/nubis-ci/issues/521)
+
+**Merged pull requests:**
+
+- Merge v2.0.3 release into develop. \[skip ci\] [\#523](https://github.com/nubisproject/nubis-ci/pull/523) ([tinnightcap](https://github.com/tinnightcap))
+- Update CHANGELOG for v2.0.3 release \[skip ci\] [\#522](https://github.com/nubisproject/nubis-ci/pull/522) ([tinnightcap](https://github.com/tinnightcap))
+
 ## [v2.0.2](https://github.com/nubisproject/nubis-ci/tree/v2.0.2) (2017-10-25)
 [Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v2.0.1...v2.0.2)
 
