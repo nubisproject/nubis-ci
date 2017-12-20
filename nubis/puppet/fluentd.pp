@@ -8,7 +8,7 @@ fluentd::source { 'jenkins_log':
   configfile => 'jenkins',
   type       => 'tail',
   format     => 'none',
-  tag        => 'forward.jenkis.general',
+  tag        => 'forward.jenkins.general',
   config     => {
     'path' => '/var/log/jenkins/jenkins.log',
   },
