@@ -1,5 +1,5 @@
 $terraform_version = '0.10.7'
-$packer_version = '1.0.4'
+$packer_version = '1.1.1'
 $nubis_builder_version = 'v1.5.6'
 
 package { 'awscli':
