@@ -319,6 +319,7 @@ data "aws_iam_policy_document" "ci_build" {
     sid = "build"
 
     actions = [
+                "iam:CreateServiceLinkedRole",
                 "ec2:DescribeSpotPriceHistory",
                 "ec2:RequestSpotInstances",
                 "ec2:CancelSpotInstanceRequests",
@@ -413,8 +414,8 @@ data "aws_iam_policy_document" "ci_deploy" {
                 "elasticache:DescribeCacheClusters",
                 "elasticache:DeleteCacheCluster",
                 "elasticache:AddTagsToResource",
-		"elasticache:ListTagsForResource",
-		"elasticache:RemoveTagsFromResource",
+                "elasticache:ListTagsForResource",
+                "elasticache:RemoveTagsFromResource",
                 "elasticloadbalancing:ApplySecurityGroupsToLoadBalancer",
                 "elasticloadbalancing:ConfigureHealthCheck",
                 "elasticloadbalancing:CreateLoadBalancer",
@@ -455,8 +456,8 @@ data "aws_iam_policy_document" "ci_deploy" {
                 "rds:ModifyDBParameterGroup",
                 "rds:ResetDBParameterGroup",
                 "rds:AddTagsToResource",
-		"rds:ListTagsForResource",
-		"rds:RemoveTagsFromResource",
+                "rds:ListTagsForResource",
+                "rds:RemoveTagsFromResource",
                 "route53:GetHostedZone",
                 "route53:ListHostedZones",
                 "route53:GetHostedZone",
