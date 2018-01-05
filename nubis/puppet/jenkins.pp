@@ -8,7 +8,7 @@ nubis::discovery::service { 'jenkins':
 }
 
 class { 'jenkins':
-  version            => '2.73.3',
+  version            => '2.89.2',
   #direct_download    => 'https://pkg.jenkins.io/debian-stable/binary/jenkins_2.46.3_all.deb',
   configure_firewall => false,
   service_enable     => false,
