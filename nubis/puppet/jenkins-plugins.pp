@@ -21,7 +21,7 @@ jenkins::plugin { 'authorize-project':
 }
 
 jenkins::plugin { 'aws-java-sdk':
-  version => '1.11.226'
+  version => '1.11.248'
 }
 
 jenkins::plugin { 'bouncycastle-api':
@@ -29,7 +29,7 @@ jenkins::plugin { 'bouncycastle-api':
 }
 
 jenkins::plugin { 'branch-api':
-  version => '2.0.15'
+  version => '2.0.17'
 }
 
 jenkins::plugin { 'build-name-setter':
@@ -38,6 +38,10 @@ jenkins::plugin { 'build-name-setter':
 
 jenkins::plugin { 'cloudbees-folder':
   version => '6.2.1'
+}
+
+jenkins::plugin { 'command-launcher':
+  version => '1.2'
 }
 
 jenkins::plugin { 'conditional-buildstep':
@@ -61,11 +65,11 @@ jenkins::plugin { 'embeddable-build-status':
 }
 
 jenkins::plugin { 'git':
-  version => '3.6.4'
+  version => '3.7.0'
 }
 
 jenkins::plugin { 'git-client':
-  version => '2.6.0'
+  version => '2.7.0'
 }
 
 jenkins::plugin { 'git-server':
@@ -81,7 +85,7 @@ jenkins::plugin { 'github-api':
 }
 
 jenkins::plugin { 'github-branch-source':
-  version => '2.3.1'
+  version => '2.3.2'
 }
 
 jenkins::plugin { 'github-oauth':
@@ -93,7 +97,7 @@ jenkins::plugin { 'icon-shim':
 }
 
 jenkins::plugin { 'jackson2-api':
-  version => '2.8.7.0'
+  version => '2.8.10.1'
 }
 
 jenkins::plugin { 'javadoc':
@@ -185,11 +189,11 @@ jenkins::plugin { 's3':
 }
 
 jenkins::plugin { 'scm-api':
-  version => '2.2.5'
+  version => '2.2.6'
 }
 
 jenkins::plugin { 'script-security':
-  version => '1.35'
+  version => '1.39'
 }
 
 jenkins::plugin { 'slack':
@@ -213,7 +217,7 @@ jenkins::plugin { 'thinBackup':
 }
 
 jenkins::plugin { 'timestamper':
-  version => '1.8.8'
+  version => '1.8.9'
 }
 
 jenkins::plugin { 'token-macro':
@@ -225,11 +229,11 @@ jenkins::plugin { 'windows-slaves':
 }
 
 jenkins::plugin { 'workflow-api':
-  version => '2.23.1'
+  version => '2.24'
 }
 
 jenkins::plugin { 'workflow-cps':
-  version => '2.41'
+  version => '2.42'
 }
 
 jenkins::plugin { 'workflow-cps-global-lib':
@@ -237,7 +241,7 @@ jenkins::plugin { 'workflow-cps-global-lib':
 }
 
 jenkins::plugin { 'workflow-job':
-  version => '2.15'
+  version => '2.16'
 }
 
 jenkins::plugin { 'workflow-multibranch':
