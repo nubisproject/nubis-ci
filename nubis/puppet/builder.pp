@@ -1,6 +1,6 @@
 $terraform_version = '0.10.7'
 $packer_version = '1.1.1'
-$nubis_builder_version = 'v1.5.6'
+$nubis_builder_version = 'v1.6.0'
 
 package { 'awscli':
   ensure => latest,
