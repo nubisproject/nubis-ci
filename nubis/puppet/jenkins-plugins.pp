@@ -21,7 +21,7 @@ jenkins::plugin { 'authorize-project':
 }
 
 jenkins::plugin { 'aws-java-sdk':
-  version => '1.11.248'
+  version => '1.11.264'
 }
 
 jenkins::plugin { 'bouncycastle-api':
@@ -29,15 +29,15 @@ jenkins::plugin { 'bouncycastle-api':
 }
 
 jenkins::plugin { 'branch-api':
-  version => '2.0.17'
+  version => '2.0.18'
 }
 
 jenkins::plugin { 'build-name-setter':
-  version => '1.6.7'
+  version => '1.6.8'
 }
 
 jenkins::plugin { 'cloudbees-folder':
-  version => '6.2.1'
+  version => '6.3'
 }
 
 jenkins::plugin { 'command-launcher':
@@ -77,7 +77,7 @@ jenkins::plugin { 'git-server':
 }
 
 jenkins::plugin { 'github':
-  version => '1.28.1'
+  version => '1.29.0'
 }
 
 jenkins::plugin { 'github-api':
@@ -193,7 +193,7 @@ jenkins::plugin { 'scm-api':
 }
 
 jenkins::plugin { 'script-security':
-  version => '1.39'
+  version => '1.40'
 }
 
 jenkins::plugin { 'slack':
