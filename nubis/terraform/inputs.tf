@@ -139,3 +139,7 @@ variable "root_storage_size" {
 }
 
 variable consul_acl_token {}
+
+variable newrelic_api_key {
+  default = "<unset>"
+}
