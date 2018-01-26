@@ -94,6 +94,9 @@ sites.each {
     wrappers {
         colorizeOutput()
         timestamps()
+        credentialsBinding {
+            string(&quot;NEWRELIC_API_KEY&quot;, &quot;NEWRELIC_API_KEY&quot;)
+        }
         buildNameSetter {
           template(&apos;#${BUILD_NUMBER} - ${environment}/${action}&apos;)
           runAtStart(true)

@@ -13,7 +13,7 @@ jenkins::plugin { 'antisamy-markup-formatter':
 }
 
 jenkins::plugin { 'apache-httpcomponents-client-4-api':
-  version => '4.5.3-2.0'
+  version => '4.5.3-2.1'
 }
 
 jenkins::plugin { 'authorize-project':
@@ -52,6 +52,10 @@ jenkins::plugin { 'copyartifact':
   version => '1.39'
 }
 
+jenkins::plugin { 'credentials-binding':
+  version => '1.14'
+}
+
 jenkins::plugin { 'discard-old-build':
   version => '1.05'
 }
@@ -69,7 +73,7 @@ jenkins::plugin { 'git':
 }
 
 jenkins::plugin { 'git-client':
-  version => '2.7.0'
+  version => '2.7.1'
 }
 
 jenkins::plugin { 'git-server':
@@ -89,7 +93,7 @@ jenkins::plugin { 'github-branch-source':
 }
 
 jenkins::plugin { 'github-oauth':
-  version => '0.28.1'
+  version => '0.29'
 }
 
 jenkins::plugin { 'icon-shim':
@@ -137,7 +141,7 @@ jenkins::plugin { 'matrix-project':
 }
 
 jenkins::plugin { 'maven-plugin':
-  version => '3.0'
+  version => '3.1'
 }
 
 jenkins::plugin { 'metrics':
@@ -229,11 +233,11 @@ jenkins::plugin { 'windows-slaves':
 }
 
 jenkins::plugin { 'workflow-api':
-  version => '2.24'
+  version => '2.25'
 }
 
 jenkins::plugin { 'workflow-cps':
-  version => '2.42'
+  version => '2.43'
 }
 
 jenkins::plugin { 'workflow-cps-global-lib':
@@ -241,11 +245,11 @@ jenkins::plugin { 'workflow-cps-global-lib':
 }
 
 jenkins::plugin { 'workflow-job':
-  version => '2.16'
+  version => '2.17'
 }
 
 jenkins::plugin { 'workflow-multibranch':
-  version => '2.16'
+  version => '2.17'
 }
 
 jenkins::plugin { 'workflow-scm-step':
@@ -257,5 +261,5 @@ jenkins::plugin { 'workflow-step-api':
 }
 
 jenkins::plugin { 'workflow-support':
-  version => '2.16'
+  version => '2.17'
 }

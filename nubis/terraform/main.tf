@@ -343,6 +343,7 @@ data "aws_iam_policy_document" "ci_build" {
                 "ec2:DescribeVolumes",
                 "ec2:DetachVolume",
                 "ec2:DescribeInstances",
+                "ec2:DescribeInstanceStatus",
                 "ec2:CreateSnapshot",
                 "ec2:DeleteSnapshot",
                 "ec2:DescribeSnapshots",
@@ -545,6 +546,7 @@ resource "null_resource" "unicreds" {
     unicreds         = "unicreds -r ${var.region} put -k ${var.credstash_key} ${var.project}/${var.arena}/ci"
     unicreds_rm      = "unicreds -r ${var.region} delete -k ${var.credstash_key} ${var.project}/${var.arena}/ci"
     version          = "${var.version}"
+    newrelic_api_key = "${var.newrelic_api_key}"
   }
 
   provisioner "local-exec" {
@@ -554,6 +556,15 @@ resource "null_resource" "unicreds" {
   provisioner "local-exec" {
     when    = "destroy"
     command = "${self.triggers.unicreds_rm}/slack_token"
+  }
+
+  provisioner "local-exec" {
+    command = "${self.triggers.unicreds}/newrelic_api_key ${var.newrelic_api_key} ${self.triggers.context}"
+  }
+
+  provisioner "local-exec" {
+    when    = "destroy"
+    command = "${self.triggers.unicreds_rm}/newrelic_api_key"
   }
 
   provisioner "local-exec" {
