@@ -1,6 +1,7 @@
-$terraform_version = '0.10.7'
-$packer_version = '1.0.4'
-$nubis_builder_version = 'v1.5.2'
+$terraform_version = '0.10.8'
+$packer_version = '1.1.3'
+$nubis_builder_version = 'v1.6.0'
+$terraform_nrs_version = '0.2.0-gozer'
 
 package { 'awscli':
   ensure => latest,
@@ -31,9 +32,6 @@ vcsrepo { '/opt/nubis-builder':
   provider => git,
   source   => 'https://github.com/nubisproject/nubis-builder.git',
   revision => $nubis_builder_version,
-  require  => [
-    Package['git'],
-  ],
 }
 
 # XXX: need to move to puppet-packer
@@ -54,4 +52,29 @@ staging::file { 'terraform.zip':
   creates => '/usr/local/bin/terraform',
 }
 
+notice ("Grabbing Terraform Newrelic Synthecit plugin ${terraform_nrs_version}")
+
+$terraform_nrs_url = "https://github.com/gozer/terraform-provider-nrs/releases/download/${terraform_nrs_version}/terraform-provider-nrs_linux-amd64"
+staging::file { '/usr/local/bin/terraform-provider-nrs':
+  source => $terraform_nrs_url,
+  target => '/usr/local/bin/terraform-provider-nrs',
+}->
+exec { 'chmod /usr/local/bin/terraform-provider-nrs':
+  command => '/bin/chmod 755 /usr/local/bin/terraform-provider-nrs',
+}
+
+file { '/var/lib/jenkins/.terraformrc':
+  require => [
+    Class['jenkins'],
+    Staging::File['/usr/local/bin/terraform-provider-nrs'],
+  ],
+  owner   => 'jenkins',
+  group   => 'jenkins',
+  mode    => '0640',
+  content => '
+providers {
+    nrs = "/usr/local/bin/terraform-provider-nrs"
+}
+',
+}
 

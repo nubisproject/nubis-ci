@@ -1,13 +1,13 @@
 forge "https://forgeapi.puppetlabs.com"
 
 # Jenkins Dependencies
-mod 'puppetlabs/apt', '2.2.1'
-mod 'puppetlabs/java','1.6.0'
-mod 'darin/zypprepo', '1.0.2'
+mod 'puppet/zypprepo', '2.2.0'
+mod 'puppetlabs-transition', '0.1.1'
 
 # Jenkins itself
-mod 'rtyler/jenkins', '1.7.0'
-mod 'camptocamp/archive', '0.9.0'
+mod 'rtyler/jenkins',
+    :git => 'https://github.com/jenkinsci/puppet-jenkins.git',
+    :ref => 'ffd12e3c12f6817bd34f67a6e041d29c53a68e36'
 
-# Java 8
-mod 'spantree-java8', '0.6.0'
+# Java
+mod 'puppetlabs/java', '2.2.0'

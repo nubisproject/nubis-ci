@@ -1,7 +1,7 @@
 [template]
 src = "vars.tmpl"
 dest = "/var/lib/jenkins/jobs/%%NUBIS_CI_NAME%%-deployment/vars.tfvars"
-prefix = "/%%NUBIS_CI_NAME%%/%%ENVIRONMENT%%"
+prefix = "/%%NUBIS_CI_NAME%%/%%ARENA%%"
 keys = [
     "/config"
 ]
