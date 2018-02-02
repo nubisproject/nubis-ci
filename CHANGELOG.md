@@ -1,5 +1,81 @@
 # Change Log
 
+## [v2.1.0](https://github.com/nubisproject/nubis-ci/tree/v2.1.0) (2018-02-02)
+[Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v2.0.4...v2.1.0)
+
+**Closed issues:**
+
+- Add initial support for NewRelic [\#566](https://github.com/nubisproject/nubis-ci/issues/566)
+- Disable JNLP3 [\#564](https://github.com/nubisproject/nubis-ci/issues/564)
+- \[upgrade\] Plugins [\#562](https://github.com/nubisproject/nubis-ci/issues/562)
+- Upgrade to nubis-builder v1.6.0 [\#557](https://github.com/nubisproject/nubis-ci/issues/557)
+- Upgrade Jenkins to 2.89.3 [\#556](https://github.com/nubisproject/nubis-ci/issues/556)
+- We forgot a small reference to environemnt [\#554](https://github.com/nubisproject/nubis-ci/issues/554)
+- Disable deprecated JNLP protocols [\#550](https://github.com/nubisproject/nubis-ci/issues/550)
+- \[Jenkins\] Plugin upgrades [\#549](https://github.com/nubisproject/nubis-ci/issues/549)
+- \[Jenkins\] Upgrade to 2.89.2 [\#548](https://github.com/nubisproject/nubis-ci/issues/548)
+- Add missing IAM perms [\#545](https://github.com/nubisproject/nubis-ci/issues/545)
+- \[packer\] Upgrade to version 1.1.3 [\#544](https://github.com/nubisproject/nubis-ci/issues/544)
+- Fluentd jenkins tag typo [\#542](https://github.com/nubisproject/nubis-ci/issues/542)
+- \[retry\] Consider retrying builds when Amazon fails us [\#524](https://github.com/nubisproject/nubis-ci/issues/524)
+- \[terraform\] Upgrade to 0.10.8 [\#503](https://github.com/nubisproject/nubis-ci/issues/503)
+
+**Merged pull requests:**
+
+- Add terraform support for NewRelic Synthetics [\#567](https://github.com/nubisproject/nubis-ci/pull/567) ([gozer](https://github.com/gozer))
+- Disable JNLP3 for security reasons [\#565](https://github.com/nubisproject/nubis-ci/pull/565) ([gozer](https://github.com/gozer))
+- Upgrade plugins [\#563](https://github.com/nubisproject/nubis-ci/pull/563) ([gozer](https://github.com/gozer))
+- Upgrade Terraform to v0.10.8 [\#561](https://github.com/nubisproject/nubis-ci/pull/561) ([gozer](https://github.com/gozer))
+- Upgrade Packer to v1.1.3 [\#560](https://github.com/nubisproject/nubis-ci/pull/560) ([gozer](https://github.com/gozer))
+- Upgrade Jenkins to 2.89.3 [\#559](https://github.com/nubisproject/nubis-ci/pull/559) ([gozer](https://github.com/gozer))
+- Upgrade nubis-builder to v1.6.0 [\#558](https://github.com/nubisproject/nubis-ci/pull/558) ([gozer](https://github.com/gozer))
+- We missed one small ENV reference in the Arena work [\#555](https://github.com/nubisproject/nubis-ci/pull/555) ([gozer](https://github.com/gozer))
+- Upgrade Jenkins plugins [\#553](https://github.com/nubisproject/nubis-ci/pull/553) ([gozer](https://github.com/gozer))
+- Upgrade Jenkins to 2.89.2 [\#552](https://github.com/nubisproject/nubis-ci/pull/552) ([gozer](https://github.com/gozer))
+- Disable deprecated JNLP protocols version 1 & 2 [\#551](https://github.com/nubisproject/nubis-ci/pull/551) ([gozer](https://github.com/gozer))
+- Add missing IAM permission [\#547](https://github.com/nubisproject/nubis-ci/pull/547) ([limed](https://github.com/limed))
+- Bump packer to be inline with nubis-docker-builder [\#546](https://github.com/nubisproject/nubis-ci/pull/546) ([limed](https://github.com/limed))
+- Fixing a typo [\#543](https://github.com/nubisproject/nubis-ci/pull/543) ([limed](https://github.com/limed))
+
+## [v2.0.4](https://github.com/nubisproject/nubis-ci/tree/v2.0.4) (2017-12-08)
+[Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v2.0.3...v2.0.4)
+
+**Closed issues:**
+
+- \[iam\] Add missing rds/elasticache tags permissions [\#539](https://github.com/nubisproject/nubis-ci/issues/539)
+- \[route53\] Additional perms for route53 [\#537](https://github.com/nubisproject/nubis-ci/issues/537)
+- Discard old builds [\#531](https://github.com/nubisproject/nubis-ci/issues/531)
+- \[iam\] route53:CreateHostedZone doesn't exist [\#527](https://github.com/nubisproject/nubis-ci/issues/527)
+- \[Jenkins\] Upgrade to 2.73.3 [\#526](https://github.com/nubisproject/nubis-ci/issues/526)
+- \[iam\] iam:DescribeAutoScalingGroup doesnt' exist [\#512](https://github.com/nubisproject/nubis-ci/issues/512)
+- \[security\] iam:PassRole is not needed anmoyre [\#471](https://github.com/nubisproject/nubis-ci/issues/471)
+- Tag v2.0.4 release [\#541](https://github.com/nubisproject/nubis-ci/issues/541)
+
+**Merged pull requests:**
+
+- Add missing IAM permissions for tags on rds and elasticache [\#540](https://github.com/nubisproject/nubis-ci/pull/540) ([gozer](https://github.com/gozer))
+- Add IAM permission to get ci deploy r53 records [\#538](https://github.com/nubisproject/nubis-ci/pull/538) ([limed](https://github.com/limed))
+- Looks like creating IAM roles needs iam:PassRole [\#536](https://github.com/nubisproject/nubis-ci/pull/536) ([gozer](https://github.com/gozer))
+- Should have been 30 days [\#535](https://github.com/nubisproject/nubis-ci/pull/535) ([gozer](https://github.com/gozer))
+- Keep our builds from growing unbounded [\#534](https://github.com/nubisproject/nubis-ci/pull/534) ([gozer](https://github.com/gozer))
+- Bump nubis-builder to v1.5.6 [\#533](https://github.com/nubisproject/nubis-ci/pull/533) ([gozer](https://github.com/gozer))
+- iam:PassRole isn't needed anymore [\#532](https://github.com/nubisproject/nubis-ci/pull/532) ([gozer](https://github.com/gozer))
+- \[Centennial\] [\#530](https://github.com/nubisproject/nubis-ci/pull/530) ([gozer](https://github.com/gozer))
+- Remove libssl package from travis check [\#529](https://github.com/nubisproject/nubis-ci/pull/529) ([limed](https://github.com/limed))
+- Allow CI system to create a hosted zone [\#528](https://github.com/nubisproject/nubis-ci/pull/528) ([limed](https://github.com/limed))
+
+## [v2.0.3](https://github.com/nubisproject/nubis-ci/tree/v2.0.3) (2017-11-02)
+[Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v2.0.2...v2.0.3)
+
+**Closed issues:**
+
+- Tag v2.0.3 release [\#521](https://github.com/nubisproject/nubis-ci/issues/521)
+
+**Merged pull requests:**
+
+- Merge v2.0.3 release into develop. \[skip ci\] [\#523](https://github.com/nubisproject/nubis-ci/pull/523) ([tinnightcap](https://github.com/tinnightcap))
+- Update CHANGELOG for v2.0.3 release \[skip ci\] [\#522](https://github.com/nubisproject/nubis-ci/pull/522) ([tinnightcap](https://github.com/tinnightcap))
+
 ## [v2.0.2](https://github.com/nubisproject/nubis-ci/tree/v2.0.2) (2017-10-25)
 [Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v2.0.1...v2.0.2)
 
