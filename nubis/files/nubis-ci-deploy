@@ -26,6 +26,7 @@ action=$1
 
 if [ "$action" = "" ] || [ "$action" = "apply" ]; then
   action="apply"
+  terraform_extra_args="-auto-approve=true"
 elif [ "$action" = "destroy" ]; then
   terraform_extra_args="-force"
 elif [ "$action" = "plan" ]; then
