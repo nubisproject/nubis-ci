@@ -273,7 +273,7 @@ data "aws_iam_policy_document" "ci_artifacts" {
     ]
 
     resources = [
-      "arn:aws:s3:::*",
+      "*",
     ]
   }
 
@@ -294,7 +294,6 @@ data "aws_iam_policy_document" "ci_artifacts" {
 
     actions = [
       "s3:PutObject",
-      "s3:ListObject",
       "s3:GetObject",
       "s3:DeleteObject"
     ]
@@ -371,7 +370,6 @@ data "aws_iam_policy_document" "ci_deploy" {
                 "autoscaling:CreateAutoScalingGroup",
                 "autoscaling:CreateLaunchConfiguration",
                 "autoscaling:DeleteLaunchConfiguration",
-                "autoscaling:DescribeAutoScalingGroup",
                 "autoscaling:DescribeAutoScalingGroups",
                 "autoscaling:DescribeLaunchConfigurations",
                 "autoscaling:DescribePolicies",
