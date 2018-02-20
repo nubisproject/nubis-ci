@@ -92,7 +92,7 @@ python::pip { 'MarkupSafe':
 }
 
 python::pip { 's3cmd':
-  ensure  => '1.6.1',
+  ensure  => '2.0.1',
   require => Class['python'],
 }
 
