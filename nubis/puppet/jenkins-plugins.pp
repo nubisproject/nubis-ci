@@ -53,7 +53,7 @@ jenkins::plugin { 'copyartifact':
 }
 
 jenkins::plugin { 'credentials-binding':
-  version => '1.14'
+  version => '1.15'
 }
 
 jenkins::plugin { 'discard-old-build':
@@ -101,7 +101,7 @@ jenkins::plugin { 'icon-shim':
 }
 
 jenkins::plugin { 'jackson2-api':
-  version => '2.8.10.1'
+  version => '2.8.11.1'
 }
 
 jenkins::plugin { 'javadoc':
@@ -109,7 +109,7 @@ jenkins::plugin { 'javadoc':
 }
 
 jenkins::plugin { 'job-dsl':
-  version => '1.66'
+  version => '1.68'
 }
 
 jenkins::plugin { 'jquery-detached':
@@ -117,15 +117,15 @@ jenkins::plugin { 'jquery-detached':
 }
 
 jenkins::plugin { 'jsch':
-  version => '0.1.54.1'
+  version => '0.1.54.2'
 }
 
 jenkins::plugin { 'junit':
-  version => '1.23'
+  version => '1.24'
 }
 
 jenkins::plugin { 'ldap':
-  version => '1.18'
+  version => '1.20'
 }
 
 jenkins::plugin { 'mailer':
@@ -173,7 +173,7 @@ jenkins::plugin { 'prometheus':
 }
 
 jenkins::plugin { 'promoted-builds':
-  version => '2.31'
+  version => '2.31.1'
 }
 
 jenkins::plugin { 'rebuild':
@@ -181,7 +181,7 @@ jenkins::plugin { 'rebuild':
 }
 
 jenkins::plugin { 'reverse-proxy-auth-plugin':
-  version => '1.5'
+  version => '1.6.3'
 }
 
 jenkins::plugin { 'run-condition':
@@ -189,7 +189,7 @@ jenkins::plugin { 'run-condition':
 }
 
 jenkins::plugin { 's3':
-  version => '0.10.12'
+  version => '0.11.0'
 }
 
 jenkins::plugin { 'scm-api':
@@ -197,7 +197,7 @@ jenkins::plugin { 'scm-api':
 }
 
 jenkins::plugin { 'script-security':
-  version => '1.40'
+  version => '1.41'
 }
 
 jenkins::plugin { 'slack':
@@ -213,7 +213,7 @@ jenkins::plugin { 'startup-trigger-plugin':
 }
 
 jenkins::plugin { 'structs':
-  version => '1.10'
+  version => '1.14'
 }
 
 jenkins::plugin { 'thinBackup':
@@ -237,7 +237,7 @@ jenkins::plugin { 'workflow-api':
 }
 
 jenkins::plugin { 'workflow-cps':
-  version => '2.43'
+  version => '2.45'
 }
 
 jenkins::plugin { 'workflow-cps-global-lib':
@@ -261,5 +261,5 @@ jenkins::plugin { 'workflow-step-api':
 }
 
 jenkins::plugin { 'workflow-support':
-  version => '2.17'
+  version => '2.18'
 }
