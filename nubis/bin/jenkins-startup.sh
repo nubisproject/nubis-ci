@@ -75,7 +75,7 @@ perl -pi -e "s[%%NUBIS_GIT_REPO%%][$NUBIS_GIT_REPO]g" "/var/lib/jenkins/jobs/00-
 # All regions according to AWS (US only), with our own first
 
 # XXX: packer doesn't support us-east-2 yet
-REGIONS=($AWS_REGION $(aws --region "$AWS_REGION" ec2 describe-regions | jq -r '.Regions[] | .RegionName' | grep -E "^us-" | grep -v "$AWS_REGION" | grep -v us-east-2 | sort))
+REGIONS="($AWS_REGION $(aws --region "$AWS_REGION" ec2 describe-regions | jq -r '.Regions[] | .RegionName' | grep -E "^us-" | grep -v "$AWS_REGION" | grep -v us-east-2 | sort))"
 
 # build a XML chunk
 for region in ${REGIONS[*]}; do
