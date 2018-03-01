@@ -386,6 +386,8 @@ data "aws_iam_policy_document" "ci_deploy" {
                 "autoscaling:DescribeAutoScalingInstances",
                 "autoscaling:EnableMetricsCollection",
                 "autoscaling:SetInstanceHealth",
+                "autoscaling:PutLifecycleHook",
+                "autoscaling:DeleteLifecycleHook",
                 "ec2:createTags",
                 "ec2:deleteTags",
                 "ec2:CreateSecurityGroup",
