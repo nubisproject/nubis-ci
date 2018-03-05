@@ -1,11 +1,11 @@
 variable "arena" {
   description = "Name of the arena this deployment is for"
-  default = "core"
+  default     = "core"
 }
 
 variable "nubis_domain" {
   description = "Top-level Nubis domain for this environemnt"
-  default = "nubis.allizom.org"
+  default     = "nubis.allizom.org"
 }
 
 variable "enabled" {
@@ -13,33 +13,33 @@ variable "enabled" {
 }
 
 variable "region" {
-  default = "us-east-1"
+  default     = "us-east-1"
   description = "The region of AWS, for AMI lookups and where to launch"
 }
 
 variable "admins" {
   description = "GitHub userids that should be admins, comma separated"
-  default = "gozer"
+  default     = "gozer"
 }
 
 variable "organizations" {
   description = "GitHub organizations that should be build users, comma separated"
-  default = "nubisproject"
+  default     = "nubisproject"
 }
 
 variable "git_repo" {
   description = "URL to git repo to build"
-  default = "https://github.com/mozilla/nubis-ci.git"
+  default     = "https://github.com/mozilla/nubis-ci.git"
 }
 
 variable "git_branches" {
   description = "List of Git branch specs to follow"
-  default = "refs/heads/master"
+  default     = "refs/heads/master"
 }
 
 variable "project" {
   description = "Name of the Nubis project"
-  default = "ci"
+  default     = "ci"
 }
 
 variable "key_name" {
@@ -76,7 +76,7 @@ variable monitoring_security_group_id {
 
 variable sso_security_group_id {
   description = "ID of that SG"
-  default = ""
+  default     = ""
 }
 
 variable "public_subnets" {
@@ -93,20 +93,18 @@ variable "account_name" {
 
 variable "email" {
   description = "e-mail to send build notifications to"
-  default = "gozer@mozilla.com"
+  default     = "gozer@mozilla.com"
 }
 
 variable "version" {
   description = "Version of nubis-ci to deploy"
 }
 
-variable "technical_contact" { 
+variable "technical_contact" {
   default = "infra-aws@mozilla.com"
 }
 
-variable "credstash_key" {
-
-}
+variable "credstash_key" {}
 
 variable "slack_domain" {
   default = "mozilla"
