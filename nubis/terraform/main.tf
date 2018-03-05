@@ -1,6 +1,6 @@
 # Configure the AWS Provider
 provider "aws" {
-    region = "${var.region}"
+  region = "${var.region}"
 }
 
 module "ci-image" {
@@ -13,127 +13,129 @@ module "ci-image" {
 
 # Create a new load balancer
 resource "aws_elb" "ci" {
-  count = "${var.enabled}"
-  name = "ci-elb-${var.project}"
+  count   = "${var.enabled}"
+  name    = "ci-elb-${var.project}"
   subnets = ["${split(",", var.public_subnets)}"]
 
   internal = true
 
   listener {
-    instance_port = 8080
+    instance_port     = 8080
     instance_protocol = "http"
-    lb_port = 80
-    lb_protocol = "http"
+    lb_port           = 80
+    lb_protocol       = "http"
   }
 
   health_check {
-    healthy_threshold = 3
+    healthy_threshold   = 3
     unhealthy_threshold = 3
-    timeout = 10
-    target = "HTTP:8080/jenkins/cc.xml"
-    interval = 30
+    timeout             = 10
+    target              = "HTTP:8080/jenkins/cc.xml"
+    interval            = 30
   }
 
   cross_zone_load_balancing = true
 
   security_groups = [
-    "${aws_security_group.elb.id}"
+    "${aws_security_group.elb.id}",
   ]
 
   tags = {
-    Region = "${var.region}"
-    Arena = "${var.arena}"
+    Region           = "${var.region}"
+    Arena            = "${var.arena}"
     TechnicalContact = "${var.technical_contact}"
   }
 }
 
 resource "aws_security_group" "elb" {
-  count = "${var.enabled}"
-  name = "ci-elb-${var.project}"
+  count       = "${var.enabled}"
+  name        = "ci-elb-${var.project}"
   description = "Allow inbound traffic for CI ${var.project}"
 
   vpc_id = "${var.vpc_id}"
 
   ingress {
-      from_port = 80
-      to_port = 80
-      protocol = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
-      from_port = 0
-      to_port = 0
-      protocol = "-1"
-      cidr_blocks = ["0.0.0.0/0"]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
-    Region = "${var.region}"
-    Arena = "${var.arena}"
+    Region           = "${var.region}"
+    Arena            = "${var.arena}"
     TechnicalContact = "${var.technical_contact}"
   }
 }
 
 resource "aws_security_group" "ci" {
-  count = "${var.enabled}"
-  name = "ci-${var.project}"
+  count       = "${var.enabled}"
+  name        = "ci-${var.project}"
   description = "Allow inbound traffic for CI ${var.project}"
 
   vpc_id = "${var.vpc_id}"
 
   ingress {
-      from_port = 8080
-      to_port = 8080
-      protocol = "tcp"
-      security_groups = [
-       "${aws_security_group.elb.id}",
-       "${var.monitoring_security_group_id}",
-       "${var.sso_security_group_id}",
-      ]
+    from_port = 8080
+    to_port   = 8080
+    protocol  = "tcp"
+
+    security_groups = [
+      "${aws_security_group.elb.id}",
+      "${var.monitoring_security_group_id}",
+      "${var.sso_security_group_id}",
+    ]
   }
 
   ingress {
-      from_port = 22
-      to_port = 22
-      protocol = "tcp"
-      security_groups = [
-        "${var.ssh_security_group_id}"
-      ]
+    from_port = 22
+    to_port   = 22
+    protocol  = "tcp"
+
+    security_groups = [
+      "${var.ssh_security_group_id}",
+    ]
   }
 
   egress {
-      from_port = 0
-      to_port = 0
-      protocol = "-1"
-      cidr_blocks = ["0.0.0.0/0"]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
-    Region = "${var.region}"
-    Arena = "${var.arena}"
+    Region           = "${var.region}"
+    Arena            = "${var.arena}"
     TechnicalContact = "${var.technical_contact}"
   }
 }
 
 resource "aws_autoscaling_group" "ci" {
-  count = "${var.enabled}"
+  count               = "${var.enabled}"
   vpc_zone_identifier = ["${split(",", var.private_subnets)}"]
 
   # This is on purpose, when the LC changes, will force creation of a new ASG
   name = "ci-${var.project} - ${aws_launch_configuration.ci.name}"
 
   load_balancers = [
-   "${aws_elb.ci.name}"
+    "${aws_elb.ci.name}",
   ]
 
-  max_size = "2"
-  min_size = "0"
+  max_size                  = "2"
+  min_size                  = "0"
   health_check_grace_period = 600
-  health_check_type = "ELB"
-  desired_capacity = "1"
-  force_delete = true
-  launch_configuration = "${aws_launch_configuration.ci.name}"
+  health_check_type         = "ELB"
+  desired_capacity          = "1"
+  force_delete              = true
+  launch_configuration      = "${aws_launch_configuration.ci.name}"
 
   enabled_metrics = [
     "GroupMinSize",
@@ -147,21 +149,22 @@ resource "aws_autoscaling_group" "ci" {
   ]
 
   tag {
-    key = "Name"
-    value = "CI server for ${var.project} (${var.version})"
-    propagate_at_launch = true
-  }
-  tag {
-    key = "TechnicalContact"
-    value = "${var.technical_contact}"
-    propagate_at_launch = true
-  }
-  tag {
-    key = "Arena"
-    value = "${var.arena}"
+    key                 = "Name"
+    value               = "CI server for ${var.project} (${var.version})"
     propagate_at_launch = true
   }
 
+  tag {
+    key                 = "TechnicalContact"
+    value               = "${var.technical_contact}"
+    propagate_at_launch = true
+  }
+
+  tag {
+    key                 = "Arena"
+    value               = "${var.arena}"
+    propagate_at_launch = true
+  }
 }
 
 resource "aws_launch_configuration" "ci" {
@@ -171,23 +174,25 @@ resource "aws_launch_configuration" "ci" {
 
   image_id = "${module.ci-image.image_id}"
 
-    instance_type = "${var.instance_type}"
-    key_name = "${var.key_name}"
-    security_groups = [
-      "${aws_security_group.ci.id}",
-      "${var.internet_security_group_id}",
-      "${var.shared_services_security_group_id}",
-    ]
-    iam_instance_profile = "${aws_iam_instance_profile.ci.name}"
+  instance_type = "${var.instance_type}"
+  key_name      = "${var.key_name}"
 
-    enable_monitoring = false
+  security_groups = [
+    "${aws_security_group.ci.id}",
+    "${var.internet_security_group_id}",
+    "${var.shared_services_security_group_id}",
+  ]
 
-    root_block_device = {
-      volume_size = "${var.root_storage_size}"
-      delete_on_termination = true
-    }
+  iam_instance_profile = "${aws_iam_instance_profile.ci.name}"
 
-    user_data = <<EOF
+  enable_monitoring = false
+
+  root_block_device = {
+    volume_size           = "${var.root_storage_size}"
+    delete_on_termination = true
+  }
+
+  user_data = <<EOF
 NUBIS_ACCOUNT=${var.account_name}
 NUBIS_PROJECT=${var.project}
 NUBIS_ARENA=${var.arena}
@@ -206,39 +211,39 @@ NUBIS_CI_SLACK_DOMAIN="${var.slack_domain}"
 NUBIS_SUDO_GROUPS="${var.nubis_sudo_groups}"
 NUBIS_USER_GROUPS="${var.nubis_user_groups}"
 EOF
-
 }
 
 resource "aws_s3_bucket" "ci_artifacts" {
-  count = "${var.enabled}"
-    bucket_prefix = "ci-${var.project}-artifacts-"
+  count         = "${var.enabled}"
+  bucket_prefix = "ci-${var.project}-artifacts-"
 
-    acl = "private"
+  acl = "private"
 
-    force_destroy = true
+  force_destroy = true
 
-    versioning {
-      enabled = true
-    }
+  versioning {
+    enabled = true
+  }
 
-    tags = {
-        Region = "${var.region}"
-        Arena = "${var.arena}"
-        TechnicalContact = "${var.technical_contact}"
-    }
+  tags = {
+    Region           = "${var.region}"
+    Arena            = "${var.arena}"
+    TechnicalContact = "${var.technical_contact}"
+  }
 }
 
 resource "aws_iam_instance_profile" "ci" {
   count = "${var.enabled}"
-    name = "ci-${var.project}-${var.arena}-${var.region}"
-    role = "${aws_iam_role.ci.name}"
+  name  = "ci-${var.project}-${var.arena}-${var.region}"
+  role  = "${aws_iam_role.ci.name}"
 }
 
 resource "aws_iam_role" "ci" {
   count = "${var.enabled}"
-    name = "ci-${var.project}-${var.arena}-${var.region}"
-    path = "/"
-    assume_role_policy = <<EOF
+  name  = "ci-${var.project}-${var.arena}-${var.region}"
+  path  = "/"
+
+  assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -256,14 +261,15 @@ EOF
 }
 
 resource "aws_iam_role_policy" "ci_artifacts" {
-  count = "${var.enabled}"
-    name    = "ci-${var.project}-${var.arena}-${var.region}-artifacts"
-    role    = "${aws_iam_role.ci.id}"
-    policy  = "${data.aws_iam_policy_document.ci_artifacts.json}"
+  count  = "${var.enabled}"
+  name   = "ci-${var.project}-${var.arena}-${var.region}-artifacts"
+  role   = "${aws_iam_role.ci.id}"
+  policy = "${data.aws_iam_policy_document.ci_artifacts.json}"
 }
 
 data "aws_iam_policy_document" "ci_artifacts" {
   count = "${var.enabled}"
+
   statement {
     sid = "AllBuckets"
 
@@ -295,7 +301,7 @@ data "aws_iam_policy_document" "ci_artifacts" {
     actions = [
       "s3:PutObject",
       "s3:GetObject",
-      "s3:DeleteObject"
+      "s3:DeleteObject",
     ]
 
     resources = [
@@ -306,52 +312,53 @@ data "aws_iam_policy_document" "ci_artifacts" {
 }
 
 resource "aws_iam_role_policy" "ci_build" {
-  count = "${var.enabled}"
-    name    = "ci-${var.project}-${var.arena}-${var.region}-build"
-    role    = "${aws_iam_role.ci.id}"
-    policy  = "${data.aws_iam_policy_document.ci_build.json}"
+  count  = "${var.enabled}"
+  name   = "ci-${var.project}-${var.arena}-${var.region}-build"
+  role   = "${aws_iam_role.ci.id}"
+  policy = "${data.aws_iam_policy_document.ci_build.json}"
 }
 
 data "aws_iam_policy_document" "ci_build" {
   count = "${var.enabled}"
+
   statement {
     sid = "build"
 
     actions = [
-                "iam:CreateServiceLinkedRole",
-                "ec2:DescribeSpotPriceHistory",
-                "ec2:RequestSpotInstances",
-                "ec2:CancelSpotInstanceRequests",
-                "ec2:DescribeSpotInstanceRequests",
-                "ec2:CopyImage",
-                "ec2:AttachVolume",
-                "ec2:CreateVolume",
-                "ec2:DeleteVolume",
-                "ec2:CreateKeypair",
-                "ec2:DeleteKeypair",
-                "ec2:DescribeKeyPairs",
-                "ec2:CreateSecurityGroup",
-                "ec2:DeleteSecurityGroup",
-                "ec2:RevokeSecurityGroupEgress",
-                "ec2:AuthorizeSecurityGroupIngress",
-                "ec2:AuthorizeSecurityGroupEgress",
-                "ec2:CreateImage",
-                "ec2:RunInstances",
-                "ec2:TerminateInstances",
-                "ec2:StopInstances",
-                "ec2:DescribeVolumes",
-                "ec2:DetachVolume",
-                "ec2:DescribeInstances",
-                "ec2:DescribeInstanceStatus",
-                "ec2:CreateSnapshot",
-                "ec2:DeleteSnapshot",
-                "ec2:DescribeSnapshots",
-                "ec2:DescribeImages",
-                "ec2:RegisterImage",
-                "ec2:DeregisterImage",
-                "ec2:CreateTags",
-                "ec2:ModifyImageAttribute",
-                "ec2:DescribeRegions",
+      "iam:CreateServiceLinkedRole",
+      "ec2:DescribeSpotPriceHistory",
+      "ec2:RequestSpotInstances",
+      "ec2:CancelSpotInstanceRequests",
+      "ec2:DescribeSpotInstanceRequests",
+      "ec2:CopyImage",
+      "ec2:AttachVolume",
+      "ec2:CreateVolume",
+      "ec2:DeleteVolume",
+      "ec2:CreateKeypair",
+      "ec2:DeleteKeypair",
+      "ec2:DescribeKeyPairs",
+      "ec2:CreateSecurityGroup",
+      "ec2:DeleteSecurityGroup",
+      "ec2:RevokeSecurityGroupEgress",
+      "ec2:AuthorizeSecurityGroupIngress",
+      "ec2:AuthorizeSecurityGroupEgress",
+      "ec2:CreateImage",
+      "ec2:RunInstances",
+      "ec2:TerminateInstances",
+      "ec2:StopInstances",
+      "ec2:DescribeVolumes",
+      "ec2:DetachVolume",
+      "ec2:DescribeInstances",
+      "ec2:DescribeInstanceStatus",
+      "ec2:CreateSnapshot",
+      "ec2:DeleteSnapshot",
+      "ec2:DescribeSnapshots",
+      "ec2:DescribeImages",
+      "ec2:RegisterImage",
+      "ec2:DeregisterImage",
+      "ec2:CreateTags",
+      "ec2:ModifyImageAttribute",
+      "ec2:DescribeRegions",
     ]
 
     resources = [
@@ -361,162 +368,162 @@ data "aws_iam_policy_document" "ci_build" {
 }
 
 data "aws_iam_policy_document" "ci_deploy" {
-    count = "${var.enabled}"
+  count = "${var.enabled}"
 
- statement {
+  statement {
     sid = "deploy"
 
     actions = [
-                "autoscaling:CreateAutoScalingGroup",
-                "autoscaling:CreateLaunchConfiguration",
-                "autoscaling:DeleteLaunchConfiguration",
-                "autoscaling:DescribeAutoScalingGroups",
-                "autoscaling:DescribeLaunchConfigurations",
-                "autoscaling:DescribePolicies",
-                "autoscaling:DeletePolicy",
-                "autoscaling:UpdateAutoScalingGroup",
-                "autoscaling:DescribeScalingActivities",
-                "autoscaling:DeleteAutoScalingGroup",
-                "autoscaling:DescribeScheduledActions",
-                "autoscaling:TerminateInstanceInAutoScalingGroup",
-                "autoscaling:SetDesiredCapacity",
-                "autoscaling:PutScalingPolicy",
-                "autoscaling:CreateOrUpdateTags",
-                "autoscaling:DeleteTags",
-                "autoscaling:DescribeAutoScalingInstances",
-                "autoscaling:EnableMetricsCollection",
-                "autoscaling:SetInstanceHealth",
-                "autoscaling:PutLifecycleHook",
-                "autoscaling:DeleteLifecycleHook",
-                "autoscaling:DescribeLifecycleHooks",
-                "autoscaling:DescribeLifecycleHookTypes",
-                "autoscaling:PutNotificationConfiguration",
-                "autoscaling:DescribeNotificationConfigurations",
-                "autoscaling:DescribeAutoScalingNotificationTypes",
-                "autoscaling:DeleteNotificationConfiguration",
-                "ec2:createTags",
-                "ec2:deleteTags",
-                "ec2:CreateSecurityGroup",
-                "ec2:DescribeAvailabilityZones",
-                "ec2:DescribeInstances",
-                "ec2:DescribeSecurityGroups",
-                "ec2:DescribeAccountAttributes",
-                "ec2:AuthorizeSecurityGroupIngress",
-                "ec2:RevokeSecurityGroupIngress",
-                "ec2:AuthorizeSecurityGroupEgress",
-                "ec2:RevokeSecurityGroupEgress",
-                "ec2:DeleteSecurityGroup",
-                "ec2:allocateAddress",
-                "ec2:describeAddresses",
-                "ec2:DescribeSubnets",
-                "ec2:DescribeNetworkInterfaces",
-                "ec2:CreateNetworkInterface",
-                "ec2:DeleteNetworkInterface",
-                "ec2:DescribeNetworkInterfaceAttribute",
-                "ec2:ModifyNetworkInterfaceAttribute",
-                "elasticache:CreateCacheSubnetGroup",
-                "elasticache:DeleteCacheSubnetGroup",
-                "elasticache:DescribeCacheSubnetGroups",
-                "elasticache:CreateCacheCluster",
-                "elasticache:DescribeCacheClusters",
-                "elasticache:DeleteCacheCluster",
-                "elasticache:AddTagsToResource",
-                "elasticache:ListTagsForResource",
-                "elasticache:RemoveTagsFromResource",
-                "elasticloadbalancing:ApplySecurityGroupsToLoadBalancer",
-                "elasticloadbalancing:ConfigureHealthCheck",
-                "elasticloadbalancing:CreateLoadBalancer",
-                "elasticloadbalancing:DeleteLoadBalancer",
-                "elasticloadbalancing:DescribeLoadBalancers",
-                "elasticloadbalancing:ModifyLoadBalancerAttributes",
-                "elasticloadbalancing:SetLoadBalancerPoliciesOfListener",
-                "elasticloadbalancing:DeleteLoadBalancerListeners",
-                "elasticloadbalancing:CreateLoadBalancerListeners",
-                "elasticloadbalancing:DescribeLoadBalancerAttributes",
-                "elasticloadbalancing:AddTags",
-                "elasticloadbalancing:DescribeTags",
-                "elasticloadbalancing:AttachLoadBalancerToSubnets",
-                "elasticloadbalancing:DescribeInstanceHealth",
-                "elasticfilesystem:CreateFileSystem",
-                "elasticfilesystem:DescribeFileSystems",
-                "elasticfilesystem:DeleteFileSystem",
-                "elasticfilesystem:CreateMountTarget",
-                "elasticfilesystem:DescribeMountTargets",
-                "elasticfilesystem:DescribeMountTargetSecurityGroups",
-                "elasticfilesystem:ModifyMountTargetSecurityGroups",
-                "elasticfilesystem:DeleteMountTarget",
-                "elasticfilesystem:CreateTags",
-                "elasticfilesystem:DescribeTags",
-                "elasticfilesystem:DeleteTags",
-                "rds:CreateDBInstance",
-                "rds:CreateDBSubnetGroup",
-                "rds:DeleteDBSubnetGroup",
-                "rds:DescribeDBSubnetGroups",
-                "rds:DeleteDBInstance",
-                "rds:DescribeDBInstances",
-                "rds:ModifyDBInstance",
-                "rds:CreateDBInstanceReadReplica",
-                "rds:CreateDBParameterGroup",
-                "rds:DeleteDBParameterGroup",
-                "rds:DescribeDBParameterGroups",
-                "rds:DescribeDBParameters",
-                "rds:ModifyDBParameterGroup",
-                "rds:ResetDBParameterGroup",
-                "rds:AddTagsToResource",
-                "rds:ListTagsForResource",
-                "rds:RemoveTagsFromResource",
-                "route53:GetHostedZone",
-                "route53:ListHostedZones",
-                "route53:GetHostedZone",
-                "route53:GetChange",
-                "route53:DeleteHostedZone",
-                "route53:CreateHostedZone",
-                "route53:CreateReusableDelegationSet",
-                "route53:DeleteReusableDelegationSet",
-                "route53:GetReusableDelegationSet",
-                "route53:UpdateHostedZoneComment",
-                "route53:ChangeTagsForResource",
-                "route53:ListTagsForResource",
-                "route53:ListResourceRecordSets",
-                "route53:ChangeResourceRecordSets",
-                "sns:CreateTopic",
-                "sns:DeleteTopic",
-                "sns:GetTopicAttributes",
-                "sqs:CreateQueue",
-                "sqs:DeleteQueue",
-                "sqs:GetQueueAttributes",
-                "sqs:GetQueueUrl",
-                "sqs:ListQueues",
-                "sqs:ListQueueTags",
-                "sqs:TagQueue",
-                "sqs:UntagQueue",
-                "cloudwatch:PutMetricAlarm",
-                "cloudwatch:DeleteAlarms",
-                "cloudwatch:DescribeAlarms",
-                "iam:PassRole",
-                "iam:GetRole",
-                "iam:CreateUser",
-                "iam:CreateRole",
-                "iam:CreateAccessKey",
-                "iam:PutUserPolicy",
-                "iam:ListAccessKeys",
-                "iam:DeleteUserPolicy",
-                "iam:DeleteAccessKey",
-                "iam:CreateInstanceProfile",
-                "iam:AddRoleToInstanceProfile",
-                "iam:PutRolePolicy",
-                "iam:RemoveRoleFromInstanceProfile",
-                "iam:DeleteRole",
-                "iam:DeleteUser",
-                "iam:DeleteRolePolicy",
-                "iam:GetInstanceProfile",
-                "iam:GetUser",
-                "iam:GetRolePolicy",
-                "iam:GetUserPolicy",
-                "iam:DeleteInstanceProfile",
-                "iam:ListInstanceProfilesForRole",
-                "s3:*",
-                "lambda:InvokeFunction",
+      "autoscaling:CreateAutoScalingGroup",
+      "autoscaling:CreateLaunchConfiguration",
+      "autoscaling:DeleteLaunchConfiguration",
+      "autoscaling:DescribeAutoScalingGroups",
+      "autoscaling:DescribeLaunchConfigurations",
+      "autoscaling:DescribePolicies",
+      "autoscaling:DeletePolicy",
+      "autoscaling:UpdateAutoScalingGroup",
+      "autoscaling:DescribeScalingActivities",
+      "autoscaling:DeleteAutoScalingGroup",
+      "autoscaling:DescribeScheduledActions",
+      "autoscaling:TerminateInstanceInAutoScalingGroup",
+      "autoscaling:SetDesiredCapacity",
+      "autoscaling:PutScalingPolicy",
+      "autoscaling:CreateOrUpdateTags",
+      "autoscaling:DeleteTags",
+      "autoscaling:DescribeAutoScalingInstances",
+      "autoscaling:EnableMetricsCollection",
+      "autoscaling:SetInstanceHealth",
+      "autoscaling:PutLifecycleHook",
+      "autoscaling:DeleteLifecycleHook",
+      "autoscaling:DescribeLifecycleHooks",
+      "autoscaling:DescribeLifecycleHookTypes",
+      "autoscaling:PutNotificationConfiguration",
+      "autoscaling:DescribeNotificationConfigurations",
+      "autoscaling:DescribeAutoScalingNotificationTypes",
+      "autoscaling:DeleteNotificationConfiguration",
+      "ec2:createTags",
+      "ec2:deleteTags",
+      "ec2:CreateSecurityGroup",
+      "ec2:DescribeAvailabilityZones",
+      "ec2:DescribeInstances",
+      "ec2:DescribeSecurityGroups",
+      "ec2:DescribeAccountAttributes",
+      "ec2:AuthorizeSecurityGroupIngress",
+      "ec2:RevokeSecurityGroupIngress",
+      "ec2:AuthorizeSecurityGroupEgress",
+      "ec2:RevokeSecurityGroupEgress",
+      "ec2:DeleteSecurityGroup",
+      "ec2:allocateAddress",
+      "ec2:describeAddresses",
+      "ec2:DescribeSubnets",
+      "ec2:DescribeNetworkInterfaces",
+      "ec2:CreateNetworkInterface",
+      "ec2:DeleteNetworkInterface",
+      "ec2:DescribeNetworkInterfaceAttribute",
+      "ec2:ModifyNetworkInterfaceAttribute",
+      "elasticache:CreateCacheSubnetGroup",
+      "elasticache:DeleteCacheSubnetGroup",
+      "elasticache:DescribeCacheSubnetGroups",
+      "elasticache:CreateCacheCluster",
+      "elasticache:DescribeCacheClusters",
+      "elasticache:DeleteCacheCluster",
+      "elasticache:AddTagsToResource",
+      "elasticache:ListTagsForResource",
+      "elasticache:RemoveTagsFromResource",
+      "elasticloadbalancing:ApplySecurityGroupsToLoadBalancer",
+      "elasticloadbalancing:ConfigureHealthCheck",
+      "elasticloadbalancing:CreateLoadBalancer",
+      "elasticloadbalancing:DeleteLoadBalancer",
+      "elasticloadbalancing:DescribeLoadBalancers",
+      "elasticloadbalancing:ModifyLoadBalancerAttributes",
+      "elasticloadbalancing:SetLoadBalancerPoliciesOfListener",
+      "elasticloadbalancing:DeleteLoadBalancerListeners",
+      "elasticloadbalancing:CreateLoadBalancerListeners",
+      "elasticloadbalancing:DescribeLoadBalancerAttributes",
+      "elasticloadbalancing:AddTags",
+      "elasticloadbalancing:DescribeTags",
+      "elasticloadbalancing:AttachLoadBalancerToSubnets",
+      "elasticloadbalancing:DescribeInstanceHealth",
+      "elasticfilesystem:CreateFileSystem",
+      "elasticfilesystem:DescribeFileSystems",
+      "elasticfilesystem:DeleteFileSystem",
+      "elasticfilesystem:CreateMountTarget",
+      "elasticfilesystem:DescribeMountTargets",
+      "elasticfilesystem:DescribeMountTargetSecurityGroups",
+      "elasticfilesystem:ModifyMountTargetSecurityGroups",
+      "elasticfilesystem:DeleteMountTarget",
+      "elasticfilesystem:CreateTags",
+      "elasticfilesystem:DescribeTags",
+      "elasticfilesystem:DeleteTags",
+      "rds:CreateDBInstance",
+      "rds:CreateDBSubnetGroup",
+      "rds:DeleteDBSubnetGroup",
+      "rds:DescribeDBSubnetGroups",
+      "rds:DeleteDBInstance",
+      "rds:DescribeDBInstances",
+      "rds:ModifyDBInstance",
+      "rds:CreateDBInstanceReadReplica",
+      "rds:CreateDBParameterGroup",
+      "rds:DeleteDBParameterGroup",
+      "rds:DescribeDBParameterGroups",
+      "rds:DescribeDBParameters",
+      "rds:ModifyDBParameterGroup",
+      "rds:ResetDBParameterGroup",
+      "rds:AddTagsToResource",
+      "rds:ListTagsForResource",
+      "rds:RemoveTagsFromResource",
+      "route53:GetHostedZone",
+      "route53:ListHostedZones",
+      "route53:GetHostedZone",
+      "route53:GetChange",
+      "route53:DeleteHostedZone",
+      "route53:CreateHostedZone",
+      "route53:CreateReusableDelegationSet",
+      "route53:DeleteReusableDelegationSet",
+      "route53:GetReusableDelegationSet",
+      "route53:UpdateHostedZoneComment",
+      "route53:ChangeTagsForResource",
+      "route53:ListTagsForResource",
+      "route53:ListResourceRecordSets",
+      "route53:ChangeResourceRecordSets",
+      "sns:CreateTopic",
+      "sns:DeleteTopic",
+      "sns:GetTopicAttributes",
+      "sqs:CreateQueue",
+      "sqs:DeleteQueue",
+      "sqs:GetQueueAttributes",
+      "sqs:GetQueueUrl",
+      "sqs:ListQueues",
+      "sqs:ListQueueTags",
+      "sqs:TagQueue",
+      "sqs:UntagQueue",
+      "cloudwatch:PutMetricAlarm",
+      "cloudwatch:DeleteAlarms",
+      "cloudwatch:DescribeAlarms",
+      "iam:PassRole",
+      "iam:GetRole",
+      "iam:CreateUser",
+      "iam:CreateRole",
+      "iam:CreateAccessKey",
+      "iam:PutUserPolicy",
+      "iam:ListAccessKeys",
+      "iam:DeleteUserPolicy",
+      "iam:DeleteAccessKey",
+      "iam:CreateInstanceProfile",
+      "iam:AddRoleToInstanceProfile",
+      "iam:PutRolePolicy",
+      "iam:RemoveRoleFromInstanceProfile",
+      "iam:DeleteRole",
+      "iam:DeleteUser",
+      "iam:DeleteRolePolicy",
+      "iam:GetInstanceProfile",
+      "iam:GetUser",
+      "iam:GetRolePolicy",
+      "iam:GetUserPolicy",
+      "iam:DeleteInstanceProfile",
+      "iam:ListInstanceProfilesForRole",
+      "s3:*",
+      "lambda:InvokeFunction",
     ]
 
     resources = [
@@ -528,22 +535,21 @@ data "aws_iam_policy_document" "ci_deploy" {
     sid = "DNS"
 
     actions = [
-       "route53:ChangeResourceRecordSets",
-       "route53:ListResourceRecordSets",
+      "route53:ChangeResourceRecordSets",
+      "route53:ListResourceRecordSets",
     ]
 
     resources = [
       "arn:aws:route53:::hostedzone/${var.zone_id}",
     ]
   }
-
 }
 
 resource "aws_iam_role_policy" "ci_deploy" {
-  count = "${var.enabled}"
-  name    = "ci-${var.project}-${var.arena}-${var.region}-deploy"
-  role    = "${aws_iam_role.ci.id}"
-  policy  = "${data.aws_iam_policy_document.ci_deploy.json}"
+  count  = "${var.enabled}"
+  name   = "ci-${var.project}-${var.arena}-${var.region}-deploy"
+  role   = "${aws_iam_role.ci.id}"
+  policy = "${data.aws_iam_policy_document.ci_deploy.json}"
 }
 
 # This null resource is responsible for publishing secrets to Unicreds
@@ -592,5 +598,4 @@ resource "null_resource" "unicreds" {
     when    = "destroy"
     command = "${self.triggers.unicreds_rm}/consul_acl_token"
   }
-
 }
