@@ -507,6 +507,7 @@ data "aws_iam_policy_document" "ci_deploy" {
       "iam:CreateAccessKey",
       "iam:PutUserPolicy",
       "iam:ListAccessKeys",
+      "iam:ListGroupsForUser",
       "iam:DeleteUserPolicy",
       "iam:DeleteAccessKey",
       "iam:CreateInstanceProfile",
