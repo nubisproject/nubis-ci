@@ -416,6 +416,7 @@ data "aws_iam_policy_document" "ci_deploy" {
       "ec2:allocateAddress",
       "ec2:describeAddresses",
       "ec2:ReleaseAddresses",
+      "ec2:DisassociateAddress",
       "ec2:DescribeSubnets",
       "ec2:DescribeNetworkInterfaces",
       "ec2:CreateNetworkInterface",
