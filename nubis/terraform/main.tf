@@ -6,9 +6,9 @@ provider "aws" {
 module "ci-image" {
   source = "github.com/nubisproject/nubis-terraform///images?ref=develop"
 
-  region  = "${var.region}"
+  region        = "${var.region}"
   image_version = "${var.nubis_version}"
-  project = "nubis-ci"
+  project       = "nubis-ci"
 }
 
 # Create a new load balancer
