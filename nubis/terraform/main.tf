@@ -4,11 +4,11 @@ provider "aws" {
 }
 
 module "ci-image" {
-  source = "github.com/nubisproject/nubis-deploy///modules/images?ref=master"
+  source = "github.com/nubisproject/nubis-terraform///images?ref=develop"
 
-  region  = "${var.region}"
-  version = "${var.version}"
-  project = "nubis-ci"
+  region        = "${var.region}"
+  image_version = "${var.nubis_version}"
+  project       = "nubis-ci"
 }
 
 # Create a new load balancer
@@ -150,7 +150,7 @@ resource "aws_autoscaling_group" "ci" {
 
   tag {
     key                 = "Name"
-    value               = "CI server for ${var.project} (${var.version})"
+    value               = "CI server for ${var.project} (${var.nubis_version})"
     propagate_at_launch = true
   }
 
@@ -571,7 +571,7 @@ resource "null_resource" "unicreds" {
     context          = "-E region:${var.region} -E arena:${var.arena} -E service:${var.project}"
     unicreds         = "unicreds -r ${var.region} put -k ${var.credstash_key} ${var.project}/${var.arena}/ci"
     unicreds_rm      = "unicreds -r ${var.region} delete -k ${var.credstash_key} ${var.project}/${var.arena}/ci"
-    version          = "${var.version}"
+    version          = "${var.nubis_version}"
     newrelic_api_key = "${var.newrelic_api_key}"
   }
 

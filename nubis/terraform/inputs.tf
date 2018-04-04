@@ -96,7 +96,7 @@ variable "email" {
   default     = "gozer@mozilla.com"
 }
 
-variable "version" {
+variable "nubis_version" {
   description = "Version of nubis-ci to deploy"
 }
 
