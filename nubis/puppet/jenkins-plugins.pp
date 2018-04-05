@@ -33,11 +33,11 @@ jenkins::plugin { 'branch-api':
 }
 
 jenkins::plugin { 'build-name-setter':
-  version => '1.6.8'
+  version => '1.6.9'
 }
 
 jenkins::plugin { 'cloudbees-folder':
-  version => '6.3'
+  version => '6.4'
 }
 
 jenkins::plugin { 'command-launcher':
@@ -49,11 +49,11 @@ jenkins::plugin { 'conditional-buildstep':
 }
 
 jenkins::plugin { 'copyartifact':
-  version => '1.39'
+  version => '1.39.1'
 }
 
 jenkins::plugin { 'credentials-binding':
-  version => '1.15'
+  version => '1.16'
 }
 
 jenkins::plugin { 'discard-old-build':
@@ -69,7 +69,7 @@ jenkins::plugin { 'embeddable-build-status':
 }
 
 jenkins::plugin { 'git':
-  version => '3.7.0'
+  version => '3.8.0'
 }
 
 jenkins::plugin { 'git-client':
@@ -89,7 +89,7 @@ jenkins::plugin { 'github-api':
 }
 
 jenkins::plugin { 'github-branch-source':
-  version => '2.3.2'
+  version => '2.3.3'
 }
 
 jenkins::plugin { 'github-oauth':
@@ -129,7 +129,7 @@ jenkins::plugin { 'ldap':
 }
 
 jenkins::plugin { 'mailer':
-  version => '1.20'
+  version => '1.21'
 }
 
 jenkins::plugin { 'matrix-auth':
@@ -141,11 +141,11 @@ jenkins::plugin { 'matrix-project':
 }
 
 jenkins::plugin { 'maven-plugin':
-  version => '3.1'
+  version => '3.1.2'
 }
 
 jenkins::plugin { 'metrics':
-  version => '3.1.2.10'
+  version => '3.1.2.11'
 }
 
 jenkins::plugin { 'multiple-scms':
@@ -173,11 +173,11 @@ jenkins::plugin { 'prometheus':
 }
 
 jenkins::plugin { 'promoted-builds':
-  version => '2.31.1'
+  version => '3.1'
 }
 
 jenkins::plugin { 'rebuild':
-  version => '1.27'
+  version => '1.28'
 }
 
 jenkins::plugin { 'reverse-proxy-auth-plugin':
@@ -197,7 +197,7 @@ jenkins::plugin { 'scm-api':
 }
 
 jenkins::plugin { 'script-security':
-  version => '1.41'
+  version => '1.43'
 }
 
 jenkins::plugin { 'slack':
@@ -225,7 +225,7 @@ jenkins::plugin { 'timestamper':
 }
 
 jenkins::plugin { 'token-macro':
-  version => '2.3'
+  version => '2.4'
 }
 
 jenkins::plugin { 'windows-slaves':
@@ -233,7 +233,7 @@ jenkins::plugin { 'windows-slaves':
 }
 
 jenkins::plugin { 'workflow-api':
-  version => '2.25'
+  version => '2.26'
 }
 
 jenkins::plugin { 'workflow-cps':
