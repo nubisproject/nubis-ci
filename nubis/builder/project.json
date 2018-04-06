@@ -7,6 +7,6 @@
     "platform": "nubis",
     "project_description": "Nubis - CI (jenkins)",
     "project_name": "nubis-ci",
-    "project_version": "v2.2.0-dev"
+    "project_version": "v2.2.0"
   }
 }
