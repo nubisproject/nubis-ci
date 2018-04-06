@@ -1,4 +1,4 @@
-$terraform_version = '0.10.8'
+$terraform_version = '0.11.5'
 $packer_version = '1.1.3'
 $nubis_builder_version = 'v1.6.0'
 $terraform_nrs_version = '0.2.0-gozer'
@@ -38,7 +38,7 @@ vcsrepo { '/opt/nubis-builder':
 staging::file { 'packer.zip':
   source => "https://releases.hashicorp.com/packer/${packer_version}/packer_${packer_version}_linux_amd64.zip"
 }
-  -> staging::extract { 'packer.zip':
+-> staging::extract { 'packer.zip':
   target  => '/usr/local/bin',
   creates => '/usr/local/bin/packer',
 }
@@ -47,7 +47,7 @@ staging::file { 'packer.zip':
 staging::file { 'terraform.zip':
   source => "https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip"
 }
-  -> staging::extract { 'terraform.zip':
+-> staging::extract { 'terraform.zip':
   target  => '/usr/local/bin',
   creates => '/usr/local/bin/terraform',
 }
@@ -58,8 +58,8 @@ $terraform_nrs_url = "https://github.com/gozer/terraform-provider-nrs/releases/d
 staging::file { '/usr/local/bin/terraform-provider-nrs':
   source => $terraform_nrs_url,
   target => '/usr/local/bin/terraform-provider-nrs',
-}->
-exec { 'chmod /usr/local/bin/terraform-provider-nrs':
+}
+->exec { 'chmod /usr/local/bin/terraform-provider-nrs':
   command => '/bin/chmod 755 /usr/local/bin/terraform-provider-nrs',
 }
 

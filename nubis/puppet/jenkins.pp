@@ -8,7 +8,7 @@ nubis::discovery::service { 'jenkins':
 }
 
 class { 'jenkins':
-  version            => '2.89.3',
+  version            => '2.107.1',
   #direct_download    => 'https://pkg.jenkins.io/debian-stable/binary/jenkins_2.46.3_all.deb',
   configure_firewall => false,
   service_enable     => false,
@@ -92,7 +92,7 @@ python::pip { 'MarkupSafe':
 }
 
 python::pip { 's3cmd':
-  ensure  => '1.6.1',
+  ensure  => '2.0.1',
   require => Class['python'],
 }
 

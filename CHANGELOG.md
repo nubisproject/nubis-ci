@@ -1,10 +1,42 @@
 # Change Log
 
-## [v2.1.0](https://github.com/nubisproject/nubis-ci/tree/v2.1.0) (2018-02-02)
+## [v2.2.0](https://github.com/nubisproject/nubis-ci/tree/v2.2.0) (2018-04-06)
+[Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v2.1.0...v2.2.0)
+
+**Closed issues:**
+
+- Upgrade Jenkisn to 2.107.1 [\#597](https://github.com/nubisproject/nubis-ci/issues/597)
+- \[TF\] Cleanup for 0.11.x [\#595](https://github.com/nubisproject/nubis-ci/issues/595)
+- \[iam\] Add missing ec2:ReleaseAddresses [\#592](https://github.com/nubisproject/nubis-ci/issues/592)
+- Add missing IAM permission iam:ListGroupsForUser [\#590](https://github.com/nubisproject/nubis-ci/issues/590)
+- Lint [\#586](https://github.com/nubisproject/nubis-ci/issues/586)
+- \[iam\] Add permissions for SNS/SQS resources and ASG Lifecycle Hooks [\#583](https://github.com/nubisproject/nubis-ci/issues/583)
+- \[jenkins\] Upgrade to 2.89.4 [\#580](https://github.com/nubisproject/nubis-ci/issues/580)
+- \[s3cmd\] Upgrade to 2.0.1 [\#578](https://github.com/nubisproject/nubis-ci/issues/578)
+- \[iam\] Cleanup Policy errors [\#576](https://github.com/nubisproject/nubis-ci/issues/576)
+
+**Merged pull requests:**
+
+- Upgrade Jenkins and plugins to latest [\#598](https://github.com/nubisproject/nubis-ci/pull/598) ([gozer](https://github.com/gozer))
+- Prep for TF 0.11.x [\#596](https://github.com/nubisproject/nubis-ci/pull/596) ([gozer](https://github.com/gozer))
+- Also add the associated ec2:DisassociateAddress permission [\#594](https://github.com/nubisproject/nubis-ci/pull/594) ([gozer](https://github.com/gozer))
+- Add missing ec2:ReleaseAddresses permission for deletion [\#593](https://github.com/nubisproject/nubis-ci/pull/593) ([gozer](https://github.com/gozer))
+- Found one more missing IAM permission needed for destroy operation [\#591](https://github.com/nubisproject/nubis-ci/pull/591) ([gozer](https://github.com/gozer))
+- Tag project as platform [\#589](https://github.com/nubisproject/nubis-ci/pull/589) ([limed](https://github.com/limed))
+- Linting [\#587](https://github.com/nubisproject/nubis-ci/pull/587) ([limed](https://github.com/limed))
+- Add more missed IAM permissions [\#585](https://github.com/nubisproject/nubis-ci/pull/585) ([gozer](https://github.com/gozer))
+- Add permissions to create SQS and SNS resources and ASG Lifecycle Hooks [\#584](https://github.com/nubisproject/nubis-ci/pull/584) ([gozer](https://github.com/gozer))
+- Move to new docker lint checks [\#582](https://github.com/nubisproject/nubis-ci/pull/582) ([tinnightcap](https://github.com/tinnightcap))
+- Upgrade Jenkins to 2.89.4 [\#581](https://github.com/nubisproject/nubis-ci/pull/581) ([gozer](https://github.com/gozer))
+- Upgrade s3cmd to v2.0.1 [\#579](https://github.com/nubisproject/nubis-ci/pull/579) ([gozer](https://github.com/gozer))
+- Fix a few leftover IAM policy errors [\#577](https://github.com/nubisproject/nubis-ci/pull/577) ([gozer](https://github.com/gozer))
+
+## [v2.1.0](https://github.com/nubisproject/nubis-ci/tree/v2.1.0) (2018-02-07)
 [Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v2.0.4...v2.1.0)
 
 **Closed issues:**
 
+- \[terraform\] Future proof for Terraform 0.11 auto-approval disablement [\#571](https://github.com/nubisproject/nubis-ci/issues/571)
 - Add initial support for NewRelic [\#566](https://github.com/nubisproject/nubis-ci/issues/566)
 - Disable JNLP3 [\#564](https://github.com/nubisproject/nubis-ci/issues/564)
 - \[upgrade\] Plugins [\#562](https://github.com/nubisproject/nubis-ci/issues/562)
@@ -19,9 +51,19 @@
 - Fluentd jenkins tag typo [\#542](https://github.com/nubisproject/nubis-ci/issues/542)
 - \[retry\] Consider retrying builds when Amazon fails us [\#524](https://github.com/nubisproject/nubis-ci/issues/524)
 - \[terraform\] Upgrade to 0.10.8 [\#503](https://github.com/nubisproject/nubis-ci/issues/503)
+- Tag v2.1.0 release [\#573](https://github.com/nubisproject/nubis-ci/issues/573)
+- Tag v2.1.0 release [\#568](https://github.com/nubisproject/nubis-ci/issues/568)
+- Discard old builds [\#531](https://github.com/nubisproject/nubis-ci/issues/531)
+- \[jenkins\] Upgrade to latest version [\#504](https://github.com/nubisproject/nubis-ci/issues/504)
+- \[security\] iam:PassRole is not needed anmoyre [\#471](https://github.com/nubisproject/nubis-ci/issues/471)
 
 **Merged pull requests:**
 
+- Update CHANGELOG for v2.1.0 release \[skip ci\] [\#575](https://github.com/nubisproject/nubis-ci/pull/575) ([nubis-automation](https://github.com/nubis-automation))
+- Update CHANGELOG for v2.1.0 release \[skip ci\] [\#574](https://github.com/nubisproject/nubis-ci/pull/574) ([nubis-automation](https://github.com/nubis-automation))
+- \[terraform\] Add -auto-approve=true to apply operations [\#572](https://github.com/nubisproject/nubis-ci/pull/572) ([gozer](https://github.com/gozer))
+- Update CHANGELOG for v2.1.0 release \[skip ci\] [\#570](https://github.com/nubisproject/nubis-ci/pull/570) ([nubis-automation](https://github.com/nubis-automation))
+- Update CHANGELOG for v2.1.0 release \[skip ci\] [\#569](https://github.com/nubisproject/nubis-ci/pull/569) ([nubis-automation](https://github.com/nubis-automation))
 - Add terraform support for NewRelic Synthetics [\#567](https://github.com/nubisproject/nubis-ci/pull/567) ([gozer](https://github.com/gozer))
 - Disable JNLP3 for security reasons [\#565](https://github.com/nubisproject/nubis-ci/pull/565) ([gozer](https://github.com/gozer))
 - Upgrade plugins [\#563](https://github.com/nubisproject/nubis-ci/pull/563) ([gozer](https://github.com/gozer))
@@ -44,11 +86,9 @@
 
 - \[iam\] Add missing rds/elasticache tags permissions [\#539](https://github.com/nubisproject/nubis-ci/issues/539)
 - \[route53\] Additional perms for route53 [\#537](https://github.com/nubisproject/nubis-ci/issues/537)
-- Discard old builds [\#531](https://github.com/nubisproject/nubis-ci/issues/531)
 - \[iam\] route53:CreateHostedZone doesn't exist [\#527](https://github.com/nubisproject/nubis-ci/issues/527)
 - \[Jenkins\] Upgrade to 2.73.3 [\#526](https://github.com/nubisproject/nubis-ci/issues/526)
 - \[iam\] iam:DescribeAutoScalingGroup doesnt' exist [\#512](https://github.com/nubisproject/nubis-ci/issues/512)
-- \[security\] iam:PassRole is not needed anmoyre [\#471](https://github.com/nubisproject/nubis-ci/issues/471)
 - Tag v2.0.4 release [\#541](https://github.com/nubisproject/nubis-ci/issues/541)
 
 **Merged pull requests:**
@@ -104,7 +144,6 @@
 **Closed issues:**
 
 - null\_resource to destroy slack\_token and consul\_acl\_token has typo [\#506](https://github.com/nubisproject/nubis-ci/issues/506)
-- \[jenkins\] Upgrade to latest version [\#504](https://github.com/nubisproject/nubis-ci/issues/504)
 - Don't add duplicate ports to the port exception list [\#500](https://github.com/nubisproject/nubis-ci/issues/500)
 - Include deployment arena in TF state path [\#499](https://github.com/nubisproject/nubis-ci/issues/499)
 - Make root volume size configurable [\#477](https://github.com/nubisproject/nubis-ci/issues/477)
