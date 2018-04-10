@@ -1,5 +1,16 @@
 # Change Log
 
+## [v2.2.0](https://github.com/nubisproject/nubis-ci/tree/v2.2.0) (2018-04-10)
+[Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v2.2.0...v2.2.0)
+
+**Closed issues:**
+
+- \[regression\] Invalid /opt/nubis-builder/secrets/variables.json [\#603](https://github.com/nubisproject/nubis-ci/issues/603)
+
+**Merged pull requests:**
+
+- Correctly and carefully build our region array [\#604](https://github.com/nubisproject/nubis-ci/pull/604) ([gozer](https://github.com/gozer))
+
 ## [v2.2.0](https://github.com/nubisproject/nubis-ci/tree/v2.2.0) (2018-04-06)
 [Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v2.1.0...v2.2.0)
 
@@ -14,9 +25,12 @@
 - \[jenkins\] Upgrade to 2.89.4 [\#580](https://github.com/nubisproject/nubis-ci/issues/580)
 - \[s3cmd\] Upgrade to 2.0.1 [\#578](https://github.com/nubisproject/nubis-ci/issues/578)
 - \[iam\] Cleanup Policy errors [\#576](https://github.com/nubisproject/nubis-ci/issues/576)
+- Tag v2.2.0 release [\#599](https://github.com/nubisproject/nubis-ci/issues/599)
 
 **Merged pull requests:**
 
+- Update CHANGELOG for v2.2.0 release \[skip ci\] [\#601](https://github.com/nubisproject/nubis-ci/pull/601) ([nubis-automation](https://github.com/nubis-automation))
+- Update CHANGELOG for v2.2.0 release \[skip ci\] [\#600](https://github.com/nubisproject/nubis-ci/pull/600) ([nubis-automation](https://github.com/nubis-automation))
 - Upgrade Jenkins and plugins to latest [\#598](https://github.com/nubisproject/nubis-ci/pull/598) ([gozer](https://github.com/gozer))
 - Prep for TF 0.11.x [\#596](https://github.com/nubisproject/nubis-ci/pull/596) ([gozer](https://github.com/gozer))
 - Also add the associated ec2:DisassociateAddress permission [\#594](https://github.com/nubisproject/nubis-ci/pull/594) ([gozer](https://github.com/gozer))
