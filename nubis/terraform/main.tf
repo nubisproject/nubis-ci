@@ -131,7 +131,7 @@ resource "aws_autoscaling_group" "ci" {
 
   max_size                  = "2"
   min_size                  = "0"
-  health_check_grace_period = 600
+  health_check_grace_period = 1800
   health_check_type         = "ELB"
   desired_capacity          = "1"
   force_delete              = true
