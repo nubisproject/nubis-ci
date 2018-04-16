@@ -26,7 +26,7 @@
     <userSearch>uid={0}</userSearch>
     <updateInterval>15</updateInterval>
     <forwardedUser>OIDC_CLAIM_email</forwardedUser>
-    <headerGroups>OIDC_CLAIM_groups</headerGroups>
+    <headerGroups>OIDC_CLAIM_https---sso.mozilla.com-claim-groups</headerGroups>
     <headerGroupsDelimiter>,</headerGroupsDelimiter>
     <disableLdapEmailResolver>true</disableLdapEmailResolver>
     <displayNameLdapAttribute></displayNameLdapAttribute>
