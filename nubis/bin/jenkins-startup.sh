@@ -22,8 +22,7 @@ mkdir $BACKUP_DIR
 chown jenkins:jenkins $BACKUP_DIR
 
 # Pull latest backups
-su - jenkins -c "s3cmd --quiet sync --exclude=.initial-sync s3://$(nubis-metadata NUBIS_CI_BUCKET)/ $BACKUP_DIR/"
-su - jenkins -c "touch $BACKUP_DIR/.initial-sync"
+/usr/local/bin/nubis-ci-backup restore
 
 # Build our latest backup chain with incrementals
 

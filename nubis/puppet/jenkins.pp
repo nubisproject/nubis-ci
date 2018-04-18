@@ -91,28 +91,22 @@ python::pip { 'MarkupSafe':
   require => Class['python'],
 }
 
-python::pip { 's3cmd':
-  ensure  => '2.0.1',
+python::pip { 'awscli':
+  ensure  => '1.15.4',
   require => Class['python'],
 }
 
-file { '/var/lib/jenkins/.s3cfg':
-  require => [
-    Class['jenkins'],
-    Python::Pip['s3cmd'],
-  ],
-  owner   => 'jenkins',
-  group   => 'jenkins',
-  mode    => '0640',
-  content => "[default]
-proxy_host = proxy.service.consul
-proxy_port = 3128
-"
+file { '/usr/local/bin/nubis-ci-backup':
+  ensure => file,
+  owner  => root,
+  group  => root,
+  mode   => '0755',
+  source => 'puppet:///nubis/files/nubis-ci-backup',
 }
 
 cron { 'jenkins-s3-backups':
   ensure      => 'present',
-  command     => 'nubis-cron jenkins-s3-backups "test -f /mnt/jenkins/.initial-sync && s3cmd --quiet sync --exclude=.initial-sync --delete-removed /mnt/jenkins/ s3://$(nubis-metadata NUBIS_CI_BUCKET)/"',
+  command     => 'nubis-cron jenkins-s3-backups /usr/local/bin/nubis-ci-backup backup',
   hour        => '*',
   minute      => '*/15',
   user        => 'jenkins',
