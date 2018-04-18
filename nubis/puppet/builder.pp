@@ -3,10 +3,6 @@ $packer_version = '1.1.3'
 $nubis_builder_version = 'v1.6.0'
 $terraform_nrs_version = '0.2.0-gozer'
 
-package { 'awscli':
-  ensure => latest,
-}
-
 package { 'rsync':
   ensure => present
 }
