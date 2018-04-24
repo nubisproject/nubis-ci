@@ -1,4 +1,5 @@
 ## ADDITIONAL PLUGINS ##
+## Generated with utils/plugins.groovy ##
 
 jenkins::plugin { 'ace-editor':
   version => '1.1'
@@ -29,7 +30,7 @@ jenkins::plugin { 'bouncycastle-api':
 }
 
 jenkins::plugin { 'branch-api':
-  version => '2.0.18'
+  version => '2.0.20'
 }
 
 jenkins::plugin { 'build-name-setter':
@@ -89,7 +90,7 @@ jenkins::plugin { 'github-api':
 }
 
 jenkins::plugin { 'github-branch-source':
-  version => '2.3.3'
+  version => '2.3.4'
 }
 
 jenkins::plugin { 'github-oauth':
@@ -109,7 +110,7 @@ jenkins::plugin { 'javadoc':
 }
 
 jenkins::plugin { 'job-dsl':
-  version => '1.68'
+  version => '1.69'
 }
 
 jenkins::plugin { 'jquery-detached':
@@ -137,7 +138,7 @@ jenkins::plugin { 'matrix-auth':
 }
 
 jenkins::plugin { 'matrix-project':
-  version => '1.12'
+  version => '1.13'
 }
 
 jenkins::plugin { 'maven-plugin':
@@ -169,7 +170,7 @@ jenkins::plugin { 'plain-credentials':
 }
 
 jenkins::plugin { 'prometheus':
-  version => '1.1.1'
+  version => '1.2.0'
 }
 
 jenkins::plugin { 'promoted-builds':
@@ -193,11 +194,11 @@ jenkins::plugin { 's3':
 }
 
 jenkins::plugin { 'scm-api':
-  version => '2.2.6'
+  version => '2.2.7'
 }
 
 jenkins::plugin { 'script-security':
-  version => '1.43'
+  version => '1.44'
 }
 
 jenkins::plugin { 'slack':
@@ -209,7 +210,7 @@ jenkins::plugin { 'ssh-credentials':
 }
 
 jenkins::plugin { 'startup-trigger-plugin':
-  version => '2.8'
+  version => '2.9.3'
 }
 
 jenkins::plugin { 'structs':
@@ -225,7 +226,7 @@ jenkins::plugin { 'timestamper':
 }
 
 jenkins::plugin { 'token-macro':
-  version => '2.4'
+  version => '2.5'
 }
 
 jenkins::plugin { 'windows-slaves':
@@ -233,11 +234,11 @@ jenkins::plugin { 'windows-slaves':
 }
 
 jenkins::plugin { 'workflow-api':
-  version => '2.26'
+  version => '2.27'
 }
 
 jenkins::plugin { 'workflow-cps':
-  version => '2.45'
+  version => '2.49'
 }
 
 jenkins::plugin { 'workflow-cps-global-lib':
@@ -245,11 +246,11 @@ jenkins::plugin { 'workflow-cps-global-lib':
 }
 
 jenkins::plugin { 'workflow-job':
-  version => '2.17'
+  version => '2.20'
 }
 
 jenkins::plugin { 'workflow-multibranch':
-  version => '2.17'
+  version => '2.18'
 }
 
 jenkins::plugin { 'workflow-scm-step':
