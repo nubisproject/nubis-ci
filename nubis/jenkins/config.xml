@@ -9,6 +9,7 @@
   <useSecurity>true</useSecurity>
   <authorizationStrategy class="hudson.security.GlobalMatrixAuthorizationStrategy">
     %%NUBIS_SUDO_PERMISSIONS%%
+    %%NUBIS_OPER_PERMISSIONS%%
     %%NUBIS_USER_PERMISSIONS%%
     <permission>hudson.model.Hudson.Read:anonymous</permission>
     <permission>hudson.model.Item.Discover:anonymous</permission>
