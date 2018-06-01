@@ -14,7 +14,7 @@ jenkins::plugin { 'antisamy-markup-formatter':
 }
 
 jenkins::plugin { 'apache-httpcomponents-client-4-api':
-  version => '4.5.3-2.1'
+  version => '4.5.5-2.1'
 }
 
 jenkins::plugin { 'authorize-project':
@@ -22,7 +22,7 @@ jenkins::plugin { 'authorize-project':
 }
 
 jenkins::plugin { 'aws-java-sdk':
-  version => '1.11.264'
+  version => '1.11.329'
 }
 
 jenkins::plugin { 'bouncycastle-api':
@@ -70,11 +70,11 @@ jenkins::plugin { 'embeddable-build-status':
 }
 
 jenkins::plugin { 'git':
-  version => '3.8.0'
+  version => '3.9.0'
 }
 
 jenkins::plugin { 'git-client':
-  version => '2.7.1'
+  version => '2.7.2'
 }
 
 jenkins::plugin { 'git-server':
@@ -102,7 +102,7 @@ jenkins::plugin { 'icon-shim':
 }
 
 jenkins::plugin { 'jackson2-api':
-  version => '2.8.11.1'
+  version => '2.8.11.2'
 }
 
 jenkins::plugin { 'javadoc':
@@ -146,7 +146,7 @@ jenkins::plugin { 'maven-plugin':
 }
 
 jenkins::plugin { 'metrics':
-  version => '3.1.2.11'
+  version => '3.1.2.12'
 }
 
 jenkins::plugin { 'multiple-scms':
@@ -170,7 +170,7 @@ jenkins::plugin { 'plain-credentials':
 }
 
 jenkins::plugin { 'prometheus':
-  version => '1.2.0'
+  version => '1.2.2'
 }
 
 jenkins::plugin { 'promoted-builds':
@@ -190,7 +190,7 @@ jenkins::plugin { 'run-condition':
 }
 
 jenkins::plugin { 's3':
-  version => '0.11.0'
+  version => '0.11.2'
 }
 
 jenkins::plugin { 'scm-api':
@@ -222,7 +222,7 @@ jenkins::plugin { 'thinBackup':
 }
 
 jenkins::plugin { 'timestamper':
-  version => '1.8.9'
+  version => '1.8.10'
 }
 
 jenkins::plugin { 'token-macro':
@@ -238,7 +238,7 @@ jenkins::plugin { 'workflow-api':
 }
 
 jenkins::plugin { 'workflow-cps':
-  version => '2.49'
+  version => '2.53'
 }
 
 jenkins::plugin { 'workflow-cps-global-lib':
@@ -246,11 +246,11 @@ jenkins::plugin { 'workflow-cps-global-lib':
 }
 
 jenkins::plugin { 'workflow-job':
-  version => '2.20'
+  version => '2.21'
 }
 
 jenkins::plugin { 'workflow-multibranch':
-  version => '2.18'
+  version => '2.19'
 }
 
 jenkins::plugin { 'workflow-scm-step':
@@ -258,7 +258,7 @@ jenkins::plugin { 'workflow-scm-step':
 }
 
 jenkins::plugin { 'workflow-step-api':
-  version => '2.14'
+  version => '2.15'
 }
 
 jenkins::plugin { 'workflow-support':
