@@ -122,6 +122,10 @@ variable nubis_sudo_groups {
   default = "nubis_global_admins"
 }
 
+variable nubis_oper_groups {
+  default = ""
+}
+
 variable nubis_user_groups {
   default = ""
 }
