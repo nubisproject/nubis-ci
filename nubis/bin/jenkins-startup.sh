@@ -92,19 +92,19 @@ IFS=,; for sudo in $NUBIS_SUDO_GROUPS; do
 done
 
 OPER_PERMISSIONS=""
-IFS=,; for OPER in $NUBIS_OPER_GROUPS; do
+IFS=,; for oper in $NUBIS_OPER_GROUPS; do
   OPER_PERMISSIONS="$OPER_PERMISSIONS
-    <permission>hudson.model.Hudson.Read:$user</permission>
-    <permission>hudson.model.Item.Build:$user</permission>
-    <permission>hudson.model.Item.Cancel:$user</permission>
-    <permission>hudson.model.Item.Discover:$user</permission>
-    <permission>hudson.model.Item.Read:$user</permission>
-    <permission>hudson.model.Item.ViewStatus:$user</permission>
-    <permission>hudson.model.Item.Workspace:$user</permission>
-    <permission>hudson.model.Run.Delete:$user</permission>
-    <permission>hudson.model.Run.Replay:$user</permission>
-    <permission>hudson.model.Run.Update:$user</permission>
-    <permission>hudson.model.View.Read:$user</permission>"
+    <permission>hudson.model.Hudson.Read:$oper</permission>
+    <permission>hudson.model.Item.Build:$oper</permission>
+    <permission>hudson.model.Item.Cancel:$oper</permission>
+    <permission>hudson.model.Item.Discover:$oper</permission>
+    <permission>hudson.model.Item.Read:$oper</permission>
+    <permission>hudson.model.Item.ViewStatus:$oper</permission>
+    <permission>hudson.model.Item.Workspace:$oper</permission>
+    <permission>hudson.model.Run.Delete:$oper</permission>
+    <permission>hudson.model.Run.Replay:$oper</permission>
+    <permission>hudson.model.Run.Update:$oper</permission>
+    <permission>hudson.model.View.Read:$oper</permission>"
 done
 
 USER_PERMISSIONS=""
