@@ -84,11 +84,27 @@ for region in ${REGIONS[*]}; do
   REGIONS_STRING="$REGIONS_STRING<string>$region</string>"
 done
 
-# Fix permissions for sudo and user groups
+# Fix permissions for sudo, oper and user groups
 SUDO_PERMISSIONS=""
 IFS=,; for sudo in $NUBIS_SUDO_GROUPS; do
   SUDO_PERMISSIONS="$SUDO_PERMISSIONS
   <permission>hudson.model.Hudson.Administer:$sudo</permission>"
+done
+
+OPER_PERMISSIONS=""
+IFS=,; for OPER in $NUBIS_OPER_GROUPS; do
+  OPER_PERMISSIONS="$OPER_PERMISSIONS
+    <permission>hudson.model.Hudson.Read:$user</permission>
+    <permission>hudson.model.Item.Build:$user</permission>
+    <permission>hudson.model.Item.Cancel:$user</permission>
+    <permission>hudson.model.Item.Discover:$user</permission>
+    <permission>hudson.model.Item.Read:$user</permission>
+    <permission>hudson.model.Item.ViewStatus:$user</permission>
+    <permission>hudson.model.Item.Workspace:$user</permission>
+    <permission>hudson.model.Run.Delete:$user</permission>
+    <permission>hudson.model.Run.Replay:$user</permission>
+    <permission>hudson.model.Run.Update:$user</permission>
+    <permission>hudson.model.View.Read:$user</permission>"
 done
 
 USER_PERMISSIONS=""
@@ -105,6 +121,7 @@ USER_PERMISSIONS="$USER_PERMISSIONS
 done
 
 perl -pi -e "s[%%NUBIS_SUDO_PERMISSIONS%%][$SUDO_PERMISSIONS]g" /var/lib/jenkins/config.xml
+perl -pi -e "s[%%NUBIS_OPER_PERMISSIONS%%][$OPER_PERMISSIONS]g" /var/lib/jenkins/config.xml
 perl -pi -e "s[%%NUBIS_USER_PERMISSIONS%%][$USER_PERMISSIONS]g" /var/lib/jenkins/config.xml
 
 # Slack
