@@ -156,7 +156,7 @@ update-ca-certificates
 
 # Manually fix our confd stuff (missing confd puppet support)
 find /etc/confd/conf.d -type f -name '*.toml' -print0 | xargs -0 --verbose sed -i -e "s/%%NUBIS_CI_NAME%%/$NUBIS_CI_NAME/g"
-service confd reload
+systemctl reload-or-restart confd
 
 # Finally, start jenkins for good
 service jenkins start
