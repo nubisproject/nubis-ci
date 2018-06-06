@@ -65,6 +65,14 @@ jenkins::plugin { 'display-url-api':
   version => '2.2.0'
 }
 
+jenkins::plugin { 'docker-commons':
+  version => '1.11'
+}
+
+jenkins::plugin { 'docker-workflow':
+  version => '1.15.1'
+}
+
 jenkins::plugin { 'embeddable-build-status':
   version => '1.9'
 }
