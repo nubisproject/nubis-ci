@@ -11,3 +11,10 @@ mod 'rtyler/jenkins',
 
 # Java
 mod 'puppetlabs/java', '2.2.0'
+
+# Docker Dependencies
+mod 'puppetlabs/translate', '1.0.0'
+mod 'puppetlabs/stdlib', '4.24.0'
+
+# Docker
+mod 'puppetlabs/docker', '1.0.5'
