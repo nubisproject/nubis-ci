@@ -2,6 +2,14 @@
 
 set -e
 
+SKIP_BUILD=$(jq -rM '.variables.skip_build' nubis/builder/project.json)
+
+# If there is a deploy_only variable don't do a build
+if [ "${SKIP_BUILD}" == "true" ]; then
+    echo "Skipping build"
+    exit 0
+fi
+
 NUBIS_ARENA=$(nubis-metadata NUBIS_ARENA)
 
 ORIG_ALLOWED_TCP=$(consul kv get "nat/$NUBIS_ARENA/config/IptablesAllowTCP" 2>/dev/null || echo '[]')
