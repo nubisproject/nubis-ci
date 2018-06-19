@@ -5,6 +5,7 @@ set -e
 declare region
 declare environment
 declare service_name
+declare -a terraform_ami_arg
 declare TF_CONSUL_WORKAROUND
 
 # We are skipping builds
@@ -41,10 +42,10 @@ fi
 
 if [ "${SKIP_BUILD}" == "true" ]; then
     echo "Deploying into $environment/$region ($action)"
-    terraform_ami_arg=""
+    terraform_ami_arg=()
 else
     echo "Deploying AMI $ami into $environment/$region ($action)"
-    terraform_ami_arg="-var ami=\"$ami\""
+    terraform_ami_arg=( -var "ami=$ami" )
 fi
 
 VARIABLES=$WORKSPACE/../vars.tfvars
@@ -77,7 +78,7 @@ if [ -d artifacts/terraform ]; then
     -var region="$region" \
     -var environment="$environment" \
     -var service_name="$service_name" \
-    $terraform_ami_arg \
+    "${terraform_ami_arg[@]}" \
     $terraform_extra_args \
     artifacts/terraform
 
