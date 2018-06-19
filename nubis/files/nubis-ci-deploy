@@ -5,7 +5,11 @@ set -e
 declare region
 declare environment
 declare service_name
+declare -a terraform_ami_arg
 declare TF_CONSUL_WORKAROUND
+
+# We are skipping builds
+SKIP_BUILD=$(jq -rM '.variables.skip_build' nubis/builder/project.json)
 
 cleanup () {
   if [ ! -z "$TF_CONSUL_WORKAROUND" ]; then
@@ -17,7 +21,7 @@ trap cleanup EXIT
 # Consume user-data
 eval "$(nubis-metadata)"
 
-if [ "$ami" = "" ]; then
+if [ "$ami" = "" ] && [ "${SKIP_BUILD}" != "true" ]; then
   # shellcheck disable=SC2016
   ami=$(jq -r '.last_run_uuid as $uuid | .builds[] | select (.packer_run_uuid == $uuid) .artifact_id' artifacts/builder/AMIs.json | sed -e's/,/\n/g' | grep "$region:" | cut -d: -f2)
 fi
@@ -36,7 +40,13 @@ else
   exit 1
 fi
 
-echo "Deploying AMI $ami into $environment/$region ($action)"
+if [ "${SKIP_BUILD}" == "true" ]; then
+    echo "Deploying into $environment/$region ($action)"
+    terraform_ami_arg=()
+else
+    echo "Deploying AMI $ami into $environment/$region ($action)"
+    terraform_ami_arg=( -var "ami=$ami" )
+fi
 
 VARIABLES=$WORKSPACE/../vars.tfvars
 
@@ -68,7 +78,7 @@ if [ -d artifacts/terraform ]; then
     -var region="$region" \
     -var environment="$environment" \
     -var service_name="$service_name" \
-    -var ami="$ami" \
+    "${terraform_ami_arg[@]}" \
     $terraform_extra_args \
     artifacts/terraform
 

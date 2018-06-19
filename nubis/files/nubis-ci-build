@@ -2,6 +2,20 @@
 
 set -e
 
+rm -rf artifacts
+mkdir artifacts
+
+SKIP_BUILD=$(jq -rM '.variables.skip_build' nubis/builder/project.json)
+
+# If there is a deploy_only variable don't do a build
+if [ "${SKIP_BUILD}" == "true" ]; then
+    echo "Skipping build"
+    # jenkins gets grumpy if artifacts folder is empty
+    # so we just add something here
+    touch "artifacts/SKIP"
+    exit 0
+fi
+
 NUBIS_ARENA=$(nubis-metadata NUBIS_ARENA)
 
 ORIG_ALLOWED_TCP=$(consul kv get "nat/$NUBIS_ARENA/config/IptablesAllowTCP" 2>/dev/null || echo '[]')
@@ -14,9 +28,6 @@ consulate kv set "nat/$NUBIS_ARENA/config/IptablesAllowTCP" "$NEW_ALLOWED_TCP"
 nubis-builder build --instance-type c3.large --spot
 
 consulate kv set "nat/$NUBIS_ARENA/config/IptablesAllowTCP" "$ORIG_ALLOWED_TCP"
-
-rm -rf artifacts
-mkdir artifacts
 
 if [ -d nubis/terraform ]; then
   rsync -av nubis/terraform artifacts/
