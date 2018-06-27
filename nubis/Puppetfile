@@ -7,7 +7,7 @@ mod 'puppetlabs-transition', '0.1.1'
 # Jenkins itself
 mod 'rtyler/jenkins',
     :git => 'https://github.com/jenkinsci/puppet-jenkins.git',
-    :ref => 'ffd12e3c12f6817bd34f67a6e041d29c53a68e36'
+    :ref => '7fe3f909d6d26299e1ba78204ea1ee022cc75b6e'
 
 # Java
 mod 'puppetlabs/java', '2.2.0'
