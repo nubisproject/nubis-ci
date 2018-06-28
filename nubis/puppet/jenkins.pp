@@ -141,3 +141,12 @@ file { '/etc/nubis.d/jenkins-seed-config.xml':
     Class['jenkins'],
   ],
 }
+
+# Jenkins is already defining the user for this, so cheat
+exec { 'jenkins-docker-group':
+  command => '/usr/sbin/usermod -G docker jenkins',
+  require => [
+    Class['jenkins'],
+    Class['docker'],
+  ],
+}
