@@ -1,123 +1,209 @@
 #!/bin/bash -l
+# shellcheck disable=SC1117
 
 set -e
 
-declare region
-declare environment
-declare service_name
-declare -a terraform_ami_arg
-declare TF_CONSUL_WORKAROUND
+ACTION="${1}"
 
-# We are skipping builds
+# Nubis-metadata provides these values
+NUBIS_ACCOUNT="$(nubis-metadata NUBIS_ACCOUNT)"
+# NUBIS_PROJECT="$(nubis-metadata NUBIS_PROJECT)"
+NUBIS_ARENA="$(nubis-metadata NUBIS_ARENA)"
+# NUBIS_DOMAIN="$(nubis-metadata NUBIS_DOMAIN)"
+# NUBIS_PROJECT_URL="$(nubis-metadata NUBIS_PROJECT_URL)"
+# NUBIS_CI_NAME="$(nubis-metadata NUBIS_CI_NAME)"
+# NUBIS_GIT_REPO="$(nubis-metadata NUBIS_GIT_REPO)"
+# NUBIS_GIT_BRANCHES="$(nubis-metadata NUBIS_GIT_BRANCHES)"
+# NUBIS_CI_BUCKET="$(nubis-metadata NUBIS_CI_BUCKET)"
+# NUBIS_CI_BUCKET_REGION="$(nubis-metadata NUBIS_CI_BUCKET_REGION)"
+# NUBIS_CI_EMAIL="$(nubis-metadata NUBIS_CI_EMAIL)"
+# NUBIS_CI_GITHUB_ADMINS="$(nubis-metadata NUBIS_CI_GITHUB_ADMINS)"
+# NUBIS_CI_GITHUB_ORGANIZATIONS="$(nubis-metadata NUBIS_CI_GITHUB_ORGANIZATIONS)"
+# NUBIS_CI_SLACK_CHANNEL="$(nubis-metadata NUBIS_CI_SLACK_CHANNEL)"
+# NUBIS_CI_SLACK_DOMAIN="$(nubis-metadata NUBIS_CI_SLACK_DOMAIN)"
+# NUBIS_SUDO_GROUPS="$(nubis-metadata NUBIS_SUDO_GROUPS)"
+# NUBIS_USER_GROUPS="$(nubis-metadata NUBIS_USER_GROUPS)"
+
+# Jenkins sets these as environment variables
+# shellcheck disable=SC2154
+# STACK_NAME="${stack_name}"
+# shellcheck disable=SC2154
+# OWNER="${owner}"
+# shellcheck disable=SC2154
+SERVICE_NAME="${service_name}"
+# shellcheck disable=SC2154
+AMI="${ami}"
+# shellcheck disable=SC2154
+# KEY_NAME="${key_name}"
+# shellcheck disable=SC2154
+ENVIRONMENT="${environment}"
+# shellcheck disable=SC2154
+ACTION="${action}"
+# shellcheck disable=SC2154
+REGION="${region}"
+
+# Check the caller action
+#+ Add extra Terraform flags as necessary
+declare -a TERRAFORM_EXTRA_ARGS
+if [ "${ACTION}" = "" ] || [ "${ACTION}" = "apply" ]; then
+    ACTION="apply"
+    TERRAFORM_EXTRA_ARGS+=( '-auto-approve=true' )
+elif [ "${ACTION}" = "destroy" ]; then
+    TERRAFORM_EXTRA_ARGS+=( '-force' )
+elif [ "${ACTION}" = "plan" ]; then
+    true
+else
+    echo "Unknown action: ${ACTION}"
+    exit 1
+fi
+
+echo "Deploying into ${ENVIRONMENT}/${REGION} (${ACTION}})"
+
+# Check to see if we are skipping builds
 SKIP_BUILD=$(jq -rM '.variables.skip_build' nubis/builder/project.json)
 
-cleanup () {
-  if [ ! -z "$TF_CONSUL_WORKAROUND" ]; then
-    rm -f "$TF_CONSUL_WORKAROUND" 2>/dev/null
-  fi
-}
-trap cleanup EXIT
-
-# Consume user-data
-eval "$(nubis-metadata)"
-
-if [ "$ami" = "" ] && [ "${SKIP_BUILD}" != "true" ]; then
-  # shellcheck disable=SC2016
-  ami=$(jq -r '.last_run_uuid as $uuid | .builds[] | select (.packer_run_uuid == $uuid) .artifact_id' artifacts/builder/AMIs.json | sed -e's/,/\n/g' | grep "$region:" | cut -d: -f2)
+# Grab the AMI_ID from the most recent build
+if [ "${AMI}" = "" ] && [ "${SKIP_BUILD}" != "true" ]; then
+    # shellcheck disable=SC2016
+    AMI=$(jq -r '.last_run_uuid as $uuid | .builds[] | select (.packer_run_uuid == $uuid) .artifact_id' artifacts/nubis/builder/artifacts/AMIs.json | sed -e's/,/\n/g' | grep "${REGION}:" | cut -d: -f2)
 fi
 
-action=$1
+# Set up the terrafrom.tfvars file
+TERRAFORM_TFVARS_FILE="artifacts/nubis/terraform/terraform.tfvars"
+if [ -f "${TERRAFORM_TFVARS_FILE}" ]; then
+    rm -f  "${TERRAFORM_TFVARS_FILE}"
+fi
+touch "${TERRAFORM_TFVARS_FILE}"
+cat > "${TERRAFORM_TFVARS_FILE}" << EOH
+account = "${NUBIS_ACCOUNT}"
+arena = "${NUBIS_ARENA}"
+region  = "${REGION}"
+environment = "${ENVIRONMENT}"
+service_name = "${SERVICE_NAME}"
+EOH
 
-if [ "$action" = "" ] || [ "$action" = "apply" ]; then
-  action="apply"
-  terraform_extra_args="-auto-approve=true"
-elif [ "$action" = "destroy" ]; then
-  terraform_extra_args="-force"
-elif [ "$action" = "plan" ]; then
-  true
-else
-  echo "Unknown action: $action"
-  exit 1
+if [ "${SKIP_BUILD}" != "true" ]; then
+    echo "ami = \"${AMI}\"" >> ${TERRAFORM_TFVARS_FILE}
 fi
 
-if [ "${SKIP_BUILD}" == "true" ]; then
-    echo "Deploying into $environment/$region ($action)"
-    terraform_ami_arg=()
-else
-    echo "Deploying AMI $ami into $environment/$region ($action)"
-    terraform_ami_arg=( -var "ami=$ami" )
-fi
+if [ -d artifacts/nubis/terraform ]; then
 
-VARIABLES=$WORKSPACE/../vars.tfvars
+    cd artifacts
 
-if [ ! -f "$VARIABLES" ]; then
-  touch "$VARIABLES"
-fi
-
-if [ -d artifacts/terraform ]; then
-
-  rm -rf .terraform
-
-  TF_CONSUL_WORKAROUND=$(mktemp artifacts/terraform/nubis-state-XXXXXX.tf)
-
-  # Workaround for TF bug https://github.com/hashicorp/terraform/issues/15761
-  echo 'terraform { backend "consul" { } }' > "$TF_CONSUL_WORKAROUND"
-
-  # Setup remote state fresh
-  terraform init \
-    -input=false \
-    -upgrade=true \
-    -backend-config="path=deploy/$service_name/$environment/tf-state" \
-    artifacts/terraform
-
-  terraform $action \
-    -input=false \
-    -var-file "$VARIABLES" \
-    -var account="$NUBIS_ACCOUNT" \
-    -var arena="$NUBIS_ARENA" \
-    -var region="$region" \
-    -var environment="$environment" \
-    -var service_name="$service_name" \
-    "${terraform_ami_arg[@]}" \
-    $terraform_extra_args \
-    artifacts/terraform
-
+    # Make sure we are not getting stale config from the vcs
     rm -rf .terraform
-fi
 
+    # Check t see if we have remote state in consul
+    #+ If so, lets migrate it to S3
+    if [ "$(consulate kv get "deploy/${SERVICE_NAME}/${ENVIRONMENT}/tf-state")" != 'None' ]; then
+        # Check Consul for migrated timestamp
+        STATE_MIGRATED_TIME=$(consulate kv get "deploy/${SERVICE_NAME}/${ENVIRONMENT}/tf-state-migrated")
+        if [ "${STATE_MIGRATED_TIME}" != 'None' ]; then
+            # Check if we migrated to S3 more than 180 days ago (in seconds)
+            #+ if so remove old state from consul
+            TIME_NOW=$(date +%s)
+            MIGRATION_AGE=$((TIME_NOW-STATE_MIGRATED_TIME))
+            if [ "${MIGRATION_AGE}" -ge '15552000' ]; then
+                # Remove old state and timestamp from consul
+                echo -e "\033[1;32mNOTICE: Consul state migrated to S3 more than 180 days ago\033[0m"
+                echo -e "\033[1;32mNOTICE: Removing stale state from Consul\033[0m"
+                consulate kv rm "deploy/${SERVICE_NAME}/${ENVIRONMENT}/tf-state"
+                consulate kv rm "deploy/${SERVICE_NAME}/${ENVIRONMENT}/tf-state-migrated"
+            else
+                echo -e "\033[1;32mNOTICE: Consul state migrated to S3 $((MIGRATION_AGE/86400)) days ago\033[0m"
+                echo -e "\033[1;32mNOTICE: Stale state will be reomved from Consul after 180 days\033[0m"
+            fi
+        else
+            # Get the current state from Consul
+            consulate kv get "deploy/${SERVICE_NAME}/${ENVIRONMENT}/tf-state" > 'tf-state.consul'
+
+            # Look up the account application state bucket
+            STATE_BUCKET=$(curl -s "http://state.nubis.${NUBIS_ACCOUNT}.nubis.allizom.org/aws/${REGION}/${NUBIS_ARENA}.tfstate" | \
+            jq -r ' .modules[] | select(.path == ["root"]) | .outputs.apps_state_bucket')
+            # Make sure we have a state bucket
+            if [ "${STATE_BUCKET}" == 'null' ] || [ -z "${STATE_BUCKET}" ]; then
+                echo -e "\033[1;32mWARNING: Could not find state bucket in account '${NUBIS_ARENA}.tfstate' file using:\033[0m"
+                echo -e "\033[1;32mWARNING: 'curl -s \"http://state.nubis.${ACCOUNT}.nubis.allizom.org/aws/${DEPLOYMENT_REGION}/${NUBIS_ARENA}.tfstate\"'\033[0m"
+
+                # Default checking state bucket using awscli
+                echo -e "\033[0;32mWARNING: Defaulting state bucket discovery in S3 using awscli\033[0m"
+                STATE_BUCKET=$(aws s3 ls | grep nubis-apps-state | awk '{print $3}')
+                if [ "${STATE_BUCKET}" == 'null' ] || [ -z "${STATE_BUCKET}" ]; then
+                    echo -e "\033[1;31mERROR: Could not find S3 state bucket using:\033[0m"
+                    echo -e "\033[1;31mERROR: 'aws s3 ls | grep nubis-apps-state | awk \"{ print \$3 }\"'\033[0m"
+                    exit 1
+                fi
+            fi
+            BUCKET_REGION=$(aws s3api get-bucket-location --bucket "${STATE_BUCKET}" | jq -r '.LocationConstraint // "us-east-1"')
+            # Make sure we got a state bucket region
+            if [ "${BUCKET_REGION}" == 'null' ]; then
+                echo -e "\033[1;31mERROR: Could not look up bucket location using:\033[0m"
+                echo -e "\033[1;31mERROR: 'aws s3api get-bucket-location --bucket \"${STATE_BUCKET}\"'\033[0m"
+                exit 1
+            fi
+
+            # Copy Terraform state file to the S3 bucket
+            echo -e "\033[1;32mNOTICE: Uploading Terraform state file to s3\033[0m"
+            if ! aws s3 cp --region "${BUCKET_REGION}" 'tf-state.consul' "s3://${STATE_BUCKET}/terraform/${REGION}/${NUBIS_ARENA}/${ENVIRONMENT}/${SERVICE_NAME}" ; then
+                echo -e "\033[1;31mERROR: Failed uploading Terraform state file to S3\033[0m"
+                exit 1
+            fi
+
+            # Put marker in Consul with timestamp
+            MIGRATED_TIME=$(date +%s)
+            consulate kv set "deploy/${SERVICE_NAME}/${ENVIRONMENT}/tf-state-migrated" "${MIGRATED_TIME}"
+        fi
+    fi
+
+    # Make sure we have an S3 state file
+    TF_S3_STATE_FILE='nubis/terraform/state.tf'
+    echo 'terraform { backend "s3" {} }' > "${TF_S3_STATE_FILE}"
+
+    # Call nubis-ctl for the deploy
+    if [ "${#TERRAFORM_EXTRA_ARGS[@]}" != 0 ]; then
+        nubis-ctl --account "${NUBIS_ACCOUNT}" --local --skip-aws-vault deploy "${ACTION}" "${TERRAFORM_EXTRA_ARGS[@]}"
+    else
+        nubis-ctl --account "${NUBIS_ACCOUNT}" --local --skip-aws-vault deploy "${ACTION}"
+    fi
+
+    # Clean up any local state (we start fresh from remote state each time)
+    if [ -d '.terraform' ]; then
+        rm -rf .terraform
+    fi
+    cd ../
+fi
 
 ## XXX: Needs to move to its own tool
 ## XXX: limit to nubis/proxy for the time being
 ## XXX: Broken in Arenas atm
-if [ -d nubis/proxy ]; then
-  CONFIG_INJECT=proxy
-  INJECT_PREFIX="nubis-$CONFIG_INJECT-$NUBIS_ARENA/$environment/config"
+if [ -d artifacts/nubis/proxy ]; then
+    CONFIG_INJECT=proxy
+    INJECT_PREFIX="nubis-${CONFIG_INJECT}-${NUBIS_ARENA}/${ENVIRONMENT}/config"
 
-  echo "Injecting $CONFIG_INJECT rules into $INJECT_PREFIX"
+    echo "Injecting ${CONFIG_INJECT} rules into ${INJECT_PREFIX}"
 
-  # Make sure the container config/ key is present
-  consulate kv mkdir "$INJECT_PREFIX/" 2>/dev/null
+    # Make sure the container config/ key is present
+    consulate kv mkdir "${INJECT_PREFIX}/" 2>/dev/null
 
-  for r in $(find nubis/$CONFIG_INJECT/ -type f | grep -v \.md | cut -d/ -f3); do
-    echo -n "$r "
-    consulate  kv set "$INJECT_PREFIX/$r" "$(cat "nubis/$CONFIG_INJECT/$r")" 2>/dev/null
-    echo
-  done
+    for r in $(find nubis/${CONFIG_INJECT}/ -type f | grep -v \.md | cut -d/ -f3); do
+        echo -n "${r} "
+        consulate  kv set "${INJECT_PREFIX}/${r}" "$(cat "nubis/${CONFIG_INJECT}/${r}")" 2>/dev/null
+        echo
+    done
 fi
 
 # XXX: Needs to move in its own tool
-if [ -d nubis/monitoring ]; then
-  echo "Injecting Monitoring rules"
+if [ -d artifacts/nubis/monitoring ]; then
+    echo "Injecting Monitoring rules"
 
-  cd nubis/monitoring
+    cd nubis/monitoring
 
-  consulate kv mkdir "monitoring/$NUBIS_ARENA/$environment/$service_name/" 2>/dev/null
+    consulate kv mkdir "monitoring/${NUBIS_ARENA}/${ENVIRONMENT}/${SERVICE_NAME}/" 2>/dev/null
 
-  for rule in *.prom; do
-    echo " + $rule"
-    consulate  kv set "monitoring/$NUBIS_ARENA/$environment/$service_name/$rule" "$(cat "$rule")" 2>/dev/null
-  done
+    for RULE in *.prom; do
+        echo " + ${RULE}"
+        consulate  kv set "monitoring/${NUBIS_ARENA}/${ENVIRONMENT}/${SERVICE_NAME}/${RULE}" "$(cat "${RULE}")" 2>/dev/null
+    done
 
-  cd ../..
-
+    cd ../../
 fi

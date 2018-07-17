@@ -150,3 +150,27 @@ exec { 'jenkins-docker-group':
     Class['docker'],
   ],
 }
+
+file { '/var/lib/jenkins/.docker':
+  ensure  => directory,
+  owner   => jenkins,
+  group   => jenkins,
+  mode    => '0755',
+  require => [
+    Class['jenkins'],
+    Class['docker'],
+  ],
+}
+
+file { '/var/lib/jenkins/.docker/config.json':
+  ensure  => file,
+  owner   => jenkins,
+  group   => jenkins,
+  mode    => '0755',
+  source  => 'puppet:///nubis/files/docker_config.json',
+  require => [
+    File['/var/lib/jenkins/.docker'],
+    Class['jenkins'],
+    Class['docker'],
+  ],
+}
