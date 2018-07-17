@@ -129,7 +129,7 @@
           <string>https_proxy</string>
           <string>http://proxy.service.consul:3128/</string>
           <string>PATH</string>
-          <string>/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/opt/nubis-builder/bin</string>
+          <string>/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/opt/nubis-ctl</string>
         </tree-map>
       </envVars>
     </hudson.slaves.EnvironmentVariablesNodeProperty>
