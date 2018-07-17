@@ -8,7 +8,7 @@ nubis::discovery::service { 'jenkins':
 }
 
 class { 'jenkins':
-  version            => '2.107.1',
+  version            => '2.121.1',
   #direct_download    => 'https://pkg.jenkins.io/debian-stable/binary/jenkins_2.46.3_all.deb',
   configure_firewall => false,
   service_enable     => false,
@@ -91,28 +91,22 @@ python::pip { 'MarkupSafe':
   require => Class['python'],
 }
 
-python::pip { 's3cmd':
-  ensure  => '2.0.1',
+python::pip { 'awscli':
+  ensure  => '1.15.4',
   require => Class['python'],
 }
 
-file { '/var/lib/jenkins/.s3cfg':
-  require => [
-    Class['jenkins'],
-    Python::Pip['s3cmd'],
-  ],
-  owner   => 'jenkins',
-  group   => 'jenkins',
-  mode    => '0640',
-  content => "[default]
-proxy_host = proxy.service.consul
-proxy_port = 3128
-"
+file { '/usr/local/bin/nubis-ci-backup':
+  ensure => file,
+  owner  => root,
+  group  => root,
+  mode   => '0755',
+  source => 'puppet:///nubis/files/nubis-ci-backup',
 }
 
 cron { 'jenkins-s3-backups':
   ensure      => 'present',
-  command     => 'nubis-cron jenkins-s3-backups "test -f /mnt/jenkins/.initial-sync && s3cmd --quiet sync --exclude=.initial-sync --delete-removed /mnt/jenkins/ s3://$(nubis-metadata NUBIS_CI_BUCKET)/"',
+  command     => 'nubis-cron jenkins-s3-backups /usr/local/bin/nubis-ci-backup backup',
   hour        => '*',
   minute      => '*/15',
   user        => 'jenkins',
@@ -145,5 +139,38 @@ file { '/etc/nubis.d/jenkins-seed-config.xml':
   require => [
     File['/var/lib/jenkins/jobs/00-seed'],
     Class['jenkins'],
+  ],
+}
+
+# Jenkins is already defining the user for this, so cheat
+exec { 'jenkins-docker-group':
+  command => '/usr/sbin/usermod -G docker jenkins',
+  require => [
+    Class['jenkins'],
+    Class['docker'],
+  ],
+}
+
+file { '/var/lib/jenkins/.docker':
+  ensure  => directory,
+  owner   => jenkins,
+  group   => jenkins,
+  mode    => '0755',
+  require => [
+    Class['jenkins'],
+    Class['docker'],
+  ],
+}
+
+file { '/var/lib/jenkins/.docker/config.json':
+  ensure  => file,
+  owner   => jenkins,
+  group   => jenkins,
+  mode    => '0755',
+  source  => 'puppet:///nubis/files/docker_config.json',
+  require => [
+    File['/var/lib/jenkins/.docker'],
+    Class['jenkins'],
+    Class['docker'],
   ],
 }

@@ -1,0 +1,38 @@
+#!/bin/bash -l
+
+# Cron doesn't set $USER
+USER=$(whoami)
+
+# Make sure we always run as jenkins
+if [ "$USER" != "jenkins" ]; then
+  exec su - jenkins -c "$0 $*"
+fi
+
+export PATH=/usr/local/bin:$PATH
+
+BACKUP_BUCKET=$(nubis-metadata NUBIS_CI_BUCKET)
+BACKUP_DIR=/mnt/jenkins
+
+ACTION=$1
+shift
+
+case $ACTION in
+  backup)
+    echo "Running backup"
+    if [ ! -f "$BACKUP_DIR/.initial-sync" ]; then
+      echo "Skipping backups, initial restore not performed"
+      exit 0
+    fi
+    aws s3 sync --delete --exclude=.initial-sync "$BACKUP_DIR/" "s3://$BACKUP_BUCKET/" "$@"
+    ;;
+  restore)
+    echo "Restoring from backup"
+    aws s3 sync --delete --exclude=.initial-sync "s3://$BACKUP_BUCKET/" "$BACKUP_DIR/" "$@"
+    touch "$BACKUP_DIR/.initial-sync"
+  ;;
+  *)
+    echo "Usage $0 [backup|restore]"
+    exit 1
+    ;;
+
+esac

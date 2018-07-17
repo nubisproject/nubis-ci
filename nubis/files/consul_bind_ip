@@ -1,0 +1,12 @@
+#!/bin/bash
+
+IP_ADDR=$(curl --retry 60 -fks http://169.254.169.254/latest/dynamic/instance-identity/document | jq '.privateIp' -r)
+
+# Multiple IPs cause consul to have issues, specify which to bind to
+if [ "${IP_ADDR:-0}" != "0" ]; then
+cat << EOF | tee /etc/consul/bind.json
+{
+  "bind_addr": "${IP_ADDR}"
+}
+EOF
+fi

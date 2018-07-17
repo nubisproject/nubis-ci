@@ -1,4 +1,5 @@
 ## ADDITIONAL PLUGINS ##
+## Generated with utils/plugins.groovy ##
 
 jenkins::plugin { 'ace-editor':
   version => '1.1'
@@ -13,7 +14,11 @@ jenkins::plugin { 'antisamy-markup-formatter':
 }
 
 jenkins::plugin { 'apache-httpcomponents-client-4-api':
-  version => '4.5.3-2.1'
+  version => '4.5.5-3.0'
+}
+
+jenkins::plugin { 'authentication-tokens':
+  version => '1.3'
 }
 
 jenkins::plugin { 'authorize-project':
@@ -21,15 +26,15 @@ jenkins::plugin { 'authorize-project':
 }
 
 jenkins::plugin { 'aws-java-sdk':
-  version => '1.11.264'
+  version => '1.11.341'
 }
 
 jenkins::plugin { 'bouncycastle-api':
-  version => '2.16.2'
+  version => '2.16.3'
 }
 
 jenkins::plugin { 'branch-api':
-  version => '2.0.18'
+  version => '2.0.20'
 }
 
 jenkins::plugin { 'build-name-setter':
@@ -37,7 +42,7 @@ jenkins::plugin { 'build-name-setter':
 }
 
 jenkins::plugin { 'cloudbees-folder':
-  version => '6.4'
+  version => '6.5.1'
 }
 
 jenkins::plugin { 'command-launcher':
@@ -64,16 +69,28 @@ jenkins::plugin { 'display-url-api':
   version => '2.2.0'
 }
 
+jenkins::plugin { 'docker-commons':
+  version => '1.13'
+}
+
+jenkins::plugin { 'docker-workflow':
+  version => '1.17'
+}
+
+jenkins::plugin { 'durable-task':
+  version => '1.22'
+}
+
 jenkins::plugin { 'embeddable-build-status':
   version => '1.9'
 }
 
 jenkins::plugin { 'git':
-  version => '3.8.0'
+  version => '3.9.1'
 }
 
 jenkins::plugin { 'git-client':
-  version => '2.7.1'
+  version => '2.7.2'
 }
 
 jenkins::plugin { 'git-server':
@@ -81,15 +98,15 @@ jenkins::plugin { 'git-server':
 }
 
 jenkins::plugin { 'github':
-  version => '1.29.0'
+  version => '1.29.2'
 }
 
 jenkins::plugin { 'github-api':
-  version => '1.90'
+  version => '1.92'
 }
 
 jenkins::plugin { 'github-branch-source':
-  version => '2.3.3'
+  version => '2.3.6'
 }
 
 jenkins::plugin { 'github-oauth':
@@ -101,7 +118,7 @@ jenkins::plugin { 'icon-shim':
 }
 
 jenkins::plugin { 'jackson2-api':
-  version => '2.8.11.1'
+  version => '2.8.11.3'
 }
 
 jenkins::plugin { 'javadoc':
@@ -109,7 +126,7 @@ jenkins::plugin { 'javadoc':
 }
 
 jenkins::plugin { 'job-dsl':
-  version => '1.68'
+  version => '1.70'
 }
 
 jenkins::plugin { 'jquery-detached':
@@ -137,7 +154,7 @@ jenkins::plugin { 'matrix-auth':
 }
 
 jenkins::plugin { 'matrix-project':
-  version => '1.12'
+  version => '1.13'
 }
 
 jenkins::plugin { 'maven-plugin':
@@ -145,7 +162,7 @@ jenkins::plugin { 'maven-plugin':
 }
 
 jenkins::plugin { 'metrics':
-  version => '3.1.2.11'
+  version => '4.0.2.2'
 }
 
 jenkins::plugin { 'multiple-scms':
@@ -169,11 +186,11 @@ jenkins::plugin { 'plain-credentials':
 }
 
 jenkins::plugin { 'prometheus':
-  version => '1.1.1'
+  version => '1.2.2'
 }
 
 jenkins::plugin { 'promoted-builds':
-  version => '3.1'
+  version => '3.2'
 }
 
 jenkins::plugin { 'rebuild':
@@ -189,15 +206,15 @@ jenkins::plugin { 'run-condition':
 }
 
 jenkins::plugin { 's3':
-  version => '0.11.0'
+  version => '0.11.2'
 }
 
 jenkins::plugin { 'scm-api':
-  version => '2.2.6'
+  version => '2.2.7'
 }
 
 jenkins::plugin { 'script-security':
-  version => '1.43'
+  version => '1.44'
 }
 
 jenkins::plugin { 'slack':
@@ -205,11 +222,11 @@ jenkins::plugin { 'slack':
 }
 
 jenkins::plugin { 'ssh-credentials':
-  version => '1.13'
+  version => '1.14'
 }
 
 jenkins::plugin { 'startup-trigger-plugin':
-  version => '2.8'
+  version => '2.9.3'
 }
 
 jenkins::plugin { 'structs':
@@ -221,11 +238,15 @@ jenkins::plugin { 'thinBackup':
 }
 
 jenkins::plugin { 'timestamper':
-  version => '1.8.9'
+  version => '1.8.10'
 }
 
 jenkins::plugin { 'token-macro':
-  version => '2.4'
+  version => '2.5'
+}
+
+jenkins::plugin { 'variant':
+  version => '1.1'
 }
 
 jenkins::plugin { 'windows-slaves':
@@ -233,23 +254,27 @@ jenkins::plugin { 'windows-slaves':
 }
 
 jenkins::plugin { 'workflow-api':
-  version => '2.26'
+  version => '2.27'
 }
 
 jenkins::plugin { 'workflow-cps':
-  version => '2.45'
+  version => '2.54'
 }
 
 jenkins::plugin { 'workflow-cps-global-lib':
   version => '2.9'
 }
 
+jenkins::plugin { 'workflow-durable-task-step':
+  version => '2.19'
+}
+
 jenkins::plugin { 'workflow-job':
-  version => '2.17'
+  version => '2.22'
 }
 
 jenkins::plugin { 'workflow-multibranch':
-  version => '2.17'
+  version => '2.20'
 }
 
 jenkins::plugin { 'workflow-scm-step':
@@ -257,9 +282,9 @@ jenkins::plugin { 'workflow-scm-step':
 }
 
 jenkins::plugin { 'workflow-step-api':
-  version => '2.14'
+  version => '2.16'
 }
 
 jenkins::plugin { 'workflow-support':
-  version => '2.18'
+  version => '2.19'
 }

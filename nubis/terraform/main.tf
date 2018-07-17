@@ -131,7 +131,7 @@ resource "aws_autoscaling_group" "ci" {
 
   max_size                  = "2"
   min_size                  = "0"
-  health_check_grace_period = 600
+  health_check_grace_period = 1800
   health_check_type         = "ELB"
   desired_capacity          = "1"
   force_delete              = true
@@ -209,6 +209,7 @@ NUBIS_CI_GITHUB_ORGANIZATIONS=${var.organizations}
 NUBIS_CI_SLACK_CHANNEL="${var.slack_channel}"
 NUBIS_CI_SLACK_DOMAIN="${var.slack_domain}"
 NUBIS_SUDO_GROUPS="${var.nubis_sudo_groups}"
+NUBIS_OPER_GROUPS="${var.nubis_oper_groups}"
 NUBIS_USER_GROUPS="${var.nubis_user_groups}"
 EOF
 }
@@ -401,6 +402,43 @@ data "aws_iam_policy_document" "ci_deploy" {
       "autoscaling:DescribeNotificationConfigurations",
       "autoscaling:DescribeAutoScalingNotificationTypes",
       "autoscaling:DeleteNotificationConfiguration",
+      "acm:AddTagsToCertificate",
+      "acm:DeleteCertificate",
+      "acm:DescribeCertificate",
+      "acm:ExportCertificate",
+      "acm:GetCertificate",
+      "acm:ImportCertificate",
+      "acm:ListCertificates",
+      "acm:ListTagsForCertificate",
+      "acm:RemoveTagsFromCertificate",
+      "acm:RequestCertificate",
+      "acm:ResendValidationEmail",
+      "cloudfront:CreateCloudFrontOriginAccessIdentity",
+      "cloudfront:CreateDistribution",
+      "cloudfront:CreateDistributionWithTags",
+      "cloudfront:CreateInvalidation",
+      "cloudfront:CreateStreamingDistribution",
+      "cloudfront:CreateStreamingDistributionWithTags",
+      "cloudfront:DeleteCloudFrontOriginAccessIdentity",
+      "cloudfront:DeleteDistribution",
+      "cloudfront:DeleteStreamingDistribution",
+      "cloudfront:GetCloudFrontOriginAccessIdentity",
+      "cloudfront:GetCloudFrontOriginAccessIdentityConfig",
+      "cloudfront:GetDistribution",
+      "cloudfront:GetDistributionConfig",
+      "cloudfront:GetInvalidation",
+      "cloudfront:GetStreamingDistribution",
+      "cloudfront:GetStreamingDistributionConfig",
+      "cloudfront:ListCloudFrontOriginAccessIdentities",
+      "cloudfront:ListDistributions",
+      "cloudfront:ListDistributionsByWebACLId",
+      "cloudfront:ListInvalidations",
+      "cloudfront:ListStreamingDistributions",
+      "cloudfront:ListTagsForResource",
+      "cloudfront:TagResource",
+      "cloudfront:UntagResource",
+      "cloudfront:UpdateCloudFrontOriginAccessIdentity",
+      "cloudfront:UpdateStreamingDistribution",
       "ec2:createTags",
       "ec2:deleteTags",
       "ec2:CreateSecurityGroup",

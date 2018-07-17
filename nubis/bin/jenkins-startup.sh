@@ -22,8 +22,7 @@ mkdir $BACKUP_DIR
 chown jenkins:jenkins $BACKUP_DIR
 
 # Pull latest backups
-su - jenkins -c "s3cmd --quiet sync --exclude=.initial-sync s3://$(nubis-metadata NUBIS_CI_BUCKET)/ $BACKUP_DIR/"
-su - jenkins -c "touch $BACKUP_DIR/.initial-sync"
+/usr/local/bin/nubis-ci-backup restore
 
 # Build our latest backup chain with incrementals
 
@@ -85,11 +84,27 @@ for region in ${REGIONS[*]}; do
   REGIONS_STRING="$REGIONS_STRING<string>$region</string>"
 done
 
-# Fix permissions for sudo and user groups
+# Fix permissions for sudo, oper and user groups
 SUDO_PERMISSIONS=""
 IFS=,; for sudo in $NUBIS_SUDO_GROUPS; do
   SUDO_PERMISSIONS="$SUDO_PERMISSIONS
   <permission>hudson.model.Hudson.Administer:$sudo</permission>"
+done
+
+OPER_PERMISSIONS=""
+IFS=,; for oper in $NUBIS_OPER_GROUPS; do
+  OPER_PERMISSIONS="$OPER_PERMISSIONS
+    <permission>hudson.model.Hudson.Read:$oper</permission>
+    <permission>hudson.model.Item.Build:$oper</permission>
+    <permission>hudson.model.Item.Cancel:$oper</permission>
+    <permission>hudson.model.Item.Discover:$oper</permission>
+    <permission>hudson.model.Item.Read:$oper</permission>
+    <permission>hudson.model.Item.ViewStatus:$oper</permission>
+    <permission>hudson.model.Item.Workspace:$oper</permission>
+    <permission>hudson.model.Run.Delete:$oper</permission>
+    <permission>hudson.model.Run.Replay:$oper</permission>
+    <permission>hudson.model.Run.Update:$oper</permission>
+    <permission>hudson.model.View.Read:$oper</permission>"
 done
 
 USER_PERMISSIONS=""
@@ -106,6 +121,7 @@ USER_PERMISSIONS="$USER_PERMISSIONS
 done
 
 perl -pi -e "s[%%NUBIS_SUDO_PERMISSIONS%%][$SUDO_PERMISSIONS]g" /var/lib/jenkins/config.xml
+perl -pi -e "s[%%NUBIS_OPER_PERMISSIONS%%][$OPER_PERMISSIONS]g" /var/lib/jenkins/config.xml
 perl -pi -e "s[%%NUBIS_USER_PERMISSIONS%%][$USER_PERMISSIONS]g" /var/lib/jenkins/config.xml
 
 # Slack
@@ -140,7 +156,7 @@ update-ca-certificates
 
 # Manually fix our confd stuff (missing confd puppet support)
 find /etc/confd/conf.d -type f -name '*.toml' -print0 | xargs -0 --verbose sed -i -e "s/%%NUBIS_CI_NAME%%/$NUBIS_CI_NAME/g"
-service confd reload
+systemctl reload-or-restart confd
 
 # Finally, start jenkins for good
 service jenkins start
