@@ -438,6 +438,7 @@ data "aws_iam_policy_document" "ci_deploy" {
       "cloudfront:TagResource",
       "cloudfront:UntagResource",
       "cloudfront:UpdateCloudFrontOriginAccessIdentity",
+      "cloudfront:UpdateDistribution",
       "cloudfront:UpdateStreamingDistribution",
       "ec2:createTags",
       "ec2:deleteTags",
