@@ -46,13 +46,13 @@ systemd::unit_file { 'docker-cleanup.service':
   enable => true,
 }
 
-docker::image { "nubisproject/nubis-json2hcl:$nubis_json2hcl_version" : }
--> docker::image { "nubisproject/nubis-jq:$nubis_jq_version" : }
--> docker::image { "nubisproject/nubis-builder:$nubis_builder_version": }
--> docker::image { "nubisproject/nubis-deploy:$nubis_deploy_version": }
+docker::image { "nubisproject/nubis-json2hcl:${nubis_json2hcl_version}" : }
+-> docker::image { "nubisproject/nubis-jq:${nubis_jq_version}" : }
+-> docker::image { "nubisproject/nubis-builder:${nubis_builder_version}": }
+-> docker::image { "nubisproject/nubis-deploy:${nubis_deploy_version}": }
   -> exec { 'alias images for local':
   path    => ['/sbin','/bin','/usr/sbin','/usr/bin','/usr/local/sbin','/usr/local/bin'],
-  command => "docker tag nubisproject/nubis-json2hcl:$nubis_json2hcl_version nubis-json2hcl; docker tag nubisproject/nubis-jq:$nubis_jq_version nubis-jq; docker tag nubisproject/nubis-builder:$nubis_builder_version nubis-builder; docker tag nubisproject/nubis-deploy:$nubis_deploy_version nubis-deploy",
+  command => "docker tag nubisproject/nubis-json2hcl:${nubis_json2hcl_version} nubis-json2hcl; docker tag nubisproject/nubis-jq:${nubis_jq_version} nubis-jq; docker tag nubisproject/nubis-builder:${nubis_builder_version} nubis-builder; docker tag nubisproject/nubis-deploy:${nubis_deploy_version} nubis-deploy",
 }
   -> exec { 'make docker proxy aware':
   path    => ['/sbin','/bin','/usr/sbin','/usr/bin','/usr/local/sbin','/usr/local/bin'],
