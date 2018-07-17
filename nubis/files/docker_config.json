@@ -1,0 +1,11 @@
+{
+ "proxies":
+ {
+   "default":
+   {
+     "httpProxy": "http://proxy.service.consul:3128",
+     "httpsProxy": "http://proxy.service.consul:3128",
+     "noProxy": "169.254.169.254"
+   }
+ }
+}

@@ -19,7 +19,7 @@ RestartSec=15
 
 ExecStartPre=-/usr/bin/docker kill $NAME
 ExecStartPre=-/usr/bin/docker rm $NAME
-ExecStartPre=-/bin/sh -c 'if ! docker images | tr -s " " : | grep "^${IMAGE}:"; then docker pull "${IMAGE}"; fi'
+ExecStartPre=-/bin/sh -c 'if ! docker images --format "{{.Repository}}:{{.Tag}}" "${IMAGE}"; then docker pull "${IMAGE}"; fi'
 ExecStart=/usr/bin/docker run \
     -v /var/run/docker.sock:/var/run/docker.sock:rw \
     -v /var/lib/docker:/var/lib/docker:rw \
