@@ -1,4 +1,4 @@
-$nubis_ctl_version = 'v0.3.5'
+$nubis_ctl_version = 'v0.4.0'
 # NOTE: docker containers versions managed in docker.pp file
 
 package { 'rsync':
