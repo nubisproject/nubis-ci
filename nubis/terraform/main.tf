@@ -4,7 +4,7 @@ provider "aws" {
 }
 
 module "ci-image" {
-  source = "github.com/nubisproject/nubis-terraform///images?ref=develop"
+  source = "github.com/nubisproject/nubis-terraform//images?ref=v2.3.0"
 
   region        = "${var.region}"
   image_version = "${var.nubis_version}"
@@ -438,6 +438,7 @@ data "aws_iam_policy_document" "ci_deploy" {
       "cloudfront:TagResource",
       "cloudfront:UntagResource",
       "cloudfront:UpdateCloudFrontOriginAccessIdentity",
+      "cloudfront:UpdateDistribution",
       "cloudfront:UpdateStreamingDistribution",
       "ec2:createTags",
       "ec2:deleteTags",
