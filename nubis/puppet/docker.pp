@@ -1,6 +1,6 @@
 $nubis_json2hcl_version = 'v0.0.2'
 $nubis_jq_version = 'v0.1.0'
-$nubis_builder_version = 'v1.12.0'
+$nubis_builder_version = 'v1.12.1'
 $nubis_deploy_version = 'v1.0.1'
 
 include ::apt
