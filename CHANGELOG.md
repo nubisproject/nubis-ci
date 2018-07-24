@@ -1,14 +1,6 @@
 # Change Log
 
 ## [v2.3.0](https://github.com/nubisproject/nubis-ci/tree/v2.3.0) (2018-07-24)
-[Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v2.3.0...v2.3.0)
-
-**Merged pull requests:**
-
-- Upgrade to latest nubis-builder [\#655](https://github.com/nubisproject/nubis-ci/pull/655) ([tinnightcap](https://github.com/tinnightcap))
-- Switch from build to builder for nubis-ctl [\#653](https://github.com/nubisproject/nubis-ci/pull/653) ([tinnightcap](https://github.com/tinnightcap))
-
-## [v2.3.0](https://github.com/nubisproject/nubis-ci/tree/v2.3.0) (2018-07-20)
 [Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v2.2.0...v2.3.0)
 
 **Fixed bugs:**
@@ -35,11 +27,16 @@
 - Tag v2.2.0 release [\#605](https://github.com/nubisproject/nubis-ci/issues/605)
 - S3 backups can be slow to initially restore from, increace ELB grace period [\#602](https://github.com/nubisproject/nubis-ci/issues/602)
 - Tag project as a platform component [\#588](https://github.com/nubisproject/nubis-ci/issues/588)
+- Tag v2.3.0 release [\#656](https://github.com/nubisproject/nubis-ci/issues/656)
 - Tag v2.3.0 release [\#650](https://github.com/nubisproject/nubis-ci/issues/650)
 - Tag v2.3.0 release [\#645](https://github.com/nubisproject/nubis-ci/issues/645)
 
 **Merged pull requests:**
 
+- Update CHANGELOG for v2.3.0 release \[skip ci\] [\#658](https://github.com/nubisproject/nubis-ci/pull/658) ([nubis-automation](https://github.com/nubis-automation))
+- Update CHANGELOG for v2.3.0 release \[skip ci\] [\#657](https://github.com/nubisproject/nubis-ci/pull/657) ([nubis-automation](https://github.com/nubis-automation))
+- Upgrade to latest nubis-builder [\#655](https://github.com/nubisproject/nubis-ci/pull/655) ([tinnightcap](https://github.com/tinnightcap))
+- Switch from build to builder for nubis-ctl [\#653](https://github.com/nubisproject/nubis-ci/pull/653) ([tinnightcap](https://github.com/tinnightcap))
 - Update CHANGELOG for v2.3.0 release \[skip ci\] [\#652](https://github.com/nubisproject/nubis-ci/pull/652) ([nubis-automation](https://github.com/nubis-automation))
 - Update CHANGELOG for v2.3.0 release \[skip ci\] [\#651](https://github.com/nubisproject/nubis-ci/pull/651) ([nubis-automation](https://github.com/nubis-automation))
 - Add missed cloudfront:UpdateDistribution [\#649](https://github.com/nubisproject/nubis-ci/pull/649) ([gozer](https://github.com/gozer))
