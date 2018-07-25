@@ -25,7 +25,7 @@ NEW_ALLOWED_TCP=$(echo "$ORIG_ALLOWED_TCP" | jq -c '. |= .+ [22] | unique' )
 
 consulate kv set "nat/$NUBIS_ARENA/config/IptablesAllowTCP" "$NEW_ALLOWED_TCP"
 
-nubis-ctl --account "$(nubis-metadata NUBIS_ACCOUNT)" --local --skip-aws-vault builder build --instance-type c3.large --spot
+nubis-ctl --account "$(nubis-metadata NUBIS_ACCOUNT)" --local --skip-aws-vault builder build --color --instance-type c3.large --spot
 
 consulate kv set "nat/$NUBIS_ARENA/config/IptablesAllowTCP" "$ORIG_ALLOWED_TCP"
 
