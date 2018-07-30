@@ -217,43 +217,43 @@ jenkins::plugin { 'pipeline-milestone-step':
   version => '1.3.1'
 }
 
-jenkins::plugins { 'pipeline-model-api':
+jenkins::plugin { 'pipeline-model-api':
   version => '1.3.1'
 }
 
-jenkins::plugins { 'pipeline-model-declarative-agent':
+jenkins::plugin { 'pipeline-model-declarative-agent':
   version => '1.1.1'
 }
 
-jenkins::plugins { 'pipeline-model-definition':
+jenkins::plugin { 'pipeline-model-definition':
   version => '1.3.1'
 }
 
-jenkins::plugins { 'pipeline-model-extensions':
+jenkins::plugin { 'pipeline-model-extensions':
   version => '1.3.1'
 }
 
-jenkins::plugins { 'pipeline-multibranch-defaults':
+jenkins::plugin { 'pipeline-multibranch-defaults':
   version => '1.1'
 }
 
-jenkins::plugins { 'pipeline-rest-api':
+jenkins::plugin { 'pipeline-rest-api':
   version => '2.10'
 }
 
-jenkins::plugins { 'pipeline-stage-step':
+jenkins::plugin { 'pipeline-stage-step':
   version => '2.3'
 }
 
-jenkins::plugins { 'pipeline-stage-tags-metadata':
+jenkins::plugin { 'pipeline-stage-tags-metadata':
   version => '1.3.1'
 }
 
-jenkins::plugins { 'pipeline-stage-view':
+jenkins::plugin { 'pipeline-stage-view':
   version => '2.10'
 }
 
-jenkins::plugins { 'pipeline-utility-steps':
+jenkins::plugin { 'pipeline-utility-steps':
   version => '2.1.0'
 }
 
