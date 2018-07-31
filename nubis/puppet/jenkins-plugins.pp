@@ -41,6 +41,10 @@ jenkins::plugin { 'build-name-setter':
   version => '1.6.9'
 }
 
+jenkins::plugin { 'build-pipeline-plugin':
+  version => '1.5.8'
+}
+
 jenkins::plugin { 'cloudbees-folder':
   version => '6.5.1'
 }
@@ -51,6 +55,10 @@ jenkins::plugin { 'command-launcher':
 
 jenkins::plugin { 'conditional-buildstep':
   version => '1.3.6'
+}
+
+jenkins::plugin { 'config-file-provider':
+  version =>  '2.18'
 }
 
 jenkins::plugin { 'copyartifact':
@@ -181,6 +189,74 @@ jenkins::plugin { 'pegdown-formatter':
   version => '1.3'
 }
 
+jenkins::plugin { 'pipeline-aws':
+  version =>  '1.28'
+}
+
+jenkins::plugin { 'pipeline-build-step':
+  version => '2.7'
+}
+
+jenkins::plugin { 'pipeline-github':
+  version =>  '2.0'
+}
+
+jenkins::plugin { 'pipeline-github-lib':
+  version =>  '1.0'
+}
+
+jenkins::plugin { 'pipeline-graph-analysis':
+  version => '1.7'
+}
+
+jenkins::plugin { 'pipeline-input-step':
+  version => '2.8'
+}
+
+jenkins::plugin { 'pipeline-milestone-step':
+  version => '1.3.1'
+}
+
+jenkins::plugin { 'pipeline-model-api':
+  version => '1.3.1'
+}
+
+jenkins::plugin { 'pipeline-model-declarative-agent':
+  version => '1.1.1'
+}
+
+jenkins::plugin { 'pipeline-model-definition':
+  version => '1.3.1'
+}
+
+jenkins::plugin { 'pipeline-model-extensions':
+  version => '1.3.1'
+}
+
+jenkins::plugin { 'pipeline-multibranch-defaults':
+  version => '1.1'
+}
+
+jenkins::plugin { 'pipeline-rest-api':
+  version => '2.10'
+}
+
+jenkins::plugin { 'pipeline-stage-step':
+  version => '2.3'
+}
+
+jenkins::plugin { 'pipeline-stage-tags-metadata':
+  version => '1.3.1'
+}
+
+jenkins::plugin { 'pipeline-stage-view':
+  version => '2.10'
+}
+
+jenkins::plugin { 'pipeline-utility-steps':
+  version => '2.1.0'
+}
+
 jenkins::plugin { 'plain-credentials':
   version => '1.4'
 }
@@ -253,8 +329,16 @@ jenkins::plugin { 'windows-slaves':
   version => '1.3.1'
 }
 
+jenkins::plugin { 'workflow-aggregator':
+  version => '2.5'
+}
+
 jenkins::plugin { 'workflow-api':
   version => '2.27'
+}
+
+jenkins::plugin { 'workflow-basic-steps':
+  version => '2.8'
 }
 
 jenkins::plugin { 'workflow-cps':
