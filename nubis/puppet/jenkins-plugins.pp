@@ -194,7 +194,7 @@ jenkins::plugin { 'pipeline-aws':
 }
 
 jenkins::plugin { 'pipeline-build-step':
-  version => '1.5.8'
+  version => '2.7'
 }
 
 jenkins::plugin { 'pipeline-github':
