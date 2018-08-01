@@ -1,20 +1,21 @@
 # Change Log
 
-## [v2.3.0](https://github.com/nubisproject/nubis-ci/tree/v2.3.0) (2018-07-27)
+## [v2.3.0](https://github.com/nubisproject/nubis-ci/tree/v2.3.0) (2018-08-01)
 [Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v2.3.0...v2.3.0)
 
 **Closed issues:**
 
-- \[bug\] Incorrect --color option [\#664](https://github.com/nubisproject/nubis-ci/issues/664)
-- Use --color for builds [\#662](https://github.com/nubisproject/nubis-ci/issues/662)
-- Bump nubis-builder version to v1.12.1 [\#654](https://github.com/nubisproject/nubis-ci/issues/654)
+- Install kubectl on ci system [\#673](https://github.com/nubisproject/nubis-ci/issues/673)
+- Install pipeline plugins [\#670](https://github.com/nubisproject/nubis-ci/issues/670)
+- Enable plugin backups [\#669](https://github.com/nubisproject/nubis-ci/issues/669)
 
 **Merged pull requests:**
 
-- Fix --color option [\#665](https://github.com/nubisproject/nubis-ci/pull/665) ([gozer](https://github.com/gozer))
-- Use --color for builds [\#663](https://github.com/nubisproject/nubis-ci/pull/663) ([tinnightcap](https://github.com/tinnightcap))
+- Install kubectl [\#674](https://github.com/nubisproject/nubis-ci/pull/674) ([limed](https://github.com/limed))
+- Install pipeline plugins [\#672](https://github.com/nubisproject/nubis-ci/pull/672) ([limed](https://github.com/limed))
+- Backup plugins for jenkins [\#671](https://github.com/nubisproject/nubis-ci/pull/671) ([limed](https://github.com/limed))
 
-## [v2.3.0](https://github.com/nubisproject/nubis-ci/tree/v2.3.0) (2018-07-24)
+## [v2.3.0](https://github.com/nubisproject/nubis-ci/tree/v2.3.0) (2018-07-27)
 [Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v2.2.0...v2.3.0)
 
 **Fixed bugs:**
@@ -23,6 +24,9 @@
 
 **Closed issues:**
 
+- \[bug\] Incorrect --color option [\#664](https://github.com/nubisproject/nubis-ci/issues/664)
+- Use --color for builds [\#662](https://github.com/nubisproject/nubis-ci/issues/662)
+- Bump nubis-builder version to v1.12.1 [\#654](https://github.com/nubisproject/nubis-ci/issues/654)
 - \[iam\] Add missign Cloudfront permission [\#648](https://github.com/nubisproject/nubis-ci/issues/648)
 - \[iam\] Add permissions to manage CloudFront resources [\#639](https://github.com/nubisproject/nubis-ci/issues/639)
 - \[iam\] Add ACM permissions [\#637](https://github.com/nubisproject/nubis-ci/issues/637)
@@ -41,6 +45,7 @@
 - Tag v2.2.0 release [\#605](https://github.com/nubisproject/nubis-ci/issues/605)
 - S3 backups can be slow to initially restore from, increace ELB grace period [\#602](https://github.com/nubisproject/nubis-ci/issues/602)
 - Tag project as a platform component [\#588](https://github.com/nubisproject/nubis-ci/issues/588)
+- Tag v2.3.0 release [\#666](https://github.com/nubisproject/nubis-ci/issues/666)
 - Tag v2.3.0 release [\#659](https://github.com/nubisproject/nubis-ci/issues/659)
 - Tag v2.3.0 release [\#656](https://github.com/nubisproject/nubis-ci/issues/656)
 - Tag v2.3.0 release [\#650](https://github.com/nubisproject/nubis-ci/issues/650)
@@ -48,6 +53,10 @@
 
 **Merged pull requests:**
 
+- Update CHANGELOG for v2.3.0 release \[skip ci\] [\#668](https://github.com/nubisproject/nubis-ci/pull/668) ([nubis-automation](https://github.com/nubis-automation))
+- Update CHANGELOG for v2.3.0 release \[skip ci\] [\#667](https://github.com/nubisproject/nubis-ci/pull/667) ([nubis-automation](https://github.com/nubis-automation))
+- Fix --color option [\#665](https://github.com/nubisproject/nubis-ci/pull/665) ([gozer](https://github.com/gozer))
+- Use --color for builds [\#663](https://github.com/nubisproject/nubis-ci/pull/663) ([tinnightcap](https://github.com/tinnightcap))
 - Update CHANGELOG for v2.3.0 release \[skip ci\] [\#661](https://github.com/nubisproject/nubis-ci/pull/661) ([nubis-automation](https://github.com/nubis-automation))
 - Update CHANGELOG for v2.3.0 release \[skip ci\] [\#660](https://github.com/nubisproject/nubis-ci/pull/660) ([nubis-automation](https://github.com/nubis-automation))
 - Update CHANGELOG for v2.3.0 release \[skip ci\] [\#658](https://github.com/nubisproject/nubis-ci/pull/658) ([nubis-automation](https://github.com/nubis-automation))
