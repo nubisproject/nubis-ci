@@ -8,7 +8,7 @@ nubis::discovery::service { 'jenkins':
 }
 
 class { 'jenkins':
-  version            => '2.121.1',
+  version            => '2.121.2',
   #direct_download    => 'https://pkg.jenkins.io/debian-stable/binary/jenkins_2.46.3_all.deb',
   configure_firewall => false,
   service_enable     => false,
@@ -23,6 +23,8 @@ class { 'jenkins':
     },
   },
 }
+
+Apt::Source['jenkins'] -> Class['apt::update'] -> Package['jenkins']
 
 #XXX: Needs to be project-aware
 #consul::service { 'jenkins':
