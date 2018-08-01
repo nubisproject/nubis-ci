@@ -11,7 +11,7 @@
   <moveOldBackupsToZipFile>true</moveOldBackupsToZipFile>
   <backupBuildResults>true</backupBuildResults>
   <backupBuildArchive>true</backupBuildArchive>
-  <backupPluginArchives>false</backupPluginArchives>
+  <backupPluginArchives>true</backupPluginArchives>
   <backupUserContents>true</backupUserContents>
   <backupAdditionalFiles>false</backupAdditionalFiles>
   <backupAdditionalFilesRegex></backupAdditionalFilesRegex>
