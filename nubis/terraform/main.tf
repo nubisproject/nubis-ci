@@ -551,6 +551,7 @@ data "aws_iam_policy_document" "ci_deploy" {
       "iam:ListGroupsForUser",
       "iam:DeleteUserPolicy",
       "iam:DeleteAccessKey",
+      "iam:DeleteRolePermissionsBoundary",
       "iam:CreateInstanceProfile",
       "iam:AddRoleToInstanceProfile",
       "iam:PutRolePolicy",
