@@ -25,6 +25,10 @@ jenkins::plugin { 'authorize-project':
   version => '1.3.0'
 }
 
+jenkins::plugin { 'aws-credentials':
+  version => '1.23'
+}
+
 jenkins::plugin { 'aws-java-sdk':
   version => '1.11.341'
 }
@@ -58,11 +62,11 @@ jenkins::plugin { 'conditional-buildstep':
 }
 
 jenkins::plugin { 'config-file-provider':
-  version =>  '2.18'
+  version => '2.18'
 }
 
 jenkins::plugin { 'copyartifact':
-  version => '1.39.1'
+  version => '1.41'
 }
 
 jenkins::plugin { 'credentials-binding':
@@ -86,7 +90,7 @@ jenkins::plugin { 'docker-workflow':
 }
 
 jenkins::plugin { 'durable-task':
-  version => '1.22'
+  version => '1.23'
 }
 
 jenkins::plugin { 'embeddable-build-status':
@@ -98,7 +102,7 @@ jenkins::plugin { 'git':
 }
 
 jenkins::plugin { 'git-client':
-  version => '2.7.2'
+  version => '2.7.3'
 }
 
 jenkins::plugin { 'git-server':
@@ -121,6 +125,10 @@ jenkins::plugin { 'github-oauth':
   version => '0.29'
 }
 
+jenkins::plugin { 'handlebars':
+  version => '1.1.1'
+}
+
 jenkins::plugin { 'icon-shim':
   version => '2.0.3'
 }
@@ -133,8 +141,16 @@ jenkins::plugin { 'javadoc':
   version => '1.4'
 }
 
+jenkins::plugin { 'jdk-tool':
+  version => '1.1'
+}
+
 jenkins::plugin { 'job-dsl':
   version => '1.70'
+}
+
+jenkins::plugin { 'jquery':
+  version => '1.12.4-0'
 }
 
 jenkins::plugin { 'jquery-detached':
@@ -158,7 +174,7 @@ jenkins::plugin { 'mailer':
 }
 
 jenkins::plugin { 'matrix-auth':
-  version => '2.2'
+  version => '2.3'
 }
 
 jenkins::plugin { 'matrix-project':
@@ -171,6 +187,10 @@ jenkins::plugin { 'maven-plugin':
 
 jenkins::plugin { 'metrics':
   version => '4.0.2.2'
+}
+
+jenkins::plugin { 'momentjs':
+  version => '1.1.1'
 }
 
 jenkins::plugin { 'multiple-scms':
@@ -190,7 +210,7 @@ jenkins::plugin { 'pegdown-formatter':
 }
 
 jenkins::plugin { 'pipeline-aws':
-  version =>  '1.28'
+  version => '1.28'
 }
 
 jenkins::plugin { 'pipeline-build-step':
@@ -198,11 +218,11 @@ jenkins::plugin { 'pipeline-build-step':
 }
 
 jenkins::plugin { 'pipeline-github':
-  version =>  '2.0'
+  version => '2.0'
 }
 
 jenkins::plugin { 'pipeline-github-lib':
-  version =>  '1.0'
+  version => '1.0'
 }
 
 jenkins::plugin { 'pipeline-graph-analysis':
@@ -334,11 +354,11 @@ jenkins::plugin { 'workflow-aggregator':
 }
 
 jenkins::plugin { 'workflow-api':
-  version => '2.27'
+  version => '2.29'
 }
 
 jenkins::plugin { 'workflow-basic-steps':
-  version => '2.8'
+  version => '2.9'
 }
 
 jenkins::plugin { 'workflow-cps':
@@ -354,7 +374,7 @@ jenkins::plugin { 'workflow-durable-task-step':
 }
 
 jenkins::plugin { 'workflow-job':
-  version => '2.22'
+  version => '2.23'
 }
 
 jenkins::plugin { 'workflow-multibranch':
