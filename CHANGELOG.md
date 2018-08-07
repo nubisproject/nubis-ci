@@ -5,7 +5,7 @@
 
 **Merged pull requests:**
 
-- Update to latest deploy container [\#689](https://github.com/nubisproject/nubis-ci/pull/689) ([tinnightcap](https://github.com/tinnightcap))
+- Update to newest deploy image and fix delete path [\#693](https://github.com/nubisproject/nubis-ci/pull/693) ([tinnightcap](https://github.com/tinnightcap))
 
 ## [v2.3.0](https://github.com/nubisproject/nubis-ci/tree/v2.3.0) (2018-08-07)
 [Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v2.2.0...v2.3.0)
@@ -41,7 +41,7 @@
 - \[backup\] Run full backups hourly, keeping incremental count low [\#608](https://github.com/nubisproject/nubis-ci/issues/608)
 - Tag v2.2.0 release [\#605](https://github.com/nubisproject/nubis-ci/issues/605)
 - S3 backups can be slow to initially restore from, increace ELB grace period [\#602](https://github.com/nubisproject/nubis-ci/issues/602)
-- Tag project as a platform component [\#588](https://github.com/nubisproject/nubis-ci/issues/588)
+- Tag v2.3.0 release [\#690](https://github.com/nubisproject/nubis-ci/issues/690)
 - Tag v2.3.0 release [\#686](https://github.com/nubisproject/nubis-ci/issues/686)
 - Tag v2.3.0 release [\#682](https://github.com/nubisproject/nubis-ci/issues/682)
 - Tag v2.3.0 release [\#675](https://github.com/nubisproject/nubis-ci/issues/675)
@@ -53,6 +53,9 @@
 
 **Merged pull requests:**
 
+- Update CHANGELOG for v2.3.0 release \[skip ci\] [\#692](https://github.com/nubisproject/nubis-ci/pull/692) ([nubis-automation](https://github.com/nubis-automation))
+- Update CHANGELOG for v2.3.0 release \[skip ci\] [\#691](https://github.com/nubisproject/nubis-ci/pull/691) ([nubis-automation](https://github.com/nubis-automation))
+- Update to latest deploy container [\#689](https://github.com/nubisproject/nubis-ci/pull/689) ([tinnightcap](https://github.com/tinnightcap))
 - Update CHANGELOG for v2.3.0 release \[skip ci\] [\#688](https://github.com/nubisproject/nubis-ci/pull/688) ([nubis-automation](https://github.com/nubis-automation))
 - Update CHANGELOG for v2.3.0 release \[skip ci\] [\#687](https://github.com/nubisproject/nubis-ci/pull/687) ([nubis-automation](https://github.com/nubis-automation))
 - Update to latest nubis-deploy image [\#685](https://github.com/nubisproject/nubis-ci/pull/685) ([tinnightcap](https://github.com/tinnightcap))
