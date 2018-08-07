@@ -74,7 +74,7 @@ package { 'boto':
   ensure => '2.38.0',
 }
 package { 'boto3':
-  ensure => '1.7.62',
+  ensure => '1.7.65',
 }
 package { 'botocore':
   ensure => '1.10.4',
@@ -86,7 +86,7 @@ package { 'bsdmainutils':
   ensure => '9.0.6ubuntu3',
 }
 package { 'bsdutils':
-  ensure => '1:2.27.1-6ubuntu3.4',
+  ensure => '1:2.27.1-6ubuntu3.6',
 }
 package { 'btrfs-tools':
   ensure => '4.4-1ubuntu1',
@@ -434,7 +434,7 @@ package { 'hibagent':
   ensure => '1.0.1-0ubuntu1~16.04.1',
 }
 package { 'hicolor-icon-theme':
-  ensure => '0.15-0ubuntu1',
+  ensure => '0.15-0ubuntu1.1',
 }
 package { 'hiera':
   ensure => ['3.3.2'],
@@ -629,7 +629,7 @@ package { 'libbind9-140':
   ensure => '1:9.10.3.dfsg.P4-8ubuntu1.10',
 }
 package { 'libblkid1':
-  ensure => '2.27.1-6ubuntu3.4',
+  ensure => '2.27.1-6ubuntu3.6',
 }
 package { 'libbsd0':
   ensure => '0.8.2-1',
@@ -758,7 +758,7 @@ package { 'libfakeroot':
   ensure => '1.20.2-1ubuntu1',
 }
 package { 'libfdisk1':
-  ensure => '2.27.1-6ubuntu3.4',
+  ensure => '2.27.1-6ubuntu3.6',
 }
 package { 'libffi6':
   ensure => '3.2.1-4',
@@ -794,10 +794,10 @@ package { 'libgdbm3':
   ensure => '1.8.3-13.1',
 }
 package { 'libgdk-pixbuf2.0-0':
-  ensure => '2.32.2-1ubuntu1.4',
+  ensure => '2.32.2-1ubuntu1.5',
 }
 package { 'libgdk-pixbuf2.0-common':
-  ensure => '2.32.2-1ubuntu1.4',
+  ensure => '2.32.2-1ubuntu1.5',
 }
 package { 'libgeoip1':
   ensure => '1.6.9-1',
@@ -818,10 +818,10 @@ package { 'libglapi-mesa':
   ensure => '18.0.5-0ubuntu0~16.04.1',
 }
 package { 'libglib2.0-0':
-  ensure => '2.48.2-0ubuntu1',
+  ensure => '2.48.2-0ubuntu3',
 }
 package { 'libglib2.0-data':
-  ensure => '2.48.2-0ubuntu1',
+  ensure => '2.48.2-0ubuntu3',
 }
 package { 'libgmp-dev':
   ensure => '2:6.1.0+dfsg-2',
@@ -1007,7 +1007,7 @@ package { 'libmnl0':
   ensure => '1.0.3-5',
 }
 package { 'libmount1':
-  ensure => '2.27.1-6ubuntu3.4',
+  ensure => '2.27.1-6ubuntu3.6',
 }
 package { 'libmpc3':
   ensure => '1.0.3-1',
@@ -1244,7 +1244,7 @@ package { 'libsigsegv2':
   ensure => '2.10-4',
 }
 package { 'libslang2':
-  ensure => '2.3.0-2ubuntu1',
+  ensure => '2.3.0-2ubuntu1.1',
 }
 package { 'libsm-dev':
   ensure => '2:1.2.2-1',
@@ -1253,7 +1253,7 @@ package { 'libsm6':
   ensure => '2:1.2.2-1',
 }
 package { 'libsmartcols1':
-  ensure => '2.27.1-6ubuntu3.4',
+  ensure => '2.27.1-6ubuntu3.6',
 }
 package { 'libsndfile1':
   ensure => '1.0.25-10ubuntu0.16.04.1',
@@ -1325,7 +1325,7 @@ package { 'libutempter0':
   ensure => '1.1.6-3',
 }
 package { 'libuuid1':
-  ensure => '2.27.1-6ubuntu3.4',
+  ensure => '2.27.1-6ubuntu3.6',
 }
 package { 'libvorbis0a':
   ensure => '1.3.5-3ubuntu0.2',
@@ -1580,7 +1580,7 @@ package { 'moreutils':
   ensure => '0.57-1',
 }
 package { 'mount':
-  ensure => '2.27.1-6ubuntu3.4',
+  ensure => '2.27.1-6ubuntu3.6',
 }
 package { 'mountall':
   ensure => '2.54ubuntu1',
@@ -1616,7 +1616,7 @@ package { 'net-ssh':
   ensure => ['5.0.2'],
 }
 package { 'net-telnet':
-  ensure => ['0.1.1'],
+  ensure => ['0.2.0', '0.1.1'],
 }
 package { 'net-tools':
   ensure => '1.60-26ubuntu1',
@@ -1745,7 +1745,7 @@ package { 'puppetlabs-release-pc1':
   ensure => '1.1.0-4xenial',
 }
 package { 'pyasn1':
-  ensure => '0.4.3',
+  ensure => '0.4.4',
 }
 package { 'pycparser':
   ensure => '2.18',
@@ -2048,13 +2048,13 @@ package { 'sgml-base':
   ensure => '1.26+nmu4ubuntu1',
 }
 package { 'shared-mime-info':
-  ensure => '1.5-2ubuntu0.1',
+  ensure => '1.5-2ubuntu0.2',
 }
 package { 'six':
   ensure => '1.11.0',
 }
 package { 'snapd':
-  ensure => '2.33.1ubuntu2',
+  ensure => '2.34.2',
 }
 package { 'software-properties-common':
   ensure => '0.96.20.7',
@@ -2132,7 +2132,7 @@ package { 'ubuntu-cloudimage-keyring':
   ensure => '2013.11.11',
 }
 package { 'ubuntu-core-launcher':
-  ensure => '2.33.1ubuntu2',
+  ensure => '2.34.2',
 }
 package { 'ubuntu-keyring':
   ensure => '2012.05.19',
@@ -2177,10 +2177,10 @@ package { 'usbutils':
   ensure => '1:007-4',
 }
 package { 'util-linux':
-  ensure => '2.27.1-6ubuntu3.4',
+  ensure => '2.27.1-6ubuntu3.6',
 }
 package { 'uuid-runtime':
-  ensure => '2.27.1-6ubuntu3.4',
+  ensure => '2.27.1-6ubuntu3.6',
 }
 package { 'vim':
   ensure => '2:7.4.1689-3ubuntu1.2',
