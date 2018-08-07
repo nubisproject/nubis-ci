@@ -91,7 +91,7 @@ if [ -d artifacts/nubis/terraform ]; then
     cd artifacts
 
     # Make sure we are not getting stale config from the vcs
-    rm -rf .terraform
+    rm -rf nubis/terraform/.terraform
 
     # Check t see if we have remote state in consul
     #+ If so, lets migrate it to S3
@@ -167,8 +167,8 @@ if [ -d artifacts/nubis/terraform ]; then
     fi
 
     # Clean up any local state (we start fresh from remote state each time)
-    if [ -d '.terraform' ]; then
-        rm -rf .terraform
+    if [ -d 'nubis/terraform/.terraform' ]; then
+        rm -rf nubis/terraform/.terraform
     fi
     cd ../
 fi
