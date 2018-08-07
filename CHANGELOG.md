@@ -3,17 +3,11 @@
 ## [v2.3.0](https://github.com/nubisproject/nubis-ci/tree/v2.3.0) (2018-08-07)
 [Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v2.3.0...v2.3.0)
 
-**Closed issues:**
-
-- \[iam\] Add missing permisson iam:DeleteRolePermissionsBoundary [\#680](https://github.com/nubisproject/nubis-ci/issues/680)
-- Install missing dependent plugins [\#678](https://github.com/nubisproject/nubis-ci/issues/678)
-
 **Merged pull requests:**
 
-- Add missing IAM permission for deploys [\#681](https://github.com/nubisproject/nubis-ci/pull/681) ([gozer](https://github.com/gozer))
-- Upgrade/install missed dependent plugins [\#679](https://github.com/nubisproject/nubis-ci/pull/679) ([gozer](https://github.com/gozer))
+- Update to latest nubis-deploy image [\#685](https://github.com/nubisproject/nubis-ci/pull/685) ([tinnightcap](https://github.com/tinnightcap))
 
-## [v2.3.0](https://github.com/nubisproject/nubis-ci/tree/v2.3.0) (2018-08-01)
+## [v2.3.0](https://github.com/nubisproject/nubis-ci/tree/v2.3.0) (2018-08-07)
 [Full Changelog](https://github.com/nubisproject/nubis-ci/compare/v2.2.0...v2.3.0)
 
 **Fixed bugs:**
@@ -22,6 +16,8 @@
 
 **Closed issues:**
 
+- \[iam\] Add missing permisson iam:DeleteRolePermissionsBoundary [\#680](https://github.com/nubisproject/nubis-ci/issues/680)
+- Install missing dependent plugins [\#678](https://github.com/nubisproject/nubis-ci/issues/678)
 - Install kubectl on ci system [\#673](https://github.com/nubisproject/nubis-ci/issues/673)
 - Install pipeline plugins [\#670](https://github.com/nubisproject/nubis-ci/issues/670)
 - Enable plugin backups [\#669](https://github.com/nubisproject/nubis-ci/issues/669)
@@ -46,6 +42,7 @@
 - Tag v2.2.0 release [\#605](https://github.com/nubisproject/nubis-ci/issues/605)
 - S3 backups can be slow to initially restore from, increace ELB grace period [\#602](https://github.com/nubisproject/nubis-ci/issues/602)
 - Tag project as a platform component [\#588](https://github.com/nubisproject/nubis-ci/issues/588)
+- Tag v2.3.0 release [\#682](https://github.com/nubisproject/nubis-ci/issues/682)
 - Tag v2.3.0 release [\#675](https://github.com/nubisproject/nubis-ci/issues/675)
 - Tag v2.3.0 release [\#666](https://github.com/nubisproject/nubis-ci/issues/666)
 - Tag v2.3.0 release [\#659](https://github.com/nubisproject/nubis-ci/issues/659)
@@ -55,6 +52,10 @@
 
 **Merged pull requests:**
 
+- Update CHANGELOG for v2.3.0 release \[skip ci\] [\#684](https://github.com/nubisproject/nubis-ci/pull/684) ([nubis-automation](https://github.com/nubis-automation))
+- Update CHANGELOG for v2.3.0 release \[skip ci\] [\#683](https://github.com/nubisproject/nubis-ci/pull/683) ([nubis-automation](https://github.com/nubis-automation))
+- Add missing IAM permission for deploys [\#681](https://github.com/nubisproject/nubis-ci/pull/681) ([gozer](https://github.com/gozer))
+- Upgrade/install missed dependent plugins [\#679](https://github.com/nubisproject/nubis-ci/pull/679) ([gozer](https://github.com/gozer))
 - Update CHANGELOG for v2.3.0 release \[skip ci\] [\#677](https://github.com/nubisproject/nubis-ci/pull/677) ([nubis-automation](https://github.com/nubis-automation))
 - Update CHANGELOG for v2.3.0 release \[skip ci\] [\#676](https://github.com/nubisproject/nubis-ci/pull/676) ([nubis-automation](https://github.com/nubis-automation))
 - Install kubectl [\#674](https://github.com/nubisproject/nubis-ci/pull/674) ([limed](https://github.com/limed))
