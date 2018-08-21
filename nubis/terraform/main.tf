@@ -4,7 +4,7 @@ provider "aws" {
 }
 
 module "ci-image" {
-  source = "github.com/nubisproject/nubis-terraform//images?ref=v2.3.0"
+  source = "github.com/nubisproject/nubis-terraform//images?ref=v2.3.1"
 
   region        = "${var.region}"
   image_version = "${var.nubis_version}"
