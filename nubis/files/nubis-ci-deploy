@@ -82,7 +82,7 @@ environment = "${ENVIRONMENT}"
 service_name = "${SERVICE_NAME}"
 EOH
 
-if [ "${SKIP_BUILD}" != "true" ]; then
+if [ "${AMI}" != "" ]; then
     echo "ami = \"${AMI}\"" >> ${TERRAFORM_TFVARS_FILE}
 fi
 
