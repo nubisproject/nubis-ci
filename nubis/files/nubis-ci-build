@@ -13,21 +13,19 @@ if [ "${SKIP_BUILD}" == "true" ]; then
     # jenkins gets grumpy if artifacts folder is empty
     # so we just add something here
     touch "artifacts/SKIP"
-    exit 0
+else
+  NUBIS_ARENA=$(nubis-metadata NUBIS_ARENA)
+  ORIG_ALLOWED_TCP=$(consul kv get "nat/$NUBIS_ARENA/config/IptablesAllowTCP" 2>/dev/null || echo '[]')
+
+  # Add port 22 exception
+  NEW_ALLOWED_TCP=$(echo "$ORIG_ALLOWED_TCP" | jq -c '. |= .+ [22] | unique' )
+
+  consulate kv set "nat/$NUBIS_ARENA/config/IptablesAllowTCP" "$NEW_ALLOWED_TCP"
+
+  nubis-ctl --account "$(nubis-metadata NUBIS_ACCOUNT)" --local --skip-aws-vault builder --color build --instance-type c3.large --spot
+
+  consulate kv set "nat/$NUBIS_ARENA/config/IptablesAllowTCP" "$ORIG_ALLOWED_TCP"
 fi
-
-NUBIS_ARENA=$(nubis-metadata NUBIS_ARENA)
-
-ORIG_ALLOWED_TCP=$(consul kv get "nat/$NUBIS_ARENA/config/IptablesAllowTCP" 2>/dev/null || echo '[]')
-
-# Add port 22 exception
-NEW_ALLOWED_TCP=$(echo "$ORIG_ALLOWED_TCP" | jq -c '. |= .+ [22] | unique' )
-
-consulate kv set "nat/$NUBIS_ARENA/config/IptablesAllowTCP" "$NEW_ALLOWED_TCP"
-
-nubis-ctl --account "$(nubis-metadata NUBIS_ACCOUNT)" --local --skip-aws-vault builder --color build --instance-type c3.large --spot
-
-consulate kv set "nat/$NUBIS_ARENA/config/IptablesAllowTCP" "$ORIG_ALLOWED_TCP"
 
 if [ -d nubis/terraform ]; then
   rsync -av nubis/terraform artifacts/nubis/
