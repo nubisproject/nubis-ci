@@ -375,6 +375,11 @@ data "aws_iam_policy_document" "ci_deploy" {
     sid = "deploy"
 
     actions = [
+      "autoscaling:AttachLoadBalancerTargetGroups",
+      "autoscaling:DetachLoadBalancerTargetGroups",
+      "autoscaling:AttachLoadBalancers",
+      "autoscaling:DetachLoadBalancers",
+      "autoscaling:DescribeLoadBalancers",
       "autoscaling:CreateAutoScalingGroup",
       "autoscaling:CreateLaunchConfiguration",
       "autoscaling:DeleteLaunchConfiguration",
@@ -471,6 +476,9 @@ data "aws_iam_policy_document" "ci_deploy" {
       "elasticache:AddTagsToResource",
       "elasticache:ListTagsForResource",
       "elasticache:RemoveTagsFromResource",
+      "elasticloadbalancing:DescribeListeners",
+      "elasticloadbalancing:DescribeTargetGroups",
+      "elasticloadbalancing:DescribeTargetGroupAttributes",
       "elasticloadbalancing:SetLoadBalancerPoliciesForBackendServer",
       "elasticloadbalancing:SetLoadBalancerPoliciesOfListener",
       "elasticloadbalancing:CreateLoadBalancerPolicy",
