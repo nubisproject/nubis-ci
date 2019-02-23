@@ -4,7 +4,7 @@ provider "aws" {
 }
 
 module "ci-image" {
-  source = "github.com/nubisproject/nubis-terraform//images?ref=v2.3.1"
+  source = "github.com/nubisproject/nubis-terraform//images?ref=v2.4.0"
 
   region        = "${var.region}"
   image_version = "${var.nubis_version}"
@@ -471,6 +471,12 @@ data "aws_iam_policy_document" "ci_deploy" {
       "elasticache:AddTagsToResource",
       "elasticache:ListTagsForResource",
       "elasticache:RemoveTagsFromResource",
+      "elasticloadbalancing:SetLoadBalancerPoliciesForBackendServer",
+      "elasticloadbalancing:SetLoadBalancerPoliciesOfListener",
+      "elasticloadbalancing:CreateLoadBalancerPolicy",
+      "elasticloadbalancing:DeleteLoadBalancerPolicy",
+      "elasticloadbalancing:DescribeLoadBalancerPolicies",
+      "elasticloadbalancing:DescribeLoadBalancerPolicyTypes",
       "elasticloadbalancing:ApplySecurityGroupsToLoadBalancer",
       "elasticloadbalancing:ConfigureHealthCheck",
       "elasticloadbalancing:CreateLoadBalancer",
