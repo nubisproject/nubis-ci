@@ -74,7 +74,7 @@ package { 'boto':
   ensure => '2.38.0',
 }
 package { 'boto3':
-  ensure => '1.9.101',
+  ensure => '1.9.108',
 }
 package { 'botocore':
   ensure => '1.10.4',
@@ -116,7 +116,7 @@ package { 'certifi':
   ensure => '2018.11.29',
 }
 package { 'cffi':
-  ensure => '1.12.1',
+  ensure => '1.12.2',
 }
 package { 'cgroup-lite':
   ensure => '1.11',
@@ -158,7 +158,7 @@ package { 'consulate':
   ensure => '0.6.0',
 }
 package { 'containerd.io':
-  ensure => '1.2.2-3',
+  ensure => '1.2.4-1',
 }
 package { 'coreutils':
   ensure => '8.25-2ubuntu3~16.04',
@@ -257,10 +257,10 @@ package { 'dnsutils':
   ensure => '1:9.10.3.dfsg.P4-8ubuntu1.12',
 }
 package { 'docker-ce':
-  ensure => '5:18.09.2~3-0~ubuntu-xenial',
+  ensure => '5:18.09.3~3-0~ubuntu-xenial',
 }
 package { 'docker-ce-cli':
-  ensure => '5:18.09.2~3-0~ubuntu-xenial',
+  ensure => '5:18.09.3~3-0~ubuntu-xenial',
 }
 package { 'docutils':
   ensure => '0.14',
@@ -527,7 +527,7 @@ package { 'jenkins':
   ensure => '2.121.2',
 }
 package { 'jmespath':
-  ensure => '0.9.3',
+  ensure => '0.9.4',
 }
 package { 'jq':
   ensure => '1.5+dfsg-1ubuntu0.1',
@@ -551,7 +551,7 @@ package { 'krb5-locales':
   ensure => '1.13.2+dfsg-5ubuntu2.1',
 }
 package { 'kubectl':
-  ensure => '1.13.3-00',
+  ensure => '1.13.4-00',
 }
 package { 'language-selector-common':
   ensure => '0.165.4',
@@ -1061,10 +1061,10 @@ package { 'libnspr4':
   ensure => '2:4.13.1-0ubuntu0.16.04.1',
 }
 package { 'libnss3':
-  ensure => '2:3.28.4-0ubuntu0.16.04.4',
+  ensure => '2:3.28.4-0ubuntu0.16.04.5',
 }
 package { 'libnss3-nssdb':
-  ensure => '2:3.28.4-0ubuntu0.16.04.4',
+  ensure => '2:3.28.4-0ubuntu0.16.04.5',
 }
 package { 'libnuma1':
   ensure => '2.0.11-1ubuntu1.1',
@@ -1268,13 +1268,13 @@ package { 'libsndfile1':
   ensure => '1.0.25-10ubuntu0.16.04.1',
 }
 package { 'libsqlite3-0':
-  ensure => '3.11.0-1ubuntu1',
+  ensure => '3.11.0-1ubuntu1.1',
 }
 package { 'libss2':
   ensure => '1.42.13-1ubuntu1',
 }
 package { 'libssl1.0.0':
-  ensure => '1.0.2g-1ubuntu4.14',
+  ensure => '1.0.2g-1ubuntu4.15',
 }
 package { 'libstdc++-5-dev':
   ensure => '5.4.0-6ubuntu1~16.04.11',
@@ -1652,16 +1652,16 @@ package { 'openjdk-8-jre-headless':
   ensure => '8u191-b12-2ubuntu0.16.04.1',
 }
 package { 'openssh-client':
-  ensure => '1:7.2p2-4ubuntu2.7',
+  ensure => '1:7.2p2-4ubuntu2.8',
 }
 package { 'openssh-server':
-  ensure => '1:7.2p2-4ubuntu2.7',
+  ensure => '1:7.2p2-4ubuntu2.8',
 }
 package { 'openssh-sftp-server':
-  ensure => '1:7.2p2-4ubuntu2.7',
+  ensure => '1:7.2p2-4ubuntu2.8',
 }
 package { 'openssl':
-  ensure => '1.0.2g-1ubuntu4.14',
+  ensure => '1.0.2g-1ubuntu4.15',
 }
 package { 'os-prober':
   ensure => '1.70ubuntu3.3',
